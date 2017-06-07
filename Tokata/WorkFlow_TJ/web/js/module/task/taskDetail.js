@@ -262,36 +262,19 @@ function generBasicObj(infoTypeId, taskTypeInfo, taskOrderInfoArray){
 			};
 			items[i] = item;
 		}
-        if(items.length > 1){
-            obj = {
-                columnWidth:taskTypeInfo.infoLength,
-                layout:'form',
-                items:[{
-                    xtype:'checkboxgroup',
-                    disabled : true,
-                    columns: 6,
-                    fieldLabel:taskTypeInfo.infoName,
-                    name: 'order_'+taskTypeInfo.taskTypeInfoId,
-                    id: 'order_'+taskTypeInfo.taskTypeInfoId,
-                    items : items,
-                    anchor:'95%'
-                }]
-            };
-        }else{
-            obj = {
-                columnWidth:taskTypeInfo.infoLength,
-                layout:'form',
-                items:[{
-                    xtype:'checkboxgroup',
-                    disabled : true,
-                    fieldLabel:taskTypeInfo.infoName,
-                    name: 'order_'+taskTypeInfo.taskTypeInfoId,
-                    id: 'order_'+taskTypeInfo.taskTypeInfoId,
-                    items : items,
-                    anchor:'95%'
-                }]
-            };
-		}
+		obj = { 
+		        columnWidth:taskTypeInfo.infoLength,
+		        layout:'form',
+		        items:[{               
+		           xtype:'checkboxgroup', 
+		           disabled : true,
+		           fieldLabel:taskTypeInfo.infoName,
+		           name: 'order_'+taskTypeInfo.taskTypeInfoId,
+		           id: 'order_'+taskTypeInfo.taskTypeInfoId, 
+		           items : items,
+		           anchor:'95%'
+		        }]
+			};
 	}else {
 		obj = { 
 		        columnWidth:taskTypeInfo.infoLength,

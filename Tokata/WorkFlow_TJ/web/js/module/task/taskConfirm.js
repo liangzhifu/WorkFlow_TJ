@@ -530,7 +530,7 @@ function generMainObj(taskTache, taskWoOrderArray){
 
 function doEditConfirmConfirm(){
 	var flag = true;
-	Ext.Msg.confirm("确认框", "是否需要重新选择项目管理部确认人："+confrimConfirmUser, function (btn) {
+	Ext.Msg.confirm("确认框", "是否需要重新选择变化点管理确认人："+confrimConfirmUser, function (btn) {
 		if(btn=='yes'){
 			while(flag){
 				var returnValue = window.showModalDialog(contextPath + "/jsp/system/selectUser.jsp", null, "dialogHeight=500px;dialogwidth=400px;help=no;scrollbars=no;");
@@ -551,14 +551,14 @@ function doEditConfirmConfirm(){
 							success : function(response, action) {
 								var responseText = Ext.decode(response.responseText);
 								if(responseText.success){
-									alert("修改项目管理部确认人成功！");
+									alert("修改变化点管理确认人成功！");
 								}else {
 									alert(responseText.message);
 								}
 								doEditQuality2Confirm();
 							},
 							failure : function(e) {
-								Ext.Msg.alert('提示', '修改项目管理部确认人失败！');
+								Ext.Msg.alert('提示', '修改变化点管理确认人失败！');
 							}
 						});
 					}
@@ -571,50 +571,8 @@ function doEditConfirmConfirm(){
 }
 
 function doEditQuality2Confirm(){
-    flag = true;
-    Ext.Msg.confirm("确认框", "是否需要重新选择品质部长承认人："+quality2ConfirmUser, function (btn) {
-        if(btn=='yes'){
-            while(flag){
-                var returnValue = window.showModalDialog(contextPath + "/jsp/system/selectUser.jsp", null, "dialogHeight=500px;dialogwidth=400px;help=no;scrollbars=no;");
-                if(returnValue){
-                    var userId = returnValue.id;
-                    if(userId != undefined && userId!=""){
-                        flag = false;
-                        Ext.Ajax.request( {
-                            url : contextPath+'/taskConfirmOrder/editConfirmOrderUser.do',
-                            async: false,
-                            waitTitle : '提示',
-                            waitMsg: '请稍后,正在提交数据...',
-                            params : {
-                                userId : userId,
-                                orderId : taskOrderId,
-                                runCode : "quality2_confirm"
-                            },
-                            success : function(response, action) {
-                                var responseText = Ext.decode(response.responseText);
-                                if(responseText.success){
-                                    alert("修改品质部长承认人成功！");
-                                }else {
-                                    alert(responseText.message);
-                                }
-                                doSubmit();
-                            },
-                            failure : function(e) {
-                                Ext.Msg.alert('提示', '修改品质部长承认人失败！');
-                            }
-                        });
-                    }
-                }
-            }
-        }else{
-            doEditManagerConfirm();
-        }
-    });
-}
-
-function doEditManagerConfirm(){
 	flag = true;
-	Ext.Msg.confirm("确认框", "是否需要重新选择项目管理部部长承认人："+quality2ConfirmUser, function (btn) {
+	Ext.Msg.confirm("确认框", "是否需要重新选择品质部长承认人："+quality2ConfirmUser, function (btn) {
 		if(btn=='yes'){
 			while(flag){
 				var returnValue = window.showModalDialog(contextPath + "/jsp/system/selectUser.jsp", null, "dialogHeight=500px;dialogwidth=400px;help=no;scrollbars=no;");
@@ -630,19 +588,19 @@ function doEditManagerConfirm(){
 							params : {
 								userId : userId,
 								orderId : taskOrderId,
-								runCode : "manager_confirm"
+								runCode : "quality2_confirm"
 							},
 							success : function(response, action) {
 								var responseText = Ext.decode(response.responseText);
 								if(responseText.success){
-									alert("修改项目管理部部长承认人成功！");
+									alert("修改品质部长承认人成功！");
 								}else {
 									alert(responseText.message);
 								}
 								doSubmit();
 							},
 							failure : function(e) {
-								Ext.Msg.alert('提示', '修改项目管理部部长承认人失败！');
+								Ext.Msg.alert('提示', '修改品质部长承认人失败！');
 							}
 						});
 					}
