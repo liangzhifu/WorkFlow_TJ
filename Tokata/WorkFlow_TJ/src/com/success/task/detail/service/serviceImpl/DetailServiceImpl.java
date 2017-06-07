@@ -200,25 +200,6 @@ public class DetailServiceImpl implements DetailService {
 						}
 					}
 					value = "TT-CH-" + shortYear + "-" + value;
-					//荆州版本
-//					Integer max = this.detailDao.selectMax("TJ-PM-"+shortYear+"-");
-//			        if(max == null){
-//			        	value = "00001";
-//			        }else {
-//			        	max += 1;
-//			        	if(max < 10){
-//			        		value = "0000" + max;
-//			        	}else if(max < 100){
-//			        		value = "000" + max;
-//			        	}else if(max < 1000){
-//			        		value = "00" + max;
-//			        	}else if(max < 10000){
-//							value = "0" + max;
-//						}else{
-//			        		value = "" + max;
-//			        	}
-//			        }
-//			        value = "TJ-PM-" + shortYear + "-" + value;
 				}else {
 					value = ServletAPIUtil.getStringParameter("order_"+taskTypeInfoId, request, null);
 				}
