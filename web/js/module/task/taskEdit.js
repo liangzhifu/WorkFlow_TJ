@@ -294,36 +294,19 @@ function generBasicObj(infoTypeId, taskTypeInfo, taskOrderInfoArray){
 			};
 			items[i] = item;
 		}
-        if(items.length > 1){
-            obj = {
-                columnWidth:taskTypeInfo.infoLength,
-                layout:'form',
-                items:[{
-                    xtype:'checkboxgroup',
-                    columns: 6,
-                    readOnly: false,
-                    fieldLabel:taskTypeInfo.infoName,
-                    name: 'order_'+taskTypeInfo.taskTypeInfoId,
-                    id: 'order_'+taskTypeInfo.taskTypeInfoId,
-                    items : items,
-                    anchor:'100%'
-                }]
-            };
-        }else {
-            obj = {
-                columnWidth:taskTypeInfo.infoLength,
-                layout:'form',
-                items:[{
-                    xtype:'checkboxgroup',
-                    readOnly: false,
-                    fieldLabel:taskTypeInfo.infoName,
-                    name: 'order_'+taskTypeInfo.taskTypeInfoId,
-                    id: 'order_'+taskTypeInfo.taskTypeInfoId,
-                    items : items,
-                    anchor:'100%'
-                }]
-            };
-        }
+		obj = { 
+		        columnWidth:taskTypeInfo.infoLength,
+		        layout:'form',
+		        items:[{               
+		           xtype:'checkboxgroup', 
+		           disabled : false,
+		           fieldLabel:taskTypeInfo.infoName,
+		           name: 'order_'+taskTypeInfo.taskTypeInfoId,
+		           id: 'order_'+taskTypeInfo.taskTypeInfoId, 
+		           items : items,
+		           anchor:'95%'
+		        }]
+			};
 	}else if(infoTypeId == 4 && taskTypeInfo.infoSeq == 7){
 		obj = { 
 		        columnWidth:taskTypeInfo.infoLength,
