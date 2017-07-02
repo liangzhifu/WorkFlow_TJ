@@ -14,6 +14,10 @@ var isHeaderStore = new Ext.data.ArrayStore({
 	fields : [ 'id', 'value' ],
 	data : [ [ "1", "是" ], [ "0", "否" ] ]
 });
+var rrProblemPersionliableStore = new Ext.data.ArrayStore({
+    fields : [ 'id', 'value' ],
+    data : [ [ "1", "是" ], [ "0", "否" ] ]
+});
 var orgStore = new Ext.data.JsonStore({
 	remoteSort : true,
 	root : 'rows',
@@ -195,7 +199,11 @@ var userManger = (function() {
 					field : 'isHeader',
 					title : '是否领导',
 					width : '20%'
-				} ] ],
+				}, {
+                    field : 'rrProblemPersionliable',
+                    title : 'RR问题责任人',
+                    width : '20%'
+                } ] ],
 				onClickRow : currentObj.onClickRow
 			});
 		},
@@ -671,6 +679,7 @@ function userFormPanel(action, id, parentId) {
 	var v_mobileTel = '';
 	var v_userMark = '';
 	var v_isHdeaer = '';
+	var v_rrProblemPersionliable='';
 	var rows = $("#userList").datagrid('getSelections');
 	if (action == 'edit') {
 		var v_id = rows[0].userId;
@@ -684,7 +693,7 @@ function userFormPanel(action, id, parentId) {
 		var v_mobileTel = rows[0].mobileTel;
 		var v_userMark = rows[0].userMark;
 		var v_isHeader = rows[0].isHeader;
-
+        var v_rrProblemPersionliable = rows[0].rrProblemPersionliable;
 	}
 	var InituserForm = new Ext.FormPanel({
 		id : 'userForm',
@@ -803,7 +812,21 @@ function userFormPanel(action, id, parentId) {
 				value : v_isHeader,
 				// emptyText : '请选择',
 				anchor : '95%'
-			} ]
+			}, {
+                xtype : 'combo',
+                fieldLabel : 'RR问题点责任人',
+                hiddenName : 'rrProblemPersionliable',// 提交时后台获取的值
+                // id : 'isHeader',
+                allowBlank : true,
+                mode : 'local',
+                valueField : 'id',
+                displayField : 'value',
+                triggerAction : 'all',
+                store : rrProblemPersionliableStore,
+                value : v_rrProblemPersionliable,
+                // emptyText : '请选择',
+                anchor : '95%'
+            } ]
 		} ]
 	});
 	return InituserForm;
