@@ -5,6 +5,8 @@ package com.dpcoi.quartz.service.serviceImpl;/**
 
 import com.dpcoi.order.dao.DpcoiOrderDao;
 import com.dpcoi.order.domain.DpcoiOrder;
+import com.dpcoi.rr.dao.RRProblemDao;
+import com.dpcoi.rr.domain.RRProblem;
 import com.dpcoi.woOrder.dao.DpcoiWoOrderDao;
 import com.dpcoi.woOrder.domain.DpcoiWoOrder;
 import com.success.sys.email.dao.TimeTaskDao;
@@ -35,6 +37,9 @@ public class CreateDpcoiEmailServiceImpl {
     @Resource(name="timeTaskDao")
     private TimeTaskDao timeTaskDao;
 
+    @Resource(name="rRProblemDao")
+    private RRProblemDao rRProblemDao;
+
     @Scheduled(cron = "0 0/10 * * * ?")
     public void job(){
         try{
@@ -60,19 +65,39 @@ public class CreateDpcoiEmailServiceImpl {
                 String taskOrderNo = (String)map.get("taskOrderNo");
 
                 StringBuffer contentBuffer = new StringBuffer();
-                contentBuffer.append("《设变通知书》编号:").append(issuedNo)
-                        .append("<br>").append("设变号:").append(designChangeNo)
-                        .append("<br>").append("车种:").append(vehicleName)
-                        .append("<br>").append("品号:").append(productNo)
-                        .append("<br>").append("希望切替日:").append(hopeCuttingDate)
-                        .append("<br>").append("实际切替日:").append(realCuttingDateStr)
-                        .append("<br>").append("变更内容:").append(changeContent)
-                        .append("<br>").append("发行日期:").append(releaseDateStr)
-                        .append("<br>").append("《设变切替手配书》返回日:").append(returnDateStr)
-                        .append("<br>").append("设计担当:").append(designAct)
-                        .append("<br>").append("量准担当:").append(quaisActName)
-                        .append("<br>").append("备注:").append(remark)
-                        .append("<br>").append("4M发行编号:").append(taskOrderNo);
+                Integer rrProbleId = (Integer)map.get("rrProblemId");
+                if(rrProbleId == null){
+                    contentBuffer.append("《设变通知书》编号:").append(issuedNo)
+                            .append("<br>").append("设变号:").append(designChangeNo)
+                            .append("<br>").append("车种:").append(vehicleName)
+                            .append("<br>").append("品号:").append(productNo)
+                            .append("<br>").append("希望切替日:").append(hopeCuttingDate)
+                            .append("<br>").append("实际切替日:").append(realCuttingDateStr)
+                            .append("<br>").append("变更内容:").append(changeContent)
+                            .append("<br>").append("发行日期:").append(releaseDateStr)
+                            .append("<br>").append("《设变切替手配书》返回日:").append(returnDateStr)
+                            .append("<br>").append("设计担当:").append(designAct)
+                            .append("<br>").append("量准担当:").append(quaisActName)
+                            .append("<br>").append("备注:").append(remark)
+                            .append("<br>").append("4M发行编号:").append(taskOrderNo);
+                }else {
+                    RRProblem rrProblem = new RRProblem();
+                    rrProblem.setId(rrProbleId);
+                    rrProblem = this.rRProblemDao.selectRRProblem(rrProblem);
+                    contentBuffer.append("状态:").append(rrProblem.getProblemStatus())
+                            .append("<br>").append("问题编号:").append(rrProblem.getProductNo())
+                            .append("<br>").append("问题类型:").append(rrProblem.getProblemType())
+                            .append("<br>").append("工程:").append(rrProblem.getEngineering())
+                            .append("<br>").append("客户:").append(rrProblem.getCustomer())
+                            .append("<br>").append("车型:").append(rrProblem.getVehicle())
+                            .append("<br>").append("品名:").append(rrProblem.getProductNo())
+                            .append("<br>").append("不良内容:").append(rrProblem.getBadContent())
+                            .append("<br>").append("生产线:").append(rrProblem.getProductLine())
+                            .append("<br>").append("严重度:").append(rrProblem.getSeverity())
+                            .append("<br>").append("根本原因:").append(rrProblem.getRootCause())
+                            .append("<br>").append("永久对策:").append(rrProblem.getPermanentGame());
+                }
+
                 DpcoiOrder dpcoiOrder = new DpcoiOrder();
                 dpcoiOrder.setDpcoiOrderId(dpcoiOrderId);
                 if(dpcoiWoOrderType.intValue() == 1){

@@ -83,4 +83,10 @@
             </if>
         </where>
     </select>
+
+    <select id="selectHolidayList" resultType="java.util.Date">
+        SELECT holiday.`holiday`
+        from sys_holiday holiday
+        where DATE_FORMAT(holiday.`holiday`,'%y-%M-%d') &gt; DATE_FORMAT(sysdate(),'%y-%M-%d')
+    </select>
 </mapper>

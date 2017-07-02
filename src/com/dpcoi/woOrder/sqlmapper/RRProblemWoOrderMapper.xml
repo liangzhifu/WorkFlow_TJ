@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RRProblemWoOrderMapper">
+
+    <sql id="WHERE_SQL">
+      <where>
+          dor.`DPCOI_ORDER_ID` = wo.`DPCOI_ORDER_ID`
+          and wo.`DPCOI_WO_ORDER_STATE` = rs.`DPCOI_WO_ORDER_STATE`
+          and wo.`DPCOI_WO_ORDER_TYPE` =  rs.`DPCOI_WO_ORDER_TYPE`
+          and rs.`DPCOI_ROLE_ID` = ur.`DPCOI_ROLE_ID`
+          and ur.`DPCOI_USER_ID` = du.`DPCOI_USER_ID`
+          AND dor.`rr_problem_id` = problem.`id`
+          and dor.`DEL_FLAG` = '0'
+          and wo.`DEL_FLAG` = '0'
+          and ur.`DEL_FLAG` = '0'
+          and du.`DEL_FLAG` = '0'
+          and du.`DPCOI_USER_STATE` = '1'
+          and rs.state_type = 1
+          and dor.`DPCOI_ORDER_TYPE` = 3
+          <if test="badContent != null and badContent != ''" >
+              and problem.`bad_content` like CONCAT('%',#{badContent,jdbcType=VARCHAR},'%')
+          </if>
+          <if test="problemProgress != null and problemProgress != ''" >
+              and problem.`problem_progress` = #{problemProgress,jdbcType=VARCHAR}
+          </if>
+          <if test="speedOfProgress != null and speedOfProgress != ''" >
+              and problem.`speed_of_progress` = #{speedOfProgress,jdbcType=VARCHAR}
+          </if>
+          <if test="dpcoiUserId != null and dpcoiUserId != ''" >
+              and du.`SYS_USER_ID` = #{dpcoiUserId}
+          </if>
+      </where>
+    </sql>
+
+    <select id="selectRRProblemWoOrderListPage" parameterType="RRProblemWoOrderQuery" resultType="java.util.HashMap">
+        select dor.`DPCOI_ORDER_ID` as rrProblemOrderId,
+        dor.`DPCOI_ORDER_STATE` as rrProblemOrderState,
+        problem.`problem_status` as problemStatus,
+        problem.`problem_no` as problemNo,
+        problem.`problem_type` as problemType,
+        problem.`product_no` as productNo,
+        problem.`engineering`,
+        problem.`customer`,
+        problem.`vehicle`,
+        problem.`bad_content` as badContent,
+        problem.`severity`,
+        problem.`product_line` as productLine,
+        problem.`reason_for_delay` as reasonForDelay,
+        problem.`Speed_of_progress` as speedOfProgress,
+        wo.`DPCOI_WO_ORDER_ID` as rrProblemWoOrderId,
+        wo.`DPCOI_WO_ORDER_STATE` as rrProblemWoOrderState,
+        wo.`DPCOI_WO_ORDER_TYPE` as rrProblemWoOrderType
+        from dpcoi_order dor, dpcoi_wo_order wo, dpcoi_role_state rs, dpcoi_user_role ur, dpcoi_user du, dpcoi_rr_problem problem
+        <include refid="WHERE_SQL"></include>
+        order by dor.`DPCOI_ORDER_ID` desc limit #{start},#{size}
+    </select>
+
+    <select id="selectRRProblemWoOrderCount" parameterType="RRProblemWoOrderQuery" resultType="java.lang.Integer">
+        select count(1)
+        from dpcoi_order dor, dpcoi_wo_order wo, dpcoi_role_state rs, dpcoi_user_role ur, dpcoi_user du, dpcoi_rr_problem problem
+        <include refid="WHERE_SQL"></include>
+    </select>
+
+</mapper>

@@ -1,5 +1,7 @@
 package com.dpcoi.woOrder.service.serviceImpl;
 
+import com.dpcoi.rr.dao.RRProblemDao;
+import com.dpcoi.rr.domain.RRProblem;
 import com.dpcoi.util.EmailUtil;
 import com.dpcoi.file.dao.FileUploadDao;
 import com.dpcoi.order.dao.DpcoiOrderDao;
@@ -19,6 +21,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +44,9 @@ public class DpcoiWoOrderServiceImpl implements DpcoiWoOrderService {
 
     @Resource(name="timeTaskDao")
     private TimeTaskDao timeTaskDao;
+
+    @Resource(name="rRProblemDao")
+    private RRProblemDao rRProblemDao;
 
     @Override
     public Integer addDpcoiWoOrder(DpcoiWoOrder dpcoiWoOrder) throws ServiceException {
@@ -88,12 +94,30 @@ public class DpcoiWoOrderServiceImpl implements DpcoiWoOrderService {
             dpcoiWoOrder.setDpcoiWoOrderState(7);
 
             //设置变更完成时间
+
             if(dpcoiWoOrderType == 1){
                 dpcoiOrder.setPfmeaCompleteDate(new Date());
             }else if (dpcoiWoOrderType == 2){
                 dpcoiOrder.setCpCompleteDate(new Date());
             }else if(dpcoiWoOrderType == 3){
                 dpcoiOrder.setStandardBookCompleteDate(new Date());
+            }
+            Integer rrId = dpcoiOrder.getRrProblemId();
+            if(rrId != null){
+                RRProblem rrProblem = new RRProblem();
+                rrProblem.setId(rrId);
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                if(dpcoiWoOrderType == 1){
+                    rrProblem.setPfmea(formatter.format(new Date()));
+                }else if (dpcoiWoOrderType == 2){
+                    rrProblem.setPfmea(formatter.format(dpcoiOrder.getPfmeaCompleteDate()));
+                    rrProblem.setCp(formatter.format(new Date()));
+                }else if(dpcoiWoOrderType == 3){
+                    rrProblem.setPfmea(formatter.format(dpcoiOrder.getPfmeaCompleteDate()));
+                    rrProblem.setCp(formatter.format(dpcoiOrder.getCpCompleteDate()));
+                    rrProblem.setStandardBook(formatter.format(new Date()));
+                }
+                this.rRProblemDao.updateRRProblem(rrProblem);
             }
 
             if(dpcoiWoOrderType == 3){
@@ -123,7 +147,16 @@ public class DpcoiWoOrderServiceImpl implements DpcoiWoOrderService {
                 dpcoiWoOrderQery.setDpcoiWoOrderState(newDpcoiWoOrder.getDpcoiWoOrderState());
                 dpcoiWoOrderQery.setDpcoiWoOrderType(newDpcoiWoOrder.getDpcoiWoOrderType());
                 String emaliUser = this.dpcoiWoOrderDao.selectWoOrderEmailUsers(dpcoiWoOrderQery);
-                TimeTask timeTask = EmailUtil.generateTimeTask(dpcoiOrder, noticeType, emaliUser);
+                Integer rrProblemId = dpcoiOrder.getRrProblemId();
+                RRProblem rrProblem;
+                if(rrProblemId == null){
+                    rrProblem = null;
+                }else {
+                    rrProblem = new RRProblem();
+                    rrProblem.setId(rrProblemId);
+                    rrProblem = this.rRProblemDao.selectRRProblem(rrProblem);
+                }
+                TimeTask timeTask = EmailUtil.generateTimeTask(dpcoiOrder, rrProblem, noticeType, emaliUser);
                 this.timeTaskDao.insertTimeTask(timeTask);
 //功能不用暂时注解
 //                //查找该工单对应的定单是否4M生成。如果是4M生成，查一下是否已经确认变更
@@ -197,7 +230,16 @@ public class DpcoiWoOrderServiceImpl implements DpcoiWoOrderService {
         dpcoiWoOrderQery.setDpcoiWoOrderState(dpcoiWoOrder.getDpcoiWoOrderState());
         dpcoiWoOrderQery.setDpcoiWoOrderType(dpcoiWoOrder.getDpcoiWoOrderType());
         String emaliUser = this.dpcoiWoOrderDao.selectWoOrderEmailUsers(dpcoiWoOrderQery);
-        TimeTask timeTask = EmailUtil.generateTimeTask(dpcoiOrder, noticeType, emaliUser);
+        Integer rrProblemId = dpcoiOrder.getRrProblemId();
+        RRProblem rrProblem;
+        if(rrProblemId == null){
+            rrProblem = null;
+        }else {
+            rrProblem = new RRProblem();
+            rrProblem.setId(rrProblemId);
+            rrProblem = this.rRProblemDao.selectRRProblem(rrProblem);
+        }
+        TimeTask timeTask = EmailUtil.generateTimeTask(dpcoiOrder, rrProblem, noticeType, emaliUser);
         this.timeTaskDao.insertTimeTask(timeTask);
     }
 
@@ -261,7 +303,16 @@ public class DpcoiWoOrderServiceImpl implements DpcoiWoOrderService {
             dpcoiWoOrderQery.setDpcoiWoOrderState(newDpcoiWoOrder.getDpcoiWoOrderState());
             dpcoiWoOrderQery.setDpcoiWoOrderType(newDpcoiWoOrder.getDpcoiWoOrderType());
             String emaliUser = this.dpcoiWoOrderDao.selectWoOrderEmailUsers(dpcoiWoOrderQery);
-            TimeTask timeTask = EmailUtil.generateTimeTask(dpcoiOrder, noticeType, emaliUser);
+            Integer rrProblemId = dpcoiOrder.getRrProblemId();
+            RRProblem rrProblem;
+            if(rrProblemId == null){
+                rrProblem = null;
+            }else {
+                rrProblem = new RRProblem();
+                rrProblem.setId(rrProblemId);
+                rrProblem = this.rRProblemDao.selectRRProblem(rrProblem);
+            }
+            TimeTask timeTask = EmailUtil.generateTimeTask(dpcoiOrder, rrProblem, noticeType, emaliUser);
             this.timeTaskDao.insertTimeTask(timeTask);
         } else {//审核通过
             //更新所有没有审核的文件为通过状态
@@ -281,6 +332,23 @@ public class DpcoiWoOrderServiceImpl implements DpcoiWoOrderService {
                 dpcoiOrder.setCpCompleteDate(new Date());
             }else if(dpcoiWoOrderType == 3){
                 dpcoiOrder.setStandardBookCompleteDate(new Date());
+            }
+            Integer rrId = dpcoiOrder.getRrProblemId();
+            if(rrId != null){
+                RRProblem rrProblem = new RRProblem();
+                rrProblem.setId(rrId);
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                if(dpcoiWoOrderType == 1){
+                    rrProblem.setPfmea(formatter.format(new Date()));
+                }else if (dpcoiWoOrderType == 2){
+                    rrProblem.setPfmea(formatter.format(dpcoiOrder.getPfmeaCompleteDate()));
+                    rrProblem.setCp(formatter.format(new Date()));
+                }else if(dpcoiWoOrderType == 3){
+                    rrProblem.setPfmea(formatter.format(dpcoiOrder.getPfmeaCompleteDate()));
+                    rrProblem.setCp(formatter.format(dpcoiOrder.getCpCompleteDate()));
+                    rrProblem.setStandardBook(formatter.format(new Date()));
+                }
+                this.rRProblemDao.updateRRProblem(rrProblem);
             }
 
             if(dpcoiWoOrderType == 3){
@@ -310,7 +378,16 @@ public class DpcoiWoOrderServiceImpl implements DpcoiWoOrderService {
                 dpcoiWoOrderQery.setDpcoiWoOrderState(newDpcoiWoOrder.getDpcoiWoOrderState());
                 dpcoiWoOrderQery.setDpcoiWoOrderType(newDpcoiWoOrder.getDpcoiWoOrderType());
                 String emaliUser = this.dpcoiWoOrderDao.selectWoOrderEmailUsers(dpcoiWoOrderQery);
-                TimeTask timeTask = EmailUtil.generateTimeTask(dpcoiOrder, newNoticeType, emaliUser);
+                Integer rrProblemId = dpcoiOrder.getRrProblemId();
+                RRProblem rrProblem;
+                if(rrProblemId == null){
+                    rrProblem = null;
+                }else {
+                    rrProblem = new RRProblem();
+                    rrProblem.setId(rrProblemId);
+                    rrProblem = this.rRProblemDao.selectRRProblem(rrProblem);
+                }
+                TimeTask timeTask = EmailUtil.generateTimeTask(dpcoiOrder, rrProblem, newNoticeType, emaliUser);
                 this.timeTaskDao.insertTimeTask(timeTask);
 //功能不用暂时注解
 //                //查找该工单对应的定单是否4M生成。如果是4M生成，查一下是否已经确认变更
