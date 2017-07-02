@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
 <head>
-    <title>Dpcoi工单列表</title>
+    <title>RR问题点订单详情</title>
     <%@include file="../public/js.jsp"%>
     <%@include file="../public/css.jsp"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -28,41 +28,41 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label class="control-label"><span style="color:red;">*</span>《设变通知书》编号：${dpcoiOrder.issuedNo}</label>
+                                    <label class="control-label">状态：${rrProblem.problemStatus}</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="control-label"><span style="color:red;">*</span>设变号：${dpcoiOrder.designChangeNo}</label>
+                                    <label class="control-label">问题编号：${rrProblem.problemNo}</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="control-label"><span style="color:red;">*</span>车种：${dpcoiOrder.vehicleName}</label>
+                                    <label class="control-label">问题类型：${rrProblem.problemType}</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="control-label"><span style="color:red;">*</span>品号：${dpcoiOrder.productNo}</label>
+                                    <label class="control-label">工程：${rrProblem.engineering}</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="control-label"><span style="color:red;">*</span>希望切替日：${dpcoiOrder.hopeCuttingDate}</label>
+                                    <label class="control-label">客户：${rrProblem.customer}</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <label class="control-label"><span style="color:red;">*</span>发行日期：${dpcoiOrder.releaseDateStr}</label>
+                                    <label class="control-label">车型：${rrProblem.vehicle}</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="control-label">实际切替日：${dpcoiOrder.realCuttingDateStr}</label>
+                                    <label class="control-label">品名：${rrProblem.productNo}</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="control-label"><span style="color:red;">*</span>量准担当：${dpcoiOrder.quasiActName}</label>
+                                    <label class="control-label">生产线：${rrProblem.productLine}</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="control-label"><span style="color:red;">*</span>设计担当：${dpcoiOrder.designAct}</label>
+                                    <label class="control-label">严重度：${rrProblem.severity}</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="control-label">《设变切替手配书》返回日：${dpcoiOrder.returnDateStr}</label>
+                                    <label class="control-label">问题进展：${rrProblem.reasonForDelay}</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <label class="control-label">4M发行编号：${dpcoiOrder.taskOrderNo}</label>
+                                    <label class="control-label">进度：${rrProblem.speedOfProgress}</label>
                                 </div>
                                 <div class="col-md-2">
                                     <label class="control-label">创建人：${dpcoiOrder.createByName}</label>
@@ -91,10 +91,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-8">
-                                    <label class="control-label"><span style="color:red;">*</span>变更内容：${dpcoiOrder.changeContent}</label>
+                                    <label class="control-label">不良内容：${rrProblem.badContent}</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="control-label"><span style="color:red;">*</span>备注：${dpcoiOrder.remark}</label>
+                                    <label class="control-label">备注：${dpcoiOrder.remark}</label>
                                 </div>
                             </div>
                         </div>
@@ -130,161 +130,161 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${dpcoiWoOrderDetailList}" var="item" >
-                                        <tr>
-                                            <td>
-                                                <c:if test="${item.dpcoiWoOrderType == 1}">PFMEA</c:if>
-                                                <c:if test="${item.dpcoiWoOrderType == 2}">CP</c:if>
-                                                <c:if test="${item.dpcoiWoOrderType == 3}">作业标准书</c:if>
-                                            </td>
-                                            <td>${item.dpcoiWoOrderState}</td>
-                                            <td>
-                                                <c:choose>
-                                                    <c:when test="${item.dpcoiWoOrderType == 1}">
-                                                        <c:if test="${dpcoiOrder.pfmeaDelay == 0}">
-                                                            ${empty item.createDateStr ? "/" : item.createDateStr}
-                                                        </c:if>
-                                                        <c:if test="${dpcoiOrder.pfmeaDelay == 1}">
+                            <c:forEach items="${dpcoiWoOrderDetailList}" var="item" >
+                                <tr>
+                                    <td>
+                                        <c:if test="${item.dpcoiWoOrderType == 1}">PFMEA</c:if>
+                                        <c:if test="${item.dpcoiWoOrderType == 2}">CP</c:if>
+                                        <c:if test="${item.dpcoiWoOrderType == 3}">作业标准书</c:if>
+                                    </td>
+                                    <td>${item.dpcoiWoOrderState}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${item.dpcoiWoOrderType == 1}">
+                                                <c:if test="${dpcoiOrder.pfmeaDelay == 0}">
+                                                    ${empty item.createDateStr ? "/" : item.createDateStr}
+                                                </c:if>
+                                                <c:if test="${dpcoiOrder.pfmeaDelay == 1}">
                                                             <span style="color:red;">
                                                                     ${empty item.createDateStr ? "/" : item.createDateStr}
                                                             </span>
-                                                        </c:if>
-                                                    </c:when>
-                                                    <c:when test="${item.dpcoiWoOrderType == 2}">
-                                                        <c:if test="${dpcoiOrder.cpDelay == 0}">
-                                                            ${empty item.createDateStr ? "/" : item.createDateStr}
-                                                        </c:if>
-                                                        <c:if test="${dpcoiOrder.cpDelay == 1}">
+                                                </c:if>
+                                            </c:when>
+                                            <c:when test="${item.dpcoiWoOrderType == 2}">
+                                                <c:if test="${dpcoiOrder.cpDelay == 0}">
+                                                    ${empty item.createDateStr ? "/" : item.createDateStr}
+                                                </c:if>
+                                                <c:if test="${dpcoiOrder.cpDelay == 1}">
                                                             <span style="color:red;">
                                                                     ${empty item.createDateStr ? "/" : item.createDateStr}
                                                             </span>
-                                                        </c:if>
-                                                    </c:when>
-                                                    <c:when test="${item.dpcoiWoOrderType == 3}">
-                                                        <c:if test="${dpcoiOrder.standardBookDelay == 0}">
-                                                            ${empty item.createDateStr ? "/" : item.createDateStr}
-                                                        </c:if>
-                                                        <c:if test="${dpcoiOrder.standardBookDelay == 1}">
+                                                </c:if>
+                                            </c:when>
+                                            <c:when test="${item.dpcoiWoOrderType == 3}">
+                                                <c:if test="${dpcoiOrder.standardBookDelay == 0}">
+                                                    ${empty item.createDateStr ? "/" : item.createDateStr}
+                                                </c:if>
+                                                <c:if test="${dpcoiOrder.standardBookDelay == 1}">
                                                             <span style="color:red;">
                                                                     ${empty item.createDateStr ? "/" : item.createDateStr}
                                                             </span>
-                                                        </c:if>
-                                                    </c:when>
-                                                </c:choose>
-                                            </td>
-                                            <td>${empty item.userName1 ? "/" : item.userName1}</td>
-                                            <td>
-                                                <c:choose>
-                                                    <c:when test="${item.dpcoiWoOrderType == 1}">
-                                                        <c:if test="${dpcoiOrder.pfmeaDelay == 0}">
-                                                            ${empty item.confirmDateStr ? "/" : item.confirmDateStr}
-                                                        </c:if>
-                                                        <c:if test="${dpcoiOrder.pfmeaDelay == 1}">
-                                                            <span style="color:red;">
-                                                                ${empty item.confirmDateStr ? "/" : item.confirmDateStr}
-                                                            </span>
-                                                        </c:if>
-                                                    </c:when>
-                                                    <c:when test="${item.dpcoiWoOrderType == 2}">
-                                                        <c:if test="${dpcoiOrder.cpDelay == 0}">
-                                                            ${empty item.confirmDateStr ? "/" : item.confirmDateStr}
-                                                        </c:if>
-                                                        <c:if test="${dpcoiOrder.cpDelay == 1}">
+                                                </c:if>
+                                            </c:when>
+                                        </c:choose>
+                                    </td>
+                                    <td>${empty item.userName1 ? "/" : item.userName1}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${item.dpcoiWoOrderType == 1}">
+                                                <c:if test="${dpcoiOrder.pfmeaDelay == 0}">
+                                                    ${empty item.confirmDateStr ? "/" : item.confirmDateStr}
+                                                </c:if>
+                                                <c:if test="${dpcoiOrder.pfmeaDelay == 1}">
                                                             <span style="color:red;">
                                                                     ${empty item.confirmDateStr ? "/" : item.confirmDateStr}
                                                             </span>
-                                                        </c:if>
-                                                    </c:when>
-                                                    <c:when test="${item.dpcoiWoOrderType == 3}">
-                                                        <c:if test="${dpcoiOrder.standardBookDelay == 0}">
-                                                            ${empty item.confirmDateStr ? "/" : item.confirmDateStr}
-                                                        </c:if>
-                                                        <c:if test="${dpcoiOrder.standardBookDelay == 1}">
+                                                </c:if>
+                                            </c:when>
+                                            <c:when test="${item.dpcoiWoOrderType == 2}">
+                                                <c:if test="${dpcoiOrder.cpDelay == 0}">
+                                                    ${empty item.confirmDateStr ? "/" : item.confirmDateStr}
+                                                </c:if>
+                                                <c:if test="${dpcoiOrder.cpDelay == 1}">
                                                             <span style="color:red;">
                                                                     ${empty item.confirmDateStr ? "/" : item.confirmDateStr}
                                                             </span>
-                                                        </c:if>
-                                                    </c:when>
-                                                </c:choose>
-                                            </td>
-                                            <td>${empty item.userName2 ? "/" : item.userName2}</td>
-                                            <td>
-                                                <c:choose>
-                                                    <c:when test="${item.dpcoiWoOrderType == 1}">
-                                                        <c:if test="${dpcoiOrder.pfmeaDelay == 0}">
-                                                            ${empty item.fileCompleteDateStr ? "/" : item.fileCompleteDateStr}
-                                                        </c:if>
-                                                        <c:if test="${dpcoiOrder.pfmeaDelay == 1}">
+                                                </c:if>
+                                            </c:when>
+                                            <c:when test="${item.dpcoiWoOrderType == 3}">
+                                                <c:if test="${dpcoiOrder.standardBookDelay == 0}">
+                                                    ${empty item.confirmDateStr ? "/" : item.confirmDateStr}
+                                                </c:if>
+                                                <c:if test="${dpcoiOrder.standardBookDelay == 1}">
+                                                            <span style="color:red;">
+                                                                    ${empty item.confirmDateStr ? "/" : item.confirmDateStr}
+                                                            </span>
+                                                </c:if>
+                                            </c:when>
+                                        </c:choose>
+                                    </td>
+                                    <td>${empty item.userName2 ? "/" : item.userName2}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${item.dpcoiWoOrderType == 1}">
+                                                <c:if test="${dpcoiOrder.pfmeaDelay == 0}">
+                                                    ${empty item.fileCompleteDateStr ? "/" : item.fileCompleteDateStr}
+                                                </c:if>
+                                                <c:if test="${dpcoiOrder.pfmeaDelay == 1}">
                                                             <span style="color:red;">
                                                                     ${empty item.fileCompleteDateStr ? "/" : item.fileCompleteDateStr}
                                                             </span>
-                                                        </c:if>
-                                                    </c:when>
-                                                    <c:when test="${item.dpcoiWoOrderType == 2}">
-                                                        <c:if test="${dpcoiOrder.cpDelay == 0}">
-                                                            ${empty item.fileCompleteDateStr ? "/" : item.fileCompleteDateStr}
-                                                        </c:if>
-                                                        <c:if test="${dpcoiOrder.cpDelay == 1}">
+                                                </c:if>
+                                            </c:when>
+                                            <c:when test="${item.dpcoiWoOrderType == 2}">
+                                                <c:if test="${dpcoiOrder.cpDelay == 0}">
+                                                    ${empty item.fileCompleteDateStr ? "/" : item.fileCompleteDateStr}
+                                                </c:if>
+                                                <c:if test="${dpcoiOrder.cpDelay == 1}">
                                                             <span style="color:red;">
                                                                     ${empty item.fileCompleteDateStr ? "/" : item.fileCompleteDateStr}
                                                             </span>
-                                                        </c:if>
-                                                    </c:when>
-                                                    <c:when test="${item.dpcoiWoOrderType == 3}">
-                                                        <c:if test="${dpcoiOrder.standardBookDelay == 0}">
-                                                            ${empty item.fileCompleteDateStr ? "/" : item.fileCompleteDateStr}
-                                                        </c:if>
-                                                        <c:if test="${dpcoiOrder.standardBookDelay == 1}">
+                                                </c:if>
+                                            </c:when>
+                                            <c:when test="${item.dpcoiWoOrderType == 3}">
+                                                <c:if test="${dpcoiOrder.standardBookDelay == 0}">
+                                                    ${empty item.fileCompleteDateStr ? "/" : item.fileCompleteDateStr}
+                                                </c:if>
+                                                <c:if test="${dpcoiOrder.standardBookDelay == 1}">
                                                             <span style="color:red;">
                                                                     ${empty item.fileCompleteDateStr ? "/" : item.fileCompleteDateStr}
                                                             </span>
-                                                        </c:if>
-                                                    </c:when>
-                                                </c:choose>
-                                            </td>
-                                            <td>${empty item.userName3 ? "/" : item.userName3}</td>
-                                            <td>
-                                                <c:choose>
-                                                    <c:when test="${item.dpcoiWoOrderType == 1}">
-                                                        <c:if test="${dpcoiOrder.pfmeaDelay == 0}">
-                                                            ${empty item.managerConfirmDateStr ? "/" : item.managerConfirmDateStr}
-                                                        </c:if>
-                                                        <c:if test="${dpcoiOrder.pfmeaDelay == 1}">
+                                                </c:if>
+                                            </c:when>
+                                        </c:choose>
+                                    </td>
+                                    <td>${empty item.userName3 ? "/" : item.userName3}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${item.dpcoiWoOrderType == 1}">
+                                                <c:if test="${dpcoiOrder.pfmeaDelay == 0}">
+                                                    ${empty item.managerConfirmDateStr ? "/" : item.managerConfirmDateStr}
+                                                </c:if>
+                                                <c:if test="${dpcoiOrder.pfmeaDelay == 1}">
                                                             <span style="color:red;">
                                                                     ${empty item.managerConfirmDateStr ? "/" : item.managerConfirmDateStr}
                                                             </span>
-                                                        </c:if>
-                                                    </c:when>
-                                                    <c:when test="${item.dpcoiWoOrderType == 2}">
-                                                        <c:if test="${dpcoiOrder.cpDelay == 0}">
-                                                            ${empty item.managerConfirmDateStr ? "/" : item.managerConfirmDateStr}
-                                                        </c:if>
-                                                        <c:if test="${dpcoiOrder.cpDelay == 1}">
+                                                </c:if>
+                                            </c:when>
+                                            <c:when test="${item.dpcoiWoOrderType == 2}">
+                                                <c:if test="${dpcoiOrder.cpDelay == 0}">
+                                                    ${empty item.managerConfirmDateStr ? "/" : item.managerConfirmDateStr}
+                                                </c:if>
+                                                <c:if test="${dpcoiOrder.cpDelay == 1}">
                                                             <span style="color:red;">
                                                                     ${empty item.managerConfirmDateStr ? "/" : item.managerConfirmDateStr}
                                                             </span>
-                                                        </c:if>
-                                                    </c:when>
-                                                    <c:when test="${item.dpcoiWoOrderType == 3}">
-                                                        <c:if test="${dpcoiOrder.standardBookDelay == 0}">
-                                                            ${empty item.managerConfirmDateStr ? "/" : item.managerConfirmDateStr}
-                                                        </c:if>
-                                                        <c:if test="${dpcoiOrder.standardBookDelay == 1}">
+                                                </c:if>
+                                            </c:when>
+                                            <c:when test="${item.dpcoiWoOrderType == 3}">
+                                                <c:if test="${dpcoiOrder.standardBookDelay == 0}">
+                                                    ${empty item.managerConfirmDateStr ? "/" : item.managerConfirmDateStr}
+                                                </c:if>
+                                                <c:if test="${dpcoiOrder.standardBookDelay == 1}">
                                                             <span style="color:red;">
                                                                     ${empty item.managerConfirmDateStr ? "/" : item.managerConfirmDateStr}
                                                             </span>
-                                                        </c:if>
-                                                    </c:when>
-                                                </c:choose>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-small btn-purple" type="button"
-                                                        ng-click="dpcoiOrderDeatil.openFileList('${item.dpcoiWoOrderId}')">
-                                                    <i class="bigger-110"></i>详情
-                                                </button>
-                                            </td>
-                                        </tr>
-                                </c:forEach>
+                                                </c:if>
+                                            </c:when>
+                                        </c:choose>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-small btn-purple" type="button"
+                                                ng-click="dpcoiOrderDeatil.openFileList('${item.dpcoiWoOrderId}')">
+                                            <i class="bigger-110"></i>详情
+                                        </button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -300,27 +300,28 @@
                             </div>
                         </div>
                         <table class="table table-striped table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th>操作类型</th>
-                            <th>操作人</th>
-                            <th>操作时间</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach items="${operateHistoryList}" var="item" >
+                            <thead>
                             <tr>
-                                <td>
-                                    <c:if test="${item.operateType == 1}">生成</c:if>
-                                    <c:if test="${item.operateType == 2}">4M同步</c:if>
-                                    <c:if test="${item.operateType == 3}">作废</c:if>
-                                    <c:if test="${item.operateType == 4}">修改</c:if>
-                                </td>
-                                <td>${item.opeateByName}</td>
-                                <td>${item.operateDateStr}</td>
+                                <th>操作类型</th>
+                                <th>操作人</th>
+                                <th>操作时间</th>
                             </tr>
-                        </c:forEach>
-                        </tbody>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${operateHistoryList}" var="item" >
+                                <tr>
+                                    <td>
+                                        <c:if test="${item.operateType == 1}">生成</c:if>
+                                        <c:if test="${item.operateType == 2}">4M同步</c:if>
+                                        <c:if test="${item.operateType == 3}">作废</c:if>
+                                        <c:if test="${item.operateType == 4}">修改</c:if>
+                                        <c:if test="${item.operateType == 5}">RR同步</c:if>
+                                    </td>
+                                    <td>${item.opeateByName}</td>
+                                    <td>${item.operateDateStr}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -360,22 +361,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="dpcoiWoOrderFileData in dpcoiOrderDeatil.dpcoiWoOrderFileList">
-                                <td>{{dpcoiWoOrderFileData.fileName}}</td>
-                                <td>
-                                    <span ng-show="dpcoiWoOrderFileData.woFileState==0">未审核</span>
-                                    <span ng-show="dpcoiWoOrderFileData.woFileState==1">通过</span>
-                                    <span ng-show="dpcoiWoOrderFileData.woFileState==2">不通过</span>
-                                </td>
-                                <td>{{dpcoiWoOrderFileData.createByName}}</td>
-                                <td>{{dpcoiWoOrderFileData.fileCreateDateStr}}</td>
-                                <td>
-                                    <button class="btn btn-small btn-purple" type="button"
-                                            ng-click="dpcoiOrderDeatil.downloadFile(dpcoiWoOrderFileData.fileId)">
-                                        <i class="bigger-110"></i>查看
-                                    </button>
-                                </td>
-                            </tr>
+                        <tr ng-repeat="dpcoiWoOrderFileData in dpcoiOrderDeatil.dpcoiWoOrderFileList">
+                            <td>{{dpcoiWoOrderFileData.fileName}}</td>
+                            <td>
+                                <span ng-show="dpcoiWoOrderFileData.woFileState==0">未审核</span>
+                                <span ng-show="dpcoiWoOrderFileData.woFileState==1">通过</span>
+                                <span ng-show="dpcoiWoOrderFileData.woFileState==2">不通过</span>
+                            </td>
+                            <td>{{dpcoiWoOrderFileData.createByName}}</td>
+                            <td>{{dpcoiWoOrderFileData.fileCreateDateStr}}</td>
+                            <td>
+                                <button class="btn btn-small btn-purple" type="button"
+                                        ng-click="dpcoiOrderDeatil.downloadFile(dpcoiWoOrderFileData.fileId)">
+                                    <i class="bigger-110"></i>查看
+                                </button>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
