@@ -9,6 +9,7 @@ import com.dpcoi.holiday.query.HolidayQuery;
 import com.success.web.framework.mybatis.BaseDao;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -57,4 +58,7 @@ public class HolidayDao extends BaseDao{
         return this.sqlSession.selectList("HolidayMapper.selectHolidayListPage", holidayQuery);
     }
 
+    public List<Date> selectHolidayList(){
+        return this.sqlSession.selectList("HolidayMapper.selectHolidayList");
+    }
 }

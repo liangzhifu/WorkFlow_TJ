@@ -42,6 +42,7 @@
         <result column="standard_book_email_date" property="standardBookEmailDate" jdbcType="TIMESTAMP" />
         <result column="standard_book_delay" property="standardBookDelay" jdbcType="BIGINT" />
         <result column="product_line" property="productLine" jdbcType="VARCHAR" />
+        <result column="rr_problem_id" property="rrProblemId" jdbcType="BIGINT" />
     </resultMap>
 
     <select id="selectDpcoiOrderListPage" parameterType="DpcoiOrderQuery" resultType="java.util.HashMap">
@@ -76,6 +77,7 @@
         from dpcoi_order dor
         <where>
             dor.del_flag = 0
+            and dor.`DPCOI_ORDER_TYPE` in (1, 2)
             <if test="vehicleName != null and vehicleName != ''" >
                 and dor.`VEHICLE_NAME` like CONCAT('%',#{vehicleName},'%')
             </if>
@@ -127,6 +129,7 @@
         from dpcoi_order dor
         <where>
             dor.del_flag = 0
+            and dor.`DPCOI_ORDER_TYPE` in (1, 2)
             <if test="vehicleName != null and vehicleName != ''" >
                 and dor.`VEHICLE_NAME` like CONCAT('%',#{vehicleName},'%')
             </if>
@@ -254,6 +257,9 @@
             <if test="productLine != null" >
                 product_line,
             </if>
+            <if test="rrProblemId != null" >
+                rr_problem_id,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             #{dpcoiOrderId,jdbcType=BIGINT},
@@ -335,6 +341,9 @@
             <if test="productLine != null" >
                 #{productLine,jdbcType=VARCHAR},
             </if>
+            <if test="rrProblemId != null" >
+                #{rrProblemId,jdbcType=BIGINT},
+            </if>
         </trim>
     </insert>
 
@@ -379,7 +388,8 @@
         dor.`standard_book_confirm_date`,
         dor.`standard_book_complete_date`,
         dor.`standard_book_email_date`,
-        dor.`standard_book_delay`
+        dor.`standard_book_delay`,
+        dor.`rr_problem_id`
         from dpcoi_order dor
         where dpcoi_order_id = #{dpcoiOrderId}
     </select>
@@ -538,6 +548,14 @@
         dor.`REMARK`
         from dpcoi_order dor
         where task_order_id = #{orderId}
+    </select>
+
+    <select id="selectDpcoiOrderOfTaskOrderNo" parameterType="java.lang.String" resultMap="DpcoiOrderMap">
+        select dor.`DPCOI_ORDER_ID`
+        from dpcoi_order dor, task_order_info info
+        where info.`ORDER_ID` = dor.`TASK_ORDER_ID`
+        and info.`TASK_TYPE_INFO_ID` = '1'
+        and info.`task_info_value` = #{taskOrderNo,jdbcType=VARCHAR}
     </select>
 
     <select id="selectSameDpcoiOrder" resultType="java.lang.Integer" parameterType="java.util.HashMap">

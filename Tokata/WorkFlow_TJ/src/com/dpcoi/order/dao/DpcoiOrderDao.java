@@ -80,6 +80,15 @@ public class DpcoiOrderDao extends BaseDao {
     }
 
     /**
+     * 通过4M定单编号获取dpcoi定单
+     * @param taskOrderNo 4M定单编号
+     * @return 返回结果
+     */
+    public DpcoiOrder selectDpcoiOrderOfTaskOrderNo(String taskOrderNo) {
+        return this.sqlSession.selectOne("dpcoiOrder.selectDpcoiOrderOfTaskOrderNo", taskOrderNo);
+    }
+
+    /**
      *查找有相同《设变通知书》编号或者设变号定单
      * @param dpcoiOrderQuery 查询条件
      * @return 返回结果
