@@ -176,7 +176,7 @@ rrProblemWoOrderListApp.controller("rrProblemWoOrderListController", function ($
 
     $scope.rrProblemWoOrderList.managerConfirmWoOrder = function (confirmResult) {
         var woOrderFileIdStr = "";
-        $("#fileListModal input[name=\"dpcoiWoOrderFileCheckbox\"]:checked ").each(function () {
+        $("#fileListModal input[name=\"rrProblemWoOrderFileCheckbox\"]:checked ").each(function () {
             woOrderFileIdStr += "," + $(this).val();
         })
         if(woOrderFileIdStr != ""){
@@ -205,7 +205,7 @@ rrProblemWoOrderListApp.controller("rrProblemWoOrderListController", function ($
     $scope.rrProblemWoOrderFile.action = "";
     $scope.rrProblemWoOrderFile.dpcoiWoOrderId = "";
     $scope.rrProblemWoOrderFile.dpcoiWoOrderFileList = [{
-        "dpcoiWoOrdreFileId" : "",
+        "dpcoiWoOrderFileId" : "",
         "fileId" : "",
         "fileName" : "",
         "fileType" : "",
@@ -216,7 +216,7 @@ rrProblemWoOrderListApp.controller("rrProblemWoOrderListController", function ($
         $.ajax({
             method:'post',
             url:"/WorkFlow/dpcoiWoOrderFile/getDpcoiWoOrderFileList.do",
-            data:{"dpcoiWoOrderId":$scope.rrProblemWoOrderList.dpcoiWoOrderId},
+            data:{"dpcoiWoOrderId":$scope.rrProblemWoOrderFile.dpcoiWoOrderId},
             success: function(resultJson) {
                 var result = angular.fromJson(resultJson);
                 if (result.success) {
@@ -231,7 +231,7 @@ rrProblemWoOrderListApp.controller("rrProblemWoOrderListController", function ($
             }
         });
     }
-    $scope.rrProblemWoOrderList.deleteDpcoiWoOrderFile = function (dpcoiWoOrderFileId) {
+    $scope.rrProblemWoOrderFile.deleteDpcoiWoOrderFile = function (dpcoiWoOrderFileId) {
         $.ajax({
             method:'post',
             url:"/WorkFlow/dpcoiWoOrderFile/deleteDpcoiWoOrderFile.do",

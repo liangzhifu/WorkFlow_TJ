@@ -94,9 +94,6 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         if(!$.html5Validate.isAllpass($("#badContent"))){//不良内容
             return;
         }
-        if(!$.html5Validate.isAllpass($("#persionLiable"))){//责任人
-            return;
-        }
         if(!$.html5Validate.isAllpass($("#reportDate"))){//下次汇报时间
             return;
         }
@@ -143,6 +140,12 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         }else {
             url = "/WorkFlow/rrProblem/updateRRProblem.do";
         }
+        var persionLiableNames = $("#persionLiable").multiselect("MyValues");
+        if(persionLiableNames == ""){
+            alert("责任人不能为空！");
+            return;
+        }
+        $scope.rrProblemEdit.rrProblem.persionLiable = persionLiableNames;
         $scope.rrProblemEdit.rrProblem.vehicle = $("#vehicle").val();
         $scope.rrProblemEdit.rrProblem.happenDate = $("#happenDate").val();
         $scope.rrProblemEdit.rrProblem.reportDate = $("#reportDate").val();
@@ -155,6 +158,7 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         $scope.rrProblemEdit.rrProblem.secondDate = $("#secondDate").val();
         $scope.rrProblemEdit.rrProblem.thirdDate = $("#thirdDate").val();
         $scope.rrProblemEdit.rrProblem.fourthDate = $("#fourthDate").val();
+        $scope.rrProblemEdit.rrProblem.closeConfirmTime = "";
         $.ajax({
             method:'post',
             url:url,
@@ -194,7 +198,16 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
                 var result = angular.fromJson(resultJson);
                 if (result.success) {
                     $scope.rrProblemEdit.persionLiableList = result.persionLiableList;
-                    $scope.$apply();
+                    for(var i = 0; i < $scope.rrProblemEdit.persionLiableList.length; i++){
+                        var obj = $scope.rrProblemEdit.persionLiableList[i];
+                        $("#persionLiable").append("<option value='"+obj.userName+"'>"+obj.userName+"</option>");
+                    }
+                    $("#persionLiable").multiselect({
+                        checkAllText: "全选",
+                        uncheckAllText: '全不选',
+                        header: false,
+                        selectedList:4
+                    });
                 }
             }
         });
@@ -262,11 +275,18 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
                     var result = angular.fromJson(resultJson);
                     if (result.success) {
                         $scope.rrProblemEdit.rrProblem = result.rrProblem;
+                        var persionLiableStr = $scope.rrProblemEdit.rrProblem.persionLiable;
+                        var arr = persionLiableStr.split(",");
+                        if (arr != null) {
+                            $('#persionLiable').val(arr);
+                            $('#persionLiable').multiselect("refresh");
+                        }
                         $scope.$apply();
                     }
                 }
             });
         }
+
     });
 });
 
