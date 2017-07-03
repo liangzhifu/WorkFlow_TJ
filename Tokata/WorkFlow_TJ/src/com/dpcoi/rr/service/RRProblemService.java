@@ -2,6 +2,7 @@ package com.dpcoi.rr.service;
 
 import com.dpcoi.rr.domain.RRProblem;
 import com.dpcoi.rr.query.RRProblemQuery;
+import com.success.sys.user.domain.User;
 import com.success.web.framework.exception.ServiceException;
 
 import javax.security.sasl.SaslServer;
@@ -67,5 +68,12 @@ public interface RRProblemService {
      * @throws ServiceException 异常
      */
     public RRProblem queryRRProblem(RRProblem rrProblem) throws ServiceException;
+
+    /**
+     * 查询部长权限
+     * @return 返回结果
+     * @throws ServiceException 异常
+     */
+    public Integer queryMinisterJurisdiction(User user) throws ServiceException;
 
 }
