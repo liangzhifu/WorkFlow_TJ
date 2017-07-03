@@ -118,11 +118,9 @@
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="persionLiable"><span style="color:red;">*</span>责任人：</label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <select id="persionLiable" name="persionLiable" class="form-control-order form-control" required="required"
-                                        ng-model="rrProblemEdit.rrProblem.persionLiable" style="width: 60%">
-                                    <option value="">请选择</option>
-                                    <option ng-repeat="persionLiableDate in rrProblemEdit.persionLiableList" ng-selected="persionLiableDate.userId==rrProblemEdit.rrProblem.persionLiable"
-                                            value="{{persionLiableDate.userId}}">{{persionLiableDate.userName}}</option>
+                                        ng-model="rrProblemEdit.rrProblem.persionLiable" multiple="multiple" style="width: 60%">
                                 </select>
                             </div>
                         </div>

@@ -59,19 +59,19 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th width="7%" class="x-grid3-header" style="padding: 0px">状态</th>
-                        <th width="8%" class="x-grid3-header" style="padding: 0px">问题编号</th>
-                        <th width="5%" class="x-grid3-header" style="padding: 0px">问题类型</th>
-                        <th width="7%" class="x-grid3-header" style="padding: 0px">工程</th>
-                        <th width="6%" class="x-grid3-header" style="padding: 0px">客户</th>
-                        <th width="6%" class="x-grid3-header" style="padding: 0px">车型</th>
+                        <th width="2%" class="x-grid3-header" style="padding: 0px">状态</th>
+                        <th width="7%" class="x-grid3-header" style="padding: 0px">问题编号</th>
+                        <th width="4%" class="x-grid3-header" style="padding: 0px">问题类型</th>
+                        <th width="2%" class="x-grid3-header" style="padding: 0px">工程</th>
+                        <th width="4%" class="x-grid3-header" style="padding: 0px">客户</th>
+                        <th width="4%" class="x-grid3-header" style="padding: 0px">车型</th>
                         <th width="6%" class="x-grid3-header" style="padding: 0px">品名</th>
                         <th width="18%" class="x-grid3-header" style="padding: 0px">不良内容</th>
                         <th width="6%" class="x-grid3-header" style="padding: 0px">生产线</th>
-                        <th width="6%" class="x-grid3-header" style="padding: 0px">严重度</th>
-                        <th width="5%" class="x-grid3-header" style="padding: 0px">问题进展</th>
-                        <th width="5%" class="x-grid3-header" style="padding: 0px">进度</th>
-                        <th width="6%" class="x-grid3-header" style="padding: 0px">订单状态</th>
+                        <th width="3%" class="x-grid3-header" style="padding: 0px">严重度</th>
+                        <th width="12%" class="x-grid3-header" style="padding: 0px">根本原因</th>
+                        <th width="12%" class="x-grid3-header" style="padding: 0px">永久对策</th>
+                        <th width="7%" class="x-grid3-header" style="padding: 0px">订单状态</th>
                         <th width="8%" class="x-grid3-header" style="padding: 0px;">操作</th>
                     </tr>
                     </thead>
@@ -108,10 +108,10 @@
                             {{rrProblemOrderDate.severity}}
                         </td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
-                            {{rrProblemOrderDate.reasonForDelay}}
+                            {{rrProblemOrderDate.rootCause}}
                         </td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
-                            {{rrProblemOrderDate.speedOfProgress}}
+                            {{rrProblemOrderDate.permanentGame}}
                         </td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
                             <span ng-show="rrProblemOrderDate.rrProblemOrderState==1">
