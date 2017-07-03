@@ -11,6 +11,9 @@
     <title>RR问题点列表</title>
     <%@include file="../public/js.jsp"%>
     <%@include file="../public/css.jsp"%>
+    <script type="text/javascript">
+        var ministerJurisdiction = '${ministerJurisdiction}';
+    </script>
 </head>
 <body ng-controller="rrProblemListController" ng-cloak>
 <div class="main-container container-fluid" style="padding-right: 1px;padding-left: 1px;">
@@ -49,13 +52,25 @@
                         <button class="btn btn-small btn-purple" type="button" id="rrProblemSearch">
                             <i class="icon-search icon-on-right bigger-110"></i>查找
                         </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;
                         <button class="btn btn-small btn-purple" type="button" id="rrProblemAdd">
                             <i class="icon-plus-sign icon-on-right bigger-110"></i>新增
                         </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;
                         <button class="btn btn-small btn-purple" type="button" id="rrProblemEdit">
                             <i class="icon-edit icon-on-right bigger-110"></i>修改
+                        </button>
+                        &nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-small btn-purple" type="button" id="rrProblemDown">
+                            <i class="icon-save-file icon-on-right bigger-110"></i>导出
+                        </button>
+                        &nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-small btn-purple" type="button" id="rrProblemClose">
+                            <i class="icon-save-file icon-on-right bigger-110"></i>关闭
+                        </button>
+                        &nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-small btn-purple" type="button" id="rrProblemDelay">
+                            <i class="icon-save-file icon-on-right bigger-110"></i>延期
                         </button>
                     </div>
                 </div>
