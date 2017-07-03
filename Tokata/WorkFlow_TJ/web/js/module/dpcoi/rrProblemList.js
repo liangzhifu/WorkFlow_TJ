@@ -1,6 +1,7 @@
 var rrProblemListApp = angular.module("rrProblemList", []);
 rrProblemListApp.controller("rrProblemListController", function ($scope) {
     $scope.rrProblemList = {};
+    $scope.rrProblemList.ministerJurisdiction = ministerJurisdiction;
     $scope.rrProblemList.dpcoiConfigList = [{
         "configId" : "",
         "configCodeId" : "",
@@ -137,8 +138,100 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         var id;
         $("input[name='checkbox_records']:checked").each(function () {
             id = $(this).val();
-        })
-        window.location.href = "/WorkFlow//rrProblem/getRRProblemEditDlg.do?id="+id;
+        });
+        window.location.href = "/WorkFlow/rrProblem/getRRProblemEditDlg.do?id="+id;
+    });
+
+    $("#rrProblemDown").click(function () {
+        var fileUrl = "";
+        $.ajax({
+            url : '/WorkFlow/rrProblem/doExportExcel.do',
+            async: false,
+            data : $scope.rrProblemList.searchForm,
+            method: "post",
+            success : function(resultJson) {
+                var obj =  angular.fromJson(resultJson);
+                if(obj.success){
+                    fileUrl = '/WorkFlow' + obj.path;
+                }else {
+                    alert(obj.message);
+                    return;
+                }
+            },
+            failure : function() {
+                alert('导出Excel失败！');
+                return;
+            }
+        });
+        if(fileUrl != ""){
+            window.open(fileUrl);
+        }
+    });
+
+    $("#rrProblemClose").click(function () {
+        if($scope.rrProblemList.ministerJurisdiction == 0){
+            alert("你没有部长权限！");
+            return;
+        }
+        var length = $("input[name='checkbox_records']:checked").length;
+        if(length == 0 || length > 1){
+            alert("请选择一条RR问题点！");
+            return ;
+        }
+        var id;
+        $("input[name='checkbox_records']:checked").each(function () {
+            id = $(this).val();
+        });
+        $.ajax({
+            url : '/WorkFlow/rrProblem/closeRRProblem.do?id='+id,
+            method: "post",
+            success : function(resultJson) {
+                var obj =  angular.fromJson(resultJson);
+                if(obj.success){
+                    $scope.rrProblemList.firstPage();
+                }else {
+                    alert(obj.message);
+                    return;
+                }
+            },
+            failure : function() {
+                alert('失败！');
+                return;
+            }
+        });
+    });
+
+    $("#rrProblemDelay").click(function () {
+        if($scope.rrProblemList.ministerJurisdiction == 0){
+            alert("你没有部长权限！");
+            return;
+        }
+        var length = $("input[name='checkbox_records']:checked").length;
+        if(length == 0 || length > 1){
+            alert("请选择一条RR问题点！");
+            return ;
+        }
+        var id;
+        $("input[name='checkbox_records']:checked").each(function () {
+            id = $(this).val();
+        });
+        $.ajax({
+            url : '/WorkFlow/rrProblem/delayRRProblem.do?id='+id,
+            method: "post",
+            success : function(resultJson) {
+                var obj =  angular.fromJson(resultJson);
+                if(obj.success){
+                    $scope.rrProblemList.firstPage();
+                }else {
+                    alert(obj.message);
+                    return;
+                }
+            },
+            failure : function() {
+                alert('失败！');
+                return;
+            }
+        });
     });
 
     $(document).ready(function() {
