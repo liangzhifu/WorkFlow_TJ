@@ -10,6 +10,8 @@ import com.dpcoi.rr.domain.RRProblem;
 import com.dpcoi.rr.dao.RRProblemDao;
 import com.dpcoi.rr.query.RRProblemQuery;
 import com.dpcoi.rr.service.RRProblemService;
+import com.success.sys.user.dao.UserDao;
+import com.success.sys.user.domain.User;
 import com.success.web.framework.exception.ServiceException;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,9 @@ public class RRProblemServiceImpl implements RRProblemService {
 
     @Resource(name = "holidayDao")
     private HolidayDao holidayDao;
+
+    @Resource(name = "userDao")
+    private UserDao userDao;
 
     @Resource(name = "dpcoiConfigVehicleDao")
     private DpcoiConfigVehicleDao dpcoiConfigVehicleDao;
@@ -160,6 +165,11 @@ public class RRProblemServiceImpl implements RRProblemService {
         rrProblem.setThirdDateStr(formatter.format(rrProblem.getThirdDate()));
         rrProblem.setFourthDateStr(formatter.format(rrProblem.getFourthDate()));
         return rrProblem;
+    }
+
+    @Override
+    public Integer queryMinisterJurisdiction(User user) throws ServiceException {
+        return this.userDao.selectMinisterJurisdiction(user);
     }
 
 

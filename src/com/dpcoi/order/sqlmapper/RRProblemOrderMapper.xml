@@ -28,11 +28,14 @@
         problem.`engineering`,
         problem.`customer`,
         problem.`vehicle`,
+        problem.product_no as productNo,
         problem.`bad_content` as badContent,
         problem.`severity`,
         problem.`product_line` as productLine,
         problem.`reason_for_delay` as reasonForDelay,
         problem.`Speed_of_progress` as speedOfProgress,
+        problem.root_cause as rootCause,
+        problem.permanent_game as permanentGame,
         (select dwo.`DPCOI_WO_ORDER_TYPE` from dpcoi_wo_order dwo
         where dwo.`DPCOI_ORDER_ID` = dor.`DPCOI_ORDER_ID`
         and dwo.`DPCOI_WO_ORDER_STATE` in (1, 2, 3)) as dpcoiWoOrderType

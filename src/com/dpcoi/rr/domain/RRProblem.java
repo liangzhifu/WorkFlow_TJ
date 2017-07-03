@@ -43,7 +43,7 @@ public class RRProblem {
 
     private String badContent;
 
-    private Integer persionLiable;
+    private String persionLiable;
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date reportDate;
@@ -138,6 +138,8 @@ public class RRProblem {
     private String materiel;
 
     private Integer state;
+
+    private Integer isDelay;
 
     public Integer getId() {
         return id;
@@ -236,11 +238,11 @@ public class RRProblem {
         this.badContent = badContent == null ? null : badContent.trim();
     }
 
-    public Integer getPersionLiable() {
+    public String getPersionLiable() {
         return persionLiable;
     }
 
-    public void setPersionLiable(Integer persionLiable) {
+    public void setPersionLiable(String persionLiable) {
         this.persionLiable = persionLiable;
     }
 
@@ -608,5 +610,13 @@ public class RRProblem {
 
     public void setReportDateStr(String reportDateStr) {
         this.reportDateStr = reportDateStr;
+    }
+
+    public Integer getIsDelay() {
+        return isDelay;
+    }
+
+    public void setIsDelay(Integer isDelay) {
+        this.isDelay = isDelay;
     }
 }

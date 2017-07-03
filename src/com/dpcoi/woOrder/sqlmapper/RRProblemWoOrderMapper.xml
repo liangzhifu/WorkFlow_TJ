@@ -44,9 +44,12 @@
         problem.`vehicle`,
         problem.`bad_content` as badContent,
         problem.`severity`,
+        problem.product_no as productNo,
         problem.`product_line` as productLine,
         problem.`reason_for_delay` as reasonForDelay,
         problem.`Speed_of_progress` as speedOfProgress,
+        problem.root_cause as rootCause,
+        problem.permanent_game as permanentGame,
         wo.`DPCOI_WO_ORDER_ID` as rrProblemWoOrderId,
         wo.`DPCOI_WO_ORDER_STATE` as rrProblemWoOrderState,
         wo.`DPCOI_WO_ORDER_TYPE` as rrProblemWoOrderType

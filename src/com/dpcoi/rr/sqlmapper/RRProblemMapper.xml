@@ -14,7 +14,7 @@
         <result column="vehicle" property="vehicle" jdbcType="VARCHAR" />
         <result column="product_no" property="productNo" jdbcType="VARCHAR" />
         <result column="bad_content" property="badContent" jdbcType="VARCHAR" />
-        <result column="persion_liable" property="persionLiable" jdbcType="INTEGER" />
+        <result column="persion_liable" property="persionLiable" jdbcType="VARCHAR" />
         <result column="report_date" property="reportDate" jdbcType="DATE" />
         <result column="Speed_of_progress" property="speedOfProgress" jdbcType="VARCHAR" />
         <result column="reason_for_delay" property="reasonForDelay" jdbcType="VARCHAR" />
@@ -98,7 +98,7 @@
         #{problemType,jdbcType=VARCHAR}, #{engineering,jdbcType=VARCHAR}, #{problemProgress,jdbcType=VARCHAR},
         #{trackingLevel,jdbcType=VARCHAR}, #{happenDate,jdbcType=DATE}, #{customer,jdbcType=VARCHAR},
         #{vehicle,jdbcType=VARCHAR}, #{productNo,jdbcType=VARCHAR}, #{badContent,jdbcType=VARCHAR},
-        #{persionLiable,jdbcType=INTEGER}, #{reportDate,jdbcType=DATE}, #{speedOfProgress,jdbcType=VARCHAR},
+        #{persionLiable,jdbcType=VARCHAR}, #{reportDate,jdbcType=DATE}, #{speedOfProgress,jdbcType=VARCHAR},
         #{reasonForDelay,jdbcType=VARCHAR}, #{firstDate,jdbcType=DATE}, #{secondDate,jdbcType=DATE},
         #{thirdDate,jdbcType=DATE}, #{fourthDate,jdbcType=DATE}, #{closeConfirm,jdbcType=VARCHAR},
         #{closeConfirmId,jdbcType=INTEGER}, #{closeConfirmTime,jdbcType=TIMESTAMP}, #{productLine,jdbcType=VARCHAR},
@@ -272,6 +272,9 @@
             <if test="state != null" >
                 state,
             </if>
+            <if test="isDelay != null" >
+                is_delay,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="id != null" >
@@ -311,7 +314,7 @@
                 #{badContent,jdbcType=VARCHAR},
             </if>
             <if test="persionLiable != null" >
-                #{persionLiable,jdbcType=INTEGER},
+                #{persionLiable,jdbcType=VARCHAR},
             </if>
             <if test="reportDate != null" >
                 #{reportDate,jdbcType=DATE},
@@ -430,6 +433,9 @@
             <if test="state != null" >
                 #{state,jdbcType=INTEGER},
             </if>
+            <if test="isDelay != null" >
+                #{isDelay,jdbcType=INTEGER},
+            </if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="RRProblem" >
@@ -469,7 +475,7 @@
                 bad_content = #{badContent,jdbcType=VARCHAR},
             </if>
             <if test="persionLiable != null" >
-                persion_liable = #{persionLiable,jdbcType=INTEGER},
+                persion_liable = #{persionLiable,jdbcType=VARCHAR},
             </if>
             <if test="reportDate != null" >
                 report_date = #{reportDate,jdbcType=DATE},
@@ -588,6 +594,9 @@
             <if test="state != null" >
                 state = #{state,jdbcType=INTEGER},
             </if>
+            <if test="isDelay != null" >
+                is_delay = #{isDelay,jdbcType=INTEGER},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -604,7 +613,7 @@
         vehicle = #{vehicle,jdbcType=VARCHAR},
         product_no = #{productNo,jdbcType=VARCHAR},
         bad_content = #{badContent,jdbcType=VARCHAR},
-        persion_liable = #{persionLiable,jdbcType=INTEGER},
+        persion_liable = #{persionLiable,jdbcType=VARCHAR},
         report_date = #{reportDate,jdbcType=DATE},
         Speed_of_progress = #{speedOfProgress,jdbcType=VARCHAR},
         reason_for_delay = #{reasonForDelay,jdbcType=VARCHAR},
@@ -670,7 +679,8 @@
 
     <select id="selectRRProblemListPage" resultType="java.util.HashMap" parameterType="RRProblemQuery">
       select id, problem_status as problemStatus, problem_no as problemNo, problem_type as problemType, engineering, problem_progress as problemProgress, tracking_level as trackingLevel,
-        happen_date as happenDate, customer, vehicle, product_no as productNo, bad_content as badContent, persion_liable as persionLiable, report_date as reportDate,
+        happen_date as happenDate, customer, vehicle, product_no as productNo, bad_content as badContent, persion_liable as persionLiable,
+        report_date as reportDate,
         Speed_of_progress as speedOfProgress, reason_for_delay as reasonForDelay, first_date as firstDate, second_date as secondDate, third_date as thirdDate, fourth_date as fourthDate,
         close_confirm as closeConfirm, close_confirm_id, close_confirm_time, product_line as productLine, severity, occurrence_frequency as occurrenceFrequency,
         bad_quantity as badQuantity, batch, happen_shift as happenShift, responsible_department as responsibleDepartment, record_ppm as recordPpm, record_num as recordNum,
@@ -684,6 +694,20 @@
 
     <select id="selectRRProblemCount" resultType="java.lang.Integer" parameterType="RRProblemQuery">
         SELECT count(1)
+        from dpcoi_rr_problem
+        <include refid="WHERE_SQL"></include>
+    </select>
+
+    <select id="selectRRProblemList" resultType="java.util.HashMap" parameterType="RRProblemQuery">
+        select id, problem_status as problemStatus, problem_no as problemNo, problem_type as problemType, engineering, problem_progress as problemProgress, tracking_level as trackingLevel,
+        happen_date as happenDate, customer, vehicle, product_no as productNo, bad_content as badContent, persion_liable as persionLiable,
+        report_date as reportDate,
+        Speed_of_progress as speedOfProgress, reason_for_delay as reasonForDelay, first_date as firstDate, second_date as secondDate, third_date as thirdDate, fourth_date as fourthDate,
+        close_confirm as closeConfirm, close_confirm_id, close_confirm_time, product_line as productLine, severity, occurrence_frequency as occurrenceFrequency,
+        bad_quantity as badQuantity, batch, happen_shift as happenShift, responsible_department as responsibleDepartment, record_ppm as recordPpm, record_num as recordNum,
+        temporary, root_cause as rootCause, permanent_game as permanentGame, effect_verification as effectVerification, serial_number as serialNumber, quality_warning_card_number as qualityWarningCardNumber,
+        product_scale as productScale, pfmea, cp, standard_book as standardBook, equipment_checklist as equipmentChecklist, always_list as alwaysList, inspection_reference_book as inspectionReferenceBook,
+        inspection_book as inspectionBook, education, change_point as changePoint, expand_trace as expandTrace, artificial, materiel, state
         from dpcoi_rr_problem
         <include refid="WHERE_SQL"></include>
     </select>

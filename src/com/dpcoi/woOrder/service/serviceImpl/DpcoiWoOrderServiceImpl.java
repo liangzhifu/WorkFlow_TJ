@@ -108,14 +108,11 @@ public class DpcoiWoOrderServiceImpl implements DpcoiWoOrderService {
                 rrProblem.setId(rrId);
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 if(dpcoiWoOrderType == 1){
-                    rrProblem.setPfmea(formatter.format(new Date()));
+                    rrProblem.setPfmea(formatter.format(new Date()) + "不需要变更");
                 }else if (dpcoiWoOrderType == 2){
-                    rrProblem.setPfmea(formatter.format(dpcoiOrder.getPfmeaCompleteDate()));
-                    rrProblem.setCp(formatter.format(new Date()));
+                    rrProblem.setCp(formatter.format(new Date()) + "不需要变更");
                 }else if(dpcoiWoOrderType == 3){
-                    rrProblem.setPfmea(formatter.format(dpcoiOrder.getPfmeaCompleteDate()));
-                    rrProblem.setCp(formatter.format(dpcoiOrder.getCpCompleteDate()));
-                    rrProblem.setStandardBook(formatter.format(new Date()));
+                    rrProblem.setStandardBook(formatter.format(new Date()) + "不需要变更");
                 }
                 this.rRProblemDao.updateRRProblem(rrProblem);
             }
@@ -339,14 +336,11 @@ public class DpcoiWoOrderServiceImpl implements DpcoiWoOrderService {
                 rrProblem.setId(rrId);
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 if(dpcoiWoOrderType == 1){
-                    rrProblem.setPfmea(formatter.format(new Date()));
+                    rrProblem.setPfmea(formatter.format(new Date())+"变更审核通过");
                 }else if (dpcoiWoOrderType == 2){
-                    rrProblem.setPfmea(formatter.format(dpcoiOrder.getPfmeaCompleteDate()));
-                    rrProblem.setCp(formatter.format(new Date()));
+                    rrProblem.setCp(formatter.format(new Date())+"变更审核通过");
                 }else if(dpcoiWoOrderType == 3){
-                    rrProblem.setPfmea(formatter.format(dpcoiOrder.getPfmeaCompleteDate()));
-                    rrProblem.setCp(formatter.format(dpcoiOrder.getCpCompleteDate()));
-                    rrProblem.setStandardBook(formatter.format(new Date()));
+                    rrProblem.setStandardBook(formatter.format(new Date())+"变更审核通过");
                 }
                 this.rRProblemDao.updateRRProblem(rrProblem);
             }

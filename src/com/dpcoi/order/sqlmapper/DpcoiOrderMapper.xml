@@ -490,6 +490,9 @@
                 <if test="productLine != null" >
                     product_line = #{productLine,jdbcType=BIGINT},
                 </if>
+                <if test="rrProblemId != null" >
+                    rr_problem_id = #{rrProblemId,jdbcType=BIGINT},
+                </if>
             </set>
             where dpcoi_order_id = #{dpcoiOrderId,jdbcType=BIGINT}
     </update>
