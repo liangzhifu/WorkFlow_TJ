@@ -18,6 +18,10 @@ var rrProblemPersionliableStore = new Ext.data.ArrayStore({
     fields : [ 'id', 'value' ],
     data : [ [ "1", "是" ], [ "0", "否" ] ]
 });
+var rrMinisterStore = new Ext.data.ArrayStore({
+    fields : [ 'id', 'value' ],
+    data : [ [ "1", "是" ], [ "0", "否" ] ]
+});
 var orgStore = new Ext.data.JsonStore({
 	remoteSort : true,
 	root : 'rows',
@@ -198,11 +202,42 @@ var userManger = (function() {
 				}, {
 					field : 'isHeader',
 					title : '是否领导',
-					width : '20%'
+					width : '20%',
+                    formatter: function(value, row, index){
+                        if(value=="0"){
+                            return "否";
+                        }else if(value=="1"){
+                            return "是";
+                        }else {
+                            return "";
+                        }
+                    }
 				}, {
                     field : 'rrProblemPersionliable',
                     title : 'RR问题责任人',
-                    width : '20%'
+                    width : '20%',
+                    formatter: function(value, row, index){
+                        if(value=="0"){
+                            return "否";
+                        }else if(value=="1"){
+                            return "是";
+                        }else {
+                            return "";
+                        }
+                    }
+                }, {
+                    field : 'rrMinister',
+                    title : 'RR部长',
+                    width : '20%',
+                    formatter: function(value, row, index){
+                        if(value=="0"){
+                            return "否";
+                        }else if(value=="1"){
+                            return "是";
+                        }else {
+                            return "";
+                        }
+                    }
                 } ] ],
 				onClickRow : currentObj.onClickRow
 			});
@@ -612,7 +647,7 @@ function userForm(action, id, parentId) {
 		id : 'userFormWindow',
 		title : '人员管理',
 		width : 300,
-		height : 400,
+		height : 450,
 		// closeAction : 'close',//释放窗体内存
 		bodyStyle : {
 			padding : '5px 0px 0px 0px',
@@ -694,6 +729,7 @@ function userFormPanel(action, id, parentId) {
 		var v_userMark = rows[0].userMark;
 		var v_isHeader = rows[0].isHeader;
         var v_rrProblemPersionliable = rows[0].rrProblemPersionliable;
+        var v_rrMinister = rows[0].rrMinister;
 	}
 	var InituserForm = new Ext.FormPanel({
 		id : 'userForm',
@@ -824,6 +860,20 @@ function userFormPanel(action, id, parentId) {
                 triggerAction : 'all',
                 store : rrProblemPersionliableStore,
                 value : v_rrProblemPersionliable,
+                // emptyText : '请选择',
+                anchor : '95%'
+            }, {
+                xtype : 'combo',
+                fieldLabel : 'RR部长',
+                hiddenName : 'rrMinister',// 提交时后台获取的值
+                // id : 'isHeader',
+                allowBlank : true,
+                mode : 'local',
+                valueField : 'id',
+                displayField : 'value',
+                triggerAction : 'all',
+                store : rrMinisterStore,
+                value : v_rrMinister,
                 // emptyText : '请选择',
                 anchor : '95%'
             } ]
