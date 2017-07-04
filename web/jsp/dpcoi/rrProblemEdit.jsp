@@ -220,6 +220,7 @@
                                 <label  class="control-label" for="responsibleDepartment"><span style="color:red;">*</span>责任部门：</label>
                                 <select id="responsibleDepartment" name="responsibleDepartment" class="form-control-order form-control" required="required"
                                         ng-model="rrProblemEdit.rrProblem.responsibleDepartment" style="width: 60%">
+                                    <option value="">请选择</option>
                                     <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList"
                                             value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.responsibleDepartment"
                                             ng-show="dpcoiConfigDate.configCodeId==9">{{dpcoiConfigDate.configValue}}</option>
@@ -229,6 +230,7 @@
                                 <label  class="control-label" for="recordPpm"><span style="color:red;">*</span>客户是否记录PPM：</label>
                                 <select id="recordPpm" name="recordPpm" class="form-control-order form-control" required="required"
                                         ng-model="rrProblemEdit.rrProblem.recordPpm" style="width: 50%">
+                                    <option value="">请选择</option>
                                     <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList"
                                             value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.recordPpm"
                                             ng-show="dpcoiConfigDate.configCodeId==10">{{dpcoiConfigDate.configValue}}</option>
@@ -325,8 +327,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <label  class="control-label" for="changePoint"><span style="color:red;">*</span>变化点管理：</label>
-                                <input class="form-control-order form-control clean" style="width: 60%" required="required" ng-disabled="action=='edit'"
+                                <label  class="control-label" for="changePoint">变化点管理：</label>
+                                <input class="form-control-order form-control clean" style="width: 60%"
                                        id="changePoint" name="changePoint" ng-model="rrProblemEdit.rrProblem.changePoint">
                             </div>
                             <div class="col-md-3">

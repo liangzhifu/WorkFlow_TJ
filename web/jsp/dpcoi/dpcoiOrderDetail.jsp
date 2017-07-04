@@ -142,10 +142,10 @@
                                     <label class="control-label">严重度：${rrProblem.severity}</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="control-label">问题进展：${rrProblem.reasonForDelay}</label>
+                                    <label class="control-label">根本原因：${rrProblem.rootCause}</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="control-label">进度：${rrProblem.speedOfProgress}</label>
+                                    <label class="control-label">永久对策：${rrProblem.permanentGame}</label>
                                 </div>
                             </div>
                         </div>

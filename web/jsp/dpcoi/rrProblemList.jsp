@@ -82,7 +82,7 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th width="60px" class="x-grid3-header" style="padding: 0px"><input title="" type="checkbox" class="form-control-order form-checkbox-mypage"></th>
+                        <th width="60px" class="x-grid3-header" style="padding: 0px"></th>
                         <th width="100px" class="x-grid3-header" style="padding: 0px">状态</th>
                         <th width="100px" class="x-grid3-header" style="padding: 0px">问题编号</th>
                         <th width="100px" class="x-grid3-header" style="padding: 0px">问题类型</th>

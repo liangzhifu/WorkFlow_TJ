@@ -37,7 +37,7 @@
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
                         <label  class="control-label" for="speedOfProgress">进度：</label>
                         <select id="speedOfProgress" name="speedOfProgress" class="form-control-order form-control" required="required"
-                                ng-model="rrProblemWoOrderList.searchForm.problemProgress" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 25px;height: 25px;">
+                                ng-model="rrProblemWoOrderList.searchForm.speedOfProgress" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 25px;height: 25px;">
                             <option value="">请选择</option>
                             <option value="delay">delay</option>
                             <option value="OK">OK</option>
