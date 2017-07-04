@@ -33,6 +33,7 @@
 		<typeAlias type="com.dpcoi.woOrder.domain.DpcoiWoOrderFile" alias="DpcoiWoOrderFile" />
 		<typeAlias type="com.dpcoi.woOrder.query.DpcoiWoOrderFileQuery" alias="DpcoiWoOrderFileQuery" />
 		<typeAlias type="com.dpcoi.woOrder.query.DpcoiWoOrderQuery" alias="DpcoiWoOrderQuery" />
+		<typeAlias type="com.dpcoi.woOrder.query.RRProblemWoOrderFileQuery" alias="RRProblemWoOrderFileQuery" />
 		<typeAlias type="com.dpcoi.woOrder.query.RRProblemWoOrderQuery" alias="RRProblemWoOrderQuery" />
 
 		<typeAlias type="com.other.history.domain.OperateHistory" alias="OperateHistory" />
