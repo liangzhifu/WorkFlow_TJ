@@ -130,9 +130,6 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         if(!$.html5Validate.isAllpass($("#recordNum"))){//记录数量
             return;
         }
-        if(!$.html5Validate.isAllpass($("#changePoint"))){//变化点管理
-            return;
-        }
 
         var url = "";
         if($scope.action == "add"){
