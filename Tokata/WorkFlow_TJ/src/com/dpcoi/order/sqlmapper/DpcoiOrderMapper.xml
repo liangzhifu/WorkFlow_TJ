@@ -71,6 +71,7 @@
         AND info.`ORDER_ID` = dor.`TASK_ORDER_ID`) AS taskOrderNo,
         dor.`REMARK` as remark,
         dor.`CREATE_BY` AS createBy,
+        dor.rr_problem_id as rrProblemId,
         (select dwo.`DPCOI_WO_ORDER_TYPE` from dpcoi_wo_order dwo
         where dwo.`DPCOI_ORDER_ID` = dor.`DPCOI_ORDER_ID`
         and dwo.`DPCOI_WO_ORDER_STATE` in (1, 2, 3)) as dpcoiWoOrderType

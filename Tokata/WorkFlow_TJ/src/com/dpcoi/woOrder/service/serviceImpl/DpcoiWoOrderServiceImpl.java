@@ -64,6 +64,11 @@ public class DpcoiWoOrderServiceImpl implements DpcoiWoOrderService {
     }
 
     @Override
+    public List<Map<String, Object>> queryDpcoiWoOrderList(DpcoiWoOrderQuery dpcoiWoOrderQuery) throws ServiceException {
+        return this.dpcoiWoOrderDao.selectDpcoiWoOrderList(dpcoiWoOrderQuery);
+    }
+
+    @Override
     public Integer queryDpcoiWoOrderCount(DpcoiWoOrderQuery dpcoiWoOrderQuery) throws ServiceException {
         return this.dpcoiWoOrderDao.selectDpcoiWoOrderCount(dpcoiWoOrderQuery);
     }
@@ -106,13 +111,12 @@ public class DpcoiWoOrderServiceImpl implements DpcoiWoOrderService {
             if(rrId != null){
                 RRProblem rrProblem = new RRProblem();
                 rrProblem.setId(rrId);
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 if(dpcoiWoOrderType == 1){
-                    rrProblem.setPfmea(formatter.format(new Date()) + "不需要变更");
+                    rrProblem.setPfmea("N/A");
                 }else if (dpcoiWoOrderType == 2){
-                    rrProblem.setCp(formatter.format(new Date()) + "不需要变更");
+                    rrProblem.setCp("N/A");
                 }else if(dpcoiWoOrderType == 3){
-                    rrProblem.setStandardBook(formatter.format(new Date()) + "不需要变更");
+                    rrProblem.setStandardBook("N/A");
                 }
                 this.rRProblemDao.updateRRProblem(rrProblem);
             }
@@ -334,13 +338,13 @@ public class DpcoiWoOrderServiceImpl implements DpcoiWoOrderService {
             if(rrId != null){
                 RRProblem rrProblem = new RRProblem();
                 rrProblem.setId(rrId);
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 if(dpcoiWoOrderType == 1){
-                    rrProblem.setPfmea(formatter.format(new Date())+"变更审核通过");
+                    rrProblem.setPfmea(formatter.format(new Date()));
                 }else if (dpcoiWoOrderType == 2){
-                    rrProblem.setCp(formatter.format(new Date())+"变更审核通过");
+                    rrProblem.setCp(formatter.format(new Date()));
                 }else if(dpcoiWoOrderType == 3){
-                    rrProblem.setStandardBook(formatter.format(new Date())+"变更审核通过");
+                    rrProblem.setStandardBook(formatter.format(new Date()));
                 }
                 this.rRProblemDao.updateRRProblem(rrProblem);
             }

@@ -9,6 +9,8 @@ import com.dpcoi.order.service.DpcoiOrderService;
 import com.dpcoi.rr.domain.RRProblem;
 import com.dpcoi.rr.query.RRProblemQuery;
 import com.dpcoi.rr.service.RRProblemService;
+import com.dpcoi.woOrder.query.DpcoiWoOrderQuery;
+import com.dpcoi.woOrder.service.DpcoiWoOrderService;
 import com.success.common.Constant;
 import com.success.sys.user.domain.User;
 import com.success.web.framework.util.AjaxUtil;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +45,9 @@ public class RRProblemController {
 
     @Resource(name = "exportExcelService")
     private ExportExcelService exportExcelService;
+
+    @Resource(name = "dpcoiWoOrderService")
+    private DpcoiWoOrderService dpcoiWoOrderService;
 
     @RequestMapping("/getRRProblemAddDlg.do")
     public String getRRProblemAddDlg(Map<String, Object> model) throws Exception{
@@ -144,12 +150,12 @@ public class RRProblemController {
     @RequestMapping("/addRRProblem.do")
     public void addRRProblem(HttpServletRequest request, HttpServletResponse response, @ModelAttribute RRProblem rrProblem){
         Map<String, Object> map = new HashMap<String, Object>();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try{
             map.put("success", true);
             String changePoint = rrProblem.getChangePoint();
             if(changePoint == null || "".equals(changePoint)){
-                map.put("success", false);
-                map.put("message", "变化点管理不能为空！");
+                this.rRProblemService.addRRProblem(rrProblem);
             }else if("N/A".equals(changePoint)){
                 this.rRProblemService.addRRProblem(rrProblem);
                 User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
@@ -160,6 +166,48 @@ public class RRProblemController {
                     map.put("success", false);
                     map.put("message", "变化点管理不存在！");
                 }else {
+                    //同步数据
+                    DpcoiWoOrderQuery dpcoiWoOrderQuery = new DpcoiWoOrderQuery();
+                    dpcoiWoOrderQuery.setDpcoiOrderId(dpcoiOrder.getDpcoiOrderId());
+                    List<Map<String, Object>> mapList = this.dpcoiWoOrderService.queryDpcoiWoOrderList(dpcoiWoOrderQuery);
+                    String pfmea = "";
+                    String cp = "";
+                    String standardBook = "";
+                    for(Map<String, Object> objectMap : mapList){
+                        Integer dpcoiWoOrderType = (Integer)objectMap.get("dpcoiWoOrderType");
+                        Integer dpcoiWoOrderState = (Integer)objectMap.get("dpcoiWoOrderState");
+                        if(1==dpcoiWoOrderType){
+                            if(4==dpcoiWoOrderState){
+                                Date pfmeaCompleteDate = (Date)objectMap.get("pfmeaCompleteDate");
+                                if(pfmeaCompleteDate != null){
+                                    pfmea = formatter.format(pfmeaCompleteDate);
+                                }
+                            }else if(7==dpcoiWoOrderState){
+                                pfmea = "N/A";
+                            }
+                        }else if(2==dpcoiWoOrderType){
+                            if(4==dpcoiWoOrderState){
+                                Date cpCompleteDate = (Date)objectMap.get("cpCompleteDate");
+                                if(cpCompleteDate != null){
+                                    cp = formatter.format(cpCompleteDate);
+                                }
+                            }else if(7==dpcoiWoOrderState){
+                                cp = "N/A";
+                            }
+                        }else if(3==dpcoiWoOrderType){
+                            if(4==dpcoiWoOrderState){
+                                Date standardBookCompleteDate = (Date)objectMap.get("standardBookCompleteDate");
+                                if(standardBookCompleteDate != null){
+                                    standardBook = formatter.format(standardBookCompleteDate);
+                                }
+                            }else if(7==dpcoiWoOrderState){
+                                standardBook = "N/A";
+                            }
+                        }
+                    }
+                    rrProblem.setPfmea(pfmea);
+                    rrProblem.setCp(cp);
+                    rrProblem.setStandardBook(standardBook);
                     this.rRProblemService.addRRProblem(rrProblem);
                     dpcoiOrder.setRrProblemId(rrProblem.getId());
                     this.dpcoiOrderService.updateDpcoiOrder(dpcoiOrder);
@@ -180,15 +228,16 @@ public class RRProblemController {
      * @param rrProblem RR问题点选项
      */
     @RequestMapping("updateRRProblem.do")
-    public void updateRRProblem(HttpServletResponse response, RRProblem rrProblem){
+    public void updateRRProblem(HttpServletRequest request, HttpServletResponse response, RRProblem rrProblem){
         Map<String, Object> map = new HashMap<String, Object>();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try{
             String problemProgress = rrProblem.getProblemProgress();
             if("4/4".equals(problemProgress)){
-                String trackingLevel = rrProblem.getTrackingLevel();
-                if(trackingLevel == null || "".equals(trackingLevel)){
-                    throw new Exception("追踪等级不能为空！");
-                }
+//                String trackingLevel = rrProblem.getTrackingLevel();
+//                if(trackingLevel == null || "".equals(trackingLevel)){
+//                    throw new Exception("追踪等级不能为空！");
+//                }
                 String temporary = rrProblem.getTemporary();
                 if(temporary == null || "".equals(temporary)){
                     throw new Exception("临时对策不能为空！");
@@ -260,6 +309,79 @@ public class RRProblemController {
                 String materiel = rrProblem.getMateriel();
                 if(materiel == null || "".equals(materiel)){
                     throw new Exception("物料等级不能为空！");
+                }
+            }
+            RRProblem oldRRProblem = new RRProblem();
+            oldRRProblem.setId(rrProblem.getId());
+            oldRRProblem = this.rRProblemService.queryRRProblem(oldRRProblem);
+            String oldChangePoint = oldRRProblem.getChangePoint();
+            String changePoint = rrProblem.getChangePoint();
+            if(changePoint == null || "".equals(changePoint)){
+                if(!(oldChangePoint == null || "".equals(oldChangePoint))){
+                    throw new Exception("变化点管理已有值，不可修改为空！");
+                }
+            }else if("N/A".equals(changePoint)){
+                if(oldChangePoint == null || "".equals(oldChangePoint)){
+                    User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
+                    this.dpcoiOrderService.addDpcoiOrder(rrProblem, user);
+                }else {
+                    if(!("N/A".equals(oldChangePoint))){
+                        throw new Exception("变化点管理原有值不是N/A，不能修改为N/A！");
+                    }
+                }
+            }else {
+                if(oldChangePoint == null || "".equals(oldChangePoint)){
+                    DpcoiOrder dpcoiOrder = this.dpcoiOrderService.quereyDpcoiOrderOfTaskOrderNo(changePoint);
+                    if(dpcoiOrder == null){
+                        throw new Exception("变化点管理不存在！");
+                    }else {
+                        //同步数据
+                        DpcoiWoOrderQuery dpcoiWoOrderQuery = new DpcoiWoOrderQuery();
+                        dpcoiWoOrderQuery.setDpcoiOrderId(dpcoiOrder.getDpcoiOrderId());
+                        List<Map<String, Object>> mapList = this.dpcoiWoOrderService.queryDpcoiWoOrderList(dpcoiWoOrderQuery);
+                        String pfmea = "";
+                        String cp = "";
+                        String standardBook = "";
+                        for (Map<String, Object> objectMap : mapList) {
+                            Integer dpcoiWoOrderType = (Integer) objectMap.get("dpcoiWoOrderType");
+                            Integer dpcoiWoOrderState = (Integer) objectMap.get("dpcoiWoOrderState");
+                            if (1==dpcoiWoOrderType) {
+                                if (4==dpcoiWoOrderState) {
+                                    Date pfmeaCompleteDate = (Date) objectMap.get("pfmeaCompleteDate");
+                                    if (pfmeaCompleteDate != null) {
+                                        pfmea = formatter.format(pfmeaCompleteDate);
+                                    }
+                                } else if (7==dpcoiWoOrderState) {
+                                    pfmea = "N/A";
+                                }
+                            } else if (2==dpcoiWoOrderType) {
+                                if (4==dpcoiWoOrderState) {
+                                    Date cpCompleteDate = (Date) objectMap.get("cpCompleteDate");
+                                    if (cpCompleteDate != null) {
+                                        cp = formatter.format(cpCompleteDate);
+                                    }
+                                } else if (7==dpcoiWoOrderState) {
+                                    cp = "N/A";
+                                }
+                            } else if (3==dpcoiWoOrderType) {
+                                if (4==dpcoiWoOrderState) {
+                                    Date standardBookCompleteDate = (Date) objectMap.get("standardBookCompleteDate");
+                                    if (standardBookCompleteDate != null) {
+                                        standardBook = formatter.format(standardBookCompleteDate);
+                                    }
+                                } else if (7==dpcoiWoOrderState) {
+                                    standardBook = "N/A";
+                                }
+                            }
+                        }
+                        rrProblem.setPfmea(pfmea);
+                        rrProblem.setCp(cp);
+                        rrProblem.setStandardBook(standardBook);
+                        dpcoiOrder.setRrProblemId(rrProblem.getId());
+                        this.dpcoiOrderService.updateDpcoiOrder(dpcoiOrder);
+                    }
+                }else if(!(oldChangePoint.equals(changePoint))){
+                    throw new Exception("变化点管理已有值，不可修改！");
                 }
             }
             this.rRProblemService.updateRRProblem(rrProblem);

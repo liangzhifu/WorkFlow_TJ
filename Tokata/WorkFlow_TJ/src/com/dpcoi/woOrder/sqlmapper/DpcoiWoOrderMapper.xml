@@ -229,6 +229,77 @@
         </where>
     </select>
 
+    <select id="selectDpcoiWoOrderList" parameterType="DpcoiWoOrderQuery" resultType="java.util.HashMap">
+        select dor.`DPCOI_ORDER_ID` as dpcoiOrderId,
+        dor.`ISSUED_NO` as issuedNo,
+        dor.`DESIGN_CHANGE_NO` as designChangeNo,
+        dor.`VEHICLE_NAME` as vehicleName,
+        dor.`PRODUCT_NO` as productNo,
+        dor.`HOPE_CUTTING_DATE` as hopeCuttingDate,
+        dor.`REAL_CUTTING_DATE` as realCuttingDate,
+        DATE_FORMAT(dor.`REAL_CUTTING_DATE`, '%Y-%m-%d') AS realCuttingDateStr,
+        dor.`CHANGE_CONTENT` as changeContent,
+        dor.`RELEASE_DATE` as releaseDate,
+        dor.`RETURN_DATE` as returnDate,
+        dor.`product_line` as productLine,
+        DATE_FORMAT(dor.`RELEASE_DATE`, '%Y-%m-%d') AS releaseDateStr,
+        DATE_FORMAT(dor.`RETURN_DATE`, '%Y-%m-%d') AS returnDateStr,
+        dor.`DESIGN_ACT` as designAct,
+        dor.`QUASI_ACT` as quasiAct,
+        (SELECT users.`user_name` FROM sys_users users WHERE users.`USER_ID` = dor.`QUASI_ACT`) AS quasiActName,
+        dor.`DPCOI_ORDER_STATE` as dpcoiOrderState,
+        dor.`DPCOI_ORDER_TYPE` as dpcoiOrderType,
+        dor.`TASK_ORDER_ID` AS taskOrderId,
+        (SELECT info.`task_info_value` FROM task_order_info info
+        WHERE info.`TASK_TYPE_INFO_ID` = '1'
+        AND info.`ORDER_ID` = dor.`TASK_ORDER_ID`) AS taskOrderNo,
+        dor.`REMARK` as remark,
+        dor.pfmea_complete_date as pfmeaCompleteDate,
+        dor.cp_complete_date as cpCompleteDate,
+        dor.standard_book_complete_date as standardBookCompleteDate,
+        wo.`DPCOI_WO_ORDER_ID` as dpcoiWoOrderId,
+        wo.`DPCOI_WO_ORDER_STATE` as dpcoiWoOrderState,
+        wo.`DPCOI_WO_ORDER_TYPE` as dpcoiWoOrderType
+        from dpcoi_order dor, dpcoi_wo_order wo
+        <where>
+            dor.`DPCOI_ORDER_ID` = wo.`DPCOI_ORDER_ID`
+            and dor.`DEL_FLAG` = '0'
+            and wo.`DEL_FLAG` = '0'
+            and dor.`DPCOI_ORDER_TYPE` in (1, 2)
+            <if test="vehicleName != null and vehicleName != ''" >
+                and dor.`VEHICLE_NAME` like CONCAT('%',#{vehicleName},'%')
+            </if>
+            <if test="productNo != null and productNo != ''" >
+                and dor.`PRODUCT_NO` like CONCAT('%',#{productNo},'%')
+            </if>
+            <if test="hopeCuttingDate != null and hopeCuttingDate != ''" >
+                and dor.`HOPE_CUTTING_DATE` = #{hopeCuttingDate}
+            </if>
+            <if test="realCuttingDateStart != null and realCuttingDateStart != ''" >
+                and DATE_FORMAT(dor.`REAL_CUTTING_DATE`,'%Y-%m-%d') &gt;= DATE_FORMAT(#{realCuttingDateStart,jdbcType=DATE},'%Y-%m-%d')
+            </if>
+            <if test="realCuttingDateEnd != null and realCuttingDateEnd != ''" >
+                and DATE_FORMAT(dor.`REAL_CUTTING_DATE`,'%Y-%m-%d') &lt;= DATE_FORMAT(#{realCuttingDateEnd,jdbcType=DATE},'%Y-%m-%d')
+            </if>
+            <if test="releaseDateStart != null and releaseDateStart != ''" >
+                and DATE_FORMAT(dor.`RELEASE_DATE`,'%Y-%m-%d') &gt;= DATE_FORMAT(#{releaseDateStart,jdbcType=DATE},'%Y-%m-%d')
+            </if>
+            <if test="releaseDateEnd != null and releaseDateEnd != ''" >
+                and DATE_FORMAT(dor.`RELEASE_DATE`,'%Y-%m-%d') &lt;= DATE_FORMAT(#{releaseDateEnd,jdbcType=DATE},'%Y-%m-%d')
+            </if>
+            <if test="dpcoiUserId != null and dpcoiUserId != ''" >
+                and du.`SYS_USER_ID` = #{dpcoiUserId}
+            </if>
+            <if test="productLine != null and productLine != ''" >
+                AND dor.`product_line` like CONCAT('%',#{productLine},'%')
+            </if>
+            <if test="dpcoiOrderId != null and dpcoiOrderId != ''" >
+                and dor.`DPCOI_ORDER_ID` = #{dpcoiOrderId}
+            </if>
+        </where>
+        order by dor.`DPCOI_ORDER_ID` ASC
+    </select>
+
     <select id="selectBySelf" parameterType="DpcoiWoOrder" resultMap="dpcoiWoOrderMap">
         select dpcoi_wo_order_id, dpcoi_order_id, del_flag, dpcoi_wo_order_type, dpcoi_wo_order_state,
           create_date, confirm_date, file_complete_date, manager_confirm_date, confirm_by,
