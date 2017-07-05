@@ -53,6 +53,15 @@ public class DpcoiOrderDao extends BaseDao {
     }
 
     /**
+     * 根据RR问题点ID查询订单实体
+     * @param rrProblemId RR问题点ID
+     * @return 返回结果
+     */
+    public DpcoiOrder selectDpcoiOrderByRRProblem(Integer rrProblemId){
+        return this.sqlSession.selectOne("dpcoiOrder.selectDpcoiOrderByRRProblem", rrProblemId);
+    }
+
+    /**
      * 根据dpcoiOrderId查询订单实体
      * @param dpcoiOrder 订单ID
      * @return 返回结果

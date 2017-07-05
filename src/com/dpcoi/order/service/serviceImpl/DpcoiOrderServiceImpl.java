@@ -154,6 +154,11 @@ public class DpcoiOrderServiceImpl implements DpcoiOrderService {
     }
 
     @Override
+    public DpcoiOrder queryDpcoiOrderByRRProblem(Integer rrProblemId) throws ServiceException {
+        return this.dpcoiOrderDao.selectDpcoiOrderByRRProblem(rrProblemId);
+    }
+
+    @Override
     public void editDpcoiOrderToVoid(DpcoiOrder dpcoiOrder, User user) throws ServiceException {
         dpcoiOrder.setDpcoiOrderState(3);
         dpcoiOrder.setUpdateBy(user.getUserId());
@@ -198,8 +203,6 @@ public class DpcoiOrderServiceImpl implements DpcoiOrderService {
         }else {
             rrProblem = new RRProblem();
             rrProblem.setId(rrProblemId);
-            rrProblem.setState(3);
-            this.rRProblemDao.updateRRProblem(rrProblem);
             rrProblem = this.rRProblemDao.selectRRProblem(rrProblem);
         }
         TimeTask timeTask = EmailUtil.generateTimeTask(dpcoiOrder, rrProblem, noticeType, emaliUser);

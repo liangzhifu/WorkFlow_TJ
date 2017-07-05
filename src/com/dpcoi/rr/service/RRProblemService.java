@@ -76,4 +76,25 @@ public interface RRProblemService {
      */
     public Integer queryMinisterJurisdiction(User user) throws ServiceException;
 
+    /**
+     * 查询RR问题（正在处理）列表
+     * @return 返回结果
+     * @throws ServiceException 异常
+     */
+    public List<RRProblem> queryJobRRProblemList() throws ServiceException;
+
+    /**
+     * 更新RR问题进度
+     * @param rrProblem RR问题
+     * @throws ServiceException 异常
+     */
+    public void updateSpeedOfProgress(RRProblem rrProblem) throws ServiceException;
+
+    /**
+     * 获取RR问题点延期的邮件
+     * @param rrProblem RR问题点
+     * @return 返回结果
+     * @throws ServiceException 异常
+     */
+    public String queryDelayEmails(RRProblem rrProblem) throws ServiceException;
 }

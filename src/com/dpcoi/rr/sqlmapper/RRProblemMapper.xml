@@ -686,7 +686,7 @@
         bad_quantity as badQuantity, batch, happen_shift as happenShift, responsible_department as responsibleDepartment, record_ppm as recordPpm, record_num as recordNum,
         temporary, root_cause as rootCause, permanent_game as permanentGame, effect_verification as effectVerification, serial_number as serialNumber, quality_warning_card_number as qualityWarningCardNumber,
         product_scale as productScale, pfmea, cp, standard_book as standardBook, equipment_checklist as equipmentChecklist, always_list as alwaysList, inspection_reference_book as inspectionReferenceBook,
-        inspection_book as inspectionBook, education, change_point as changePoint, expand_trace as expandTrace, artificial, materiel, state
+        inspection_book as inspectionBook, education, change_point as changePoint, expand_trace as expandTrace, artificial, materiel, state, is_delay as isDelay
         from dpcoi_rr_problem
         <include refid="WHERE_SQL"></include>
         order by id desc limit #{start},#{size}
@@ -707,8 +707,23 @@
         bad_quantity as badQuantity, batch, happen_shift as happenShift, responsible_department as responsibleDepartment, record_ppm as recordPpm, record_num as recordNum,
         temporary, root_cause as rootCause, permanent_game as permanentGame, effect_verification as effectVerification, serial_number as serialNumber, quality_warning_card_number as qualityWarningCardNumber,
         product_scale as productScale, pfmea, cp, standard_book as standardBook, equipment_checklist as equipmentChecklist, always_list as alwaysList, inspection_reference_book as inspectionReferenceBook,
-        inspection_book as inspectionBook, education, change_point as changePoint, expand_trace as expandTrace, artificial, materiel, state
+        inspection_book as inspectionBook, education, change_point as changePoint, expand_trace as expandTrace, artificial, materiel, state, is_delay as isDelay
         from dpcoi_rr_problem
         <include refid="WHERE_SQL"></include>
+    </select>
+
+    <select id="selectJobRRProblemList" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from dpcoi_rr_problem
+        where state=1
+    </select>
+
+    <select id="selectDelayEmails" parameterType="RRProblem" resultType="java.lang.String">
+        SELECT GROUP_CONCAT(users.`EMAIL`)
+        FROM sys_users users
+        WHERE users.`DELETE_STATE` = 0
+        AND  FIND_IN_SET(users.`USER_NAME`,(SELECT GROUP_CONCAT(problem.`persion_liable`)
+        FROM dpcoi_rr_problem problem WHERE problem.`id` = #{id,jdbcType=INTEGER})) &gt; 0
     </select>
 </mapper>

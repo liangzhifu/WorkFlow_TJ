@@ -154,6 +154,8 @@ public class RRProblemController {
         try{
             map.put("success", true);
             String changePoint = rrProblem.getChangePoint();
+            changePoint = changePoint.toUpperCase();
+            rrProblem.setChangePoint(changePoint);
             if(changePoint == null || "".equals(changePoint)){
                 this.rRProblemService.addRRProblem(rrProblem);
             }else if("N/A".equals(changePoint)){
@@ -316,6 +318,8 @@ public class RRProblemController {
             oldRRProblem = this.rRProblemService.queryRRProblem(oldRRProblem);
             String oldChangePoint = oldRRProblem.getChangePoint();
             String changePoint = rrProblem.getChangePoint();
+            changePoint = changePoint.toUpperCase();
+            rrProblem.setChangePoint(changePoint);
             if(changePoint == null || "".equals(changePoint)){
                 if(!(oldChangePoint == null || "".equals(oldChangePoint))){
                     throw new Exception("变化点管理已有值，不可修改为空！");
@@ -384,6 +388,7 @@ public class RRProblemController {
                     throw new Exception("变化点管理已有值，不可修改！");
                 }
             }
+            this.rRProblemService.updateSpeedOfProgress(rrProblem);
             this.rRProblemService.updateRRProblem(rrProblem);
             map.put("success", true);
         }catch (Exception e){
@@ -453,6 +458,41 @@ public class RRProblemController {
     }
 
     /**
+     * 作废RR问题点
+     * @param response 参数
+     * @param rrProblem 参数
+     */
+    @RequestMapping("toVoidRRProblem.do")
+    public void toVoidRRProblem(HttpServletRequest request, HttpServletResponse response, RRProblem rrProblem){
+        Map<String, Object> map = new HashMap<String, Object>();
+        try{
+            User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
+            rrProblem = this.rRProblemService.queryRRProblem(rrProblem);
+            Integer state = rrProblem.getState();
+            if(state == 2){
+                throw new Exception("RR问题点已关闭，不能作废！");
+            }else if(state == 3){
+                throw new Exception("RR问题点已作废，不能再次作废！");
+            }else {
+                RRProblem newRRProblem = new RRProblem();
+                newRRProblem.setId(rrProblem.getId());
+                newRRProblem.setState(3);
+                this.rRProblemService.updateRRProblem(newRRProblem);
+                DpcoiOrder dpcoiOrder = this.dpcoiOrderService.queryDpcoiOrderByRRProblem(rrProblem.getId());
+                if(dpcoiOrder != null){
+                    this.dpcoiOrderService.editDpcoiOrderToVoid(dpcoiOrder, user);
+                }
+            }
+            map.put("success", true);
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("success", false);
+            map.put("message", e.getMessage());
+        }
+        AjaxUtil.ajaxResponse(response, new JSONObject(map).toString(), AjaxUtil.RESPONCE_TYPE_JSON);
+    }
+
+    /**
      * RR问题点延期
      * @param response 参数
      * @param rrProblem 参数
@@ -461,8 +501,16 @@ public class RRProblemController {
     public void delayRRProblem(HttpServletResponse response, RRProblem rrProblem){
         Map<String, Object> map = new HashMap<String, Object>();
         try{
-            rrProblem.setIsDelay(1);
-            this.rRProblemService.updateRRProblem(rrProblem);
+            rrProblem = this.rRProblemService.queryRRProblem(rrProblem);
+            Integer state = rrProblem.getState();
+            if(state == 2){
+                throw new Exception("RR问题点已关闭，不能延期！");
+            }else if(state == 3){
+                throw new Exception("RR问题点已作废，不能延期！");
+            }else{
+                rrProblem.setIsDelay(1);
+                this.rRProblemService.updateRRProblem(rrProblem);
+            }
             map.put("success", true);
         }catch (Exception e){
             e.printStackTrace();

@@ -65,6 +65,14 @@ public interface DpcoiOrderService {
     public DpcoiOrder queryDpcoiOrder(DpcoiOrder dpcoiOrder) throws ServiceException;
 
     /**
+     *根据RR问题ID查询实体
+     * @param rrProblemId RR问题ID
+     * @return 返回结果
+     * @throws ServiceException 异常
+     */
+    public DpcoiOrder queryDpcoiOrderByRRProblem(Integer rrProblemId) throws ServiceException;
+
+    /**
      * 作废定单
      * @param dpcoiOrder 定单实体
      * @user 操作员
