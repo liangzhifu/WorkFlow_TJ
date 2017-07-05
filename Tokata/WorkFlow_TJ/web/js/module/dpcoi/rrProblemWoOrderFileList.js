@@ -90,6 +90,17 @@ rrProblemWoOrderFileListApp.controller("rrProblemWoOrderFileListController", fun
     }
 
     $(document).ready(function() {
+        $.ajax({
+            method: 'post',
+            url: "/WorkFlow/dpcoiConfig/getDpcoiConfigList.do",
+            success: function (resultJson) {
+                var result = angular.fromJson(resultJson);
+                if (result.success) {
+                    $scope.rrProblemWoOrderFileList.dpcoiConfigList = result.dpcoiConfigList;
+                    $scope.$apply();
+                }
+            }
+        });
 
         $scope.rrProblemWoOrderFileList.firstPage();
 
