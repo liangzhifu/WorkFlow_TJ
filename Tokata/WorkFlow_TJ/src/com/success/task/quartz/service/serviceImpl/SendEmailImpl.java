@@ -138,6 +138,8 @@ public class SendEmailImpl {
 							subject = "DPCOI作废-设变废除";
 						}else if(noticeType == 37){
 							subject = "DPCOI作废-4M变更废除";
+						}else if(noticeType == 38){
+							subject = "RR问题点Delay";
 						}else {
 							
 						}
