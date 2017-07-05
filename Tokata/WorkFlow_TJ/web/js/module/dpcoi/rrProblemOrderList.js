@@ -97,25 +97,6 @@ rrProblemOrderListApp.controller("rrProblemOrderListController", function ($scop
         $scope.rrProblemOrderList.firstPage();
     });
 
-    $scope.rrProblemOrderList.toVoidDpcoiOrder = function (dpcoiOrderId) {
-        $.ajax({
-            method:'post',
-            url:"/WorkFlow/dpcoiOrder/toVoidDpcoiOrder.do",
-            data:{"dpcoiOrderId":dpcoiOrderId},
-            success: function(resultJson) {
-                var result = angular.fromJson(resultJson);
-                if(result.success){
-                    $scope.rrProblemOrderList.firstPage();
-                }else {
-                    alert(result.message);
-                }
-            },
-            error : function() {
-                alert("系统出现异常!!");
-            }
-        });
-    }
-
     $(document).ready(function() {
         $.ajax({
             method: 'post',

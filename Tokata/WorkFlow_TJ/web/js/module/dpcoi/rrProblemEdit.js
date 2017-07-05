@@ -174,6 +174,20 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         });
     });
 
+    $scope.editInput = function(id){
+        $("#inputModal").modal("show");
+        $("#textAreaId").val(id);
+        $("#inputText").val($("#"+id).val());
+        $('#inputText').foucs();
+    };
+
+    $scope.completTextArea = function () {
+        var id = $("#textAreaId").val();
+        $("#"+id).val($("#inputText").val());
+        $("#inputModal").modal("hide");
+        $('#inputText').blur();
+    };
+
     $(document).ready(function() {
 
         $.ajax({
