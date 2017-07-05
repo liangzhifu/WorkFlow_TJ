@@ -29,7 +29,7 @@
                         <select id="problemProgress" name="problemProgress" class="form-control-order form-control" required="required"
                                 ng-model="rrProblemWoOrderFileList.searchForm.problemProgress" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option value="">请选择</option>
-                            <option ng-repeat="dpcoiConfigDate in rrProblemOrderList.dpcoiConfigList"
+                            <option ng-repeat="dpcoiConfigDate in rrProblemWoOrderFileList.dpcoiConfigList"
                                     value="{{dpcoiConfigDate.configValue}}"
                                     ng-show="dpcoiConfigDate.configCodeId==4">{{dpcoiConfigDate.configValue}}</option>
                         </select>
