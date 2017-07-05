@@ -3,7 +3,7 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
     $scope.rrProblemList = {};
     $scope.rrProblemList.ministerJurisdiction = ministerJurisdiction;
     $scope.rrProblemList.dpcoiConfigList = [{
-        "configId" : "",
+        "configId" : 0,
         "configCodeId" : "",
         "configValue" : ""
     }];
@@ -57,7 +57,9 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         "expandTrace" : "N/A",
         "artificial" : "N/A",
         "materiel" : "N/A",
-        "state" : ""
+        "state" : "",
+        "isDelay": "",
+        "backgroundColor":""
     }];
     $scope.rrProblemList.pageInfo = {"url":"/WorkFlow/rrProblem/getRRProblemListPage.do"};
     $scope.rrProblemList.firstPage = function () {
@@ -109,6 +111,31 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                     }else {
                         $scope.rrProblemList.pageInfo.nextPageDisabled = false;
                         $scope.rrProblemList.pageInfo.lastPageDisabled = false;
+                    }
+                    for(var i = 0; i < $scope.rrProblemList.rrProblemList.length; i++){
+                        var obj = $scope.rrProblemList.rrProblemList[i];
+                        var speedOfProgress = obj.speedOfProgress;
+                        if(speedOfProgress == undefined || speedOfProgress == null || speedOfProgress == ""){
+                            $scope.rrProblemList.rrProblemList[i].backgroundColor = "";
+                        }else if(speedOfProgress == "delay"){
+                            var isDelay = obj.isDelay;
+                            if(isDelay == undefined || isDelay == null){
+                                $scope.rrProblemList.rrProblemList[i].backgroundColor = "background-color:red;";
+                            }else if(isDelay == 1){
+                                $scope.rrProblemList.rrProblemList[i].backgroundColor = "background-color:beige;";
+                            }else {
+                                $scope.rrProblemList.rrProblemList[i].backgroundColor = "background-color:red;";
+                            }
+                        }else if(speedOfProgress == "follow"){
+                            var problemProgress = obj.problemProgress;
+                            if(problemProgress == "4/4"){
+                                $scope.rrProblemList.rrProblemList[i].backgroundColor = "background-color:yellow;";
+                            }else {
+                                $scope.rrProblemList.rrProblemList[i].backgroundColor = "";
+                            }
+                        }else{
+                            $scope.rrProblemList.rrProblemList[i].backgroundColor = "";
+                        }
                     }
                     $scope.$apply();
                 }else {
@@ -217,6 +244,35 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         });
         $.ajax({
             url : '/WorkFlow/rrProblem/delayRRProblem.do?id='+id,
+            method: "post",
+            success : function(resultJson) {
+                var obj =  angular.fromJson(resultJson);
+                if(obj.success){
+                    $scope.rrProblemList.firstPage();
+                }else {
+                    alert(obj.message);
+                    return;
+                }
+            },
+            failure : function() {
+                alert('失败！');
+                return;
+            }
+        });
+    });
+
+    $("#rrProblemToVoid").click(function () {
+        var length = $("input[name='checkbox_records']:checked").length;
+        if(length == 0 || length > 1){
+            alert("请选择一条RR问题点！");
+            return ;
+        }
+        var id;
+        $("input[name='checkbox_records']:checked").each(function () {
+            id = $(this).val();
+        });
+        $.ajax({
+            url : '/WorkFlow/rrProblem/toVoidRRProblem.do?id='+id,
             method: "post",
             success : function(resultJson) {
                 var obj =  angular.fromJson(resultJson);
