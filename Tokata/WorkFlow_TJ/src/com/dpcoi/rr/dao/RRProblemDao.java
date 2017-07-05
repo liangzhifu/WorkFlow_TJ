@@ -58,19 +58,27 @@ public class RRProblemDao extends BaseDao {
     /**
      * 查询RR问题点分页列表
      * @param rrProblemQuery 查询条件
-     * @return
+     * @return 返回结果
      */
     public List<Map<String, Object>> selectRRProblemListPage(RRProblemQuery rrProblemQuery){
         return this.sqlSession.selectList("RRProblemMapper.selectRRProblemListPage", rrProblemQuery);
     }
 
     /**
-     * 查询RR问题点分页
+     * 查询RR问题点列表
      * @param rrProblemQuery 查询条件
-     * @return
+     * @return 返回结果
      */
     public List<Map<String, Object>> selectRRProblemList(RRProblemQuery rrProblemQuery){
         return this.sqlSession.selectList("RRProblemMapper.selectRRProblemList", rrProblemQuery);
+    }
+
+    /**
+     * 查询RR问题点列表
+     * @return 返回结果
+     */
+    public List<RRProblem> selectJobRRProblemList(){
+        return this.sqlSession.selectList("RRProblemMapper.selectJobRRProblemList", null);
     }
 
     /**
@@ -88,5 +96,14 @@ public class RRProblemDao extends BaseDao {
      */
     public Integer selectProblemNoMax(String problemNo){
         return this.sqlSession.selectOne("RRProblemMapper.selectProblemNoMax", problemNo);
+    }
+
+    /**
+     * 查询RR问题点延期的邮件
+     * @param rrProblem RR问题点
+     * @return 返回结果
+     */
+    public String selectDelayEmails(RRProblem rrProblem) {
+        return this.sqlSession.selectOne("RRProblemMapper.selectDelayEmails", rrProblem);
     }
 }

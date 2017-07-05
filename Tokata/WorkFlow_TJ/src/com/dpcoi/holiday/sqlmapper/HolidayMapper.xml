@@ -68,7 +68,7 @@
                 and DATE_FORMAT(holiday.`holiday`,'%y-%M-%d') &lt;= DATE_FORMAT(#{holidayEnd},'%y-%M-%d')
             </if>
         </where>
-        order by holiday.`holiday` limit #{start},#{size}
+        order by holiday.`holiday` DESC limit #{start},#{size}
     </select>
 
     <select id="selectHolidayCount" parameterType="HolidayQuery" resultType="java.lang.Integer">

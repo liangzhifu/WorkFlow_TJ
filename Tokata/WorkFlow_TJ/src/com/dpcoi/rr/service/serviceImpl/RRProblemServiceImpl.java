@@ -92,25 +92,26 @@ public class RRProblemServiceImpl implements RRProblemService {
             rrProblem.setCustomer((String)map.get("configValue"));
         }
 
+        Date happenDate = rrProblem.getHappenDate();
         List<Calendar> calendarList = this.queryHolidayList();
         //第一次
-        Date date = this.calculationWorkingDay(nowDate, 2, calendarList);
+        Date date = this.calculationWorkingDay(happenDate, 2, calendarList);
         rrProblem.setFirstDate(date);
 
         //第二次
-        date = this.calculationWorkingDay(nowDate, 14, calendarList);
+        date = this.calculationWorkingDay(happenDate, 14, calendarList);
         rrProblem.setSecondDate(date);
 
         //第三次
-        date = this.calculationWorkingDay(nowDate, 34, calendarList);
+        date = this.calculationWorkingDay(happenDate, 34, calendarList);
         rrProblem.setThirdDate(date);
 
         //第四次
-        date = this.calculationWorkingDay(nowDate, 40, calendarList);
+        date = this.calculationWorkingDay(happenDate, 40, calendarList);
         rrProblem.setFourthDate(date);
 
         //问题进度
-        rrProblem.setSpeedOfProgress("follow");
+        this.updateSpeedOfProgress(rrProblem);
 
         return this.rRProblemDao.insertRRProblem(rrProblem);
     }
@@ -170,6 +171,58 @@ public class RRProblemServiceImpl implements RRProblemService {
     @Override
     public Integer queryMinisterJurisdiction(User user) throws ServiceException {
         return this.userDao.selectMinisterJurisdiction(user);
+    }
+
+    @Override
+    public List<RRProblem> queryJobRRProblemList() throws ServiceException {
+        return this.rRProblemDao.selectJobRRProblemList();
+    }
+
+    @Override
+    public void updateSpeedOfProgress(RRProblem rrProblem) throws ServiceException {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String speedOfProgress = "follow";
+        String problemProgress = rrProblem.getProblemProgress();
+        Date reportDate = rrProblem.getReportDate();
+        String reportDateStr = df.format(reportDate);
+        Date nowDate = new Date();
+        String nowDateStr = df.format(nowDate);
+        if(reportDateStr.compareTo(nowDateStr) < 0){
+            speedOfProgress = "delay";
+        }
+        if("1/4".equals(problemProgress)){
+            Date firstDate = rrProblem.getFirstDate();
+            String firstDateStr = df.format(nowDate);
+            if(reportDateStr.compareTo(firstDateStr) < 0){
+                speedOfProgress = "delay";
+            }
+        }else if("2/4".equals(problemProgress)){
+            Date secondDate = rrProblem.getSecondDate();
+            String secondDateStr = df.format(nowDate);
+            if(reportDateStr.compareTo(secondDateStr) < 0){
+                speedOfProgress = "delay";
+            }
+        }else if("3/4".equals(problemProgress)){
+            Date thirdDate = rrProblem.getThirdDate();
+            String thirdDateStr = df.format(nowDate);
+            if(reportDateStr.compareTo(thirdDateStr) < 0){
+                speedOfProgress = "delay";
+            }
+        }else if("4/4".equals(problemProgress)){
+            Date fourthDate = rrProblem.getFourthDate();
+            String fourthDateStr = df.format(nowDate);
+            if(reportDateStr.compareTo(fourthDateStr) < 0){
+                speedOfProgress = "delay";
+            }
+        }else {
+
+        }
+        rrProblem.setSpeedOfProgress(speedOfProgress);
+    }
+
+    @Override
+    public String queryDelayEmails(RRProblem rrProblem) throws ServiceException {
+        return this.rRProblemDao.selectDelayEmails(rrProblem);
     }
 
 

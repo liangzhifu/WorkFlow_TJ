@@ -24,7 +24,7 @@ public class EmailUtil {
         Integer dpcoiOrderType = dpcoiOrder.getDpcoiOrderType();
         if(dpcoiOrderType.intValue() == 3){
             comment.append("状态:").append(rrProblem.getProblemStatus())
-                    .append("<br>").append("问题编号:").append(rrProblem.getProductNo())
+                    .append("<br>").append("问题编号:").append(rrProblem.getProblemNo())
                     .append("<br>").append("问题类型:").append(rrProblem.getProblemType())
                     .append("<br>").append("工程:").append(rrProblem.getEngineering())
                     .append("<br>").append("客户:").append(rrProblem.getCustomer())

@@ -395,6 +395,12 @@
         where dpcoi_order_id = #{dpcoiOrderId}
     </select>
 
+    <select id="selectDpcoiOrderByRRProblem" parameterType="java.lang.Integer" resultMap="DpcoiOrderMap">
+        select dor.`DPCOI_ORDER_ID`,
+        from dpcoi_order dor
+        where rr_problem_id = #{rrProblemId}
+    </select>
+
     <update id="updateSelective" parameterType="DpcoiOrder">
             update dpcoi_order
             <set>
