@@ -114,7 +114,8 @@
                             <div class="col-md-3">
                                 <label  class="control-label" for="badContent"><span style="color:red;">*</span>不良内容：</label>
                                 <input class="form-control-order form-control clean" style="width: 60%" required="required"
-                                       id="badContent" name="badContent" ng-model="rrProblemEdit.rrProblem.badContent">
+                                       id="badContent" name="badContent" ng-model="rrProblemEdit.rrProblem.badContent"
+                                       ng-dblclick="editInput('badContent')">
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="persionLiable"><span style="color:red;">*</span>责任人：</label>
@@ -138,7 +139,8 @@
                             <div class="col-md-3">
                                 <label  class="control-label" for="reasonForDelay">延期原因及进展：</label>
                                 <input class="form-control-order form-control clean" style="width: 60%"
-                                       id="reasonForDelay" name="reasonForDelay" ng-model="rrProblemEdit.rrProblem.reasonForDelay">
+                                       id="reasonForDelay" name="reasonForDelay" ng-model="rrProblemEdit.rrProblem.reasonForDelay"
+                                       ng-dblclick="editInput('reasonForDelay')">
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="firstDate">第一次原因调查：</label>
@@ -246,24 +248,28 @@
                             <div class="col-md-3">
                                 <label  class="control-label" for="temporary">临时对策：</label>
                                 <input class="form-control-order form-control clean" style="width: 60%"
-                                       id="temporary" name="temporary" ng-model="rrProblemEdit.rrProblem.temporary">
+                                       id="temporary" name="temporary" ng-model="rrProblemEdit.rrProblem.temporary"
+                                       ng-dblclick="editInput('temporary')">
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="rootCause">根本原因：</label>
                                 <input class="form-control-order form-control clean" style="width: 60%"
-                                       id="rootCause" name="rootCause" ng-model="rrProblemEdit.rrProblem.rootCause">
+                                       id="rootCause" name="rootCause" ng-model="rrProblemEdit.rrProblem.rootCause"
+                                       ng-dblclick="editInput('rootCause')">
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="permanentGame">永久对策：</label>
                                 <input class="form-control-order form-control clean" style="width: 60%"
-                                       id="permanentGame" name="permanentGame" ng-model="rrProblemEdit.rrProblem.permanentGame">
+                                       id="permanentGame" name="permanentGame" ng-model="rrProblemEdit.rrProblem.permanentGame"
+                                       ng-dblclick="editInput('permanentGame')">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3">
                                 <label  class="control-label" for="effectVerification">效果校验：</label>
                                 <input class="form-control-order form-control clean" style="width: 60%"
-                                       id="effectVerification" name="effectVerification" ng-model="rrProblemEdit.rrProblem.effectVerification">
+                                       id="effectVerification" name="effectVerification" ng-model="rrProblemEdit.rrProblem.effectVerification"
+                                       ng-dblclick="editInput('effectVerification')">
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="serialNumber">品情联编号：</label>
@@ -363,6 +369,20 @@
     </div>
 </div>
 
+<!-- 文件列表 -->
+<div id="inputModal" class="modal fade" tabindex="-1"
+     role="dialog" aria-hidden="true">
+    <div class="modal-body">
+        <div class="row">
+            <input type="hidden" id="textAreaId">
+            <div class="col-md-12">
+                <textarea class="form-control-order form-control clean" style="width: 100%"
+                          rows="3" id="inputText" name="inputText"
+                ng-dblclick="completTextArea()"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <script src="/WorkFlow/js/module/dpcoi/rrProblemEdit.js"></script>
 </html>

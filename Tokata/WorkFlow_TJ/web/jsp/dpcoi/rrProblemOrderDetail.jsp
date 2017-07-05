@@ -328,7 +328,7 @@
             </div>
 
             <div class="modal-footer">
-                <a href="/WorkFlow/dpcoiOrder/getDpcoiOrderListDlg.do"
+                <a href="/WorkFlow/rrProblemOrder/getRRProblemOrderListDlg.do"
                    class="btn  btn-mini btn-info">关闭</a>
             </div>
         </div>

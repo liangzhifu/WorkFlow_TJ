@@ -123,14 +123,6 @@
                             <span ng-show="rrProblemOrderDate.rrProblemOrderState==3">作废</span>
                         </td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;text-align: left;">
-                            <span ng-hide="rrProblemOrderDate.rrProblemOrderState==3">
-                                <span ng-hide="rrProblemOrderDate.rrProblemOrderState==2">
-                                    <button class="btn btn-small btn-purple" type="button"
-                                            ng-click="rrProblemOrderList.toVoidDpcoiOrder(rrProblemOrderDate.rrProblemOrderId);" style="margin-left: 4px">
-                                        <i class="bigger-110"></i>作废
-                                    </button>
-                                </span>
-                            </span>
                             <span ng-hide="rrProblemOrderList.dpcoiAddJurisdiction == 1">
                                 <a href="/WorkFlow/rrProblemOrder/getRRProblemOrderDetailDlg.do?rrProblemOrderId={{rrProblemOrderDate.rrProblemOrderId}}"
                                    class="btn  btn-mini btn-info btn-purple" style="margin-left: 4px">详情</a>
