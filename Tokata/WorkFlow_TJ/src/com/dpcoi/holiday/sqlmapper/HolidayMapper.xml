@@ -87,6 +87,6 @@
     <select id="selectHolidayList" resultType="java.util.Date">
         SELECT holiday.`holiday`
         from sys_holiday holiday
-        where DATE_FORMAT(holiday.`holiday`,'%y-%M-%d') &gt; DATE_FORMAT(sysdate(),'%y-%M-%d')
+        where DATE_FORMAT(holiday.`holiday`,'%Y-%m-%d') &gt; DATE_FORMAT(sysdate(),'%Y-%m-%d')
     </select>
 </mapper>
