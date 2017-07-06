@@ -156,6 +156,12 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         $scope.rrProblemEdit.rrProblem.thirdDate = $("#thirdDate").val();
         $scope.rrProblemEdit.rrProblem.fourthDate = $("#fourthDate").val();
         $scope.rrProblemEdit.rrProblem.closeConfirmTime = "";
+        $scope.rrProblemEdit.rrProblem.badContent = $("#badContent").val();
+        $scope.rrProblemEdit.rrProblem.reasonForDelay = $("#reasonForDelay").val();
+        $scope.rrProblemEdit.rrProblem.temporary = $("#temporary").val();
+        $scope.rrProblemEdit.rrProblem.rootCause = $("#rootCause").val();
+        $scope.rrProblemEdit.rrProblem.permanentGame = $("#permanentGame").val();
+        $scope.rrProblemEdit.rrProblem.effectVerification = $("#effectVerification").val();
         $.ajax({
             method:'post',
             url:url,

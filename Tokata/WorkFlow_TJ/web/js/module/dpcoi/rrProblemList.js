@@ -122,7 +122,7 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                             if(isDelay == undefined || isDelay == null){
                                 $scope.rrProblemList.rrProblemList[i].backgroundColor = "background-color:red;";
                             }else if(isDelay == 1){
-                                $scope.rrProblemList.rrProblemList[i].backgroundColor = "background-color:beige;";
+                                $scope.rrProblemList.rrProblemList[i].backgroundColor = "background-color:GoldenRod;";
                             }else {
                                 $scope.rrProblemList.rrProblemList[i].backgroundColor = "background-color:red;";
                             }
