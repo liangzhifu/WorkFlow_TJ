@@ -85,11 +85,11 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th width="60px" class="x-grid3-header" style="padding: 0px"></th>
-                        <th width="30px" class="x-grid3-header" style="padding: 0px">状态</th>
+                        <th width="40px" class="x-grid3-header" style="padding: 0px"></th>
+                        <th width="35px" class="x-grid3-header" style="padding: 0px">状态</th>
                         <th width="100px" class="x-grid3-header" style="padding: 0px">问题编号</th>
                         <th width="100px" class="x-grid3-header" style="padding: 0px">问题类型</th>
-                        <th width="30px" class="x-grid3-header" style="padding: 0px">工程</th>
+                        <th width="35px" class="x-grid3-header" style="padding: 0px">工程</th>
                         <th width="60px" class="x-grid3-header" style="padding: 0px">问题进展</th>
                         <th width="60px" class="x-grid3-header" style="padding: 0px">追踪等级</th>
                         <th width="100px" class="x-grid3-header" style="padding: 0px">发生日期</th>
@@ -106,11 +106,11 @@
                         <th width="100px" class="x-grid3-header" style="padding: 0px">第三次永久对策有效</th>
                         <th width="100px" class="x-grid3-header" style="padding: 0px">第四次经验总结</th>
                         <th width="60px" class="x-grid3-header" style="padding: 0px">关闭确认</th>
-                        <th width="450px" class="x-grid3-header" style="padding: 0px;">生产线</th>
+                        <th width="45px" class="x-grid3-header" style="padding: 0px;">生产线</th>
                         <th width="45px" class="x-grid3-header" style="padding: 0px">严重度</th>
                         <th width="60px" class="x-grid3-header" style="padding: 0px">发生频次</th>
                         <th width="60px" class="x-grid3-header" style="padding: 0px">不良数量</th>
-                        <th width="120px" class="x-grid3-header" style="padding: 0px">批次</th>
+                        <th width="64px" class="x-grid3-header" style="padding: 0px">批次</th>
                         <th width="30px" class="x-grid3-header" style="padding: 0px">班次</th>
                         <th width="120px" class="x-grid3-header" style="padding: 0px">责任部门</th>
                         <th width="75px" class="x-grid3-header" style="padding: 0px;">客户处是否记录PPM</th>
