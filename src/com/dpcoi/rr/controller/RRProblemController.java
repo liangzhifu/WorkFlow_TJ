@@ -443,6 +443,7 @@ public class RRProblemController {
                     newRRProblem.setCloseConfirm("已关闭");
                     newRRProblem.setCloseConfirmId(user.getUserId());
                     newRRProblem.setCloseConfirmTime(new Date());
+                    newRRProblem.setSpeedOfProgress("close");
                     this.rRProblemService.updateRRProblem(newRRProblem);
                 }
             }else {

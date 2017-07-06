@@ -396,7 +396,7 @@
     </select>
 
     <select id="selectDpcoiOrderByRRProblem" parameterType="java.lang.Integer" resultMap="DpcoiOrderMap">
-        select dor.`DPCOI_ORDER_ID`,
+        select dor.`DPCOI_ORDER_ID`
         from dpcoi_order dor
         where rr_problem_id = #{rrProblemId}
     </select>
