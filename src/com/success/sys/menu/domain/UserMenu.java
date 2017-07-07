@@ -15,6 +15,9 @@ public class UserMenu {
 	private String menuModule;
 	
 	private String menuUrl;
+
+	//数量
+	private Integer number;
 	
 	public Integer getUserMenuId() {
 		return userMenuId;
@@ -64,7 +67,13 @@ public class UserMenu {
 	public void setMenuUrl(String menuUrl) {
 		this.menuUrl = menuUrl;
 	}
-		
 
-	
+
+	public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
 }
