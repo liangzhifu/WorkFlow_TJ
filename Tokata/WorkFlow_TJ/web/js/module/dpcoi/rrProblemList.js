@@ -81,7 +81,8 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
     $scope.rrProblemList.searchForm = {
         "badContent": "",
         "problemProgress": "",
-        "speedOfProgress": ""
+        "speedOfProgress": "",
+        "ids":""
     }
     $scope.rrProblemList.Search = function () {
         $scope.rrProblemList.searchForm.pagenum = $scope.rrProblemList.pageInfo.page-1;
@@ -166,10 +167,34 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         $("input[name='checkbox_records']:checked").each(function () {
             id = $(this).val();
         });
+        var rrProblem = null;
+        for(var i = 0; i < $scope.rrProblemList.rrProblemList.length; i++){
+            var obj = $scope.rrProblemList.rrProblemList[i];
+            var rrProblemId = obj.id;
+            if(id == rrProblemId){
+                rrProblem = obj;
+            }
+        }
+        if(rrProblem != null){
+            var state = rrProblem.state;
+            if(state == 2){
+                alert("已关闭，不能修改！");
+                return;
+            }else if(state == 3){
+                alert("已作废，不能修改！");
+                return;
+            }
+        }
         window.location.href = "/WorkFlow/rrProblem/getRRProblemEditDlg.do?id="+id;
     });
 
     $("#rrProblemDown").click(function () {
+        var ids = "";
+        $("input[name='checkbox_records']:checked").each(function () {
+            ids += "," + $(this).val();
+        });
+        if(ids != "") ids = ids.substring(1);
+        $scope.rrProblemList.searchForm.ids = ids;
         var fileUrl = "";
         $.ajax({
             url : '/WorkFlow/rrProblem/doExportExcel.do',
@@ -311,6 +336,20 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         var height = height - searchTableHeight - footTableHeight - 40;
         $("#listTable").css("height", height);
     });
+});
+
+rrProblemListApp.filter('myFilter', function() {
+    return function(inputArray, configCodeId) {
+        var array = [];
+        for(var i = 0; i < inputArray.length ; i++){
+            var obj = inputArray[i];
+            var id = obj.configCodeId;
+            if(id == configCodeId){
+                array.push(obj);
+            }
+        }
+        return array;
+    };
 });
 
 angular.bootstrap(document, [ 'rrProblemList' ]);
