@@ -32,9 +32,9 @@
                                 <select id="problemStatus" name="problemStatus" class="form-control-order form-control" required="required"
                                         ng-model="rrProblemEdit.rrProblem.problemStatus" style="width: 60%">
                                     <option value="">请选择</option>
-                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList"
+                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList | myFilter:1"
                                             value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.problemStatus"
-                                            ng-show="dpcoiConfigDate.configCodeId==1">{{dpcoiConfigDate.configValue}}</option>
+                                            >{{dpcoiConfigDate.configValue}}</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -47,9 +47,9 @@
                                 <select id="problemType" name="problemType" class="form-control-order form-control" ng-disabled="action=='edit'" required="required"
                                         ng-model="rrProblemEdit.rrProblem.problemType" style="width: 60%">
                                     <option value="">请选择</option>
-                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList"
+                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList | myFilter:2"
                                             value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.problemType"
-                                            ng-show="dpcoiConfigDate.configCodeId==2">{{dpcoiConfigDate.configValue}}</option>
+                                            >{{dpcoiConfigDate.configValue}}</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -57,9 +57,9 @@
                                 <select id="engineering" name="engineering" class="form-control-order form-control" required="required"
                                         ng-model="rrProblemEdit.rrProblem.engineering" style="width: 60%">
                                     <option value="">请选择</option>
-                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList"
+                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList | myFilter:3"
                                             value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.engineering"
-                                            ng-show="dpcoiConfigDate.configCodeId==3">{{dpcoiConfigDate.configValue}}</option>
+                                            >{{dpcoiConfigDate.configValue}}</option>
                                 </select>
                             </div>
                         </div>
@@ -69,9 +69,9 @@
                                 <select id="problemProgress" name="problemProgress" class="form-control-order form-control" required="required"
                                         ng-model="rrProblemEdit.rrProblem.problemProgress" style="width: 60%">
                                     <option value="">请选择</option>
-                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList"
+                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList | myFilter:4"
                                             value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.problemProgress"
-                                            ng-show="dpcoiConfigDate.configCodeId==4">{{dpcoiConfigDate.configValue}}</option>
+                                            >{{dpcoiConfigDate.configValue}}</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -79,9 +79,9 @@
                                 <select id="trackingLevel" name="trackingLevel" class="form-control-order form-control"
                                         ng-model="rrProblemEdit.rrProblem.trackingLevel" style="width: 60%">
                                     <option value="">请选择</option>
-                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList"
+                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList | myFilter:12"
                                             value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.trackingLevel"
-                                            ng-show="dpcoiConfigDate.configCodeId==12">{{dpcoiConfigDate.configValue}}</option>
+                                            >{{dpcoiConfigDate.configValue}}</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -106,9 +106,9 @@
                                 <select id="productNo" name="productNo" class="form-control-order form-control" required="required"
                                         ng-model="rrProblemEdit.rrProblem.productNo" style="width: 60%">
                                     <option value="">请选择</option>
-                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList"
+                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList | myFilter:5"
                                             value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.productNo"
-                                            ng-show="dpcoiConfigDate.configCodeId==5">{{dpcoiConfigDate.configValue}}</option>
+                                            >{{dpcoiConfigDate.configValue}}</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -181,9 +181,9 @@
                                 <select id="severity" name="severity" class="form-control-order form-control" required="required"
                                         ng-model="rrProblemEdit.rrProblem.severity" style="width: 60%">
                                     <option value="">请选择</option>
-                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList"
+                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList | myFilter:6"
                                             value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.severity"
-                                            ng-show="dpcoiConfigDate.configCodeId==6">{{dpcoiConfigDate.configValue}}</option>
+                                            >{{dpcoiConfigDate.configValue}}</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -191,9 +191,9 @@
                                 <select id="occurrenceFrequency" name="occurrenceFrequency" class="form-control-order form-control" required="required"
                                         ng-model="rrProblemEdit.rrProblem.occurrenceFrequency" style="width: 60%">
                                     <option value="">请选择</option>
-                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList"
+                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList | myFilter:7"
                                             value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.occurrenceFrequency"
-                                            ng-show="dpcoiConfigDate.configCodeId==7">{{dpcoiConfigDate.configValue}}</option>
+                                            >{{dpcoiConfigDate.configValue}}</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -213,9 +213,9 @@
                                 <select id="happenShift" name="happenShift" class="form-control-order form-control" required="required"
                                         ng-model="rrProblemEdit.rrProblem.happenShift" style="width: 60%">
                                     <option value="">请选择</option>
-                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList"
+                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList | myFilter:8"
                                             value="{{dpcoiConfigDate.configValue}}" ng-selected="rrProblemEdit.rrProblem.happenShift==dpcoiConfigDate.configValue"
-                                            ng-show="dpcoiConfigDate.configCodeId==8">{{dpcoiConfigDate.configValue}}</option>
+                                            >{{dpcoiConfigDate.configValue}}</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -223,9 +223,9 @@
                                 <select id="responsibleDepartment" name="responsibleDepartment" class="form-control-order form-control" required="required"
                                         ng-model="rrProblemEdit.rrProblem.responsibleDepartment" style="width: 60%">
                                     <option value="">请选择</option>
-                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList"
+                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList | myFilter:9"
                                             value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.responsibleDepartment"
-                                            ng-show="dpcoiConfigDate.configCodeId==9">{{dpcoiConfigDate.configValue}}</option>
+                                            >{{dpcoiConfigDate.configValue}}</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -233,9 +233,9 @@
                                 <select id="recordPpm" name="recordPpm" class="form-control-order form-control" required="required"
                                         ng-model="rrProblemEdit.rrProblem.recordPpm" style="width: 50%">
                                     <option value="">请选择</option>
-                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList"
+                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList | myFilter:10"
                                             value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.recordPpm"
-                                            ng-show="dpcoiConfigDate.configCodeId==10">{{dpcoiConfigDate.configValue}}</option>
+                                            >{{dpcoiConfigDate.configValue}}</option>
                                 </select>
                             </div>
                         </div>

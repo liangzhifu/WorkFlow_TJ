@@ -32,18 +32,18 @@
                         <select id="problemProgress" name="problemProgress" class="form-control-order form-control" required="required"
                                 ng-model="rrProblemList.searchForm.problemProgress" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option value="">请选择</option>
-                            <option ng-repeat="dpcoiConfigDate in rrProblemList.dpcoiConfigList"
+                            <option ng-repeat="dpcoiConfigDate in rrProblemList.dpcoiConfigList | myFilter:4"
                                     value="{{dpcoiConfigDate.configValue}}"
-                                    ng-show="dpcoiConfigDate.configCodeId==4">{{dpcoiConfigDate.configValue}}</option>
+                                    >{{dpcoiConfigDate.configValue}}</option>
                         </select>
                     </div>
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
                         <label  class="control-label" for="speedOfProgress">进度：</label>
                         <select id="speedOfProgress" name="speedOfProgress" class="form-control-order form-control" required="required"
-                                ng-model="rrProblemList.searchForm.problemProgress" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 25px;height: 25px;">
+                                ng-model="rrProblemList.searchForm.speedOfProgress" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 25px;height: 25px;">
                             <option value="">请选择</option>
                             <option value="delay">delay</option>
-                            <option value="OK">OK</option>
+                            <option value="close">close</option>
                             <option value="follow">follow</option>
                         </select>
                     </div>
@@ -102,8 +102,8 @@
                         <th width="50px" class="x-grid3-header" style="padding: 0px;">进度</th>
                         <th width="400px" class="x-grid3-header" style="padding: 0px">延期原因及延期进展</th>
                         <th width="100px" class="x-grid3-header" style="padding: 0px">第一次原因调查</th>
-                        <th width="100px" class="x-grid3-header" style="padding: 0px">第二次永久对策制定</th>
-                        <th width="100px" class="x-grid3-header" style="padding: 0px">第三次永久对策有效</th>
+                        <th width="100px" class="x-grid3-header" style="padding: 0px">第二次永久<br>对策制定</th>
+                        <th width="100px" class="x-grid3-header" style="padding: 0px">第三次永久<br>对策有效</th>
                         <th width="100px" class="x-grid3-header" style="padding: 0px">第四次经验总结</th>
                         <th width="60px" class="x-grid3-header" style="padding: 0px">关闭确认</th>
                         <th width="45px" class="x-grid3-header" style="padding: 0px;">生产线</th>
@@ -111,7 +111,7 @@
                         <th width="60px" class="x-grid3-header" style="padding: 0px">发生频次</th>
                         <th width="60px" class="x-grid3-header" style="padding: 0px">不良数量</th>
                         <th width="64px" class="x-grid3-header" style="padding: 0px">批次</th>
-                        <th width="30px" class="x-grid3-header" style="padding: 0px">班次</th>
+                        <th width="35px" class="x-grid3-header" style="padding: 0px">班次</th>
                         <th width="120px" class="x-grid3-header" style="padding: 0px">责任部门</th>
                         <th width="75px" class="x-grid3-header" style="padding: 0px;">客户处是否记录PPM</th>
                         <th width="60px" class="x-grid3-header" style="padding: 0px">记录数量</th>
@@ -120,7 +120,7 @@
                         <th width="400px" class="x-grid3-header" style="padding: 0px">永久对策（14D）</th>
                         <th width="400px" class="x-grid3-header" style="padding: 0px">效果验证（34D）</th>
                         <th width="80px" class="x-grid3-header" style="padding: 0px">品清联编号</th>
-                        <th width="80px" class="x-grid3-header" style="padding: 0px;">质量警示卡编号</th>
+                        <th width="80px" class="x-grid3-header" style="padding: 0px;">质量警示<br>卡编号</th>
                         <th width="80px" class="x-grid3-header" style="padding: 0px">品推表</th>
                         <th width="80px" class="x-grid3-header" style="padding: 0px">PFMEA</th>
                         <th width="80px" class="x-grid3-header" style="padding: 0px">CPQC工程表</th>
@@ -138,7 +138,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="rrProblemDate in rrProblemList.rrProblemList">
-                        <td style="{{rrProblemDate.backgroundColor}}"><input title="" type="checkbox" name="checkbox_records" id="checkbox_records_{{rrProblemDate.id}}" value="{{rrProblemDate.id}}" class="form-control-order form-checkbox-mypage"></td>
+                        <td style="{{rrProblemDate.backgroundColor}}vertical-align:middle;"><input title="" type="checkbox" name="checkbox_records" id="checkbox_records_{{rrProblemDate.id}}" value="{{rrProblemDate.id}}" class="form-control-order form-checkbox-mypage"></td>
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.problemStatus}}</td>
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.problemNo}}</td>
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.problemType}}</td>
@@ -149,11 +149,11 @@
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.customer}}</td>
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.vehicle}}</td>
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.productNo}}</td>
-                        <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.badContent}}</td>
+                        <td style="{{rrProblemDate.backgroundColor}}white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.badContent}}</td>
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.persionLiable}}</td>
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.reportDate}}</td>
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.speedOfProgress}}</td>
-                        <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.reasonForDelay}}</td>
+                        <td style="{{rrProblemDate.backgroundColor}}white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.reasonForDelay}}</td>
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.firstDate}}</td>
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.secondDate}}</td>
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.thirdDate}}</td>
@@ -168,10 +168,10 @@
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.responsibleDepartment}}</td>
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.recordPpm}}</td>
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.recordNum}}</td>
-                        <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.temporary}}</td>
-                        <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.rootCause}}</td>
-                        <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.permanentGame}}</td>
-                        <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.effectVerification}}</td>
+                        <td style="{{rrProblemDate.backgroundColor}}white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.temporary}}</td>
+                        <td style="{{rrProblemDate.backgroundColor}}white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.rootCause}}</td>
+                        <td style="{{rrProblemDate.backgroundColor}}white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.permanentGame}}</td>
+                        <td style="{{rrProblemDate.backgroundColor}}white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.effectVerification}}</td>
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.serialNumber}}</td>
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.qualityWarningCardNumber}}</td>
                         <td style="{{rrProblemDate.backgroundColor}}white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.productScale}}</td>
