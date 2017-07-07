@@ -187,31 +187,40 @@ public class RRProblemServiceImpl implements RRProblemService {
         String reportDateStr = df.format(reportDate);
         Date nowDate = new Date();
         String nowDateStr = df.format(nowDate);
-        if(reportDateStr.compareTo(nowDateStr) < 0){
-            speedOfProgress = "delay";
-        }
         if("1/4".equals(problemProgress)){
             Date firstDate = rrProblem.getFirstDate();
-            String firstDateStr = df.format(nowDate);
-            if(reportDateStr.compareTo(firstDateStr) < 0){
+            String firstDateStr = df.format(firstDate);
+            if(reportDateStr.compareTo(nowDateStr) < 0){
+                speedOfProgress = "delay";
+            }
+            if(reportDateStr.compareTo(firstDateStr) > 0){
                 speedOfProgress = "delay";
             }
         }else if("2/4".equals(problemProgress)){
             Date secondDate = rrProblem.getSecondDate();
-            String secondDateStr = df.format(nowDate);
-            if(reportDateStr.compareTo(secondDateStr) < 0){
+            String secondDateStr = df.format(secondDate);
+            if(reportDateStr.compareTo(nowDateStr) < 0){
+                speedOfProgress = "delay";
+            }
+            if(reportDateStr.compareTo(secondDateStr) > 0){
                 speedOfProgress = "delay";
             }
         }else if("3/4".equals(problemProgress)){
             Date thirdDate = rrProblem.getThirdDate();
-            String thirdDateStr = df.format(nowDate);
-            if(reportDateStr.compareTo(thirdDateStr) < 0){
+            String thirdDateStr = df.format(thirdDate);
+            if(reportDateStr.compareTo(nowDateStr) < 0){
+                speedOfProgress = "delay";
+            }
+            if(reportDateStr.compareTo(thirdDateStr) > 0){
                 speedOfProgress = "delay";
             }
         }else if("4/4".equals(problemProgress)){
             Date fourthDate = rrProblem.getFourthDate();
-            String fourthDateStr = df.format(nowDate);
-            if(reportDateStr.compareTo(fourthDateStr) < 0){
+            String fourthDateStr = df.format(fourthDate);
+            if(reportDateStr.compareTo(nowDateStr) < 0){
+                speedOfProgress = "delay";
+            }
+            if(reportDateStr.compareTo(fourthDateStr) > 0){
                 speedOfProgress = "delay";
             }
         }else {
@@ -223,6 +232,11 @@ public class RRProblemServiceImpl implements RRProblemService {
     @Override
     public String queryDelayEmails(RRProblem rrProblem) throws ServiceException {
         return this.rRProblemDao.selectDelayEmails(rrProblem);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryRRProblemScreenShowList() throws ServiceException {
+        return this.rRProblemDao.selectRRProblemScreenShowList();
     }
 
 

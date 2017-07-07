@@ -65,6 +65,14 @@ public class RRProblemDao extends BaseDao {
     }
 
     /**
+     * 查询RR问题点屏幕显示列表
+     * @return 返回结果
+     */
+    public List<Map<String, Object>> selectRRProblemScreenShowList(){
+        return this.sqlSession.selectList("RRProblemMapper.selectRRProblemScreenShowList", null);
+    }
+
+    /**
      * 查询RR问题点列表
      * @param rrProblemQuery 查询条件
      * @return 返回结果

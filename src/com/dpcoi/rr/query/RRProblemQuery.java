@@ -21,6 +21,8 @@ public class RRProblemQuery {
 
     private String speedOfProgress;
 
+    private String ids;
+
     public Integer getStart() {
         return start;
     }
@@ -59,5 +61,13 @@ public class RRProblemQuery {
 
     public void setSpeedOfProgress(String speedOfProgress) {
         this.speedOfProgress = speedOfProgress;
+    }
+
+    public String getIds() {
+        return ids;
+    }
+
+    public void setIds(String ids) {
+        this.ids = ids;
     }
 }

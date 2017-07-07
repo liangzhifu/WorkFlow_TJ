@@ -674,6 +674,9 @@
             <if test="speedOfProgress != null and speedOfProgress != ''" >
                 and `speed_of_progress` = #{speedOfProgress,jdbcType=VARCHAR}
             </if>
+            <if test="ids != null and ids != ''" >
+                and id in (${ids})
+            </if>
         </where>
     </sql>
 
@@ -725,5 +728,20 @@
         WHERE users.`DELETE_STATE` = 0
         AND  FIND_IN_SET(users.`USER_NAME`,(SELECT GROUP_CONCAT(problem.`persion_liable`)
         FROM dpcoi_rr_problem problem WHERE problem.`id` = #{id,jdbcType=INTEGER})) &gt; 0
+    </select>
+
+    <select id="selectRRProblemScreenShowList" resultType="java.util.HashMap">
+        select id, problem_status as problemStatus, problem_no as problemNo, problem_type as problemType, engineering, problem_progress as problemProgress, tracking_level as trackingLevel,
+        happen_date as happenDate, customer, vehicle, product_no as productNo, bad_content as badContent, persion_liable as persionLiable,
+        report_date as reportDate,
+        Speed_of_progress as speedOfProgress, reason_for_delay as reasonForDelay, first_date as firstDate, second_date as secondDate, third_date as thirdDate, fourth_date as fourthDate,
+        close_confirm as closeConfirm, close_confirm_id, close_confirm_time, product_line as productLine, severity, occurrence_frequency as occurrenceFrequency,
+        bad_quantity as badQuantity, batch, happen_shift as happenShift, responsible_department as responsibleDepartment, record_ppm as recordPpm, record_num as recordNum,
+        temporary, root_cause as rootCause, permanent_game as permanentGame, effect_verification as effectVerification, serial_number as serialNumber, quality_warning_card_number as qualityWarningCardNumber,
+        product_scale as productScale, pfmea, cp, standard_book as standardBook, equipment_checklist as equipmentChecklist, always_list as alwaysList, inspection_reference_book as inspectionReferenceBook,
+        inspection_book as inspectionBook, education, change_point as changePoint, expand_trace as expandTrace, artificial, materiel, state, is_delay as isDelay
+        from dpcoi_rr_problem
+        where state = 1
+        order by id desc
     </select>
 </mapper>
