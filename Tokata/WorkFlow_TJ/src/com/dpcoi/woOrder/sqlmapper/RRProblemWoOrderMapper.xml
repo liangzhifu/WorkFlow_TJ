@@ -17,6 +17,7 @@
           and du.`DPCOI_USER_STATE` = '1'
           and rs.state_type = 1
           and dor.`DPCOI_ORDER_TYPE` = 3
+          and dor.dpcoi_order_state = 1
           <if test="badContent != null and badContent != ''" >
               and problem.`bad_content` like CONCAT('%',#{badContent,jdbcType=VARCHAR},'%')
           </if>

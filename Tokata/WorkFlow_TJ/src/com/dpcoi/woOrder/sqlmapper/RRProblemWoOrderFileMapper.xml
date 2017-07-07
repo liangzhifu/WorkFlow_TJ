@@ -12,6 +12,15 @@
           AND dwo.`DEL_FLAG` = '0'
           AND dwof.`DEL_FLAG` = '0'
           and dor.`DPCOI_ORDER_TYPE` = 3
+          <if test="badContent != null and badContent != ''" >
+              and problem.`bad_content` like CONCAT('%',#{badContent,jdbcType=VARCHAR},'%')
+          </if>
+          <if test="problemProgress != null and problemProgress != ''" >
+              and problem.`problem_progress` = #{problemProgress,jdbcType=VARCHAR}
+          </if>
+          <if test="speedOfProgress != null and speedOfProgress != ''" >
+              and problem.`speed_of_progress` = #{speedOfProgress,jdbcType=VARCHAR}
+          </if>
       </where>
     </sql>
 

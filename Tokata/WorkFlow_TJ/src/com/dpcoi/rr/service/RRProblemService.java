@@ -97,4 +97,11 @@ public interface RRProblemService {
      * @throws ServiceException 异常
      */
     public String queryDelayEmails(RRProblem rrProblem) throws ServiceException;
+
+    /**
+     * 查询屏幕显示列表
+     * @return 返回结果
+     * @throws ServiceException 异常
+     */
+    public List<Map<String, Object>> queryRRProblemScreenShowList() throws ServiceException;
 }

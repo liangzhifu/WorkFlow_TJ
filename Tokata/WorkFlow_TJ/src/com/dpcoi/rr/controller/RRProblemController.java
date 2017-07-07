@@ -23,10 +23,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -74,6 +71,37 @@ public class RRProblemController {
         Integer ministerJurisdiction = this.rRProblemService.queryMinisterJurisdiction(user);
         model.put("ministerJurisdiction", ministerJurisdiction);
         return "dpcoi/rrProblemList";
+    }
+
+    @RequestMapping("/getRRProblemScreenShowDlg.do")
+    public String getRRProblemScreenShowDlg(Map<String, Object> model) throws Exception{
+        List<Map<String, Object>> newMapList = new LinkedList<Map<String, Object>>();
+        List<Map<String, Object>> mapList = this.rRProblemService.queryRRProblemScreenShowList();
+        for(Map<String, Object> map : mapList){
+            String speedOfProgress = (String)map.get("speedOfProgress");
+            if(speedOfProgress == null || "".equals(speedOfProgress)){
+                map.put("backgroundColor", "");
+            }else if("delay".equals(speedOfProgress)){
+                Integer isDelay = (Integer)map.get("isDelay");
+                if(isDelay.intValue() == 1){
+                    map.put("backgroundColor", "background-color:GoldenRod;");
+                }else {
+                    map.put("backgroundColor", "background-color:red;");
+                }
+            }else if("follow".equals(speedOfProgress)){
+                String problemProgress = (String)map.get("problemProgress");
+                if("4/4".equals(problemProgress)){
+                    map.put("backgroundColor", "background-color:yellow;");
+                }else {
+                    map.put("backgroundColor", "");
+                }
+            }else{
+                map.put("backgroundColor", "");
+            }
+            newMapList.add(map);
+        }
+        model.put("mapList", newMapList);
+        return "dpcoi/rrProblemScreenShow";
     }
 
     /**
@@ -478,6 +506,7 @@ public class RRProblemController {
                 RRProblem newRRProblem = new RRProblem();
                 newRRProblem.setId(rrProblem.getId());
                 newRRProblem.setState(3);
+                newRRProblem.setCloseConfirm("已作废");
                 this.rRProblemService.updateRRProblem(newRRProblem);
                 DpcoiOrder dpcoiOrder = this.dpcoiOrderService.queryDpcoiOrderByRRProblem(rrProblem.getId());
                 if(dpcoiOrder != null){
@@ -509,6 +538,7 @@ public class RRProblemController {
             }else if(state == 3){
                 throw new Exception("RR问题点已作废，不能延期！");
             }else{
+                rrProblem.setCloseConfirm("延期");
                 rrProblem.setIsDelay(1);
                 this.rRProblemService.updateRRProblem(rrProblem);
             }
