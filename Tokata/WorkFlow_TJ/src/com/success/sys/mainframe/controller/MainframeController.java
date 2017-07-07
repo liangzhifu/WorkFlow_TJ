@@ -85,6 +85,7 @@ public class MainframeController {
 						userMenuQuery.setUserId(user.getUserId());
 						userMenuQuery.setModuleId(moduleList.get(0).getId());
 						List<UserMenu> menuList = this.menuService.selectUserMenu(userMenuQuery);
+						List<UserMenu> newMenuList = this.getNewUserMenu(user, menuList);
 						model.put("subCatalogList", menuList);
 					}
 				}else {
@@ -103,7 +104,7 @@ public class MainframeController {
 	}
 
 	@RequestMapping("/viewMainframe.do")
-	public String viewMainframe(HttpServletRequest request,HttpServletResponse response, Map<String, Object> model){
+	public String viewMainframe(HttpServletRequest request,HttpServletResponse response, Map<String, Object> model) throws Exception{
 		try{
 			User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
 			model.put("staff", new JSONObject(user));
@@ -122,7 +123,8 @@ public class MainframeController {
 				userMenuQuery.setUserId(user.getUserId());
 				userMenuQuery.setModuleId(moduleList.get(0).getId());
 				List<UserMenu> menuList = this.menuService.selectUserMenu(userMenuQuery);
-				model.put("subCatalogList", menuList);
+				List<UserMenu> newMenuList = this.getNewUserMenu(user, menuList);
+				model.put("subCatalogList", newMenuList);
 			}
 
 			return "mainframe/mainframe";
@@ -147,6 +149,11 @@ public class MainframeController {
 		userMenuQuery.setUserId(user.getUserId());
 		userMenuQuery.setModuleId(catalogId);
 		List<UserMenu> menuList = this.menuService.selectUserMenu(userMenuQuery);
+		List<UserMenu> newMenuList = this.getNewUserMenu(user, menuList);
+		AjaxUtil.ajaxResponse(response, new JSONArray(newMenuList).toString() , AjaxUtil.RESPONCE_TYPE_JSON);
+	}
+
+	private List<UserMenu> getNewUserMenu(User user, List<UserMenu> menuList) throws Exception{
 		List<UserMenu> newMenuList = new LinkedList<UserMenu>();
 		for(UserMenu userMenu : menuList){
 			Integer menuId = userMenu.getMenuId();
@@ -165,9 +172,10 @@ public class MainframeController {
 				Page page = this.detailService.queryTaskAgentPage(query, 1, 10);
 				number = Integer.valueOf(String.valueOf(page.getTotalNumber()));
 			}
-			userMenu.setNumber(number);
+			userMenu.setWoOrderNumber(number);
 			newMenuList.add(userMenu);
 		}
-		AjaxUtil.ajaxResponse(response, new JSONArray(newMenuList).toString() , AjaxUtil.RESPONCE_TYPE_JSON);
+		return newMenuList;
 	}
+
 }
