@@ -291,4 +291,18 @@ rrProblemWoOrderListApp.controller("rrProblemWoOrderListController", function ($
     });
 });
 
+rrProblemWoOrderListApp.filter('myFilter', function() {
+    return function(inputArray, configCodeId) {
+        var array = [];
+        for(var i = 0; i < inputArray.length ; i++){
+            var obj = inputArray[i];
+            var id = obj.configCodeId;
+            if(id == configCodeId){
+                array.push(obj);
+            }
+        }
+        return array;
+    };
+});
+
 angular.bootstrap(document, [ 'rrProblemWoOrderList' ]);
