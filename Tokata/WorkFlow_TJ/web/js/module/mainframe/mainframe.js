@@ -36,7 +36,7 @@ var mainframeConfig = (function() {
 						var dataHtml = "";
 						for(var i=0;i<data.length;i++){
 							var catalog = data[i];
-							var number = catalog.number;
+							var number = catalog.woOrderNumber;
 							if(number == 0){
                                 dataHtml += '<div class="subM02 subc2" id="subCatalog'+catalog.menuId+'" title="'+catalog.menuName+'" moduleId="'+catalog.menuId+'" moduleUrl="'+catalog.menuUrl+'">'
                                     +catalog.menuName
