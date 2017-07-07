@@ -29,9 +29,9 @@
                         <select id="problemProgress" name="problemProgress" class="form-control-order form-control" required="required"
                                 ng-model="rrProblemWoOrderList.searchForm.problemProgress" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option value="">请选择</option>
-                            <option ng-repeat="dpcoiConfigDate in rrProblemWoOrderList.dpcoiConfigList"
+                            <option ng-repeat="dpcoiConfigDate in rrProblemWoOrderList.dpcoiConfigList | myFilter:4"
                                     value="{{dpcoiConfigDate.configValue}}"
-                                    ng-show="dpcoiConfigDate.configCodeId==4">{{dpcoiConfigDate.configValue}}</option>
+                                    >{{dpcoiConfigDate.configValue}}</option>
                         </select>
                     </div>
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
@@ -40,7 +40,7 @@
                                 ng-model="rrProblemWoOrderList.searchForm.speedOfProgress" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 25px;height: 25px;">
                             <option value="">请选择</option>
                             <option value="delay">delay</option>
-                            <option value="OK">OK</option>
+                            <option value="close">close</option>
                             <option value="follow">follow</option>
                         </select>
                     </div>
@@ -108,10 +108,10 @@
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
                             {{rrProblemWoOrderDate.severity}}
                         </td>
-                        <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
+                        <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">
                             {{rrProblemWoOrderDate.rootCause}}
                         </td>
-                        <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
+                        <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">
                             {{rrProblemWoOrderDate.permanentGame}}
                         </td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
