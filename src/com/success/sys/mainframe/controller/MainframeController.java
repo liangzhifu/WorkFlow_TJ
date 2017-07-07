@@ -8,6 +8,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.dpcoi.woOrder.query.DpcoiWoOrderQuery;
+import com.dpcoi.woOrder.query.RRProblemWoOrderQuery;
+import com.dpcoi.woOrder.service.DpcoiWoOrderService;
+import com.dpcoi.woOrder.service.RRProblemWoOrderService;
+import com.success.task.detail.query.DetailQuery;
+import com.success.task.detail.service.DetailService;
+import com.success.web.framework.mybatis.Page;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -39,6 +46,15 @@ public class MainframeController {
 	
 	@Resource(name = "userService")
 	private UserService userService;
+
+	@Resource(name = "dpcoiWoOrderService")
+	private DpcoiWoOrderService dpcoiWoOrderService;
+
+	@Resource(name = "rRProblemWoOrderService")
+	private RRProblemWoOrderService rRProblemWoOrderService;
+
+	@Resource(name = "detailService")
+	private DetailService detailService;
 	
 	@RequestMapping("/loginAuthenticateFromOA.do")
 	public String loginAuthenticateFromOA(HttpServletRequest request, HttpServletResponse response, Map<String, Object> model){
@@ -124,13 +140,34 @@ public class MainframeController {
 	 * @return
 	 */
 	@RequestMapping("/mainframe/getSubCatalog.do")
-	public void getSubCatalog(HttpServletRequest request,HttpServletResponse response, Map<String, Object> model){
+	public void getSubCatalog(HttpServletRequest request,HttpServletResponse response, Map<String, Object> model) throws Exception{
 		Integer catalogId = ServletAPIUtil.getIntegerParameter("catalogId", request);
 		UserMenuQuery userMenuQuery = new UserMenuQuery();
 		User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
 		userMenuQuery.setUserId(user.getUserId());
 		userMenuQuery.setModuleId(catalogId);
 		List<UserMenu> menuList = this.menuService.selectUserMenu(userMenuQuery);
-		AjaxUtil.ajaxResponse(response, new JSONArray(menuList).toString() , AjaxUtil.RESPONCE_TYPE_JSON);
+		List<UserMenu> newMenuList = new LinkedList<UserMenu>();
+		for(UserMenu userMenu : menuList){
+			Integer menuId = userMenu.getMenuId();
+			Integer number = 0;
+			if(menuId == 29){//RR代办
+				RRProblemWoOrderQuery rrProblemWoOrderQuery = new RRProblemWoOrderQuery();
+				rrProblemWoOrderQuery.setDpcoiUserId(user.getUserId());
+				number = this.rRProblemWoOrderService.queryRRProblemWoOrderCount(rrProblemWoOrderQuery);
+			}else if(menuId == 18){//DPCOI代办
+				DpcoiWoOrderQuery dpcoiWoOrderQuery = new DpcoiWoOrderQuery();
+				dpcoiWoOrderQuery.setDpcoiUserId(user.getUserId());
+				number = this.dpcoiWoOrderService.queryDpcoiWoOrderCount(dpcoiWoOrderQuery);
+			}else if(menuId == 1){//4M代办
+				DetailQuery query = new DetailQuery();
+				query.setUserId(user.getUserId());
+				Page page = this.detailService.queryTaskAgentPage(query, 1, 10);
+				number = Integer.valueOf(String.valueOf(page.getTotalNumber()));
+			}
+			userMenu.setNumber(number);
+			newMenuList.add(userMenu);
+		}
+		AjaxUtil.ajaxResponse(response, new JSONArray(newMenuList).toString() , AjaxUtil.RESPONCE_TYPE_JSON);
 	}
 }
