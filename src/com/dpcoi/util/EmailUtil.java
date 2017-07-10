@@ -35,6 +35,7 @@ public class EmailUtil {
                     .append("<br>").append("严重度:").append(rrProblem.getSeverity())
                     .append("<br>").append("根本原因:").append(rrProblem.getRootCause())
                     .append("<br>").append("永久对策:").append(rrProblem.getPermanentGame());
+            timeTask.setEmailTitle(rrProblem.getProblemNo());
         }else {
             comment.append("《设变通知书》编号:").append(dpcoiOrder.getIssuedNo())
                     .append("<br>").append("设变号:").append(dpcoiOrder.getDesignChangeNo())
@@ -49,6 +50,11 @@ public class EmailUtil {
                     .append("<br>").append("量准担当:").append(dpcoiOrder.getQuasiActName())
                     .append("<br>").append("备注:").append(dpcoiOrder.getRemark())
                     .append("<br>").append("4M发行编号:").append(dpcoiOrder.getTaskOrderNo());
+            if(dpcoiOrder.getIssuedNo() == null || "".equals(dpcoiOrder.getIssuedNo())){
+                timeTask.setEmailTitle(dpcoiOrder.getTaskOrderNo());
+            }else{
+                timeTask.setEmailTitle(dpcoiOrder.getIssuedNo());
+            }
         }
         timeTask.setComment(comment.toString());
         timeTask.setUserEmail(emailUser);
