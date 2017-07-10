@@ -85,7 +85,7 @@
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemWoOrderFileDate.customer}}</td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemWoOrderFileDate.vehicle}}</td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemWoOrderFileDate.productNo}}</td>
-                        <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemWoOrderFileDate.badContent}}</td>
+                        <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;text-align: left;">{{rrProblemWoOrderFileDate.badContent}}</td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemWoOrderFileDate.productLine}}</td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemWoOrderFileDate.severity}}</td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">

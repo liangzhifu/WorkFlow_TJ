@@ -22,7 +22,7 @@
                         <thead>
                             <tr>
                                 <th width="90px" class="x-grid3-header">问题类型</th>
-                                <th width="70px" class="x-grid3-header">问题进展</th>
+                                <th width="35px" class="x-grid3-header">进展</th>
                                 <th width="80px" class="x-grid3-header">发生日期</th>
                                 <th width="70px" class="x-grid3-header">车型</th>
                                 <th width="80px" class="x-grid3-header">品名</th>
@@ -40,7 +40,7 @@
                                     <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">${item.happenDate}</td>
                                     <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">${item.vehicle}</td>
                                     <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">${item.productNo}</td>
-                                    <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">${item.badContent}</td>
+                                    <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;text-align: left;">${item.badContent}</td>
                                     <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">${item.persionLiable}</td>
                                     <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">${item.reportDate}</td>
                                     <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">${item.speedOfProgress}</td>

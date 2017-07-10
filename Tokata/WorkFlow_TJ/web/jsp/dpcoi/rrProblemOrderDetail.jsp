@@ -57,7 +57,7 @@
                                     <label class="control-label">严重度：${rrProblem.severity}</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="control-label">问题进展：${rrProblem.reasonForDelay}</label>
+                                    <label class="control-label">根本原因：${rrProblem.rootCause}</label>
                                 </div>
                             </div>
                             <div class="row">

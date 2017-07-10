@@ -147,6 +147,9 @@
                                 <div class="col-md-2">
                                     <label class="control-label">永久对策：${rrProblem.permanentGame}</label>
                                 </div>
+                                <div class="col-md-2">
+                                    <label class="control-label">不良内容：${rrProblem.badContent}</label>
+                                </div>
                             </div>
                         </div>
                     </div>
