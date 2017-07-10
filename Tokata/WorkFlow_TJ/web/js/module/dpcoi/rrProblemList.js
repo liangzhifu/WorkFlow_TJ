@@ -59,7 +59,9 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         "materiel" : "N/A",
         "state" : "",
         "isDelay": "",
-        "backgroundColor":""
+        isRed:false,
+        isGoldenRod:false,
+        isYellow:false
     }];
     $scope.rrProblemList.pageInfo = {"url":"/WorkFlow/rrProblem/getRRProblemListPage.do"};
     $scope.rrProblemList.firstPage = function () {
@@ -114,6 +116,9 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                         $scope.rrProblemList.pageInfo.lastPageDisabled = false;
                     }
                     for(var i = 0; i < $scope.rrProblemList.rrProblemList.length; i++){
+                        $scope.rrProblemList.rrProblemList[i].isRed=false;
+                        $scope.rrProblemList.rrProblemList[i].isGoldenRod=false;
+                        $scope.rrProblemList.rrProblemList[i].isYellow=false;
                         var obj = $scope.rrProblemList.rrProblemList[i];
                         var speedOfProgress = obj.speedOfProgress;
                         if(speedOfProgress == undefined || speedOfProgress == null || speedOfProgress == ""){
@@ -121,21 +126,19 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                         }else if(speedOfProgress == "delay"){
                             var isDelay = obj.isDelay;
                             if(isDelay == undefined || isDelay == null){
-                                $scope.rrProblemList.rrProblemList[i].backgroundColor = "background-color:red;";
+                                $scope.rrProblemList.rrProblemList[i].isRed = true;
                             }else if(isDelay == 1){
-                                $scope.rrProblemList.rrProblemList[i].backgroundColor = "background-color:GoldenRod;";
+                                $scope.rrProblemList.rrProblemList[i].isGoldenRod = true;
                             }else {
-                                $scope.rrProblemList.rrProblemList[i].backgroundColor = "background-color:red;";
+                                $scope.rrProblemList.rrProblemList[i].isRed = true;
                             }
                         }else if(speedOfProgress == "follow"){
                             var problemProgress = obj.problemProgress;
                             if(problemProgress == "4/4"){
-                                $scope.rrProblemList.rrProblemList[i].backgroundColor = "background-color:yellow;";
+                                $scope.rrProblemList.rrProblemList[i].isYellow = true;
                             }else {
-                                $scope.rrProblemList.rrProblemList[i].backgroundColor = "";
                             }
                         }else{
-                            $scope.rrProblemList.rrProblemList[i].backgroundColor = "";
                         }
                     }
                     $scope.$apply();
