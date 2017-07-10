@@ -44,7 +44,7 @@ var mainframeConfig = (function() {
 							}else {
                                 dataHtml += '<div class="subM02 subc2" id="subCatalog'+catalog.menuId+'" title="'+catalog.menuName+'" moduleId="'+catalog.menuId+'" moduleUrl="'+catalog.menuUrl+'">'
                                     +catalog.menuName
-                                    +'<span style="position:absolute;top: 0px;right: 0px;width: 20px;height: 14px;font-size: 12px;line-height: 14px;color:red; ">'+number+'</span>'
+                                    +'<span style="position:absolute;top: 0px;right: 0px;width: 20px;height: 14px;font-size: 12px;line-height: 14px;color:red;font-weight:bold;font-style:italic;background-color:blue;">'+number+'</span>'
                                     +'</div>';
 							}
 						}
