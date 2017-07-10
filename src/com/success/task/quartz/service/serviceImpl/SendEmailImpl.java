@@ -144,6 +144,10 @@ public class SendEmailImpl {
 							
 						}
 						//内容
+						String emailTitle = timeTask.getEmailTitle();
+						if(!(emailTitle == null || "".equals(emailTitle))){
+							subject = emailTitle + ":" + subject;
+						}
 						String content = timeTask.getComment() + "<br>系统URL：http://s401app09.cn.takatacorp.com";
 						sendMailDao.send("403_4M@cn.takata.com", toMailAddress, subject, content);
 						timeTask.setDeleteState(1);
