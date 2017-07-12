@@ -16,7 +16,7 @@
 		<result property="userEmail" column="user_email" />
 		<result property="failedNum" column="failed_num" />
 		<result property="comment" column="comment" />
-		<result property="email_title" column="emailTitle" />
+		<result property="emailTitle" column="email_title" />
 	</resultMap>
 
 	<select id="selectTimeTask" resultMap="timeTaskResultMap" parameterType="TimeTaskQuery">
