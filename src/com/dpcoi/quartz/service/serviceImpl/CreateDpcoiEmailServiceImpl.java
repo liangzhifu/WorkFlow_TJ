@@ -66,6 +66,7 @@ public class CreateDpcoiEmailServiceImpl {
 
                 StringBuffer contentBuffer = new StringBuffer();
                 Integer rrProbleId = (Integer)map.get("rrProblemId");
+                String emailTitle = "";
                 if(rrProbleId == null){
                     contentBuffer.append("《设变通知书》编号:").append(issuedNo)
                             .append("<br>").append("设变号:").append(designChangeNo)
@@ -80,6 +81,11 @@ public class CreateDpcoiEmailServiceImpl {
                             .append("<br>").append("量准担当:").append(quaisActName)
                             .append("<br>").append("备注:").append(remark)
                             .append("<br>").append("4M发行编号:").append(taskOrderNo);
+                    if(issuedNo == null || "".equals(issuedNo)){
+                        emailTitle = issuedNo;
+                    }else {
+                        emailTitle = taskOrderNo;
+                    }
                 }else {
                     RRProblem rrProblem = new RRProblem();
                     rrProblem.setId(rrProbleId);
@@ -96,6 +102,7 @@ public class CreateDpcoiEmailServiceImpl {
                             .append("<br>").append("严重度:").append(rrProblem.getSeverity())
                             .append("<br>").append("根本原因:").append(rrProblem.getRootCause())
                             .append("<br>").append("永久对策:").append(rrProblem.getPermanentGame());
+                    emailTitle = rrProblem.getProblemNo();
                 }
 
                 DpcoiOrder dpcoiOrder = new DpcoiOrder();
@@ -124,6 +131,7 @@ public class CreateDpcoiEmailServiceImpl {
                 timeTask.setNoticeType(noticeType);
                 timeTask.setComment(contentBuffer.toString());
                 timeTask.setUserEmail(emailStr);
+                timeTask.setEmailTitle(emailTitle);
                 timeTask.setDeleteState(0);
                 //判断是否节假日
                 Integer holidayNum = this.dpcoiWoOrderDao.selectHoliday(new Date());
@@ -193,6 +201,11 @@ public class CreateDpcoiEmailServiceImpl {
                 timeTask.setNoticeType(noticeType);
                 timeTask.setComment(contentBuffer.toString());
                 timeTask.setUserEmail(emailStr);
+                if(issuedNo == null || "".equals(issuedNo)){
+                    timeTask.setEmailTitle(issuedNo);
+                }else {
+                    timeTask.setEmailTitle(taskOrderNo);
+                }
                 timeTask.setDeleteState(0);
                 this.timeTaskDao.insertTimeTask(timeTask);
             }

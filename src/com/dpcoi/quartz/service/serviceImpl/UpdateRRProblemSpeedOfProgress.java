@@ -55,6 +55,7 @@ public class UpdateRRProblemSpeedOfProgress {
                     String emailUser = this.rRProblemService.queryDelayEmails(rrProblem);
                     timeTask.setUserEmail(emailUser);
                     timeTask.setDeleteState(0);
+                    timeTask.setEmailTitle(rrProblem.getProblemNo());
                     this.timeTaskDao.insertTimeTask(timeTask);
                 }
                 this.rRProblemService.updateRRProblem(rrProblem);
