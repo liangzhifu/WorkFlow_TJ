@@ -18,7 +18,7 @@
         <div class="page-content" >
 
             <div class="modal-body" style="padding: 3px;" id="searchTable">
-                <div class="row" style="margin-top: 15px;">
+                <div class="row" style="margin-bottom: 4px;margin-top: 15px;">
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
                         <label  class="control-label" for="badContent">不良内容：</label>
                         <input type="text" name="badContent" id="badContent" ng-model="rrProblemWoOrderFileList.searchForm.badContent"
@@ -37,11 +37,111 @@
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
                         <label  class="control-label" for="speedOfProgress">进度：</label>
                         <select id="speedOfProgress" name="speedOfProgress" class="form-control-order form-control" required="required"
-                                ng-model="rrProblemWoOrderFileList.searchForm.speedOfProgress" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 25px;height: 25px;">
+                                ng-model="rrProblemWoOrderFileList.searchForm.speedOfProgress" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option value="">请选择</option>
                             <option value="delay">delay</option>
                             <option value="close">close</option>
                             <option value="follow">follow</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
+                        <label  class="control-label" for="problemStatus">状态：</label>
+                        <select id="problemStatus" name="problemStatus" class="form-control-order form-control" required="required"
+                                ng-model="rrProblemWoOrderFileList.searchForm.problemStatus" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                            <option value="">请选择</option>
+                            <option ng-repeat="dpcoiConfigDate in rrProblemWoOrderFileList.dpcoiConfigList | myFilter:1"
+                                    value="{{dpcoiConfigDate.configValue}}"
+                            >{{dpcoiConfigDate.configValue}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
+                        <label  class="control-label" for="problemType">问题类型：</label>
+                        <select id="problemType" name="problemType" class="form-control-order form-control" required="required"
+                                ng-model="rrProblemWoOrderFileList.searchForm.problemType" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                            <option value="">请选择</option>
+                            <option ng-repeat="dpcoiConfigDate in rrProblemWoOrderFileList.dpcoiConfigList | myFilter:2"
+                                    value="{{dpcoiConfigDate.configValue}}"
+                            >{{dpcoiConfigDate.configValue}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
+                        <label  class="control-label" for="engineering">工程：</label>
+                        <select id="engineering" name="engineering" class="form-control-order form-control" required="required"
+                                ng-model="rrProblemWoOrderFileList.searchForm.engineering" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                            <option value="">请选择</option>
+                            <option ng-repeat="dpcoiConfigDate in rrProblemWoOrderFileList.dpcoiConfigList | myFilter:3"
+                                    value="{{dpcoiConfigDate.configValue}}"
+                            >{{dpcoiConfigDate.configValue}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 4px;">
+                    <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
+                        <label  class="control-label" for="customer">客户：</label>
+                        <select id="customer" name="customer" class="form-control-order form-control" required="required"
+                                ng-model="rrProblemWoOrderFileList.searchForm.customer" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                            <option value="">请选择</option>
+                            <option ng-repeat="dpcoiConfigDate in rrProblemWoOrderFileList.dpcoiConfigList | myFilter:11"
+                                    value="{{dpcoiConfigDate.configValue}}"
+                            >{{dpcoiConfigDate.configValue}}</option>
+                        </select>
+
+                    </div>
+                    <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
+                        <label  class="control-label" for="vehicle">车型：</label>
+                        <input type="text" name="vehicle" id="vehicle" ng-model="rrProblemWoOrderFileList.searchForm.vehicle"
+                               class="form-control-order form-control" placeholder="车型" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                    </div>
+                    <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
+                        <label  class="control-label" for="productNo">品名：</label>
+                        <select id="productNo" name="productNo" class="form-control-order form-control" required="required"
+                                ng-model="rrProblemWoOrderFileList.searchForm.productNo" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                            <option value="">请选择</option>
+                            <option ng-repeat="dpcoiConfigDate in rrProblemWoOrderFileList.dpcoiConfigList | myFilter:5"
+                                    value="{{dpcoiConfigDate.configValue}}"
+                            >{{dpcoiConfigDate.configValue}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
+                        <label  class="control-label" for="happenDateBegin">发生日期：</label>
+                        <input type="text" name="happenDateBegin" id="happenDateBegin" ng-model="rrProblemWoOrderFileList.searchForm.happenDateBegin"
+                               class="form-control-order form-control" data-type="date" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                    </div>
+                    <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
+                        <label  class="control-label" for="happenDateEnd">至：</label>
+                        <input type="text" name="happenDateEnd" id="happenDateEnd" ng-model="rrProblemWoOrderFileList.searchForm.happenDateEnd"
+                               class="form-control-order form-control" data-type="date" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                    </div>
+                    <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
+                        <label  class="control-label" for="persionLiable">责任人：</label>
+                        <input type="text" name="persionLiable" id="persionLiable" ng-model="rrProblemWoOrderFileList.searchForm.persionLiable"
+                               class="form-control-order form-control" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
+                        <label  class="control-label" for="productLine">生产线：</label>
+                        <input type="text" name="productLine" id="productLine" ng-model="rrProblemWoOrderFileList.searchForm.productLine"
+                               class="form-control-order form-control" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                    </div>
+                    <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
+                        <label  class="control-label" for="severity">严重度：</label>
+                        <select id="severity" name="severity" class="form-control-order form-control" required="required"
+                                ng-model="rrProblemWoOrderFileList.searchForm.severity" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                            <option value="">请选择</option>
+                            <option ng-repeat="dpcoiConfigDate in rrProblemWoOrderFileList.dpcoiConfigList | myFilter:6"
+                                    value="{{dpcoiConfigDate.configValue}}"
+                            >{{dpcoiConfigDate.configValue}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
+                        <label  class="control-label" for="responsibleDepartment">责任部门：</label>
+                        <select id="responsibleDepartment" name="responsibleDepartment" class="form-control-order form-control" required="required"
+                                ng-model="rrProblemWoOrderFileList.searchForm.responsibleDepartment" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                            <option value="">请选择</option>
+                            <option ng-repeat="dpcoiConfigDate in rrProblemWoOrderFileList.dpcoiConfigList | myFilter:9"
+                                    value="{{dpcoiConfigDate.configValue}}"
+                            >{{dpcoiConfigDate.configValue}}</option>
                         </select>
                     </div>
                     <div class="col-md-4">
