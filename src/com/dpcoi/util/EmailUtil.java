@@ -49,7 +49,8 @@ public class EmailUtil {
                     .append("<br>").append("设计担当:").append(dpcoiOrder.getDesignAct())
                     .append("<br>").append("量准担当:").append(dpcoiOrder.getQuasiActName())
                     .append("<br>").append("备注:").append(dpcoiOrder.getRemark())
-                    .append("<br>").append("4M发行编号:").append(dpcoiOrder.getTaskOrderNo());
+                    .append("<br>").append("4M发行编号:").append(dpcoiOrder.getTaskOrderNo())
+                    .append("<br>").append("生产线:").append(dpcoiOrder.getProductLine());
             if(dpcoiOrder.getIssuedNo() == null || "".equals(dpcoiOrder.getIssuedNo())){
                 timeTask.setEmailTitle(dpcoiOrder.getTaskOrderNo());
             }else{
