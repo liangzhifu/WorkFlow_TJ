@@ -677,6 +677,42 @@
             <if test="ids != null and ids != ''" >
                 and id in (${ids})
             </if>
+            <if test="problemStatus != null and problemStatus != ''" >
+                and problem_status = #{problemStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="problemType != null and problemType != ''" >
+                and problem_type = #{problemType,jdbcType=VARCHAR}
+            </if>
+            <if test="engineering != null and engineering != ''" >
+                and engineering = #{engineering,jdbcType=VARCHAR}
+            </if>
+            <if test="customer != null and customer != ''" >
+                and customer = #{customer,jdbcType=VARCHAR}
+            </if>
+            <if test="vehicle != null and vehicle != ''" >
+                and vehicle like concat('%',#{vehicle,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="productNo != null and productNo != ''" >
+                and product_no = #{productNo,jdbcType=VARCHAR}
+            </if>
+            <if test="happenDateBegin != null and happenDateBegin != ''" >
+                and DATE_FORMAT(happen_date,'%Y-%m-%d') &gt;= #{happenDateBegin,jdbcType=VARCHAR}
+            </if>
+            <if test="happenDateEnd != null and happenDateEnd != ''" >
+                and DATE_FORMAT(happen_date,'%Y-%m-%d') &lt;= #{happenDateEnd,jdbcType=VARCHAR}
+            </if>
+            <if test="persionLiable != null and persionLiable != ''" >
+                and persion_liable like concat('%',#{persionLiable,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="productLine != null and productLine != ''" >
+                and product_line like concat('%',#{productLine,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="severity != null and severity != ''" >
+                and severity = #{severity,jdbcType=VARCHAR}
+            </if>
+            <if test="responsibleDepartment != null and responsibleDepartment != ''" >
+                and responsible_department = #{responsibleDepartment,jdbcType=VARCHAR}
+            </if>
         </where>
     </sql>
 

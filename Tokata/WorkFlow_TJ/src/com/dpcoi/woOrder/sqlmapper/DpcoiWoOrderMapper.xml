@@ -368,6 +368,7 @@
         dorder.`DPCOI_ORDER_STATE` AS dpcoiOrderState,
         dorder.`DPCOI_ORDER_TYPE` AS dpcoiOrderType,
         dorder.`TASK_ORDER_ID` AS taskOrderId,
+        dorder.`product_line` AS productLine,
         (SELECT info.`task_info_value` FROM task_order_info info
         WHERE info.`TASK_TYPE_INFO_ID` = '1'
         AND info.`ORDER_ID` = dorder.`TASK_ORDER_ID`) AS taskOrderNo,
@@ -420,6 +421,7 @@
         dorder.`DPCOI_ORDER_STATE` AS dpcoiOrderState,
         dorder.`DPCOI_ORDER_TYPE` AS dpcoiOrderType,
         dorder.`TASK_ORDER_ID` AS taskOrderId,
+        dorder.`product_line` AS productLine,
         (SELECT info.`task_info_value` FROM task_order_info info
         WHERE info.`TASK_TYPE_INFO_ID` = '1'
         AND info.`ORDER_ID` = dorder.`TASK_ORDER_ID`) AS taskOrderNo,

@@ -63,6 +63,7 @@ public class CreateDpcoiEmailServiceImpl {
                 String quaisActName = (String)map.get("quaisActName");
                 String remark = (String)map.get("remark");
                 String taskOrderNo = (String)map.get("taskOrderNo");
+                String productLine = (String)map.get("productLine");
 
                 StringBuffer contentBuffer = new StringBuffer();
                 Integer rrProbleId = (Integer)map.get("rrProblemId");
@@ -80,7 +81,8 @@ public class CreateDpcoiEmailServiceImpl {
                             .append("<br>").append("设计担当:").append(designAct)
                             .append("<br>").append("量准担当:").append(quaisActName)
                             .append("<br>").append("备注:").append(remark)
-                            .append("<br>").append("4M发行编号:").append(taskOrderNo);
+                            .append("<br>").append("4M发行编号:").append(taskOrderNo)
+                            .append("<br>").append("生产线:").append(productLine);
                     if(issuedNo == null || "".equals(issuedNo)){
                         emailTitle = issuedNo;
                     }else {
@@ -171,6 +173,7 @@ public class CreateDpcoiEmailServiceImpl {
                 String quaisActName = (String)map.get("quaisActName");
                 String remark = (String)map.get("remark");
                 String taskOrderNo = (String)map.get("taskOrderNo");
+                String productLine = (String)map.get("productLine");
 
                 StringBuffer contentBuffer = new StringBuffer();
                 contentBuffer.append("《设变通知书》编号:").append(issuedNo)
@@ -185,7 +188,8 @@ public class CreateDpcoiEmailServiceImpl {
                         .append("<br>").append("设计担当:").append(designAct)
                         .append("<br>").append("量准担当:").append(quaisActName)
                         .append("<br>").append("备注:").append(remark)
-                        .append("<br>").append("4M发行编号:").append(taskOrderNo);
+                        .append("<br>").append("4M发行编号:").append(taskOrderNo)
+                        .append("<br>").append("生产线:").append(productLine);
                 Integer noticeType = 32;
                 if(dpcoiWoOrderType.intValue() == 1){
                     noticeType = 32;
