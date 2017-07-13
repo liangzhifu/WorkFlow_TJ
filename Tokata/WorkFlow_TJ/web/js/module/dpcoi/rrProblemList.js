@@ -84,9 +84,23 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         "badContent": "",
         "problemProgress": "",
         "speedOfProgress": "",
+        "problemStatus" : "",
+        "problemType" : "",
+        "engineering" : "",
+        "customer" : "",
+        "vehicle" : "",
+        "productNo" : "",
+        "happenDateBegin" : "",
+        "happenDateEnd" : "",
+        "persionLiable" : "",
+        "productLine" : "",
+        "severity" : "",
+        "responsibleDepartment" : "",
         "ids":""
     }
     $scope.rrProblemList.Search = function () {
+        $scope.rrProblemList.searchForm.happenDateBegin = $("#happenDateBegin").val();
+        $scope.rrProblemList.searchForm.happenDateEnd = $("#happenDateEnd").val();
         $scope.rrProblemList.searchForm.pagenum = $scope.rrProblemList.pageInfo.page-1;
         $scope.rrProblemList.searchForm.pageCount = 10;
         $scope.rrProblemList.searchForm.size = $scope.rrProblemList.searchForm.pageCount;
@@ -319,6 +333,13 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
     });
 
     $(document).ready(function() {
+        $("input[data-type='date']").each(function () {
+            $(this).datetimepicker({
+                timepicker: false,
+                format: 'Y-m-d'
+            });
+        });
+
         $.ajax({
             method: 'post',
             url: "/WorkFlow/dpcoiConfig/getDpcoiConfigList.do",

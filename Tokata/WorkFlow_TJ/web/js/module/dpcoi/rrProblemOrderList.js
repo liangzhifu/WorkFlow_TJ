@@ -43,7 +43,19 @@ rrProblemOrderListApp.controller("rrProblemOrderListController", function ($scop
     $scope.rrProblemOrderList.searchForm = {
         "badContent": "",
         "problemProgress": "",
-        "speedOfProgress": ""
+        "speedOfProgress": "",
+        "problemStatus" : "",
+        "problemType" : "",
+        "engineering" : "",
+        "customer" : "",
+        "vehicle" : "",
+        "productNo" : "",
+        "happenDateBegin" : "",
+        "happenDateEnd" : "",
+        "persionLiable" : "",
+        "productLine" : "",
+        "severity" : "",
+        "responsibleDepartment" : ""
     }
     $scope.rrProblemOrderList.Search = function () {
         var delay = $("#delay").val();
@@ -54,6 +66,8 @@ rrProblemOrderListApp.controller("rrProblemOrderListController", function ($scop
         }else if(delay == "3"){
             $scope.rrProblemOrderList.searchForm.standardBookDelay = "1";
         }
+        $scope.rrProblemOrderList.searchForm.happenDateBegin = $("#happenDateBegin").val();
+        $scope.rrProblemOrderList.searchForm.happenDateEnd = $("#happenDateEnd").val();
         $scope.rrProblemOrderList.searchForm.pagenum = $scope.rrProblemOrderList.pageInfo.page-1;
         $scope.rrProblemOrderList.searchForm.pageCount = 10;
         $scope.rrProblemOrderList.searchForm.size = $scope.rrProblemOrderList.searchForm.pageCount;
@@ -98,6 +112,13 @@ rrProblemOrderListApp.controller("rrProblemOrderListController", function ($scop
     });
 
     $(document).ready(function() {
+        $("input[data-type='date']").each(function () {
+            $(this).datetimepicker({
+                timepicker: false,
+                format: 'Y-m-d'
+            });
+        });
+
         $.ajax({
             method: 'post',
             url: "/WorkFlow/dpcoiConfig/getDpcoiConfigList.do",
