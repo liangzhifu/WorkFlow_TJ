@@ -254,6 +254,7 @@
 		from sys_users s
 		where s.delete_state = 0
 		and s.rr_problem_persionliable = '1'
+		order by convert(s.user_name using gbk) asc
 	</select>
 
 	<select id="selectMinisterJurisdiction" parameterType="User" resultType="java.lang.Integer">

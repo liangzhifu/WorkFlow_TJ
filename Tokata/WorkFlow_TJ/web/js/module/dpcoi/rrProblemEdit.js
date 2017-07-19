@@ -232,8 +232,6 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         $("input[data-type='dateType1']").each(function () {
             $(this).datetimepicker({
                 timepicker: false,
-                maxDate : endDate,
-                minDate : startDate,
                 format: 'Y-m-d'
             });
         });
