@@ -17,6 +17,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -41,7 +42,7 @@ public class RRProblemServiceImpl implements RRProblemService {
     private DpcoiConfigVehicleDao dpcoiConfigVehicleDao;
 
     @Override
-    public Integer addRRProblem(RRProblem rrProblem) throws ServiceException {
+    public Integer addRRProblem(RRProblem rrProblem) throws Exception {
         rrProblem.setState(1);
         //获得问题编号
         String problemType = rrProblem.getProblemType();
@@ -179,7 +180,7 @@ public class RRProblemServiceImpl implements RRProblemService {
     }
 
     @Override
-    public void updateSpeedOfProgress(RRProblem rrProblem) throws ServiceException {
+    public void updateSpeedOfProgress(RRProblem rrProblem) throws Exception {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String speedOfProgress = "follow";
         String problemProgress = rrProblem.getProblemProgress();
@@ -191,42 +192,79 @@ public class RRProblemServiceImpl implements RRProblemService {
             Date firstDate = rrProblem.getFirstDate();
             String firstDateStr = df.format(firstDate);
             if(reportDateStr.compareTo(nowDateStr) < 0){
-                speedOfProgress = "delay";
+                speedOfProgress = "delayIV";
             }
             if(reportDateStr.compareTo(firstDateStr) > 0){
-                speedOfProgress = "delay";
+                speedOfProgress = "delayIV";
+                List<Calendar> calendarList = this.queryHolidayList();
+                int day = this.daysBetween(firstDateStr, reportDateStr, calendarList);
+                if(day > 1){
+                    speedOfProgress = "delayII";
+                }
             }
         }else if("2/4".equals(problemProgress)){
             Date secondDate = rrProblem.getSecondDate();
             String secondDateStr = df.format(secondDate);
             if(reportDateStr.compareTo(nowDateStr) < 0){
-                speedOfProgress = "delay";
+                speedOfProgress = "delayIV";
             }
             if(reportDateStr.compareTo(secondDateStr) > 0){
-                speedOfProgress = "delay";
+                speedOfProgress = "delayIV";
+                List<Calendar> calendarList = this.queryHolidayList();
+                int day = this.daysBetween(secondDateStr, reportDateStr, calendarList);
+                if(day > 7){
+                    speedOfProgress = "delayII";
+                }else if(day > 4){
+                    speedOfProgress = "delayIII";
+                }else {
+                    speedOfProgress = "delayIV";
+                }
             }
         }else if("3/4".equals(problemProgress)){
             Date thirdDate = rrProblem.getThirdDate();
             String thirdDateStr = df.format(thirdDate);
             if(reportDateStr.compareTo(nowDateStr) < 0){
-                speedOfProgress = "delay";
+                speedOfProgress = "delayII";
             }
             if(reportDateStr.compareTo(thirdDateStr) > 0){
-                speedOfProgress = "delay";
+                speedOfProgress = "delayII";
             }
         }else if("4/4".equals(problemProgress)){
             Date fourthDate = rrProblem.getFourthDate();
             String fourthDateStr = df.format(fourthDate);
             if(reportDateStr.compareTo(nowDateStr) < 0){
-                speedOfProgress = "delay";
+                speedOfProgress = "delayI";
             }
             if(reportDateStr.compareTo(fourthDateStr) > 0){
-                speedOfProgress = "delay";
+                speedOfProgress = "delayI";
             }
         }else {
 
         }
         rrProblem.setSpeedOfProgress(speedOfProgress);
+    }
+
+    /**
+     * 计算两个日期之间相差的天数
+     * @param smdate
+     * @param bdate
+     * @return
+     * @throws ParseException
+     */
+    private int daysBetween(String smdate, String bdate, List<Calendar> calendarList) throws ParseException {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Integer num = 0;
+        Calendar cal = Calendar.getInstance();
+        while (bdate.compareTo(smdate) >= 0){
+            cal.setTime(sdf.parse(smdate));
+            boolean holidayFlag = checkHoliday(cal, calendarList);
+            if(!holidayFlag){
+                num ++;
+            }
+            cal.add(Calendar.DAY_OF_MONTH, 1);
+            smdate = sdf.format(cal.getTime());
+        }
+        return num;
     }
 
     @Override

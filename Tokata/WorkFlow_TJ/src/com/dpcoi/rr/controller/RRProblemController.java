@@ -9,6 +9,8 @@ import com.dpcoi.order.service.DpcoiOrderService;
 import com.dpcoi.rr.domain.RRProblem;
 import com.dpcoi.rr.query.RRProblemQuery;
 import com.dpcoi.rr.service.RRProblemService;
+import com.dpcoi.statistics.domain.RRDelayStatistics;
+import com.dpcoi.statistics.service.RRDelayStatisticsService;
 import com.dpcoi.woOrder.query.DpcoiWoOrderQuery;
 import com.dpcoi.woOrder.service.DpcoiWoOrderService;
 import com.success.common.Constant;
@@ -45,6 +47,9 @@ public class RRProblemController {
 
     @Resource(name = "dpcoiWoOrderService")
     private DpcoiWoOrderService dpcoiWoOrderService;
+
+    @Resource(name = "rRDelayStatisticsService")
+    private RRDelayStatisticsService rRDelayStatisticsService;
 
     @RequestMapping("/getRRProblemAddDlg.do")
     public String getRRProblemAddDlg(Map<String, Object> model) throws Exception{
@@ -345,6 +350,7 @@ public class RRProblemController {
             oldRRProblem.setId(rrProblem.getId());
             oldRRProblem = this.rRProblemService.queryRRProblem(oldRRProblem);
             String oldChangePoint = oldRRProblem.getChangePoint();
+            String oldSpeedOfProgress = rrProblem.getSpeedOfProgress();
             String changePoint = rrProblem.getChangePoint();
             changePoint = changePoint.toUpperCase();
             rrProblem.setChangePoint(changePoint);
@@ -417,6 +423,24 @@ public class RRProblemController {
                 }
             }
             this.rRProblemService.updateSpeedOfProgress(rrProblem);
+            if("follow".equals(oldSpeedOfProgress)){
+                String speedOfProgress = rrProblem.getSpeedOfProgress();
+                if(("delayI".equals(speedOfProgress)) || ("delayII".equals(speedOfProgress)) || ("delayIII".equals(speedOfProgress)) || ("delayIV".equals(speedOfProgress))) {
+                    String persionLiable = rrProblem.getPersionLiable();
+                    String[] persionLiableArray = persionLiable.split(",");
+                    for (int i = 0; i < persionLiableArray.length; i++) {
+                        RRDelayStatistics rrDelayStatistics = new RRDelayStatistics();
+                        rrDelayStatistics.setSpeedOfProgress(speedOfProgress);
+                        rrDelayStatistics.setDelayDate(new Date());
+                        rrDelayStatistics.setDelayType(2);
+                        rrDelayStatistics.setPersionLiable(persionLiableArray[i]);
+                        rrDelayStatistics.setRrProblemId(rrProblem.getId());
+                        rrDelayStatistics.setProblemStatus(rrProblem.getProblemStatus());
+                        rrDelayStatistics.setProblemProgress(rrProblem.getProblemProgress());
+                        this.rRDelayStatisticsService.addRRDelayStatistics(rrDelayStatistics);
+                    }
+                }
+            }
             this.rRProblemService.updateRRProblem(rrProblem);
             map.put("success", true);
         }catch (Exception e){

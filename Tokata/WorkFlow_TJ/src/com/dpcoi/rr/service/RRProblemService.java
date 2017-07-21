@@ -21,7 +21,7 @@ public interface RRProblemService {
      * @return 返回结果
      * @throws ServiceException 异常
      */
-    public Integer addRRProblem(RRProblem rrProblem) throws ServiceException;
+    public Integer addRRProblem(RRProblem rrProblem) throws Exception;
 
     /**
      * 更新
@@ -88,7 +88,7 @@ public interface RRProblemService {
      * @param rrProblem RR问题
      * @throws ServiceException 异常
      */
-    public void updateSpeedOfProgress(RRProblem rrProblem) throws ServiceException;
+    public void updateSpeedOfProgress(RRProblem rrProblem) throws Exception;
 
     /**
      * 获取RR问题点延期的邮件
