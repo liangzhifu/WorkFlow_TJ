@@ -22,7 +22,9 @@
 		<typeAlias type="com.dpcoi.rr.domain.RRProblem" alias="RRProblem" />
 		<typeAlias type="com.dpcoi.rr.query.RRProblemQuery" alias="RRProblemQuery" />
 
+		<typeAlias type="com.dpcoi.statistics.domain.RRDelayStatistics" alias="RRDelayStatistics" />
 		<typeAlias type="com.dpcoi.statistics.query.DpcoiStatisticsQuery" alias="DpcoiStatisticsQuery" />
+		<typeAlias type="com.dpcoi.statistics.query.RRDelayStatisticsQuery" alias="RRDelayStatisticsQuery" />
 
 		<typeAlias type="com.dpcoi.sys.domain.DpcoiUser" alias="DpcoiUser" />
 		<typeAlias type="com.dpcoi.sys.domain.DpcoiUserRole" alias="DpcoiUserRole" />
