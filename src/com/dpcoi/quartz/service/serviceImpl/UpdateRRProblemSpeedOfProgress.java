@@ -5,12 +5,17 @@ package com.dpcoi.quartz.service.serviceImpl;/**
 
 import com.dpcoi.rr.domain.RRProblem;
 import com.dpcoi.rr.service.RRProblemService;
+import com.dpcoi.statistics.domain.RRDelayStatistics;
+import com.dpcoi.statistics.service.RRDelayStatisticsService;
 import com.success.sys.email.dao.TimeTaskDao;
 import com.success.sys.email.domain.TimeTask;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,14 +33,33 @@ public class UpdateRRProblemSpeedOfProgress {
     @Resource(name = "rRProblemService")
     private RRProblemService rRProblemService;
 
+    @Resource(name = "rRDelayStatisticsService")
+    private RRDelayStatisticsService rRDelayStatisticsService;
+
     @Scheduled(cron = "0 30 2 * * ?")
     public void job() {
         try {
             List<RRProblem> rrProblemList = this.rRProblemService.queryJobRRProblemList();
             for (RRProblem rrProblem : rrProblemList){
+                String oldSpeedOfProgress = rrProblem.getSpeedOfProgress();
                 this.rRProblemService.updateSpeedOfProgress(rrProblem);
                 String speedOfProgress = rrProblem.getSpeedOfProgress();
-                if("delay".equals(speedOfProgress)){
+                if("delayI".equals(speedOfProgress) || "delayII".equals(speedOfProgress) || "delayIII".equals(speedOfProgress) || "delayIV".equals(speedOfProgress)){
+                    if("follow".equals(oldSpeedOfProgress)){
+                        String persionLiable = rrProblem.getPersionLiable();
+                        String[] persionLiableArray = persionLiable.split(",");
+                        for(int i = 0; i < persionLiableArray.length; i++){
+                            RRDelayStatistics rrDelayStatistics = new RRDelayStatistics();
+                            rrDelayStatistics.setSpeedOfProgress(speedOfProgress);
+                            rrDelayStatistics.setDelayDate(new Date());
+                            rrDelayStatistics.setDelayType(1);
+                            rrDelayStatistics.setPersionLiable(persionLiableArray[i]);
+                            rrDelayStatistics.setRrProblemId(rrProblem.getId());
+                            rrDelayStatistics.setProblemStatus(rrProblem.getProblemStatus());
+                            rrDelayStatistics.setProblemProgress(rrProblem.getProblemProgress());
+                            this.rRDelayStatisticsService.addRRDelayStatistics(rrDelayStatistics);
+                        }
+                    }
                     TimeTask timeTask = new TimeTask();
                     timeTask.setNoticeType(38);
                     StringBuffer comment = new StringBuffer();
@@ -50,7 +74,8 @@ public class UpdateRRProblemSpeedOfProgress {
                             .append("<br>").append("生产线:").append(rrProblem.getProductLine())
                             .append("<br>").append("严重度:").append(rrProblem.getSeverity())
                             .append("<br>").append("根本原因:").append(rrProblem.getRootCause())
-                            .append("<br>").append("永久对策:").append(rrProblem.getPermanentGame());
+                            .append("<br>").append("永久对策:").append(rrProblem.getPermanentGame())
+                            .append("<br>").append("进度").append(speedOfProgress);
                     timeTask.setComment(comment.toString());
                     String emailUser = this.rRProblemService.queryDelayEmails(rrProblem);
                     timeTask.setUserEmail(emailUser);
