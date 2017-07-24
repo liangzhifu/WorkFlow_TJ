@@ -84,21 +84,32 @@ public class RRProblemController {
         List<Map<String, Object>> mapList = this.rRProblemService.queryRRProblemScreenShowList();
         for(Map<String, Object> map : mapList){
             String speedOfProgress = (String)map.get("speedOfProgress");
+            Integer isDelay = (Integer)map.get("isDelay");
             if(speedOfProgress == null || "".equals(speedOfProgress)){
                 map.put("backgroundColor", "");
-            }else if("delay".equals(speedOfProgress)){
-                Integer isDelay = (Integer)map.get("isDelay");
+            }else if("delayI".equals(speedOfProgress)){
                 if(isDelay.intValue() == 1){
-                    map.put("backgroundColor", "background-color:GoldenRod;");
+                    map.put("backgroundColor", "background-color : deepskyblue;color: #000000;!important;");
                 }else {
-                    map.put("backgroundColor", "background-color:red;");
+                    map.put("backgroundColor", "background-color : red;color: #000000;!important;");
                 }
-            }else if("follow".equals(speedOfProgress)){
-                String problemProgress = (String)map.get("problemProgress");
-                if("4/4".equals(problemProgress)){
-                    map.put("backgroundColor", "background-color:yellow;");
+            }else if("delayII".equals(speedOfProgress)){
+                if(isDelay.intValue() == 1){
+                    map.put("backgroundColor", "background-color : deepskyblue;color: #000000;!important;");
                 }else {
-                    map.put("backgroundColor", "");
+                    map.put("backgroundColor", "background-color : red;color: #000000;!important;");
+                }
+            }else if("delayIII".equals(speedOfProgress)){
+                if(isDelay.intValue() == 1){
+                    map.put("backgroundColor", "background-color : deepskyblue;color: #000000;!important;");
+                }else {
+                    map.put("backgroundColor", "background-color : GoldenRod;color: #000000;!important;");
+                }
+            }else if("delayIV".equals(speedOfProgress)){
+                if(isDelay.intValue() == 1){
+                    map.put("backgroundColor", "background-color : deepskyblue;color: #000000;!important;");
+                }else {
+                    map.put("backgroundColor", "background-color : yellow;#000000;!important;");
                 }
             }else{
                 map.put("backgroundColor", "");
