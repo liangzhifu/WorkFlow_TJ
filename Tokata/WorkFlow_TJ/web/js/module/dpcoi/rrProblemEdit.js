@@ -63,7 +63,7 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         "inspectionReferenceBook" : "",
         "inspectionBook" : "",
         "education" : "",
-        "changePoint" : "",
+        "changePoint" : "N/A",
         "expandTrace" : "N/A",
         "artificial" : "N/A",
         "materiel" : "N/A"
