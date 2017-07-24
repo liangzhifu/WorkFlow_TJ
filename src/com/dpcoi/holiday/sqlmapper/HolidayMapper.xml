@@ -87,6 +87,12 @@
     <select id="selectHolidayList" resultType="java.util.Date">
         SELECT holiday.`holiday`
         from sys_holiday holiday
-        where DATE_FORMAT(holiday.`holiday`,'%Y-%m-%d') &gt; DATE_FORMAT(sysdate(),'%Y-%m-%d')
+        where DATE_FORMAT(holiday.`holiday`,'%Y-%m-%d') &gt;= DATE_FORMAT(sysdate(),'%Y-%m-%d')
+    </select>
+
+    <select id="selectHolidayListFromBeginDate" resultType="java.util.Date" parameterType="java.lang.String">
+        SELECT holiday.`holiday`
+        from sys_holiday holiday
+        where DATE_FORMAT(holiday.`holiday`,'%Y-%m-%d') &gt;= #{beginDate}
     </select>
 </mapper>
