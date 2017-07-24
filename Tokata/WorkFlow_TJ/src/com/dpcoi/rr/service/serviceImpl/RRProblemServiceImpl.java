@@ -94,7 +94,7 @@ public class RRProblemServiceImpl implements RRProblemService {
         }
 
         Date happenDate = rrProblem.getHappenDate();
-        List<Calendar> calendarList = this.queryHolidayList();
+        List<Calendar> calendarList = this.queryHolidayList(null);
         //第一次
         Date date = this.calculationWorkingDay(happenDate, 2, calendarList);
         rrProblem.setFirstDate(date);
@@ -196,7 +196,7 @@ public class RRProblemServiceImpl implements RRProblemService {
             }
             if(reportDateStr.compareTo(firstDateStr) > 0){
                 speedOfProgress = "delayIV";
-                List<Calendar> calendarList = this.queryHolidayList();
+                List<Calendar> calendarList = this.queryHolidayList(firstDateStr);
                 int day = this.daysBetween(firstDateStr, reportDateStr, calendarList);
                 if(day > 1){
                     speedOfProgress = "delayII";
@@ -210,7 +210,7 @@ public class RRProblemServiceImpl implements RRProblemService {
             }
             if(reportDateStr.compareTo(secondDateStr) > 0){
                 speedOfProgress = "delayIV";
-                List<Calendar> calendarList = this.queryHolidayList();
+                List<Calendar> calendarList = this.queryHolidayList(secondDateStr);
                 int day = this.daysBetween(secondDateStr, reportDateStr, calendarList);
                 if(day > 7){
                     speedOfProgress = "delayII";
@@ -327,9 +327,14 @@ public class RRProblemServiceImpl implements RRProblemService {
      * 获取所有的节假日
      * @return 返回结果
      */
-    private List<Calendar> queryHolidayList(){
+    private List<Calendar> queryHolidayList(String beginDate){
         List<Calendar> calendarList = new LinkedList<Calendar>();
-        List<Date> dateList = this.holidayDao.selectHolidayList();
+        List<Date> dateList = new LinkedList<Date>();
+        if(beginDate == null || "".equals(beginDate)){
+            dateList = this.holidayDao.selectHolidayList();
+        }else {
+            dateList = this.holidayDao.selectHolidayListFromBeginDate(beginDate);
+        }
         for(Date date : dateList){
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
