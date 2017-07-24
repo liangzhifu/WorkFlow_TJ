@@ -12,6 +12,27 @@
     <%@include file="../public/js.jsp"%>
     <%@include file="../public/css.jsp"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <style type="text/css">
+        .claasRed{
+            background-color : red;
+            color: #000000;!important;
+        }
+
+        .classGoldenRod{
+            background-color : GoldenRod;
+            color: #000000;!important;
+        }
+
+        .classYellow{
+            background-color : yellow;
+            color: #000000;!important;
+        }
+
+        .cassDeepSkyBlue{
+            background-color : deepskyblue;
+            color: #000000;!important;
+        }
+    </style>
 </head>
 <body>
     <div class="main-container container-fluid" style="padding-right: 1px;padding-left: 1px;">
