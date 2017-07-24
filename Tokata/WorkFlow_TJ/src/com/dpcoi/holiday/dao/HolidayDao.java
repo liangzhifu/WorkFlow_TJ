@@ -58,7 +58,20 @@ public class HolidayDao extends BaseDao{
         return this.sqlSession.selectList("HolidayMapper.selectHolidayListPage", holidayQuery);
     }
 
+    /**
+     * 查询从当前时间的节假日
+     * @return 返回结果
+     */
     public List<Date> selectHolidayList(){
         return this.sqlSession.selectList("HolidayMapper.selectHolidayList");
+    }
+
+    /**
+     * 查询从某个时间开始的节假日
+     * @param beginDate 开始时间
+     * @return 返回结果
+     */
+    public List<Date> selectHolidayListFromBeginDate(String beginDate){
+        return this.sqlSession.selectList("HolidayMapper.selectHolidayListFromBeginDate", beginDate);
     }
 }
