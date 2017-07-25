@@ -59,7 +59,7 @@
 			var contextPath = "${pageContext.request.contextPath}";
 		</script>
 		
-		<script type="text/javascript" src="<c:url value='/js/module/screen/screenShow.js?version=58'/>"></script>
+		<script type="text/javascript" src="<c:url value='/js/module/screen/screenShow.js?version=59'/>"></script>
 	</head>
 	<body>
 		<div id="mainDiv"></div>
