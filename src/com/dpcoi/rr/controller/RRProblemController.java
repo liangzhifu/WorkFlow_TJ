@@ -199,6 +199,8 @@ public class RRProblemController {
         Map<String, Object> map = new HashMap<String, Object>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try{
+            this.validSpeedOfProgress(rrProblem);
+
             map.put("success", true);
             String changePoint = rrProblem.getChangePoint();
             changePoint = changePoint.toUpperCase();
@@ -281,85 +283,7 @@ public class RRProblemController {
         Map<String, Object> map = new HashMap<String, Object>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try{
-            String problemProgress = rrProblem.getProblemProgress();
-            if("4/4".equals(problemProgress)){
-//                String trackingLevel = rrProblem.getTrackingLevel();
-//                if(trackingLevel == null || "".equals(trackingLevel)){
-//                    throw new Exception("追踪等级不能为空！");
-//                }
-                String temporary = rrProblem.getTemporary();
-                if(temporary == null || "".equals(temporary)){
-                    throw new Exception("临时对策不能为空！");
-                }
-                String rootCause = rrProblem.getRootCause();
-                if(rootCause == null || "".equals(rootCause)){
-                    throw new Exception("根本原因不能为空！");
-                }
-                String permanentGame = rrProblem.getPermanentGame();
-                if(permanentGame == null || "".equals(permanentGame)){
-                    throw new Exception("永久对策不能为空！");
-                }
-                String effectVerification = rrProblem.getEffectVerification();
-                if(effectVerification == null || "".equals(effectVerification)){
-                    throw new Exception("效果校验不能为空！");
-                }
-                String serialNumber = rrProblem.getSerialNumber();
-                if(serialNumber == null || "".equals(serialNumber)){
-                    throw new Exception("品情联编号不能为空！");
-                }
-                String qualityWarningCardNumber = rrProblem.getQualityWarningCardNumber();
-                if(qualityWarningCardNumber == null || "".equals(qualityWarningCardNumber)){
-                    throw new Exception("质量警示卡编号不能为空！");
-                }
-                String productScale = rrProblem.getProductScale();
-                if(productScale == null || "".equals(productScale)){
-                    throw new Exception("品推表编号不能为空！");
-                }
-//                String pfmea = rrProblem.getPfmea();
-//                if(pfmea == null || "".equals(pfmea)){
-//                    throw new Exception("PFMEA不能为空！");
-//                }
-//                String cp = rrProblem.getCp();
-//                if(cp == null || "".equals(cp)){
-//                    throw new Exception("CP不能为空！");
-//                }
-//                String standardBook = rrProblem.getStandardBook();
-//                if(standardBook == null || "".equals(standardBook)){
-//                    throw new Exception("WI不能为空！");
-//                }
-                String equipmentChecklist = rrProblem.getEquipmentChecklist();
-                if(equipmentChecklist == null || "".equals(equipmentChecklist)){
-                    throw new Exception("设备点检表不能为空！");
-                }
-                String alwaysList = rrProblem.getAlwaysList();
-                if(alwaysList == null || "".equals(alwaysList)){
-                    throw new Exception("始终件表不能为空！");
-                }
-                String inspectionReferenceBook = rrProblem.getInspectionReferenceBook();
-                if(inspectionReferenceBook == null || "".equals(inspectionReferenceBook)){
-                    throw new Exception("检查基准书不能为空！");
-                }
-                String inspectionBook = rrProblem.getInspectionBook();
-                if(inspectionBook == null || "".equals(inspectionBook)){
-                    throw new Exception("检查手顺书不能为空！");
-                }
-                String education = rrProblem.getEducation();
-                if(education == null || "".equals(education)){
-                    throw new Exception("教育议事录不能为空！");
-                }
-                String expandTrace = rrProblem.getExpandTrace();
-                if(expandTrace == null || "".equals(expandTrace)){
-                    throw new Exception("展开追踪是否完成不能为空！");
-                }
-                String artificial = rrProblem.getArtificial();
-                if(artificial == null || "".equals(artificial)){
-                    throw new Exception("人工不能为空！");
-                }
-                String materiel = rrProblem.getMateriel();
-                if(materiel == null || "".equals(materiel)){
-                    throw new Exception("物料等级不能为空！");
-                }
-            }
+            validSpeedOfProgress(rrProblem);
             RRProblem oldRRProblem = new RRProblem();
             oldRRProblem.setId(rrProblem.getId());
             oldRRProblem = this.rRProblemService.queryRRProblem(oldRRProblem);
@@ -587,5 +511,92 @@ public class RRProblemController {
             map.put("message", e.getMessage());
         }
         AjaxUtil.ajaxResponse(response, new JSONObject(map).toString(), AjaxUtil.RESPONCE_TYPE_JSON);
+    }
+
+    /**
+     * 验证4/4
+     * @param rrProblem rr问题点
+     * @throws Exception 异常
+     */
+    private void validSpeedOfProgress(RRProblem rrProblem) throws Exception{
+        String problemProgress = rrProblem.getProblemProgress();
+        if("4/4".equals(problemProgress)){
+//                String trackingLevel = rrProblem.getTrackingLevel();
+//                if(trackingLevel == null || "".equals(trackingLevel)){
+//                    throw new Exception("追踪等级不能为空！");
+//                }
+            String temporary = rrProblem.getTemporary();
+            if(temporary == null || "".equals(temporary)){
+                throw new Exception("临时对策不能为空！");
+            }
+            String rootCause = rrProblem.getRootCause();
+            if(rootCause == null || "".equals(rootCause)){
+                throw new Exception("根本原因不能为空！");
+            }
+            String permanentGame = rrProblem.getPermanentGame();
+            if(permanentGame == null || "".equals(permanentGame)){
+                throw new Exception("永久对策不能为空！");
+            }
+            String effectVerification = rrProblem.getEffectVerification();
+            if(effectVerification == null || "".equals(effectVerification)){
+                throw new Exception("效果校验不能为空！");
+            }
+            String serialNumber = rrProblem.getSerialNumber();
+            if(serialNumber == null || "".equals(serialNumber)){
+                throw new Exception("品情联编号不能为空！");
+            }
+            String qualityWarningCardNumber = rrProblem.getQualityWarningCardNumber();
+            if(qualityWarningCardNumber == null || "".equals(qualityWarningCardNumber)){
+                throw new Exception("质量警示卡编号不能为空！");
+            }
+            String productScale = rrProblem.getProductScale();
+            if(productScale == null || "".equals(productScale)){
+                throw new Exception("品推表编号不能为空！");
+            }
+//                String pfmea = rrProblem.getPfmea();
+//                if(pfmea == null || "".equals(pfmea)){
+//                    throw new Exception("PFMEA不能为空！");
+//                }
+//                String cp = rrProblem.getCp();
+//                if(cp == null || "".equals(cp)){
+//                    throw new Exception("CP不能为空！");
+//                }
+//                String standardBook = rrProblem.getStandardBook();
+//                if(standardBook == null || "".equals(standardBook)){
+//                    throw new Exception("WI不能为空！");
+//                }
+            String equipmentChecklist = rrProblem.getEquipmentChecklist();
+            if(equipmentChecklist == null || "".equals(equipmentChecklist)){
+                throw new Exception("设备点检表不能为空！");
+            }
+            String alwaysList = rrProblem.getAlwaysList();
+            if(alwaysList == null || "".equals(alwaysList)){
+                throw new Exception("始终件表不能为空！");
+            }
+            String inspectionReferenceBook = rrProblem.getInspectionReferenceBook();
+            if(inspectionReferenceBook == null || "".equals(inspectionReferenceBook)){
+                throw new Exception("检查基准书不能为空！");
+            }
+            String inspectionBook = rrProblem.getInspectionBook();
+            if(inspectionBook == null || "".equals(inspectionBook)){
+                throw new Exception("检查手顺书不能为空！");
+            }
+            String education = rrProblem.getEducation();
+            if(education == null || "".equals(education)){
+                throw new Exception("教育议事录不能为空！");
+            }
+            String expandTrace = rrProblem.getExpandTrace();
+            if(expandTrace == null || "".equals(expandTrace)){
+                throw new Exception("展开追踪是否完成不能为空！");
+            }
+            String artificial = rrProblem.getArtificial();
+            if(artificial == null || "".equals(artificial)){
+                throw new Exception("人工不能为空！");
+            }
+            String materiel = rrProblem.getMateriel();
+            if(materiel == null || "".equals(materiel)){
+                throw new Exception("物料等级不能为空！");
+            }
+        }
     }
 }
