@@ -184,7 +184,7 @@ var task = {
     	if(page * pageSize >= storeCount){
     		//进行挑战页面
     		var getTimestamp=new Date().getTime();
-    		window.location.href = "http://10.234.11.21:9007/pub/problem1.aspx"+"?timestamp="+getTimestamp;
+    		window.location.href = contextPath+"/rrProblem/getRRProblemScreenShowDlg.do";
     		return;
     	}
     	Ext.Ajax.request({
