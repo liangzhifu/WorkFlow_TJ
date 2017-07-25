@@ -217,8 +217,10 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         if(rrProblem != null){
             var state = rrProblem.state;
             if(state == 2){
-                alert("已关闭，不能修改！");
-                return;
+                if($scope.rrProblemList.ministerJurisdiction != 1){
+                    alert("已关闭，不能修改！");
+                    return;
+                }
             }else if(state == 3){
                 alert("已作废，不能修改！");
                 return;
