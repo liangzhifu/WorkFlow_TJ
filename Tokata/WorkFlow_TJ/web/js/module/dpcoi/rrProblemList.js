@@ -100,6 +100,7 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         "ids":""
     }
     $scope.rrProblemList.Search = function () {
+        $scope.rrProblemList.searchForm.speedOfProgress = $("#speedOfProgress").multiselect("MyValues");
         $scope.rrProblemList.searchForm.happenDateBegin = $("#happenDateBegin").val();
         $scope.rrProblemList.searchForm.happenDateEnd = $("#happenDateEnd").val();
         $scope.rrProblemList.searchForm.pagenum = $scope.rrProblemList.pageInfo.page-1;
@@ -362,6 +363,13 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                 timepicker: false,
                 format: 'Y-m-d'
             });
+        });
+
+        $("#speedOfProgress").multiselect({
+            checkAllText: "全选",
+            uncheckAllText: '全不选',
+            header: false,
+            selectedList:4
         });
 
         $.ajax({

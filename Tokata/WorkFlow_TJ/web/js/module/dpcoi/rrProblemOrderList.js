@@ -66,6 +66,7 @@ rrProblemOrderListApp.controller("rrProblemOrderListController", function ($scop
         }else if(delay == "3"){
             $scope.rrProblemOrderList.searchForm.standardBookDelay = "1";
         }
+        $scope.rrProblemOrderList.searchForm.speedOfProgress = $("#speedOfProgress").multiselect("MyValues");
         $scope.rrProblemOrderList.searchForm.happenDateBegin = $("#happenDateBegin").val();
         $scope.rrProblemOrderList.searchForm.happenDateEnd = $("#happenDateEnd").val();
         $scope.rrProblemOrderList.searchForm.pagenum = $scope.rrProblemOrderList.pageInfo.page-1;
@@ -117,6 +118,13 @@ rrProblemOrderListApp.controller("rrProblemOrderListController", function ($scop
                 timepicker: false,
                 format: 'Y-m-d'
             });
+        });
+
+        $("#speedOfProgress").multiselect({
+            checkAllText: "全选",
+            uncheckAllText: '全不选',
+            header: false,
+            selectedList:4
         });
 
         $.ajax({
