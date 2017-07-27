@@ -22,7 +22,7 @@
               and problem.`bad_content` like CONCAT('%',#{badContent,jdbcType=VARCHAR},'%')
           </if>
           <if test="problemProgress != null and problemProgress != ''" >
-              and problem.`problem_progress` = #{problemProgress,jdbcType=VARCHAR}
+              and find_in_set(problem.`problem_progress`, #{problemProgress,jdbcType=VARCHAR})
           </if>
           <if test="speedOfProgress != null and speedOfProgress != ''" >
               and problem.`speed_of_progress` = #{speedOfProgress,jdbcType=VARCHAR}

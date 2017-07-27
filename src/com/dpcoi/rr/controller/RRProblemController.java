@@ -469,6 +469,7 @@ public class RRProblemController {
                 newRRProblem.setId(rrProblem.getId());
                 newRRProblem.setState(3);
                 newRRProblem.setCloseConfirm("已作废");
+                newRRProblem.setSpeedOfProgress("deleted");
                 this.rRProblemService.updateRRProblem(newRRProblem);
                 DpcoiOrder dpcoiOrder = this.dpcoiOrderService.queryDpcoiOrderByRRProblem(rrProblem.getId());
                 if(dpcoiOrder != null){
