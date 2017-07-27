@@ -672,7 +672,7 @@
                 and `problem_progress` = #{problemProgress,jdbcType=VARCHAR}
             </if>
             <if test="speedOfProgress != null and speedOfProgress != ''" >
-                and `speed_of_progress` = #{speedOfProgress,jdbcType=VARCHAR}
+                and find_in_set(`speed_of_progress`, #{speedOfProgress,jdbcType=VARCHAR})
             </if>
             <if test="ids != null and ids != ''" >
                 and id in (${ids})

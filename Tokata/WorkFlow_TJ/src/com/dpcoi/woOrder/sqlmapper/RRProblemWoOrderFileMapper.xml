@@ -19,7 +19,7 @@
               and problem.`problem_progress` = #{problemProgress,jdbcType=VARCHAR}
           </if>
           <if test="speedOfProgress != null and speedOfProgress != ''" >
-              and problem.`speed_of_progress` = #{speedOfProgress,jdbcType=VARCHAR}
+              and find_in_set(problem.`speed_of_progress`, #{speedOfProgress,jdbcType=VARCHAR})
           </if>
           <if test="problemStatus != null and problemStatus != ''" >
               and problem.problem_status = #{problemStatus,jdbcType=VARCHAR}
