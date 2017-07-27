@@ -37,14 +37,14 @@
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
                         <label  class="control-label" for="speedOfProgress">进度：</label>
                         <select id="speedOfProgress" name="speedOfProgress" class="form-control-order form-control" required="required"
-                                ng-model="rrProblemWoOrderFileList.searchForm.speedOfProgress" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
-                            <option value="">请选择</option>
+                                ng-model="rrProblemWoOrderFileList.searchForm.speedOfProgress" multiple="multiple" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option value="delayI">delayI</option>
                             <option value="delayII">delayII</option>
                             <option value="delayIII">delayIII</option>
                             <option value="delayIV">delayIV</option>
                             <option value="close">close</option>
                             <option value="follow">follow</option>
+                            <option value="deleted">deleted</option>
                         </select>
                     </div>
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
