@@ -341,4 +341,23 @@ public class UserController {
 		return user;
 	}
 
+	/**
+	 * 查询车型选项列表
+	 * @param response 参数
+	 * @param userQuery 查询条件
+	 */
+	@RequestMapping("/getUserList.do")
+	public void getUserList(HttpServletResponse response, UserQuery userQuery){
+		Map<String, Object> map = new HashMap<String, Object>();
+		try{
+			List<Map<String, Object>> userList = this.userService.queryUserList(userQuery);
+			map.put("userList", userList);
+			map.put("success", true);
+		}catch (Exception e){
+			e.printStackTrace();
+			map.put("success", false);
+			map.put("message", e.getMessage());
+		}
+		AjaxUtil.ajaxResponse(response, new JSONObject(map).toString(), AjaxUtil.RESPONCE_TYPE_JSON);
+	}
 }
