@@ -78,6 +78,11 @@ public class RRProblemController {
         return "dpcoi/rrProblemList";
     }
 
+    @RequestMapping("/getRRProblemViewListDlg.do")
+    public String getRRProblemViewListDlg() throws Exception{
+        return "dpcoi/rrProblemViewList";
+    }
+
     @RequestMapping("/getRRProblemScreenShowDlg.do")
     public String getRRProblemScreenShowDlg(Map<String, Object> model) throws Exception{
         List<Map<String, Object>> newMapList = new LinkedList<Map<String, Object>>();

@@ -264,4 +264,11 @@
 		AND users.`rr_minister` = 1
 		AND users.`USER_ID` = #{userId}
 	</select>
+
+	<select id="selectUserList" parameterType="UserQuery" resultType="java.util.HashMap">
+		SELECT users.`USER_ID` AS `value`,
+		users.`USER_NAME` AS `label`
+		FROM sys_users users
+		WHERE users.`DELETE_STATE` = 0
+	</select>
 </mapper>
