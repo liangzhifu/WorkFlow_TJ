@@ -106,6 +106,7 @@ rrDelayLeaderListApp.controller("rrDelayLeaderListController", function ($scope)
         $("#rrLeaderId").val("");
         $("#rrLeaderName").val("");
         $("#rrLeaderType").val("");
+        $("#delayLeaderAdd").attr("disabled",false);
         $("#rrDelayLeaderAddModal").modal("show");
     });
 
@@ -135,7 +136,6 @@ rrDelayLeaderListApp.controller("rrDelayLeaderListController", function ($scope)
                     alert(result.message);
                 }
                 $("#rrDelayLeaderAddModal").modal("hide");
-                $("#delayLeaderAdd").attr("disabled","false");
                 $scope.rrDelayLeaderList.firstPage();
             },
             error : function() {
