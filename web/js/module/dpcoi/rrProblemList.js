@@ -132,6 +132,7 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                         $scope.rrProblemList.pageInfo.lastPageDisabled = false;
                     }
                     for(var i = 0; i < $scope.rrProblemList.rrProblemList.length; i++){
+                        $scope.rrProblemList.rrProblemList[i].checkBoxValue="no";
                         $scope.rrProblemList.rrProblemList[i].isRed=false;
                         $scope.rrProblemList.rrProblemList[i].isGoldenRod=false;
                         $scope.rrProblemList.rrProblemList[i].isYellow=false;
@@ -356,6 +357,89 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
             }
         });
     });
+
+    $scope.checkBoxChange = function(index){
+
+        if($scope.rrProblemList.rrProblemList[index].checkBoxValue == "yes"){
+            $scope.rrProblemList.rrProblemList[index].checkBoxValue = "no"
+            var obj = $scope.rrProblemList.rrProblemList[index];
+            var speedOfProgress = obj.speedOfProgress;
+            if(speedOfProgress == undefined || speedOfProgress == null || speedOfProgress == ""){
+                $("#table_tr_"+index).find("td").each(function () {
+                    $(this).css("background-color","#FFFFFF");
+                });
+            }else if(speedOfProgress == "delayI"){
+                var isDelay = obj.isDelay;
+                if(isDelay == undefined || isDelay == null){
+                    $("#table_tr_"+index).find("td").each(function () {
+                        $(this).css("background-color","red");
+                    });
+                }else if(isDelay == 1){
+                    $("#table_tr_"+index).find("td").each(function () {
+                        $(this).css("background-color","deepskyblue");
+                    });
+                }else {
+                    $("#table_tr_"+index).find("td").each(function () {
+                        $(this).css("background-color","red");
+                    });
+                }
+            }else if(speedOfProgress == "delayII"){
+                var isDelay = obj.isDelay;
+                if(isDelay == undefined || isDelay == null){
+                    $("#table_tr_"+index).find("td").each(function () {
+                        $(this).css("background-color","red");
+                    });
+                }else if(isDelay == 1){
+                    $("#table_tr_"+index).find("td").each(function () {
+                        $(this).css("background-color","deepskyblue");
+                    });
+                }else {
+                    $("#table_tr_"+index).find("td").each(function () {
+                        $(this).css("background-color","red");
+                    });
+                }
+            }else if(speedOfProgress == "delayIII"){
+                var isDelay = obj.isDelay;
+                if(isDelay == undefined || isDelay == null){
+                    $("#table_tr_"+index).find("td").each(function () {
+                        $(this).css("background-color","GoldenRod");
+                    });
+                }else if(isDelay == 1){
+                    $("#table_tr_"+index).find("td").each(function () {
+                        $(this).css("background-color","deepskyblue");
+                    });
+                }else {
+                    $("#table_tr_"+index).find("td").each(function () {
+                        $(this).css("background-color","GoldenRod");
+                    });
+                }
+            }else if(speedOfProgress == "delayIV"){
+                var isDelay = obj.isDelay;
+                if(isDelay == undefined || isDelay == null){
+                    $("#table_tr_"+index).find("td").each(function () {
+                        $(this).css("background-color","yellow");
+                    });
+                }else if(isDelay == 1){
+                    $("#table_tr_"+index).find("td").each(function () {
+                        $(this).css("background-color","deepskyblue");
+                    });
+                }else {
+                    $("#table_tr_"+index).find("td").each(function () {
+                        $(this).css("background-color","yellow");
+                    });
+                }
+            }else{
+                $("#table_tr_"+index).find("td").each(function () {
+                    $(this).css("background-color","#FFFFFF");
+                });
+            }
+        }else {
+            $scope.rrProblemList.rrProblemList[index].checkBoxValue = "yes";
+            $("#table_tr_"+index).find("td").each(function () {
+                $(this).css("background-color","#fff5d2");
+            })
+        }
+    };
 
     $(document).ready(function() {
         $("input[data-type='date']").each(function () {
