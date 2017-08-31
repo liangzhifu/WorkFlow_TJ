@@ -167,10 +167,11 @@
                         <th width="7%" class="x-grid3-header" style="padding: 0px">问题编号</th>
                         <th width="4%" class="x-grid3-header" style="padding: 0px">问题类型</th>
                         <th width="2%" class="x-grid3-header" style="padding: 0px">工程</th>
+                        <th width="2%" class="x-grid3-header" style="padding: 0px">进展</th>
                         <th width="4%" class="x-grid3-header" style="padding: 0px">客户</th>
                         <th width="4%" class="x-grid3-header" style="padding: 0px">车型</th>
                         <th width="6%" class="x-grid3-header" style="padding: 0px">品名</th>
-                        <th width="14%" class="x-grid3-header" style="padding: 0px">不良内容</th>
+                        <th width="12%" class="x-grid3-header" style="padding: 0px">不良内容</th>
                         <th width="6%" class="x-grid3-header" style="padding: 0px">生产线</th>
                         <th width="3%" class="x-grid3-header" style="padding: 0px">严重度</th>
                         <th width="9%" class="x-grid3-header" style="padding: 0px">根本原因</th>
@@ -192,6 +193,9 @@
                         </td>
                         <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">
                             {{rrProblemWoOrderDate.engineering}}
+                        </td>
+                        <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">
+                            {{rrProblemWoOrderDate.problemProgress}}
                         </td>
                         <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">
                             {{rrProblemWoOrderDate.customer}}

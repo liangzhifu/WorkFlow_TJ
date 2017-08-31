@@ -87,6 +87,7 @@
         problem.`Speed_of_progress` as speedOfProgress,
         problem.root_cause as rootCause,
         problem.permanent_game as permanentGame,
+        problem.problem_progress as problemProgress,
         wo.`DPCOI_WO_ORDER_ID` as rrProblemWoOrderId,
         wo.`DPCOI_WO_ORDER_STATE` as rrProblemWoOrderState,
         wo.`DPCOI_WO_ORDER_TYPE` as rrProblemWoOrderType

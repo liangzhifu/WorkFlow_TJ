@@ -167,6 +167,7 @@
                         <th width="7%" class="x-grid3-header" style="padding: 0px">问题编号</th>
                         <th width="5%" class="x-grid3-header" style="padding: 0px">问题类型</th>
                         <th width="3%" class="x-grid3-header" style="padding: 0px">工程</th>
+                        <th width="3%" class="x-grid3-header" style="padding: 0px">进展</th>
                         <th width="6%" class="x-grid3-header" style="padding: 0px">客户</th>
                         <th width="6%" class="x-grid3-header" style="padding: 0px">车型</th>
                         <th width="6%" class="x-grid3-header" style="padding: 0px">品名</th>
@@ -175,7 +176,7 @@
                         <th width="6%" class="x-grid3-header" style="padding: 0px">严重度</th>
                         <th width="5%" class="x-grid3-header" style="padding: 0px">工单类型</th>
                         <th width="6%" class="x-grid3-header" style="padding: 0px">工单状态</th>
-                        <th width="15%" class="x-grid3-header" style="padding: 0px">文件名称</th>
+                        <th width="12%" class="x-grid3-header" style="padding: 0px">文件名称</th>
                         <th width="5%" class="x-grid3-header" style="padding: 0px">操作</th>
                     </tr>
                     </thead>
@@ -185,6 +186,7 @@
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemWoOrderFileDate.problemNo}}</td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemWoOrderFileDate.problemType}}</td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemWoOrderFileDate.engineering}}</td>
+                        <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemWoOrderFileDate.problemProgress}}</td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemWoOrderFileDate.customer}}</td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemWoOrderFileDate.vehicle}}</td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemWoOrderFileDate.productNo}}</td>

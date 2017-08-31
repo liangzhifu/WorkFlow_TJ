@@ -25,6 +25,7 @@ rrProblemWoOrderListApp.controller("rrProblemWoOrderListController", function ($
         "problemNo" : "",
         "problemType" : "",
         "engineering" : "",
+        "problemProgress" : "",
         "customer" : "",
         "vehicle" : "",
         "productNo" : "",

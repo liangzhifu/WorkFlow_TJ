@@ -8,6 +8,7 @@ rrProblemWoOrderFileListApp.controller("rrProblemWoOrderFileListController", fun
         "dpcoiWoOrderType" : "",
         "dpcoiWoOrderState" : "",
         "taskOrderNo" : "",
+        "problemProgress" : "",
         "fileId" : "",
         "fileName" : "",
         "fileType" : "",

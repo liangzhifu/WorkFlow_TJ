@@ -79,6 +79,7 @@
         problem.`Speed_of_progress` as speedOfProgress,
         problem.root_cause as rootCause,
         problem.permanent_game as permanentGame,
+        problem.problem_progress as problemProgress,
         fu.`FILE_ID` AS fileId,
         fu.`FILE_NAME` AS fileName,
         fu.`FILe_TYPE` AS fileType,

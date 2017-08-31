@@ -11,6 +11,7 @@ rrProblemOrderListApp.controller("rrProblemOrderListController", function ($scop
         "problemNo" : "",
         "problemType" : "",
         "engineering" : "",
+        "problemProgress" : "",
         "customer" : "",
         "vehicle" : "",
         "productNo" : "",

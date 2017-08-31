@@ -72,6 +72,7 @@
         problem.`Speed_of_progress` as speedOfProgress,
         problem.root_cause as rootCause,
         problem.permanent_game as permanentGame,
+        problem.problem_progress as problemProgress,
         (select dwo.`DPCOI_WO_ORDER_TYPE` from dpcoi_wo_order dwo
         where dwo.`DPCOI_ORDER_ID` = dor.`DPCOI_ORDER_ID`
         and dwo.`DPCOI_WO_ORDER_STATE` in (1, 2, 3)) as dpcoiWoOrderType
