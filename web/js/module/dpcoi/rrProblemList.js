@@ -82,25 +82,43 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         $scope.rrProblemList.Search();
     }
     $scope.rrProblemList.searchForm = {
-        "badContent": "",
-        "problemProgress": "",
-        "speedOfProgress": "",
-        "problemStatus" : "",
-        "problemType" : "",
-        "engineering" : "",
-        "customer" : "",
-        "vehicle" : "",
-        "productNo" : "",
-        "happenDateBegin" : "",
-        "happenDateEnd" : "",
-        "persionLiable" : "",
-        "productLine" : "",
-        "severity" : "",
-        "responsibleDepartment" : "",
+        "badContent": badContent,
+        "problemProgress": problemProgress,
+        "speedOfProgress": speedOfProgress,
+        "problemStatus" : problemStatus,
+        "problemType" : problemType,
+        "engineering" : engineering,
+        "customer" : customer,
+        "vehicle" : vehicle,
+        "productNo" : productNo,
+        "happenDateBegin" : happenDateBegin,
+        "happenDateEnd" : happenDateEnd,
+        "persionLiable" : persionLiable,
+        "productLine" : productLine,
+        "severity" : severity,
+        "responsibleDepartment" : responsibleDepartment,
         "ids":""
     }
+
+    $scope.getMultiselectValue = function(id){
+        var idArray = $("#"+id).val();
+        var idStr = "";
+        if(!(idArray == undefined || idArray == null || idArray == "")){
+            for(var i = 0; i < idArray.length; i++){
+                idStr += "," + idArray[i];
+            }
+            if(idStr != ""){
+                idStr = idStr.substring(1);
+            }
+        }
+        return idStr;
+    }
+
     $scope.rrProblemList.Search = function () {
-        $scope.rrProblemList.searchForm.speedOfProgress = $("#speedOfProgress").multiselect("MyValues");
+        $scope.rrProblemList.searchForm.speedOfProgress = $scope.getMultiselectValue("speedOfProgress");
+        $scope.rrProblemList.searchForm.problemType = $scope.getMultiselectValue("problemType");
+        $scope.rrProblemList.searchForm.engineering = $scope.getMultiselectValue("engineering");
+        $scope.rrProblemList.searchForm.problemProgress = $scope.getMultiselectValue("problemProgress");
         $scope.rrProblemList.searchForm.happenDateBegin = $("#happenDateBegin").val();
         $scope.rrProblemList.searchForm.happenDateEnd = $("#happenDateEnd").val();
         $scope.rrProblemList.searchForm.pagenum = $scope.rrProblemList.pageInfo.page-1;
@@ -228,7 +246,25 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                 return;
             }
         }
-        window.location.href = "/WorkFlow/rrProblem/getRRProblemEditDlg.do?id="+id;
+        var searchStr = ""
+        searchStr += "badContent=" + $scope.rrProblemList.searchForm.badContent;
+        searchStr += "&problemProgress=" + $scope.getMultiselectValue("problemProgress");
+        searchStr += "&speedOfProgress=" + $scope.getMultiselectValue("speedOfProgress");
+        searchStr += "&problemStatus=" + $scope.rrProblemList.searchForm.problemStatus;
+        searchStr += "&problemType=" + $scope.getMultiselectValue("problemType");
+        searchStr += "&engineering=" + $scope.getMultiselectValue("engineering");
+        searchStr += "&customer=" + $scope.rrProblemList.searchForm.customer;
+        searchStr += "&vehicle=" + $scope.rrProblemList.searchForm.vehicle;
+        searchStr += "&productNo=" + $scope.rrProblemList.searchForm.productNo;
+        searchStr += "&happenDateBegin=" + $("#happenDateBegin").val();
+        searchStr += "&happenDateEnd=" + $("#happenDateEnd").val();
+        searchStr += "&persionLiable=" + $scope.rrProblemList.searchForm.persionLiable;
+        searchStr += "&productLine=" + $scope.rrProblemList.searchForm.productLine;
+        searchStr += "&severity=" + $scope.rrProblemList.searchForm.severity;
+        searchStr += "&responsibleDepartment=" + $scope.rrProblemList.searchForm.responsibleDepartment;
+        searchStr += "&size=" + $scope.rrProblemList.searchForm.pageCount;
+        searchStr += "&start=" + $scope.rrProblemList.searchForm.pagenum * $scope.rrProblemList.searchForm.size;
+        window.location.href = "/WorkFlow/rrProblem/getRRProblemEditDlg.do?id="+id+"&"+searchStr;
     });
 
     $("#rrProblemDown").click(function () {
@@ -442,6 +478,7 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
     };
 
     $(document).ready(function() {
+
         $("input[data-type='date']").each(function () {
             $(this).datetimepicker({
                 timepicker: false,
@@ -455,6 +492,16 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
             header: false,
             selectedList:4
         });
+        if(speedOfProgress != ''){
+            var sceneIdArr = speedOfProgress.split(",");
+            $('#speedOfProgress option').each(function(i,content){
+                //alert(i+"***"+content.value);
+                if($.inArray($.trim(content.value),sceneIdArr)>=0){
+                    this.selected=true;
+                }
+            });
+            $("#speedOfProgress").multiselect('refresh');
+        }
 
         $.ajax({
             method: 'post',
@@ -464,11 +511,59 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                 if (result.success) {
                     $scope.rrProblemList.dpcoiConfigList = result.dpcoiConfigList;
                     $scope.$apply();
+                    $("#problemProgress").multiselect({
+                        checkAllText: "全选",
+                        uncheckAllText: '全不选',
+                        header: false,
+                        selectedList:4
+                    });
+                    if(problemProgress != ''){
+                        var sceneIdArr = problemProgress.split(",");
+                        $('#problemProgress option').each(function(i,content){
+                            //alert(i+"***"+content.value);
+                            if($.inArray($.trim(content.value),sceneIdArr)>=0){
+                                this.selected=true;
+                            }
+                        });
+                        $("#problemProgress").multiselect('refresh');
+                    }
+                    $("#engineering").multiselect({
+                        checkAllText: "全选",
+                        uncheckAllText: '全不选',
+                        header: false,
+                        selectedList:4
+                    });
+                    if(engineering != ''){
+                        var sceneIdArr = engineering.split(",");
+                        $('#engineering option').each(function(i,content){
+                            //alert(i+"***"+content.value);
+                            if($.inArray($.trim(content.value),sceneIdArr)>=0){
+                                this.selected=true;
+                            }
+                        });
+                        $("#engineering").multiselect('refresh');
+                    }
+                    $("#problemType").multiselect({
+                        checkAllText: "全选",
+                        uncheckAllText: '全不选',
+                        header: false,
+                        selectedList:4
+                    });
+                    if(problemType != ''){
+                        var sceneIdArr = problemType.split(",");
+                        $('#problemType option').each(function(i,content){
+                            //alert(i+"***"+content.value);
+                            if($.inArray($.trim(content.value),sceneIdArr)>=0){
+                                this.selected=true;
+                            }
+                        });
+                        $("#problemType").multiselect('refresh');
+                    }
+                    $scope.rrProblemList.pageInfo.page = pageNum;
+                    $scope.rrProblemList.Search();
                 }
             }
         });
-
-        $scope.rrProblemList.firstPage();
 
         var height = document.body.clientHeight;
         var searchTableHeight = $("#searchTable").height();

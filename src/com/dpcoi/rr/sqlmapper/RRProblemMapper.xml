@@ -669,7 +669,7 @@
                 and `bad_content` like CONCAT('%',#{badContent,jdbcType=VARCHAR},'%')
             </if>
             <if test="problemProgress != null and problemProgress != ''" >
-                and `problem_progress` = #{problemProgress,jdbcType=VARCHAR}
+                and find_in_set(`problem_progress`, #{problemProgress,jdbcType=VARCHAR})
             </if>
             <if test="speedOfProgress != null and speedOfProgress != ''" >
                 and find_in_set(`speed_of_progress`, #{speedOfProgress,jdbcType=VARCHAR})
@@ -681,10 +681,10 @@
                 and problem_status = #{problemStatus,jdbcType=VARCHAR}
             </if>
             <if test="problemType != null and problemType != ''" >
-                and problem_type = #{problemType,jdbcType=VARCHAR}
+                and find_in_set(`problem_type`, #{problemType,jdbcType=VARCHAR})
             </if>
             <if test="engineering != null and engineering != ''" >
-                and engineering = #{engineering,jdbcType=VARCHAR}
+                and find_in_set(`engineering`, #{engineering,jdbcType=VARCHAR})
             </if>
             <if test="customer != null and customer != ''" >
                 and customer = #{customer,jdbcType=VARCHAR}

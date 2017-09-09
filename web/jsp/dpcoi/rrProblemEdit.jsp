@@ -16,6 +16,24 @@
         var startDate = '${startDate}';
         var endDate = '${endDate}';
         var rrProblemId = '${rrProblemId}';
+        var searchStr = ""
+        searchStr += "badContent=${rrProblemQuery.badContent}";
+        searchStr += "&problemProgress=${rrProblemQuery.problemProgress}";
+        searchStr += "&speedOfProgress=${rrProblemQuery.speedOfProgress}";
+        searchStr += "&problemStatus=${rrProblemQuery.problemStatus}";
+        searchStr += "&problemType=${rrProblemQuery.problemType}";
+        searchStr += "&engineering=${rrProblemQuery.engineering}";
+        searchStr += "&customer=${rrProblemQuery.customer}";
+        searchStr += "&vehicle=${rrProblemQuery.vehicle}";
+        searchStr += "&productNo=${rrProblemQuery.productNo}";
+        searchStr += "&happenDateBegin=${rrProblemQuery.happenDateBegin}";
+        searchStr += "&happenDateEnd=${rrProblemQuery.happenDateEnd}";
+        searchStr += "&persionLiable=${rrProblemQuery.persionLiable}";
+        searchStr += "&productLine=${rrProblemQuery.productLine}";
+        searchStr += "&severity=${rrProblemQuery.severity}";
+        searchStr += "&responsibleDepartment=${rrProblemQuery.responsibleDepartment}";
+        searchStr += "&size=${rrProblemQuery.size}";
+        searchStr += "&start=${rrProblemQuery.start}";
     </script>
 </head>
 <body ng-controller="rrProblemEditController" ng-cloak>

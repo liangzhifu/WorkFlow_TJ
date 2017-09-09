@@ -1,3 +1,4 @@
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: 梁志福
@@ -32,6 +33,27 @@
     <link rel="stylesheet" type="text/css" href="/WorkFlow/js/ext/resources/css/ext-zte.css">
     <script type="text/javascript">
         var ministerJurisdiction = '${ministerJurisdiction}';
+        var pageNum = 1;
+        if('${rrProblemQuery.size}' == ''){
+            pageNum = 1;
+        }else {
+            pageNum = parseInt('${rrProblemQuery.start}')/parseInt('${rrProblemQuery.size}')+1;
+        }
+        var badContent = "${rrProblemQuery.badContent}";
+        var problemProgress = "${rrProblemQuery.problemProgress}";
+        var speedOfProgress = "${rrProblemQuery.speedOfProgress}";
+        var problemStatus = "${rrProblemQuery.problemStatus}";
+        var problemType = "${rrProblemQuery.problemType}";
+        var engineering = "${rrProblemQuery.engineering}";
+        var customer = "${rrProblemQuery.customer}";
+        var vehicle = "${rrProblemQuery.vehicle}";
+        var productNo = "${rrProblemQuery.productNo}";
+        var happenDateBegin = "${rrProblemQuery.happenDateBegin}";
+        var happenDateEnd = "${rrProblemQuery.happenDateEnd}";
+        var persionLiable = "${rrProblemQuery.persionLiable}";
+        var productLine = "${rrProblemQuery.productLine}";
+        var severity = "${rrProblemQuery.severity}";
+        var responsibleDepartment = "${rrProblemQuery.responsibleDepartment}";
     </script>
     <style type="text/css">
         .claasRed{
@@ -68,19 +90,18 @@
                                class="form-control-order form-control" placeholder="不良内容" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                     </div>
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
-                        <label  class="control-label" for="problemProgress">问题进展：</label>
+                        <label  class="control-label" for="problemProgress">进展：</label>
                         <select id="problemProgress" name="problemProgress" class="form-control-order form-control" required="required"
-                                ng-model="rrProblemList.searchForm.problemProgress" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
-                            <option value="">请选择</option>
+                                multiple="multiple" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option ng-repeat="dpcoiConfigDate in rrProblemList.dpcoiConfigList | myFilter:4"
-                                    value="{{dpcoiConfigDate.configValue}}"
+                                    value="{{dpcoiConfigDate.configValue}} "
                                     >{{dpcoiConfigDate.configValue}}</option>
                         </select>
                     </div>
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
                         <label  class="control-label" for="speedOfProgress">进度：</label>
                         <select id="speedOfProgress" name="speedOfProgress" class="form-control-order form-control" required="required"
-                                ng-model="rrProblemList.searchForm.speedOfProgress" multiple="multiple" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                                multiple="multiple" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option value="delayI">delayI</option>
                             <option value="delayII">delayII</option>
                             <option value="delayIII">delayIII</option>
@@ -96,15 +117,14 @@
                                 ng-model="rrProblemList.searchForm.problemStatus" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option value="">请选择</option>
                             <option ng-repeat="dpcoiConfigDate in rrProblemList.dpcoiConfigList | myFilter:1"
-                                    value="{{dpcoiConfigDate.configValue}}"
+                                    value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue == '${rrProblemQuery.problemStatus}'"
                             >{{dpcoiConfigDate.configValue}}</option>
                         </select>
                     </div>
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
-                        <label  class="control-label" for="problemType">问题类型：</label>
+                        <label  class="control-label" for="problemType">类型：</label>
                         <select id="problemType" name="problemType" class="form-control-order form-control" required="required"
-                                ng-model="rrProblemList.searchForm.problemType" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
-                            <option value="">请选择</option>
+                                multiple="multiple" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option ng-repeat="dpcoiConfigDate in rrProblemList.dpcoiConfigList | myFilter:2"
                                     value="{{dpcoiConfigDate.configValue}}"
                             >{{dpcoiConfigDate.configValue}}</option>
@@ -113,8 +133,7 @@
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
                         <label  class="control-label" for="engineering">工程：</label>
                         <select id="engineering" name="engineering" class="form-control-order form-control" required="required"
-                                ng-model="rrProblemList.searchForm.engineering" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
-                            <option value="">请选择</option>
+                                multiple="multiple" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option ng-repeat="dpcoiConfigDate in rrProblemList.dpcoiConfigList | myFilter:3"
                                     value="{{dpcoiConfigDate.configValue}}"
                             >{{dpcoiConfigDate.configValue}}</option>
@@ -128,7 +147,7 @@
                                 ng-model="rrProblemList.searchForm.customer" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option value="">请选择</option>
                             <option ng-repeat="dpcoiConfigDate in rrProblemList.dpcoiConfigList | myFilter:11"
-                                    value="{{dpcoiConfigDate.configValue}}"
+                                    value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue == '${rrProblemQuery.customer}'"
                             >{{dpcoiConfigDate.configValue}}</option>
                         </select>
 
@@ -144,7 +163,7 @@
                                 ng-model="rrProblemList.searchForm.productNo" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option value="">请选择</option>
                             <option ng-repeat="dpcoiConfigDate in rrProblemList.dpcoiConfigList | myFilter:5"
-                                    value="{{dpcoiConfigDate.configValue}}"
+                                    value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue == '${rrProblemQuery.productNo}'"
                             >{{dpcoiConfigDate.configValue}}</option>
                         </select>
                     </div>
@@ -176,7 +195,7 @@
                                 ng-model="rrProblemList.searchForm.severity" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option value="">请选择</option>
                             <option ng-repeat="dpcoiConfigDate in rrProblemList.dpcoiConfigList | myFilter:6"
-                                    value="{{dpcoiConfigDate.configValue}}"
+                                    value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue == '${rrProblemQuery.severity}'"
                             >{{dpcoiConfigDate.configValue}}</option>
                         </select>
                     </div>
@@ -186,7 +205,7 @@
                                 ng-model="rrProblemList.searchForm.responsibleDepartment" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option value="">请选择</option>
                             <option ng-repeat="dpcoiConfigDate in rrProblemList.dpcoiConfigList | myFilter:9"
-                                    value="{{dpcoiConfigDate.configValue}}"
+                                    value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue == '${rrProblemQuery.responsibleDepartment}'"
                             >{{dpcoiConfigDate.configValue}}</option>
                         </select>
                     </div>

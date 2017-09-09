@@ -169,7 +169,7 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
             success: function(resultJson) {
                 var result = angular.fromJson(resultJson);
                 if(result.success){
-                    window.location.href = "/WorkFlow/rrProblem/getRRProblemListDlg.do";
+                    window.location.href = "/WorkFlow/rrProblem/getRRProblemListDlg.do?"+searchStr;
                 }else {
                     alert(result.message);
                 }
