@@ -180,6 +180,10 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         });
     });
 
+    $("#rrProblemEditCancle").click(function () {
+        window.location.href = "/WorkFlow/rrProblem/getRRProblemListDlg.do?"+searchStr;
+    });
+
     $scope.editInput = function(id){
         $("#inputModal").modal("show");
         $("#textAreaId").val(id);

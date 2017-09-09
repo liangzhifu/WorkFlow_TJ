@@ -377,8 +377,8 @@
                                     class="btn btn-small btn-primary">确定
                             </button>
                             &nbsp;&nbsp;
-                            <a href="/WorkFlow/rrProblem/getRRProblemListDlg.do"
-                               class="btn  btn-mini btn-info">取消</a>
+                            <button type="button" id="rrProblemEditCancle"
+                                    class="btn  btn-mini btn-info">取消</button>
                         </div>
                     </div>
                 </div>
