@@ -161,6 +161,11 @@ public class RRProblemController {
     public void getRRProblemListPage(HttpServletResponse response, RRProblemQuery rrProblemQuery){
         Map<String, Object> map = new HashMap<String, Object>();
         try{
+            String speedOfProgress = rrProblemQuery.getSpeedOfProgress();
+            if(speedOfProgress == null || "".equals(speedOfProgress)){
+                speedOfProgress = "delayI,delayII,delayIII,delayIV,close,follow";
+                rrProblemQuery.setSpeedOfProgress(speedOfProgress);
+            }
             List<Map<String, Object>> rrProblemList = this.rRProblemService.queryRRProblemPageList(rrProblemQuery);
             Integer rrProblemCount = this.rRProblemService.queryRRProblemCount(rrProblemQuery);
             Integer pageCount = rrProblemCount / rrProblemQuery.getSize() + (rrProblemCount % rrProblemQuery.getSize() > 0 ? 1 : 0);

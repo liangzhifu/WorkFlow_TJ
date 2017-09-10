@@ -98,9 +98,27 @@ rrProblemViewListApp.controller("rrProblemViewListController", function ($scope)
         "severity" : "",
         "responsibleDepartment" : "",
         "ids":""
-    }
+    };
+
+    $scope.getMultiselectValue = function(id){
+        var idArray = $("#"+id).val();
+        var idStr = "";
+        if(!(idArray == undefined || idArray == null || idArray == "")){
+            for(var i = 0; i < idArray.length; i++){
+                idStr += "," + idArray[i];
+            }
+            if(idStr != ""){
+                idStr = idStr.substring(1);
+            }
+        }
+        return idStr;
+    };
+
     $scope.rrProblemViewList.Search = function () {
-        $scope.rrProblemViewList.searchForm.speedOfProgress = $("#speedOfProgress").multiselect("MyValues");
+        $scope.rrProblemViewList.searchForm.speedOfProgress = $scope.getMultiselectValue("speedOfProgress");
+        $scope.rrProblemViewList.searchForm.problemType = $scope.getMultiselectValue("problemType");
+        $scope.rrProblemViewList.searchForm.engineering = $scope.getMultiselectValue("engineering");
+        $scope.rrProblemViewList.searchForm.problemProgress = $scope.getMultiselectValue("problemProgress");
         $scope.rrProblemViewList.searchForm.happenDateBegin = $("#happenDateBegin").val();
         $scope.rrProblemViewList.searchForm.happenDateEnd = $("#happenDateEnd").val();
         $scope.rrProblemViewList.searchForm.pagenum = $scope.rrProblemViewList.pageInfo.page-1;
@@ -380,6 +398,24 @@ rrProblemViewListApp.controller("rrProblemViewListController", function ($scope)
                 if (result.success) {
                     $scope.rrProblemViewList.dpcoiConfigList = result.dpcoiConfigList;
                     $scope.$apply();
+                    $("#problemProgress").multiselect({
+                        checkAllText: "全选",
+                        uncheckAllText: '全不选',
+                        header: false,
+                        selectedList:4
+                    });
+                    $("#engineering").multiselect({
+                        checkAllText: "全选",
+                        uncheckAllText: '全不选',
+                        header: false,
+                        selectedList:4
+                    });
+                    $("#problemType").multiselect({
+                        checkAllText: "全选",
+                        uncheckAllText: '全不选',
+                        header: false,
+                        selectedList:4
+                    });
                 }
             }
         });

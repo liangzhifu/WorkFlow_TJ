@@ -68,10 +68,9 @@
                                class="form-control-order form-control" placeholder="不良内容" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                     </div>
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
-                        <label  class="control-label" for="problemProgress">问题进展：</label>
+                        <label  class="control-label" for="problemProgress">进展：</label>
                         <select id="problemProgress" name="problemProgress" class="form-control-order form-control" required="required"
-                                ng-model="rrProblemViewList.searchForm.problemProgress" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
-                            <option value="">请选择</option>
+                                multiple="multiple" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option ng-repeat="dpcoiConfigDate in rrProblemViewList.dpcoiConfigList | myFilter:4"
                                     value="{{dpcoiConfigDate.configValue}}"
                             >{{dpcoiConfigDate.configValue}}</option>
@@ -101,10 +100,9 @@
                         </select>
                     </div>
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
-                        <label  class="control-label" for="problemType">问题类型：</label>
+                        <label  class="control-label" for="problemType">类型：</label>
                         <select id="problemType" name="problemType" class="form-control-order form-control" required="required"
-                                ng-model="rrProblemViewList.searchForm.problemType" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
-                            <option value="">请选择</option>
+                                multiple="multiple" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option ng-repeat="dpcoiConfigDate in rrProblemViewList.dpcoiConfigList | myFilter:2"
                                     value="{{dpcoiConfigDate.configValue}}"
                             >{{dpcoiConfigDate.configValue}}</option>
@@ -113,8 +111,7 @@
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
                         <label  class="control-label" for="engineering">工程：</label>
                         <select id="engineering" name="engineering" class="form-control-order form-control" required="required"
-                                ng-model="rrProblemViewList.searchForm.engineering" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
-                            <option value="">请选择</option>
+                                multiple="multiple" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                             <option ng-repeat="dpcoiConfigDate in rrProblemViewList.dpcoiConfigList | myFilter:3"
                                     value="{{dpcoiConfigDate.configValue}}"
                             >{{dpcoiConfigDate.configValue}}</option>

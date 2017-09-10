@@ -191,7 +191,7 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <label  class="control-label" for="productLine"><span style="color:red;">*</span>生产线：</label>
-                                <input class="form-control-order form-control clean" style="width: 60%" required="required"
+                                <input class="form-control-order form-control clean" style="width: 60%" required="required" pattern="^T[a-zA-Z][a-zA-Z]\-[0-9][0-9]$"
                                        id="productLine" name="productLine" ng-model="rrProblemEdit.rrProblem.productLine">
                             </div>
                             <div class="col-md-3">
@@ -222,8 +222,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <label  class="control-label" for="batch"><span style="color:red;">*</span>批次：</label>
-                                <input class="form-control-order form-control clean" style="width: 60%" required="required"
+                                <label  class="control-label" for="batch">批次：</label>
+                                <input class="form-control-order form-control clean" style="width: 60%"
                                        id="batch" name="batch" ng-model="rrProblemEdit.rrProblem.batch">
                             </div>
                             <div class="col-md-3">

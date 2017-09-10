@@ -125,6 +125,7 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         $scope.rrProblemList.searchForm.pageCount = 10;
         $scope.rrProblemList.searchForm.size = $scope.rrProblemList.searchForm.pageCount;
         $scope.rrProblemList.searchForm.start = $scope.rrProblemList.searchForm.pagenum * $scope.rrProblemList.searchForm.size;
+        $scope.rrProblemList.searchForm.productLine = $scope.rrProblemList.searchForm.productLine.toUpperCase();
         $.ajax({
             method:'post',
             url:$scope.rrProblemList.pageInfo.url,

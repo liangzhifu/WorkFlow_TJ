@@ -162,6 +162,7 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         $scope.rrProblemEdit.rrProblem.rootCause = $("#rootCause").val();
         $scope.rrProblemEdit.rrProblem.permanentGame = $("#permanentGame").val();
         $scope.rrProblemEdit.rrProblem.effectVerification = $("#effectVerification").val();
+        $scope.rrProblemEdit.rrProblem.productLine = $("#productLine").val().toUpperCase();
         $.ajax({
             method:'post',
             url:url,
