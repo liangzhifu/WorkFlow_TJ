@@ -140,6 +140,16 @@ public class RRProblemController {
     public void doDown(HttpServletRequest request, HttpServletResponse response, RRProblemQuery rrProblemQuery){
         Map<String, Object> map = new HashMap<String, Object>();
         try{
+            User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
+            Integer ministerJurisdiction = this.rRProblemService.queryMinisterJurisdiction(user);
+            if(ministerJurisdiction == 0){
+                rrProblemQuery.setIsHide(0);
+            }
+            String speedOfProgress = rrProblemQuery.getSpeedOfProgress();
+            if(speedOfProgress == null || "".equals(speedOfProgress)){
+                speedOfProgress = "delayI,delayII,delayIII,delayIV,close,follow";
+                rrProblemQuery.setSpeedOfProgress(speedOfProgress);
+            }
             String path = request.getSession().getServletContext().getRealPath("/");
             String fileName = this.exportExcelService.excelRRProblem(path, rrProblemQuery);
             map.put("success", true);
@@ -158,9 +168,14 @@ public class RRProblemController {
      * @param rrProblemQuery 查询条件
      */
     @RequestMapping("/getRRProblemListPage.do")
-    public void getRRProblemListPage(HttpServletResponse response, RRProblemQuery rrProblemQuery){
+    public void getRRProblemListPage(HttpServletRequest request, HttpServletResponse response, RRProblemQuery rrProblemQuery){
         Map<String, Object> map = new HashMap<String, Object>();
         try{
+            User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
+            Integer ministerJurisdiction = this.rRProblemService.queryMinisterJurisdiction(user);
+            if(ministerJurisdiction == 0){
+                rrProblemQuery.setIsHide(0);
+            }
             String speedOfProgress = rrProblemQuery.getSpeedOfProgress();
             if(speedOfProgress == null || "".equals(speedOfProgress)){
                 speedOfProgress = "delayI,delayII,delayIII,delayIV,close,follow";
@@ -211,6 +226,7 @@ public class RRProblemController {
         Map<String, Object> map = new HashMap<String, Object>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try{
+            rrProblem.setIsHide(0);
             this.validSpeedOfProgress(rrProblem);
 
             map.put("success", true);
@@ -515,6 +531,58 @@ public class RRProblemController {
             }else{
                 rrProblem.setCloseConfirm("延期");
                 rrProblem.setIsDelay(1);
+                this.rRProblemService.updateRRProblem(rrProblem);
+            }
+            map.put("success", true);
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("success", false);
+            map.put("message", e.getMessage());
+        }
+        AjaxUtil.ajaxResponse(response, new JSONObject(map).toString(), AjaxUtil.RESPONCE_TYPE_JSON);
+    }
+
+    /**
+     * RR问题点隐藏
+     * @param response 参数
+     * @param rrProblem 参数
+     */
+    @RequestMapping("hideRRProblem.do")
+    public void hideRRProblem(HttpServletResponse response, RRProblem rrProblem){
+        Map<String, Object> map = new HashMap<String, Object>();
+        try{
+            rrProblem = this.rRProblemService.queryRRProblem(rrProblem);
+            Integer isHide = rrProblem.getIsHide();
+            if(isHide == 1){
+                throw new Exception("RR问题点已隐藏，不能再次隐藏！");
+            }else{
+                rrProblem.setIsHide(1);
+                this.rRProblemService.updateRRProblem(rrProblem);
+            }
+            map.put("success", true);
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("success", false);
+            map.put("message", e.getMessage());
+        }
+        AjaxUtil.ajaxResponse(response, new JSONObject(map).toString(), AjaxUtil.RESPONCE_TYPE_JSON);
+    }
+
+    /**
+     * RR问题点显示
+     * @param response 参数
+     * @param rrProblem 参数
+     */
+    @RequestMapping("cancleHideRRProblem.do")
+    public void cancleHideRRProblem(HttpServletResponse response, RRProblem rrProblem){
+        Map<String, Object> map = new HashMap<String, Object>();
+        try{
+            rrProblem = this.rRProblemService.queryRRProblem(rrProblem);
+            Integer isHide = rrProblem.getIsHide();
+            if(isHide == 0){
+                throw new Exception("RR问题点已显示，不能再次显示！");
+            }else{
+                rrProblem.setIsHide(0);
                 this.rRProblemService.updateRRProblem(rrProblem);
             }
             map.put("success", true);

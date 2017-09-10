@@ -237,6 +237,14 @@
                         <button class="btn btn-small btn-purple" type="button" id="rrProblemDelay">
                             <i class="icon-save-file icon-on-right bigger-110"></i>延期
                         </button>
+                        &nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-small btn-purple" type="button" id="rrProblemHide" ng-hide="rrProblemList.ministerJurisdiction == 0">
+                            <i class="icon-save-file icon-on-right bigger-110"></i>隐藏
+                        </button>
+                        &nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-small btn-purple" type="button" id="rrProblemCancleHide" ng-hide="rrProblemList.ministerJurisdiction == 0">
+                            <i class="icon-save-file icon-on-right bigger-110"></i>显示
+                        </button>
                     </div>
                 </div>
             </div>
@@ -296,6 +304,7 @@
                         <th width="400px" class="x-grid3-header" style="padding: 0px">展开及追踪是否完成</th>
                         <th width="400px" class="x-grid3-header" style="padding: 0px">人工</th>
                         <th width="400px" class="x-grid3-header" style="padding: 0px">物料</th>
+                        <th width="400px" class="x-grid3-header" style="padding: 0px" ng-hide="rrProblemList.ministerJurisdiction == 0">是否隐藏</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -351,6 +360,10 @@
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.expandTrace}}</td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.artificial}}</td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.materiel}}</td>
+                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;" ng-hide="rrProblemList.ministerJurisdiction == 0">
+                            <span ng-show="rrProblemDate.isHide == 1">是</span>
+                            <span ng-show="rrProblemDate.isHide == 0">否</span>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

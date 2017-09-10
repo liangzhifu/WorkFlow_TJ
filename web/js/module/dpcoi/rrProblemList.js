@@ -365,6 +365,70 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
             }
         });
     });
+    $("#rrProblemHide").click(function () {
+        if($scope.rrProblemList.ministerJurisdiction == 0){
+            alert("你没有部长权限！");
+            return;
+        }
+        var length = $("input[name='checkbox_records']:checked").length;
+        if(length == 0 || length > 1){
+            alert("请选择一条RR问题点！");
+            return ;
+        }
+        var id;
+        $("input[name='checkbox_records']:checked").each(function () {
+            id = $(this).val();
+        });
+        $.ajax({
+            url : '/WorkFlow/rrProblem/hideRRProblem.do?id='+id,
+            method: "post",
+            success : function(resultJson) {
+                var obj =  angular.fromJson(resultJson);
+                if(obj.success){
+                    $scope.rrProblemList.firstPage();
+                }else {
+                    alert(obj.message);
+                    return;
+                }
+            },
+            failure : function() {
+                alert('失败！');
+                return;
+            }
+        });
+    });
+    $("#rrProblemCancleHide").click(function () {
+        if($scope.rrProblemList.ministerJurisdiction == 0){
+            alert("你没有部长权限！");
+            return;
+        }
+        var length = $("input[name='checkbox_records']:checked").length;
+        if(length == 0 || length > 1){
+            alert("请选择一条RR问题点！");
+            return ;
+        }
+        var id;
+        $("input[name='checkbox_records']:checked").each(function () {
+            id = $(this).val();
+        });
+        $.ajax({
+            url : '/WorkFlow/rrProblem/cancleHideRRProblem.do?id='+id,
+            method: "post",
+            success : function(resultJson) {
+                var obj =  angular.fromJson(resultJson);
+                if(obj.success){
+                    $scope.rrProblemList.firstPage();
+                }else {
+                    alert(obj.message);
+                    return;
+                }
+            },
+            failure : function() {
+                alert('失败！');
+                return;
+            }
+        });
+    });
 
     $("#rrProblemToVoid").click(function () {
         var length = $("input[name='checkbox_records']:checked").length;

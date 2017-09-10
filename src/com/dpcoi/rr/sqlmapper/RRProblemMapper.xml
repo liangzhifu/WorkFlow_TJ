@@ -54,6 +54,7 @@
         <result column="artificial" property="artificial" jdbcType="VARCHAR" />
         <result column="materiel" property="materiel" jdbcType="VARCHAR" />
         <result column="state" property="state" jdbcType="INTEGER" />
+        <result column="is_hide" property="isHide" jdbcType="INTEGER" />
     </resultMap>
     <sql id="Base_Column_List" >
         id, problem_status, problem_no, problem_type, engineering, problem_progress, tracking_level,
@@ -63,7 +64,7 @@
         bad_quantity, batch, happen_shift, responsible_department, record_ppm, record_num,
         temporary, root_cause, permanent_game, effect_verification, serial_number, quality_warning_card_number,
         product_scale, pfmea, cp, standard_book, equipment_checklist, always_list, inspection_reference_book,
-        inspection_book, education, change_point, expand_trace, artificial, materiel, state
+        inspection_book, education, change_point, expand_trace, artificial, materiel, state, is_hide
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="RRProblem" >
         select
@@ -275,6 +276,9 @@
             <if test="isDelay != null" >
                 is_delay,
             </if>
+            <if test="isHide != null" >
+                is_hide,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="id != null" >
@@ -435,6 +439,9 @@
             </if>
             <if test="isDelay != null" >
                 #{isDelay,jdbcType=INTEGER},
+            </if>
+            <if test="isHide != null" >
+                #{isHide,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -597,6 +604,9 @@
             <if test="isDelay != null" >
                 is_delay = #{isDelay,jdbcType=INTEGER},
             </if>
+            <if test="isHide != null" >
+                is_hide = #{isHide,jdbcType=INTEGER},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -713,6 +723,9 @@
             <if test="responsibleDepartment != null and responsibleDepartment != ''" >
                 and responsible_department = #{responsibleDepartment,jdbcType=VARCHAR}
             </if>
+            <if test="isHide != null" >
+                and is_hide = #{isHide,jdbcType=INTEGER}
+            </if>
         </where>
     </sql>
 
@@ -725,7 +738,7 @@
         bad_quantity as badQuantity, batch, happen_shift as happenShift, responsible_department as responsibleDepartment, record_ppm as recordPpm, record_num as recordNum,
         temporary, root_cause as rootCause, permanent_game as permanentGame, effect_verification as effectVerification, serial_number as serialNumber, quality_warning_card_number as qualityWarningCardNumber,
         product_scale as productScale, pfmea, cp, standard_book as standardBook, equipment_checklist as equipmentChecklist, always_list as alwaysList, inspection_reference_book as inspectionReferenceBook,
-        inspection_book as inspectionBook, education, change_point as changePoint, expand_trace as expandTrace, artificial, materiel, state, is_delay as isDelay
+        inspection_book as inspectionBook, education, change_point as changePoint, expand_trace as expandTrace, artificial, materiel, state, is_delay as isDelay, is_hide as isHide
         from dpcoi_rr_problem
         <include refid="WHERE_SQL"></include>
         order by id desc limit #{start},#{size}
@@ -778,6 +791,7 @@
         inspection_book as inspectionBook, education, change_point as changePoint, expand_trace as expandTrace, artificial, materiel, state, is_delay as isDelay
         from dpcoi_rr_problem
         where state = 1
+        and is_hide = 0
         order by id desc
     </select>
 </mapper>

@@ -141,6 +141,8 @@ public class RRProblem {
 
     private Integer isDelay;
 
+    private Integer isHide;
+
     public Integer getId() {
         return id;
     }
@@ -618,5 +620,13 @@ public class RRProblem {
 
     public void setIsDelay(Integer isDelay) {
         this.isDelay = isDelay;
+    }
+
+    public Integer getIsHide() {
+        return isHide;
+    }
+
+    public void setIsHide(Integer isHide) {
+        this.isHide = isHide;
     }
 }

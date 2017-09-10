@@ -47,6 +47,8 @@ public class RRProblemQuery {
 
     private String responsibleDepartment;
 
+    private Integer isHide;
+
     public Integer getStart() {
         return start;
     }
@@ -189,5 +191,13 @@ public class RRProblemQuery {
 
     public void setResponsibleDepartment(String responsibleDepartment) {
         this.responsibleDepartment = responsibleDepartment;
+    }
+
+    public Integer getIsHide() {
+        return isHide;
+    }
+
+    public void setIsHide(Integer isHide) {
+        this.isHide = isHide;
     }
 }
