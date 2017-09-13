@@ -1,3 +1,19 @@
+var myModal;
+
+updateFileExcelChange = function (fileTimeInput, fileIdInput){
+    if($("#uploadFile").val()){
+        $("#excelForm").ajaxSubmit({
+            success:function(data){
+                alert(data.message);
+                $("#"+fileTimeInput).val(data.fileDate);
+                $("#"+fileIdInput).val(data.fileId);
+                myModal.destroy();
+            }
+        });
+        $("#uploadFile").val('');
+    }
+};
+
 var rrProblemEditApp = angular.module("rrProblemEdit", []);
 rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
     $scope.action = action;
@@ -52,21 +68,39 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         "rootCause" : "",
         "permanentGame" : "",
         "effectVerification" : "",
+        "serialNumberFileId" : "",
         "serialNumber" : "N/A",
+        "qualityWarningCardNumberFileId" : "",
         "qualityWarningCardNumber" : "N/A",
+        "productScaleFileId" : "",
         "productScale" : "N/A",
         "pfmea" : "",
         "cp" : "",
         "standardBook" : "",
+        "equipmentChecklistFileId" : "",
         "equipmentChecklist" : "",
         "alwaysList" : "",
+        "inspectionReferenceBookFileId" : "",
         "inspectionReferenceBook" : "",
+        "inspectionBookFileId" : "",
         "inspectionBook" : "",
+        "educationFileId" : "",
         "education" : "",
         "changePoint" : "N/A",
         "expandTrace" : "N/A",
         "artificial" : "N/A",
-        "materiel" : "N/A"
+        "materiel" : "N/A",
+        "dpcoi4M" : "",
+        "analyticReport" : "",
+        "layeredAudit" : "",
+        "checkResult" : "",
+        "naPending" : "",
+        "otherInformation" : "",
+        "analyticReportFileId" : "",
+        "layeredAuditFileId" : "",
+        "checkResultFileId" : "",
+        "naPendingFileId" : "",
+        "otherInformationFileId" : ""
     }
 
     $("#rrProblemEditConfirm").click(function () {
@@ -163,6 +197,32 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         $scope.rrProblemEdit.rrProblem.permanentGame = $("#permanentGame").val();
         $scope.rrProblemEdit.rrProblem.effectVerification = $("#effectVerification").val();
         $scope.rrProblemEdit.rrProblem.productLine = $("#productLine").val().toUpperCase();
+
+        $scope.rrProblemEdit.rrProblem.serialNumber = $("#serialNumber").val();
+        $scope.rrProblemEdit.rrProblem.serialNumberFileId = $("#serialNumberFileId").val();
+        $scope.rrProblemEdit.rrProblem.qualityWarningCardNumber = $("#qualityWarningCardNumber").val();
+        $scope.rrProblemEdit.rrProblem.qualityWarningCardNumberFileId = $("#qualityWarningCardNumberFileId").val();
+        $scope.rrProblemEdit.rrProblem.productScale = $("#productScale").val();
+        $scope.rrProblemEdit.rrProblem.productScaleFileId = $("#productScaleFileId").val();
+        $scope.rrProblemEdit.rrProblem.equipmentChecklist = $("#equipmentChecklist").val();
+        $scope.rrProblemEdit.rrProblem.equipmentChecklistFileId = $("#equipmentChecklistFileId").val();
+        $scope.rrProblemEdit.rrProblem.inspectionReferenceBook = $("#inspectionReferenceBook").val();
+        $scope.rrProblemEdit.rrProblem.inspectionReferenceBookFileId = $("#inspectionReferenceBookFileId").val();
+        $scope.rrProblemEdit.rrProblem.inspectionBook = $("#inspectionBook").val();
+        $scope.rrProblemEdit.rrProblem.inspectionBookFileId = $("#inspectionBookFileId").val();
+        $scope.rrProblemEdit.rrProblem.education = $("#education").val();
+        $scope.rrProblemEdit.rrProblem.educationFileId = $("#educationFileId").val();
+        $scope.rrProblemEdit.rrProblem.analyticReport = $("#analyticReport").val();
+        $scope.rrProblemEdit.rrProblem.analyticReportFileId = $("#analyticReportFileId").val();
+        $scope.rrProblemEdit.rrProblem.layeredAudit = $("#layeredAudit").val();
+        $scope.rrProblemEdit.rrProblem.layeredAuditFileId = $("#layeredAuditFileId").val();
+        $scope.rrProblemEdit.rrProblem.checkResult = $("#checkResult").val();
+        $scope.rrProblemEdit.rrProblem.checkResultFileId = $("#checkResultFileId").val();
+        $scope.rrProblemEdit.rrProblem.naPending = $("#naPending").val();
+        $scope.rrProblemEdit.rrProblem.naPendingFileId = $("#naPendingFileId").val();
+        $scope.rrProblemEdit.rrProblem.otherInformation = $("#otherInformation").val();
+        $scope.rrProblemEdit.rrProblem.otherInformationFileId = $("#otherInformationFileId").val();
+
         $.ajax({
             method:'post',
             url:url,
@@ -197,6 +257,25 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         $("#"+id).val($("#inputText").val());
         $("#inputModal").modal("hide");
         $('#inputText').blur();
+    };
+
+    $scope.uploadFile = function (fileTimeInput, fileIdInput) {
+        var path=$("#path").val();
+        var html="<form method='post' id='excelForm' enctype='multipart/form-data' action='/WorkFlow/rrProblem/uploadFile.do'>"+
+            "<a class='uploadFile button button-primary button-rounded button-small' href='#'>" +
+            "<input type='file' onchange='updateFileExcelChange(\""+fileTimeInput+"\",\""+fileIdInput+"\")' name='uploadFile' id='uploadFile'/><i class='glyphicon glyphicon-search'></i>浏览" +
+            "</a>"+
+            "<input type='hidden' name='rrProblemId' value='"+rrProblemId+"'/>"+
+            "<input type='hidden' name='fileAttr' value='"+fileTimeInput+"'/>"+
+        "</form>";
+        myModal = new jBox('Modal', {
+            width: 150,
+            title: '上传文件',
+            content: html,
+            onCloseComplete:function(){
+                myModal.destroy();
+            }
+        }).open();
     };
 
     $(document).ready(function() {

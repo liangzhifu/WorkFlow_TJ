@@ -542,6 +542,10 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         }
     };
 
+    $scope.rrProblemList.downloadFile = function (fileId) {
+        window.open("/WorkFlow/fileUpload/download.do?fileId="+fileId);
+    }
+
     $(document).ready(function() {
 
         $("input[data-type='date']").each(function () {

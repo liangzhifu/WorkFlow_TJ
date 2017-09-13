@@ -5,6 +5,8 @@ package com.dpcoi.rr.service.serviceImpl;/**
 
 import com.dpcoi.config.dao.DpcoiConfigVehicleDao;
 import com.dpcoi.config.query.DpcoiConfigVehicleQuery;
+import com.dpcoi.file.dao.FileUploadDao;
+import com.dpcoi.file.domain.FileUpload;
 import com.dpcoi.holiday.dao.HolidayDao;
 import com.dpcoi.rr.domain.RRProblem;
 import com.dpcoi.rr.dao.RRProblemDao;
@@ -15,8 +17,10 @@ import com.success.sys.user.domain.User;
 import com.success.web.framework.exception.ServiceException;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -37,6 +41,9 @@ public class RRProblemServiceImpl implements RRProblemService {
 
     @Resource(name = "userDao")
     private UserDao userDao;
+
+    @Resource(name="fileUploadDao")
+    private FileUploadDao fileUploadDao;
 
     @Resource(name = "dpcoiConfigVehicleDao")
     private DpcoiConfigVehicleDao dpcoiConfigVehicleDao;
@@ -275,6 +282,71 @@ public class RRProblemServiceImpl implements RRProblemService {
     @Override
     public List<Map<String, Object>> queryRRProblemScreenShowList() throws ServiceException {
         return this.rRProblemDao.selectRRProblemScreenShowList();
+    }
+
+    @Override
+    public FileUpload addUploadFile(Integer rrProblemId, String fileAttr, MultipartFile file, String path, User user) throws Exception {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = file.getOriginalFilename();
+        String fileType = file.getContentType();
+        int index = fileName.lastIndexOf(".");
+        String fileSuffix = fileName.substring(index);
+        String fileAlias = UUID.randomUUID().toString() + fileSuffix;
+        String filePath = path + "fileupload/" + fileAlias;
+        file.transferTo(new File(filePath));
+
+        FileUpload fileUpload = new FileUpload();
+        fileUpload.setFileName(fileName);
+        fileUpload.setFileAlias(fileAlias);
+        fileUpload.setFileType(fileType);
+        fileUpload.setExcelPdfName("");
+        fileUpload.setCreateDate(new Date());
+        fileUpload.setCreateBy(user.getUserId());
+        this.fileUploadDao.insertFileUpload(fileUpload);
+
+        if(rrProblemId != null){
+            RRProblem rrProblem = new RRProblem();
+            rrProblem.setId(rrProblemId);
+            if("serialNumber".equals(fileAttr)){//品情联编号
+                rrProblem.setSerialNumberFileId(fileUpload.getFileId());
+                rrProblem.setSerialNumber(formatter.format(new Date()));
+            }else if("qualityWarningCardNumber".equals(fileAttr)){
+                rrProblem.setQualityWarningCardNumber(formatter.format(new Date()));
+                rrProblem.setQualityWarningCardNumberFileId(fileUpload.getFileId());
+            }else if("productScale".equals(fileAttr)){
+                rrProblem.setProductScale(formatter.format(new Date()));
+                rrProblem.setProductScaleFileId(fileUpload.getFileId());
+            }else if("equipmentChecklist".equals(fileAttr)){
+                rrProblem.setEquipmentChecklist(formatter.format(new Date()));
+                rrProblem.setEquipmentChecklistFileId(fileUpload.getFileId());
+            }else if("inspectionReferenceBook".equals(fileAttr)){
+                rrProblem.setInspectionReferenceBook(formatter.format(new Date()));
+                rrProblem.setInspectionReferenceBookFileId(fileUpload.getFileId());
+            }else if("inspectionBook".equals(fileAttr)){
+                rrProblem.setInspectionBook(formatter.format(new Date()));
+                rrProblem.setInspectionBookFileId(fileUpload.getFileId());
+            }else if("education".equals(fileAttr)){
+                rrProblem.setEducation(formatter.format(new Date()));
+                rrProblem.setEducationFileId(fileUpload.getFileId());
+            }else if("analyticReport".equals(fileAttr)){
+                rrProblem.setAnalyticReport(formatter.format(new Date()));
+                rrProblem.setAnalyticReportFileId(fileUpload.getFileId());
+            }else if("layeredAudit".equals(fileAttr)){
+                rrProblem.setLayeredAudit(formatter.format(new Date()));
+                rrProblem.setLayeredAuditFileId(fileUpload.getFileId());
+            }else if("checkResult".equals(fileAttr)){
+                rrProblem.setCheckResult(formatter.format(new Date()));
+                rrProblem.setCheckResultFileId(fileUpload.getFileId());
+            }else if("naPending".equals(fileAttr)){
+                rrProblem.setNaPending(formatter.format(new Date()));
+                rrProblem.setNaPendingFileId(fileUpload.getFileId());
+            }else if("otherInformation".equals(fileAttr)){
+                rrProblem.setOtherInformation(formatter.format(new Date()));
+                rrProblem.setOtherInformationFileId(fileUpload.getFileId());
+            }
+            this.rRProblemDao.updateRRProblem(rrProblem);
+        }
+        return fileUpload;
     }
 
 

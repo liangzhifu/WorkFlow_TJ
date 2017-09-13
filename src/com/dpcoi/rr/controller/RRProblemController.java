@@ -4,6 +4,7 @@ package com.dpcoi.rr.controller;/**
  */
 
 import com.dpcoi.drived.service.ExportExcelService;
+import com.dpcoi.file.domain.FileUpload;
 import com.dpcoi.order.domain.DpcoiOrder;
 import com.dpcoi.order.service.DpcoiOrderService;
 import com.dpcoi.rr.domain.RRProblem;
@@ -20,6 +21,9 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -228,6 +232,7 @@ public class RRProblemController {
         try{
             rrProblem.setIsHide(0);
             this.validSpeedOfProgress(rrProblem);
+            rrProblem = this.validUploadFile(rrProblem);
 
             map.put("success", true);
             String changePoint = rrProblem.getChangePoint();
@@ -311,6 +316,7 @@ public class RRProblemController {
         Map<String, Object> map = new HashMap<String, Object>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try{
+            rrProblem = this.validUploadFile(rrProblem);
             validSpeedOfProgress(rrProblem);
             RRProblem oldRRProblem = new RRProblem();
             oldRRProblem.setId(rrProblem.getId());
@@ -678,6 +684,122 @@ public class RRProblemController {
             if(materiel == null || "".equals(materiel)){
                 throw new Exception("物料等级不能为空！");
             }
+            String dpcoi4M = rrProblem.getDpcoi4M();
+            if(dpcoi4M == null || "".equals(dpcoi4M)){
+                throw new Exception("4M不能为空！");
+            }
+            String analyticReport = rrProblem.getAnalyticReport();
+            if(analyticReport == null || "".equals(analyticReport)){
+                throw new Exception("解析报告不能为空！");
+            }
+            String layeredAudit = rrProblem.getLayeredAudit();
+            if(layeredAudit == null || "".equals(layeredAudit)){
+                throw new Exception("分层审核不能为空！");
+            }
+            String checkResult = rrProblem.getCheckResult();
+            if(checkResult == null || "".equals(checkResult)){
+                throw new Exception("验岗结果不能为空！");
+            }
+            String naPending = rrProblem.getNaPending();
+            if(naPending == null || "".equals(naPending)){
+                throw new Exception("NA待定不能为空！");
+            }
+            String otherInformation = rrProblem.getOtherInformation();
+            if(otherInformation == null || "".equals(otherInformation)){
+                throw new Exception("其他资料不能为空！");
+            }
         }
+    }
+
+    /**
+     * 上传文件
+     * @param request 参数
+     * @param response 参数
+     * @param rrProblemId RR问题点ID
+     * @param fileAttr 文件类型
+     * @param file 文件
+     */
+    @RequestMapping(value="uploadFile.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public void uploadFile(HttpServletRequest request, HttpServletResponse response, @RequestParam("rrProblemId") Integer rrProblemId, @RequestParam("fileAttr") String fileAttr, @RequestParam("uploadFile") MultipartFile file){
+        Map<String, Object> map = new HashMap<String, Object>();
+        try{
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
+            String path = request.getSession().getServletContext().getRealPath("/");
+            if (!path.endsWith(java.io.File.separator)) {
+                path = path + java.io.File.separator;
+            }
+            if(!file.isEmpty()){
+                FileUpload fileUpload = this.rRProblemService.addUploadFile(rrProblemId, fileAttr, file, path, user);
+                map.put("success", true);
+                map.put("fileId", fileUpload.getFileId());
+                map.put("fileDate", formatter.format(new Date()));
+                map.put("message", "上传成功");
+            }else {
+                map.put("success", false);
+                map.put("message", "上传失败");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("success", false);
+            map.put("message", e.getMessage());
+        }
+        AjaxUtil.ajaxResponse(response, new JSONObject(map).toString(), AjaxUtil.RESPONCE_TYPE_JSON);
+    }
+
+    /**
+     * 验证上传文件
+     * @param rrProblem RR问题点数据
+     */
+    private RRProblem validUploadFile(RRProblem rrProblem){
+        String serialNumber = rrProblem.getSerialNumber();
+        if(rrProblem == null || "".equals(serialNumber) || "N/A".equals(serialNumber.toUpperCase())){
+            rrProblem.setSerialNumberFileId(0);
+        }
+        String qualityWarningCardNumber = rrProblem.getQualityWarningCardNumber();
+        if(qualityWarningCardNumber == null || "".equals(qualityWarningCardNumber) || "N/A".equals(qualityWarningCardNumber.toUpperCase())){
+            rrProblem.setQualityWarningCardNumberFileId(0);
+        }
+        String productScale = rrProblem.getProductScale();
+        if(productScale == null || "".equals(productScale) || "N/A".equals(productScale.toUpperCase())){
+            rrProblem.setProductScaleFileId(0);
+        }
+        String equipmentChecklist = rrProblem.getEquipmentChecklist();
+        if(equipmentChecklist == null || "".equals(equipmentChecklist) || "N/A".equals(equipmentChecklist.toUpperCase())){
+            rrProblem.setEquipmentChecklistFileId(0);
+        }
+        String inspectionReferenceBook =  rrProblem.getInspectionReferenceBook();
+        if(inspectionReferenceBook == null || "".equals(inspectionReferenceBook) || "N/A".equals(inspectionReferenceBook.toUpperCase())){
+            rrProblem.setInspectionReferenceBookFileId(0);
+        }
+        String inspectionBook = rrProblem.getInspectionBook();
+        if(inspectionBook == null || "".equals(inspectionBook) || "N/A".equals(inspectionBook.toUpperCase())){
+            rrProblem.setInspectionBookFileId(0);
+        }
+        String education = rrProblem.getEducation();
+        if(education == null || "".equals(education) || "N/A".equals(education.toUpperCase())){
+            rrProblem.setEducationFileId(0);
+        }
+        String analyticReport = rrProblem.getAnalyticReport();
+        if(analyticReport == null || "".equals(analyticReport) || "N/A".equals(analyticReport.toUpperCase())){
+            rrProblem.setAnalyticReportFileId(0);
+        }
+        String layeredAudit = rrProblem.getLayeredAudit();
+        if(layeredAudit == null || "".equals(layeredAudit) || "N/A".equals(layeredAudit.toUpperCase())){
+            rrProblem.setLayeredAuditFileId(0);
+        }
+        String checkResult = rrProblem.getCheckResult();
+        if(checkResult == null || "".equals(checkResult) || "N/A".equals(checkResult.toUpperCase())){
+            rrProblem.setCheckResultFileId(0);
+        }
+        String naPending = rrProblem.getNaPending();
+        if(naPending == null || "".equals(naPending) || "N/A".equals(naPending.toUpperCase())){
+            rrProblem.setNaPendingFileId(0);
+        }
+        String otherInformation = rrProblem.getOtherInformation();
+        if(otherInformation == null || "".equals(otherInformation) || "N/A".equals(otherInformation.toUpperCase())){
+            rrProblem.setOtherInformationFileId(0);
+        }
+        return rrProblem;
     }
 }

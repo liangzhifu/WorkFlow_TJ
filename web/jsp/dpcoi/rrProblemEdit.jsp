@@ -291,17 +291,23 @@
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="serialNumber">品情联编号：</label>
-                                <input class="form-control-order form-control clean" style="width: 60%"
+                                <input type="button" ng-click="uploadFile('serialNumber','serialNumberFileId')" value="上传文件">
+                                <input type="hidden" id="serialNumberFileId" name="serialNumberFileId" ng-model="rrProblemEdit.rrProblem.serialNumberFileId">
+                                <input class="form-control-order form-control clean" style="width: 45%"
                                        id="serialNumber" name="serialNumber" ng-model="rrProblemEdit.rrProblem.serialNumber">
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="qualityWarningCardNumber">质量警示卡编号：</label>
-                                <input class="form-control-order form-control clean" style="width: 60%"
+                                <input type="button" ng-click="uploadFile('qualityWarningCardNumber','qualityWarningCardNumberFileId')" value="上传文件">
+                                <input type="hidden" id="qualityWarningCardNumberFileId" name="qualityWarningCardNumberFileId" ng-model="rrProblemEdit.rrProblem.qualityWarningCardNumberFileId">
+                                <input class="form-control-order form-control clean" style="width: 38%"
                                        id="qualityWarningCardNumber" name="qualityWarningCardNumber" ng-model="rrProblemEdit.rrProblem.qualityWarningCardNumber">
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="productScale">品推表编号：</label>
-                                <input class="form-control-order form-control clean" style="width: 60%"
+                                <input type="button" ng-click="uploadFile('productScale','productScaleFileId')" value="上传文件">
+                                <input type="hidden" id="productScaleFileId" name="productScaleFileId" ng-model="rrProblemEdit.rrProblem.productScaleFileId">
+                                <input class="form-control-order form-control clean" style="width: 45%"
                                        id="productScale" name="productScale" ng-model="rrProblemEdit.rrProblem.productScale">
                             </div>
                         </div>
@@ -323,7 +329,9 @@
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="equipmentChecklist">设备点检表：</label>
-                                <input class="form-control-order form-control clean" style="width: 60%" data-type="dateType3"
+                                <input type="button" ng-click="uploadFile('equipmentChecklist','equipmentChecklistFileId')" value="上传文件">
+                                <input type="hidden" id="equipmentChecklistFileId" name="equipmentChecklistFileId" ng-model="rrProblemEdit.rrProblem.equipmentChecklistFileId">
+                                <input class="form-control-order form-control clean" style="width: 45%"
                                        id="equipmentChecklist" name="equipmentChecklist" ng-model="rrProblemEdit.rrProblem.equipmentChecklist">
                             </div>
                         </div>
@@ -335,17 +343,23 @@
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="inspectionReferenceBook">检查基准书：</label>
-                                <input class="form-control-order form-control clean" style="width: 60%" data-type="dateType3"
+                                <input type="button" ng-click="uploadFile('inspectionReferenceBook','inspectionReferenceBookFileId')" value="上传文件">
+                                <input type="hidden" id="inspectionReferenceBookFileId" name="inspectionReferenceBookFileId" ng-model="rrProblemEdit.rrProblem.inspectionReferenceBookFileId">
+                                <input class="form-control-order form-control clean" style="width: 45%"
                                        id="inspectionReferenceBook" name="inspectionReferenceBook" ng-model="rrProblemEdit.rrProblem.inspectionReferenceBook">
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="inspectionBook">检查手顺书：</label>
-                                <input class="form-control-order form-control clean" style="width: 60%" data-type="dateType3"
+                                <input type="button" ng-click="uploadFile('inspectionBook','inspectionBookFileId')" value="上传文件">
+                                <input type="hidden" id="inspectionBookFileId" name="inspectionBookFileId" ng-model="rrProblemEdit.rrProblem.inspectionBookFileId">
+                                <input class="form-control-order form-control clean" style="width: 45%"
                                        id="inspectionBook" name="inspectionBook" ng-model="rrProblemEdit.rrProblem.inspectionBook">
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="education">教育议事录：</label>
-                                <input class="form-control-order form-control clean" style="width: 60%" data-type="dateType3"
+                                <input type="button" ng-click="uploadFile('education','educationFileId')" value="上传文件">
+                                <input type="hidden" id="educationFileId" name="educationFileId" ng-model="rrProblemEdit.rrProblem.educationFileId">
+                                <input class="form-control-order form-control clean" style="width: 45%"
                                        id="education" name="education" ng-model="rrProblemEdit.rrProblem.education">
                             </div>
                         </div>
@@ -369,6 +383,55 @@
                                 <label  class="control-label" for="materiel">物料：</label>
                                 <input class="form-control-order form-control clean" style="width: 60%"
                                        id="materiel" name="materiel" ng-model="rrProblemEdit.rrProblem.materiel">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label  class="control-label" for="dpcoi4M">4M：</label>
+                                <select id="dpcoi4M" name="dpcoi4M" class="form-control-order form-control" required="required"
+                                        ng-model="rrProblemEdit.rrProblem.dpcoi4M" style="width: 60%">
+                                    <option value="">请选择</option>
+                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList | myFilter:13"
+                                            value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.severity"
+                                    >{{dpcoiConfigDate.configValue}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label  class="control-label" for="analyticReport">解析报告：</label>
+                                <input type="button" ng-click="uploadFile('analyticReport','analyticReportFileId')" value="上传文件">
+                                <input type="hidden" id="analyticReportFileId" name="analyticReportFileId" ng-model="rrProblemEdit.rrProblem.analyticReportFileId">
+                                <input class="form-control-order form-control clean" style="width: 45%"
+                                       id="analyticReport" name="analyticReport" ng-model="rrProblemEdit.rrProblem.analyticReport">
+                            </div>
+                            <div class="col-md-3">
+                                <label  class="control-label" for="layeredAudit">分层审核：</label>
+                                <input type="button" ng-click="uploadFile('layeredAudit','layeredAuditFileId')" value="上传文件">
+                                <input type="hidden" id="layeredAuditFileId" name="layeredAuditFileId" ng-model="rrProblemEdit.rrProblem.layeredAuditFileId">
+                                <input class="form-control-order form-control clean" style="width: 45%"
+                                       id="layeredAudit" name="layeredAudit" ng-model="rrProblemEdit.rrProblem.layeredAudit">
+                            </div>
+                            <div class="col-md-3">
+                                <label  class="control-label" for="checkResult">验岗结果：</label>
+                                <input type="button" ng-click="uploadFile('checkResult','checkResultFileId')" value="上传文件">
+                                <input type="hidden" id="checkResultFileId" name="checkResultFileId" ng-model="rrProblemEdit.rrProblem.checkResultFileId">
+                                <input class="form-control-order form-control clean" style="width: 45%"
+                                       id="checkResult" name="checkResult" ng-model="rrProblemEdit.rrProblem.checkResult">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label  class="control-label" for="naPending">NA待定：</label>
+                                <input type="button" ng-click="uploadFile('naPending','naPendingFileId')" value="上传文件">
+                                <input type="hidden" id="naPendingFileId" name="naPendingFileId" ng-model="rrProblemEdit.rrProblem.naPendingFileId">
+                                <input class="form-control-order form-control clean" style="width: 45%"
+                                       id="naPending" name="naPending" ng-model="rrProblemEdit.rrProblem.naPending">
+                            </div>
+                            <div class="col-md-3">
+                                <label  class="control-label" for="otherInformation">其他资料：</label>
+                                <input type="button" ng-click="uploadFile('otherInformation','otherInformationFileId')" value="上传文件">
+                                <input type="hidden" id="otherInformationFileId" name="otherInformationFileId" ng-model="rrProblemEdit.rrProblem.otherInformationFileId">
+                                <input class="form-control-order form-control clean" style="width: 45%"
+                                       id="otherInformation" name="otherInformation" ng-model="rrProblemEdit.rrProblem.otherInformation">
                             </div>
                         </div>
                         <hr>
