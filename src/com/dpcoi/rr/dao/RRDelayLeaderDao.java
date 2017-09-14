@@ -81,4 +81,12 @@ public class RRDelayLeaderDao extends BaseDao {
     public String selectDelay2Email(String userNames){
         return this.sqlSession.selectOne("RRDelayLeaderMapper.selectDelay2Email", userNames);
     }
+
+    /**
+     * 查询部长邮箱
+     * @return 返回结果
+     */
+    public String selectMinisteEmail(){
+        return this.sqlSession.selectOne("RRDelayLeaderMapper.selectMinisteEmail");
+    }
 }

@@ -179,6 +179,8 @@ public class RRProblem {
 
     private Integer otherInformationFileId;
 
+    private Integer delayApplication;
+
     public Integer getId() {
         return id;
     }
@@ -808,5 +810,13 @@ public class RRProblem {
 
     public void setOtherInformationFileId(Integer otherInformationFileId) {
         this.otherInformationFileId = otherInformationFileId;
+    }
+
+    public Integer getDelayApplication() {
+        return delayApplication;
+    }
+
+    public void setDelayApplication(Integer delayApplication) {
+        this.delayApplication = delayApplication;
     }
 }

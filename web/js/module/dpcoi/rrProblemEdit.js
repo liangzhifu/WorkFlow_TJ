@@ -100,69 +100,90 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         "layeredAuditFileId" : "",
         "checkResultFileId" : "",
         "naPendingFileId" : "",
-        "otherInformationFileId" : ""
-    }
+        "otherInformationFileId" : "",
+        "firstDelay" : "0",
+        "secondDelay" : "0",
+        "thirdDelay" : "0",
+        "fourthDelay" : "0",
+        "delayLevel" : "0",
+        "isDelay" : "0",
+        "delayApplication" : "0"
+    };
 
-    $("#rrProblemEditConfirm").click(function () {
+    $scope.validData = function(){
+        var flag = true;
         if(!$.html5Validate.isAllpass($("#problemStatus"))){//状态
-            return;
+            return false;
         }
         if(!$.html5Validate.isAllpass($("#problemType"))){//问题类型
-            return;
+            return false;
         }
         if(!$.html5Validate.isAllpass($("#engineering"))){//工程
-            return;
+            return false;
         }
         if(!$.html5Validate.isAllpass($("#problemProgress"))){//问题进展
-            return;
+            return false;
         }
         if(!$.html5Validate.isAllpass($("#happenDate"))){//发生日期
-            return;
+            return false;
         }
         if(!$.html5Validate.isAllpass($("#vehicle"))){//车型
-            return;
+            return false;
         }
         if(!$.html5Validate.isAllpass($("#productNo"))){//品名
-            return;
+            return false;
         }
         if(!$.html5Validate.isAllpass($("#badContent"))){//不良内容
-            return;
+            return false;
         }
         if(!$.html5Validate.isAllpass($("#reportDate"))){//下次汇报时间
-            return;
+            return false;
         }
-        var speedOfProgress = $("#speedOfProgress").val();
-        if(speedOfProgress == "delay"){
+        var trackingLevel = $("#trackingLevel").val();
+        if(!(trackingLevel == undefined || trackingLevel == null || trackingLevel == ""|| trackingLevel == "V")){
             if(!$.html5Validate.isAllpass($("#reasonForDelay"))){//延期原因及进展
-                return;
+                return false;
             }
         }
         if(!$.html5Validate.isAllpass($("#productLine"))){//生产线
-            return;
+            return false;
         }
         if(!$.html5Validate.isAllpass($("#severity"))){//严重度
-            return;
+            return false;
         }
         if(!$.html5Validate.isAllpass($("#occurrenceFrequency"))){//occurrenceFrequency
-            return;
+            return false;
         }
         if(!$.html5Validate.isAllpass($("#badQuantity"))){//不良数量
-            return;
+            return false;
         }
         if(!$.html5Validate.isAllpass($("#batch"))){//批次
-            return;
+            return false;
         }
         if(!$.html5Validate.isAllpass($("#happenShift"))){//发生班次
-            return;
+            return false;
         }
         if(!$.html5Validate.isAllpass($("#responsibleDepartment"))){//责任部门
-            return;
+            return false;
         }
         if(!$.html5Validate.isAllpass($("#recordPpm"))){//客户是否记录PPM
-            return;
+            return false;
         }
         if(!$.html5Validate.isAllpass($("#recordNum"))){//记录数量
-            return;
+            return false;
+        }
+        var persionLiableNames = $("#persionLiable").multiselect("MyValues");
+        if(persionLiableNames == ""){
+            alert("责任人不能为空！");
+            return false;
+        }
+        return flag;
+    };
+
+    $("#rrProblemEditConfirm").click(function () {
+        var flag = $scope.validData();
+        if(!flag){
+            return ;
         }
 
         var url = "";
@@ -172,10 +193,87 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
             url = "/WorkFlow/rrProblem/updateRRProblem.do";
         }
         var persionLiableNames = $("#persionLiable").multiselect("MyValues");
-        if(persionLiableNames == ""){
-            alert("责任人不能为空！");
-            return;
+        $scope.rrProblemEdit.rrProblem.persionLiable = persionLiableNames;
+        $scope.rrProblemEdit.rrProblem.vehicle = $("#vehicle").val();
+        $scope.rrProblemEdit.rrProblem.happenDate = $("#happenDate").val();
+        $scope.rrProblemEdit.rrProblem.reportDate = $("#reportDate").val();
+        $scope.rrProblemEdit.rrProblem.equipmentChecklist = $("#equipmentChecklist").val();
+        $scope.rrProblemEdit.rrProblem.alwaysList = $("#alwaysList").val();
+        $scope.rrProblemEdit.rrProblem.inspectionReferenceBook = $("#inspectionReferenceBook").val();
+        $scope.rrProblemEdit.rrProblem.inspectionBook = $("#inspectionBook").val();
+        $scope.rrProblemEdit.rrProblem.education = $("#education").val();
+        $scope.rrProblemEdit.rrProblem.firstDate = $("#firstDate").val();
+        $scope.rrProblemEdit.rrProblem.secondDate = $("#secondDate").val();
+        $scope.rrProblemEdit.rrProblem.thirdDate = $("#thirdDate").val();
+        $scope.rrProblemEdit.rrProblem.fourthDate = $("#fourthDate").val();
+        $scope.rrProblemEdit.rrProblem.closeConfirmTime = "";
+        $scope.rrProblemEdit.rrProblem.badContent = $("#badContent").val();
+        $scope.rrProblemEdit.rrProblem.reasonForDelay = $("#reasonForDelay").val();
+        $scope.rrProblemEdit.rrProblem.temporary = $("#temporary").val();
+        $scope.rrProblemEdit.rrProblem.rootCause = $("#rootCause").val();
+        $scope.rrProblemEdit.rrProblem.permanentGame = $("#permanentGame").val();
+        $scope.rrProblemEdit.rrProblem.effectVerification = $("#effectVerification").val();
+        $scope.rrProblemEdit.rrProblem.productLine = $("#productLine").val().toUpperCase();
+
+        $scope.rrProblemEdit.rrProblem.serialNumber = $("#serialNumber").val();
+        $scope.rrProblemEdit.rrProblem.serialNumberFileId = $("#serialNumberFileId").val();
+        $scope.rrProblemEdit.rrProblem.qualityWarningCardNumber = $("#qualityWarningCardNumber").val();
+        $scope.rrProblemEdit.rrProblem.qualityWarningCardNumberFileId = $("#qualityWarningCardNumberFileId").val();
+        $scope.rrProblemEdit.rrProblem.productScale = $("#productScale").val();
+        $scope.rrProblemEdit.rrProblem.productScaleFileId = $("#productScaleFileId").val();
+        $scope.rrProblemEdit.rrProblem.equipmentChecklist = $("#equipmentChecklist").val();
+        $scope.rrProblemEdit.rrProblem.equipmentChecklistFileId = $("#equipmentChecklistFileId").val();
+        $scope.rrProblemEdit.rrProblem.inspectionReferenceBook = $("#inspectionReferenceBook").val();
+        $scope.rrProblemEdit.rrProblem.inspectionReferenceBookFileId = $("#inspectionReferenceBookFileId").val();
+        $scope.rrProblemEdit.rrProblem.inspectionBook = $("#inspectionBook").val();
+        $scope.rrProblemEdit.rrProblem.inspectionBookFileId = $("#inspectionBookFileId").val();
+        $scope.rrProblemEdit.rrProblem.education = $("#education").val();
+        $scope.rrProblemEdit.rrProblem.educationFileId = $("#educationFileId").val();
+        $scope.rrProblemEdit.rrProblem.analyticReport = $("#analyticReport").val();
+        $scope.rrProblemEdit.rrProblem.analyticReportFileId = $("#analyticReportFileId").val();
+        $scope.rrProblemEdit.rrProblem.layeredAudit = $("#layeredAudit").val();
+        $scope.rrProblemEdit.rrProblem.layeredAuditFileId = $("#layeredAuditFileId").val();
+        $scope.rrProblemEdit.rrProblem.checkResult = $("#checkResult").val();
+        $scope.rrProblemEdit.rrProblem.checkResultFileId = $("#checkResultFileId").val();
+        $scope.rrProblemEdit.rrProblem.naPending = $("#naPending").val();
+        $scope.rrProblemEdit.rrProblem.naPendingFileId = $("#naPendingFileId").val();
+        $scope.rrProblemEdit.rrProblem.otherInformation = $("#otherInformation").val();
+        $scope.rrProblemEdit.rrProblem.otherInformationFileId = $("#otherInformationFileId").val();
+
+        $.ajax({
+            method:'post',
+            url:url,
+            data:$scope.rrProblemEdit.rrProblem,
+            success: function(resultJson) {
+                var result = angular.fromJson(resultJson);
+                if(result.success){
+                    var message = result.message;
+                    if(!(message == undefined || message == null || message == "")){
+                        alert(result.message);
+                    }
+                    window.location.href = "/WorkFlow/rrProblem/getRRProblemListDlg.do?"+searchStr;
+                }else {
+                    alert(result.message);
+                }
+            },
+            error : function() {
+                alert("系统出现异常!!");
+            }
+        });
+    });
+
+    $("#rrProblemDelayConfirm").click(function () {
+        if($scope.rrProblemEdit.rrProblem.isDelay == "1"){
+            alert("已延期，不能再次延期申请！");
+            return ;
         }
+        var flag = $scope.validData();
+        if(!flag){
+            return ;
+        }
+
+        var url = "/WorkFlow/rrProblem/updateDelayRRProblem.do";
+        var persionLiableNames = $("#persionLiable").multiselect("MyValues");
         $scope.rrProblemEdit.rrProblem.persionLiable = persionLiableNames;
         $scope.rrProblemEdit.rrProblem.vehicle = $("#vehicle").val();
         $scope.rrProblemEdit.rrProblem.happenDate = $("#happenDate").val();

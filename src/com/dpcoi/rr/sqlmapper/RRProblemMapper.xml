@@ -54,6 +54,7 @@
         <result column="artificial" property="artificial" jdbcType="VARCHAR" />
         <result column="materiel" property="materiel" jdbcType="VARCHAR" />
         <result column="state" property="state" jdbcType="INTEGER" />
+        <result column="is_delay" property="isDelay" jdbcType="INTEGER" />
         <result column="is_hide" property="isHide" jdbcType="INTEGER" />
         <result column="serial_number_file_id" property="serialNumberFileId" jdbcType="INTEGER" />
         <result column="quality_warning_card_number_file_id" property="qualityWarningCardNumberFileId" jdbcType="INTEGER" />
@@ -73,6 +74,7 @@
         <result column="na_pending_file_id" property="naPendingFileId" jdbcType="INTEGER" />
         <result column="other_information" property="otherInformation" jdbcType="INTEGER" />
         <result column="other_information_file_id" property="otherInformationFileId" jdbcType="INTEGER" />
+        <result column="delay_application" property="delayApplication" jdbcType="INTEGER" />
     </resultMap>
     <sql id="Base_Column_List" >
         id, problem_status, problem_no, problem_type, engineering, problem_progress, tracking_level,
@@ -86,7 +88,8 @@
         serial_number_file_id, quality_warning_card_number_file_id, product_scale_file_id,
         equipment_checklist_file_id, inspection_reference_book_file_id, inspection_book_file_id, education_file_id,
         dpcoi4M, analytic_report, analytic_report_file_id, layered_audit, layered_audit_file_id, check_result,
-        check_result_file_id, na_pending, na_pending_file_id, other_information, other_information_file_id
+        check_result_file_id, na_pending, na_pending_file_id, other_information, other_information_file_id,
+        delay_application, is_delay
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="RRProblem" >
         select
@@ -355,6 +358,9 @@
             <if test="otherInformationFileId != null" >
                 other_information_file_id,
             </if>
+            <if test="delayApplication != null" >
+                delay_application,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="id != null" >
@@ -573,6 +579,9 @@
             <if test="otherInformationFileId != null" >
                 #{otherInformationFileId,jdbcType=INTEGER},
             </if>
+            <if test="delayApplication != null" >
+                #{delayApplication,jdbcType=INTEGER},
+            </if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="RRProblem" >
@@ -790,6 +799,9 @@
             </if>
             <if test="otherInformationFileId != null" >
                 other_information_file_id = #{otherInformationFileId,jdbcType=INTEGER},
+            </if>
+            <if test="delayApplication != null" >
+                delay_application = #{delayApplication,jdbcType=INTEGER},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}

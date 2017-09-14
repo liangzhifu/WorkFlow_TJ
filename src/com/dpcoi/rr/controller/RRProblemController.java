@@ -395,6 +395,7 @@ public class RRProblemController {
                 }
             }
             this.rRProblemService.updateSpeedOfProgress(rrProblem);
+            this.rRProblemService.updateTrackingLevel(rrProblem);
             if("follow".equals(oldSpeedOfProgress)){
                 String speedOfProgress = rrProblem.getSpeedOfProgress();
                 if(("delayI".equals(speedOfProgress)) || ("delayII".equals(speedOfProgress)) || ("delayIII".equals(speedOfProgress)) || ("delayIV".equals(speedOfProgress))) {
@@ -414,6 +415,132 @@ public class RRProblemController {
                 }
             }
             this.rRProblemService.updateRRProblem(rrProblem);
+            String trackingLevel = rrProblem.getTrackingLevel();
+            if(!"V".equals(trackingLevel)){
+                map.put("message", "已超期！");
+            }else {
+                map.put("message", "");
+            }
+            map.put("success", true);
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("success", false);
+            map.put("message", e.getMessage());
+        }
+        AjaxUtil.ajaxResponse(response, new JSONObject(map).toString(), AjaxUtil.RESPONCE_TYPE_JSON);
+    }
+
+    /**
+     * 更新并申请延期RR问题点选项
+     * @param response 参数
+     * @param rrProblem RR问题点选项
+     */
+    @RequestMapping("updateDelayRRProblem.do")
+    public void updateDelayRRProblem(HttpServletRequest request, HttpServletResponse response, RRProblem rrProblem){
+        Map<String, Object> map = new HashMap<String, Object>();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try{
+            rrProblem.setDelayApplication(1);
+            rrProblem = this.validUploadFile(rrProblem);
+            validSpeedOfProgress(rrProblem);
+            RRProblem oldRRProblem = new RRProblem();
+            oldRRProblem.setId(rrProblem.getId());
+            oldRRProblem = this.rRProblemService.queryRRProblem(oldRRProblem);
+            String oldChangePoint = oldRRProblem.getChangePoint();
+            String oldSpeedOfProgress = rrProblem.getSpeedOfProgress();
+            String changePoint = rrProblem.getChangePoint();
+            changePoint = changePoint.toUpperCase();
+            rrProblem.setChangePoint(changePoint);
+            if(changePoint == null || "".equals(changePoint)){
+                if(!(oldChangePoint == null || "".equals(oldChangePoint))){
+                    throw new Exception("变化点管理已有值，不可修改为空！");
+                }
+            }else if("N/A".equals(changePoint)){
+                if(oldChangePoint == null || "".equals(oldChangePoint)){
+                    User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
+                    this.dpcoiOrderService.addDpcoiOrder(rrProblem, user);
+                }else {
+                    if(!("N/A".equals(oldChangePoint))){
+                        throw new Exception("变化点管理原有值不是N/A，不能修改为N/A！");
+                    }
+                }
+            }else {
+                if(oldChangePoint == null || "".equals(oldChangePoint)){
+                    DpcoiOrder dpcoiOrder = this.dpcoiOrderService.quereyDpcoiOrderOfTaskOrderNo(changePoint);
+                    if(dpcoiOrder == null){
+                        throw new Exception("变化点管理不存在！");
+                    }else {
+                        //同步数据
+                        DpcoiWoOrderQuery dpcoiWoOrderQuery = new DpcoiWoOrderQuery();
+                        dpcoiWoOrderQuery.setDpcoiOrderId(dpcoiOrder.getDpcoiOrderId());
+                        List<Map<String, Object>> mapList = this.dpcoiWoOrderService.queryDpcoiWoOrderList(dpcoiWoOrderQuery);
+                        String pfmea = "";
+                        String cp = "";
+                        String standardBook = "";
+                        for (Map<String, Object> objectMap : mapList) {
+                            Integer dpcoiWoOrderType = (Integer) objectMap.get("dpcoiWoOrderType");
+                            Integer dpcoiWoOrderState = (Integer) objectMap.get("dpcoiWoOrderState");
+                            if (1==dpcoiWoOrderType) {
+                                if (4==dpcoiWoOrderState) {
+                                    Date pfmeaCompleteDate = (Date) objectMap.get("pfmeaCompleteDate");
+                                    if (pfmeaCompleteDate != null) {
+                                        pfmea = formatter.format(pfmeaCompleteDate);
+                                    }
+                                } else if (7==dpcoiWoOrderState) {
+                                    pfmea = "N/A";
+                                }
+                            } else if (2==dpcoiWoOrderType) {
+                                if (4==dpcoiWoOrderState) {
+                                    Date cpCompleteDate = (Date) objectMap.get("cpCompleteDate");
+                                    if (cpCompleteDate != null) {
+                                        cp = formatter.format(cpCompleteDate);
+                                    }
+                                } else if (7==dpcoiWoOrderState) {
+                                    cp = "N/A";
+                                }
+                            } else if (3==dpcoiWoOrderType) {
+                                if (4==dpcoiWoOrderState) {
+                                    Date standardBookCompleteDate = (Date) objectMap.get("standardBookCompleteDate");
+                                    if (standardBookCompleteDate != null) {
+                                        standardBook = formatter.format(standardBookCompleteDate);
+                                    }
+                                } else if (7==dpcoiWoOrderState) {
+                                    standardBook = "N/A";
+                                }
+                            }
+                        }
+                        rrProblem.setPfmea(pfmea);
+                        rrProblem.setCp(cp);
+                        rrProblem.setStandardBook(standardBook);
+                        dpcoiOrder.setRrProblemId(rrProblem.getId());
+                        this.dpcoiOrderService.updateDpcoiOrder(dpcoiOrder);
+                    }
+                }else if(!(oldChangePoint.equals(changePoint))){
+                    throw new Exception("变化点管理已有值，不可修改！");
+                }
+            }
+            this.rRProblemService.updateSpeedOfProgress(rrProblem);
+            this.rRProblemService.updateTrackingLevel(rrProblem);
+            if("follow".equals(oldSpeedOfProgress)){
+                String speedOfProgress = rrProblem.getSpeedOfProgress();
+                if(("delayI".equals(speedOfProgress)) || ("delayII".equals(speedOfProgress)) || ("delayIII".equals(speedOfProgress)) || ("delayIV".equals(speedOfProgress))) {
+                    String persionLiable = rrProblem.getPersionLiable();
+                    String[] persionLiableArray = persionLiable.split(",");
+                    for (int i = 0; i < persionLiableArray.length; i++) {
+                        RRDelayStatistics rrDelayStatistics = new RRDelayStatistics();
+                        rrDelayStatistics.setSpeedOfProgress(speedOfProgress);
+                        rrDelayStatistics.setDelayDate(new Date());
+                        rrDelayStatistics.setDelayType(2);
+                        rrDelayStatistics.setPersionLiable(persionLiableArray[i]);
+                        rrDelayStatistics.setRrProblemId(rrProblem.getId());
+                        rrDelayStatistics.setProblemStatus(rrProblem.getProblemStatus());
+                        rrDelayStatistics.setProblemProgress(rrProblem.getProblemProgress());
+                        this.rRDelayStatisticsService.addRRDelayStatistics(rrDelayStatistics);
+                    }
+                }
+            }
+            this.rRProblemService.updateRRProblem(rrProblem);
+            this.rRProblemService.addSendMinisterEmail(rrProblem);
             map.put("success", true);
         }catch (Exception e){
             e.printStackTrace();
@@ -537,6 +664,7 @@ public class RRProblemController {
             }else{
                 rrProblem.setCloseConfirm("延期");
                 rrProblem.setIsDelay(1);
+                this.rRProblemService.updateTrackingLevel(rrProblem);
                 this.rRProblemService.updateRRProblem(rrProblem);
             }
             map.put("success", true);
@@ -672,18 +800,18 @@ public class RRProblemController {
             if(education == null || "".equals(education)){
                 throw new Exception("教育议事录不能为空！");
             }
-            String expandTrace = rrProblem.getExpandTrace();
-            if(expandTrace == null || "".equals(expandTrace)){
-                throw new Exception("展开追踪是否完成不能为空！");
-            }
-            String artificial = rrProblem.getArtificial();
-            if(artificial == null || "".equals(artificial)){
-                throw new Exception("人工不能为空！");
-            }
-            String materiel = rrProblem.getMateriel();
-            if(materiel == null || "".equals(materiel)){
-                throw new Exception("物料等级不能为空！");
-            }
+//            String expandTrace = rrProblem.getExpandTrace();
+//            if(expandTrace == null || "".equals(expandTrace)){
+//                throw new Exception("展开追踪是否完成不能为空！");
+//            }
+//            String artificial = rrProblem.getArtificial();
+//            if(artificial == null || "".equals(artificial)){
+//                throw new Exception("人工不能为空！");
+//            }
+//            String materiel = rrProblem.getMateriel();
+//            if(materiel == null || "".equals(materiel)){
+//                throw new Exception("物料等级不能为空！");
+//            }
             String dpcoi4M = rrProblem.getDpcoi4M();
             if(dpcoi4M == null || "".equals(dpcoi4M)){
                 throw new Exception("4M不能为空！");
@@ -700,14 +828,14 @@ public class RRProblemController {
             if(checkResult == null || "".equals(checkResult)){
                 throw new Exception("验岗结果不能为空！");
             }
-            String naPending = rrProblem.getNaPending();
-            if(naPending == null || "".equals(naPending)){
-                throw new Exception("NA待定不能为空！");
-            }
-            String otherInformation = rrProblem.getOtherInformation();
-            if(otherInformation == null || "".equals(otherInformation)){
-                throw new Exception("其他资料不能为空！");
-            }
+//            String naPending = rrProblem.getNaPending();
+//            if(naPending == null || "".equals(naPending)){
+//                throw new Exception("NA待定不能为空！");
+//            }
+//            String otherInformation = rrProblem.getOtherInformation();
+//            if(otherInformation == null || "".equals(otherInformation)){
+//                throw new Exception("其他资料不能为空！");
+//            }
         }
     }
 

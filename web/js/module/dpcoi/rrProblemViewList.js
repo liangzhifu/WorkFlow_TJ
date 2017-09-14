@@ -158,41 +158,45 @@ rrProblemViewListApp.controller("rrProblemViewListController", function ($scope)
                         if(speedOfProgress == undefined || speedOfProgress == null || speedOfProgress == ""){
 
                         }else if(speedOfProgress == "delayI"){
-                            var isDelay = obj.isDelay;
+                            /*var isDelay = obj.isDelay;
                             if(isDelay == undefined || isDelay == null){
                                 $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
                             }else if(isDelay == 1){
                                 $scope.rrProblemViewList.rrProblemViewList[i].isDeepSkyBlue = true;
                             }else {
                                 $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
-                            }
+                            }*/
+                            $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
                         }else if(speedOfProgress == "delayII"){
-                            var isDelay = obj.isDelay;
+                            /*var isDelay = obj.isDelay;
                             if(isDelay == undefined || isDelay == null){
                                 $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
                             }else if(isDelay == 1){
                                 $scope.rrProblemViewList.rrProblemViewList[i].isDeepSkyBlue = true;
                             }else {
                                 $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
-                            }
+                            }*/
+                            $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
                         }else if(speedOfProgress == "delayIII"){
-                            var isDelay = obj.isDelay;
+                            /*var isDelay = obj.isDelay;
                             if(isDelay == undefined || isDelay == null){
                                 $scope.rrProblemViewList.rrProblemViewList[i].isGoldenRod = true;
                             }else if(isDelay == 1){
                                 $scope.rrProblemViewList.rrProblemViewList[i].isDeepSkyBlue = true;
                             }else {
                                 $scope.rrProblemViewList.rrProblemViewList[i].isGoldenRod = true;
-                            }
+                            }*/
+                            $scope.rrProblemViewList.rrProblemViewList[i].isGoldenRod = true;
                         }else if(speedOfProgress == "delayIV"){
-                            var isDelay = obj.isDelay;
+                            /*var isDelay = obj.isDelay;
                             if(isDelay == undefined || isDelay == null){
                                 $scope.rrProblemViewList.rrProblemViewList[i].isYellow = true;
                             }else if(isDelay == 1){
                                 $scope.rrProblemViewList.rrProblemViewList[i].isDeepSkyBlue = true;
                             }else {
                                 $scope.rrProblemViewList.rrProblemViewList[i].isYellow = true;
-                            }
+                            }*/
+                            $scope.rrProblemViewList.rrProblemViewList[i].isYellow = true;
                         }else{
                         }
                     }

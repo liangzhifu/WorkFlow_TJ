@@ -8,10 +8,13 @@ import com.dpcoi.config.query.DpcoiConfigVehicleQuery;
 import com.dpcoi.file.dao.FileUploadDao;
 import com.dpcoi.file.domain.FileUpload;
 import com.dpcoi.holiday.dao.HolidayDao;
+import com.dpcoi.rr.dao.RRDelayLeaderDao;
 import com.dpcoi.rr.domain.RRProblem;
 import com.dpcoi.rr.dao.RRProblemDao;
 import com.dpcoi.rr.query.RRProblemQuery;
 import com.dpcoi.rr.service.RRProblemService;
+import com.success.sys.email.dao.TimeTaskDao;
+import com.success.sys.email.domain.TimeTask;
 import com.success.sys.user.dao.UserDao;
 import com.success.sys.user.domain.User;
 import com.success.web.framework.exception.ServiceException;
@@ -47,6 +50,12 @@ public class RRProblemServiceImpl implements RRProblemService {
 
     @Resource(name = "dpcoiConfigVehicleDao")
     private DpcoiConfigVehicleDao dpcoiConfigVehicleDao;
+
+    @Resource(name="timeTaskDao")
+    private TimeTaskDao timeTaskDao;
+
+    @Resource(name="rRDelayLeaderDao")
+    private RRDelayLeaderDao rRDelayLeaderDao;
 
     @Override
     public Integer addRRProblem(RRProblem rrProblem) throws Exception {
@@ -120,6 +129,9 @@ public class RRProblemServiceImpl implements RRProblemService {
 
         //问题进度
         this.updateSpeedOfProgress(rrProblem);
+
+        //追踪等级
+        this.updateTrackingLevel(rrProblem);
 
         return this.rRProblemDao.insertRRProblem(rrProblem);
     }
@@ -251,6 +263,96 @@ public class RRProblemServiceImpl implements RRProblemService {
         rrProblem.setSpeedOfProgress(speedOfProgress);
     }
 
+    @Override
+    public void updateTrackingLevel(RRProblem rrProblem) throws Exception {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String problemProgress = rrProblem.getProblemProgress();
+        Date nowDate = new Date();
+        String nowDateStr = df.format(nowDate);
+        Date hanppenDate = rrProblem.getHappenDate();
+        String hanppenDateStr = df.format(hanppenDate);
+        List<Calendar> calendarList = this.queryHolidayList(hanppenDateStr);
+        String trackingLevel = "";
+        int day = this.daysBetween(hanppenDateStr, nowDateStr, calendarList);
+        Integer isDelay = rrProblem.getIsDelay();
+        day = day - 1;
+        if("1/4".equals(problemProgress)){
+            if(isDelay == 1){
+                if(day <= 7){
+                    trackingLevel = "V";
+                }else {
+                    trackingLevel = "II";
+                }
+            }else {
+                if(day <= 2){
+                    trackingLevel = "V";
+                }else if(day <= 4){
+                    trackingLevel = "IV";
+                }else if(day <= 7){
+                    trackingLevel = "III";
+                }else {
+                    trackingLevel = "II";
+                }
+            }
+
+        }else if("2/4".equals(problemProgress)){
+            if(isDelay == 1){
+                if(day <= 14){
+                    trackingLevel = "V";
+                }else {
+                    trackingLevel = "II";
+                }
+            }else {
+                if(day <= 7){
+                    trackingLevel = "V";
+                }else if(day <= 9){
+                    trackingLevel = "IV";
+                }else if(day <= 14){
+                    trackingLevel = "III";
+                }else {
+                    trackingLevel = "II";
+                }
+            }
+        }else if("3/4".equals(problemProgress)){
+            if(isDelay == 1){
+                if(day <= 34){
+                    trackingLevel = "V";
+                }else {
+                    trackingLevel = "II";
+                }
+            }else {
+                if(day <= 17){
+                    trackingLevel = "V";
+                }else if(day <= 21){
+                    trackingLevel = "IV";
+                }else if(day <= 34){
+                    trackingLevel = "III";
+                }else {
+                    trackingLevel = "II";
+                }
+            }
+        }else if("4/4".equals(problemProgress)){
+            if(isDelay == 1){
+                if(day <= 40){
+                    trackingLevel = "V";
+                }else {
+                    trackingLevel = "I";
+                }
+            }else {
+                if(day <= 20){
+                    trackingLevel = "V";
+                }else if(day <= 24){
+                    trackingLevel = "IV";
+                }else if(day <= 40){
+                    trackingLevel = "III";
+                }else {
+                    trackingLevel = "I";
+                }
+            }
+        }
+        rrProblem.setTrackingLevel(trackingLevel);
+    }
+
     /**
      * 计算两个日期之间相差的天数
      * @param smdate
@@ -347,6 +449,32 @@ public class RRProblemServiceImpl implements RRProblemService {
             this.rRProblemDao.updateRRProblem(rrProblem);
         }
         return fileUpload;
+    }
+
+    @Override
+    public void addSendMinisterEmail(RRProblem rrProblem) throws ServiceException {
+        TimeTask timeTask = new TimeTask();
+        timeTask.setNoticeType(39);
+        StringBuffer comment = new StringBuffer();
+        comment.append("状态:").append(rrProblem.getProblemStatus())
+                .append("<br>").append("问题编号:").append(rrProblem.getProblemNo())
+                .append("<br>").append("问题类型:").append(rrProblem.getProblemType())
+                .append("<br>").append("工程:").append(rrProblem.getEngineering())
+                .append("<br>").append("客户:").append(rrProblem.getCustomer())
+                .append("<br>").append("车型:").append(rrProblem.getVehicle())
+                .append("<br>").append("品名:").append(rrProblem.getProductNo())
+                .append("<br>").append("不良内容:").append(rrProblem.getBadContent())
+                .append("<br>").append("生产线:").append(rrProblem.getProductLine())
+                .append("<br>").append("严重度:").append(rrProblem.getSeverity())
+                .append("<br>").append("根本原因:").append(rrProblem.getRootCause())
+                .append("<br>").append("永久对策:").append(rrProblem.getPermanentGame())
+                .append("<br>").append("进度").append(rrProblem.getSpeedOfProgress());
+        timeTask.setComment(comment.toString());
+        String emailUser = this.rRDelayLeaderDao.selectMinisteEmail();
+        timeTask.setUserEmail(emailUser);
+        timeTask.setDeleteState(0);
+        timeTask.setEmailTitle(rrProblem.getProblemNo());
+        this.timeTaskDao.insertTimeTask(timeTask);
     }
 
 

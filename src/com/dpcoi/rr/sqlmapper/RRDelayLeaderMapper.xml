@@ -212,4 +212,16 @@
         and leader3.`leader_type` = '3'
         AND FIND_IN_SET(user1.`USER_NAME`, #{userName}))
     </select>
+
+    <select id="selectMinisteEmail" resultType="java.lang.String">
+        select group_concat(users.`EMAIL`)
+        from sys_users users
+        where users.`USER_ID` in
+        (select drdl.`leader_id`
+        from dpcoi_rr_delay_leader drdl
+        where drdl.`delete_state` = '0'
+        and drdl.`leader_type` = '3'
+        )
+        and users.`delete_state` = '0'
+    </select>
 </mapper>

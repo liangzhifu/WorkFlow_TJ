@@ -93,6 +93,13 @@ public interface RRProblemService {
     public void updateSpeedOfProgress(RRProblem rrProblem) throws Exception;
 
     /**
+     * 更新RR问题追踪等级
+     * @param rrProblem RR问题
+     * @throws Exception 异常
+     */
+    public void updateTrackingLevel(RRProblem rrProblem) throws Exception;
+
+    /**
      * 获取RR问题点延期的邮件
      * @param rrProblem RR问题点
      * @return 返回结果
@@ -118,5 +125,12 @@ public interface RRProblemService {
      * @throws Exception 异常
      */
     public FileUpload addUploadFile(Integer rrProblemId, String fileAttr, MultipartFile file, String path, User user) throws Exception;
+
+    /**
+     * 申请延期，发送部长邮件
+     * @param rrProblem RR问题点
+     * @throws ServiceException 异常
+     */
+    public void addSendMinisterEmail(RRProblem rrProblem) throws ServiceException;
 
 }

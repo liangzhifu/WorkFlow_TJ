@@ -47,6 +47,7 @@ public class UpdateRRProblemSpeedOfProgress {
             for (RRProblem rrProblem : rrProblemList){
                 String oldSpeedOfProgress = rrProblem.getSpeedOfProgress();
                 this.rRProblemService.updateSpeedOfProgress(rrProblem);
+                this.rRProblemService.updateTrackingLevel(rrProblem);
                 String speedOfProgress = rrProblem.getSpeedOfProgress();
                 if("delayI".equals(speedOfProgress) || "delayII".equals(speedOfProgress) || "delayIII".equals(speedOfProgress) || "delayIV".equals(speedOfProgress)){
                     if("follow".equals(oldSpeedOfProgress)){
