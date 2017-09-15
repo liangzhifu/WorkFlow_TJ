@@ -407,6 +407,30 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
                         header: false,
                         selectedList:4
                     });
+                    if($scope.action == "edit"){
+                        $.ajax({
+                            method: 'post',
+                            url: "/WorkFlow/rrProblem/getRRProblem.do?id="+rrProblemId,
+                            success: function (resultJson) {
+                                var result = angular.fromJson(resultJson);
+                                if (result.success) {
+                                    $scope.rrProblemEdit.rrProblem = result.rrProblem;
+                                    var persionLiableStr = $scope.rrProblemEdit.rrProblem.persionLiable;
+                                    var arr = persionLiableStr.split(",");
+                                    if (arr != null) {
+                                        $('#persionLiable option').each(function(i,content){
+                                            //alert(i+"***"+content.value);
+                                            if($.inArray($.trim(content.value),arr)>=0){
+                                                this.selected=true;
+                                            }
+                                        });
+                                        $('#persionLiable').multiselect("refresh");
+                                    }
+                                    $scope.$apply();
+                                }
+                            }
+                        });
+                    }
                 }
             }
         });
@@ -463,26 +487,6 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
                 alert("系统出现异常!!");
             }
         });
-
-        if($scope.action == "edit"){
-            $.ajax({
-                method: 'post',
-                url: "/WorkFlow/rrProblem/getRRProblem.do?id="+rrProblemId,
-                success: function (resultJson) {
-                    var result = angular.fromJson(resultJson);
-                    if (result.success) {
-                        $scope.rrProblemEdit.rrProblem = result.rrProblem;
-                        var persionLiableStr = $scope.rrProblemEdit.rrProblem.persionLiable;
-                        var arr = persionLiableStr.split(",");
-                        if (arr != null) {
-                            $('#persionLiable').val(arr);
-                            $('#persionLiable').multiselect("refresh");
-                        }
-                        $scope.$apply();
-                    }
-                }
-            });
-        }
 
     });
 });

@@ -134,7 +134,7 @@
                                 <label  class="control-label" for="persionLiable"><span style="color:red;">*</span>责任人：</label>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <select id="persionLiable" name="persionLiable" class="form-control-order form-control" required="required"
-                                        ng-model="rrProblemEdit.rrProblem.persionLiable" multiple="multiple" style="width: 60%">
+                                        multiple="multiple" style="width: 60%">
                                 </select>
                             </div>
                         </div>
