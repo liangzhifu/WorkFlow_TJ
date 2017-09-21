@@ -97,6 +97,8 @@ rrProblemViewListApp.controller("rrProblemViewListController", function ($scope)
         "productLine" : "",
         "severity" : "",
         "responsibleDepartment" : "",
+        "trackingLevel" : "",
+        "dpcoi4M" : "",
         "ids":""
     };
 
@@ -119,6 +121,8 @@ rrProblemViewListApp.controller("rrProblemViewListController", function ($scope)
         $scope.rrProblemViewList.searchForm.problemType = $scope.getMultiselectValue("problemType");
         $scope.rrProblemViewList.searchForm.engineering = $scope.getMultiselectValue("engineering");
         $scope.rrProblemViewList.searchForm.problemProgress = $scope.getMultiselectValue("problemProgress");
+        $scope.rrProblemViewList.searchForm.trackingLevel = $scope.getMultiselectValue("trackingLevel");
+        $scope.rrProblemViewList.searchForm.dpcoi4M = $scope.getMultiselectValue("dpcoi4M");
         $scope.rrProblemViewList.searchForm.happenDateBegin = $("#happenDateBegin").val();
         $scope.rrProblemViewList.searchForm.happenDateEnd = $("#happenDateEnd").val();
         $scope.rrProblemViewList.searchForm.pagenum = $scope.rrProblemViewList.pageInfo.page-1;
@@ -154,49 +158,49 @@ rrProblemViewListApp.controller("rrProblemViewListController", function ($scope)
                         $scope.rrProblemViewList.rrProblemViewList[i].isGoldenRod=false;
                         $scope.rrProblemViewList.rrProblemViewList[i].isYellow=false;
                         var obj = $scope.rrProblemViewList.rrProblemViewList[i];
-                        var speedOfProgress = obj.speedOfProgress;
-                        if(speedOfProgress == undefined || speedOfProgress == null || speedOfProgress == ""){
+                        var trackingLevel = obj.trackingLevel;
+                        if(trackingLevel == undefined || trackingLevel == null || trackingLevel == "" || trackingLevel == "V"){
 
-                        }else if(speedOfProgress == "delayI"){
-                            /*var isDelay = obj.isDelay;
+                        }else if(trackingLevel == "I"){
+                            var isDelay = obj.isDelay;
                             if(isDelay == undefined || isDelay == null){
                                 $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
                             }else if(isDelay == 1){
                                 $scope.rrProblemViewList.rrProblemViewList[i].isDeepSkyBlue = true;
                             }else {
                                 $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
-                            }*/
-                            $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
-                        }else if(speedOfProgress == "delayII"){
-                            /*var isDelay = obj.isDelay;
+                            }
+                            /*$scope.rrProblemViewList.rrProblemViewList[i].isRed = true;*/
+                        }else if(trackingLevel == "II"){
+                            var isDelay = obj.isDelay;
                             if(isDelay == undefined || isDelay == null){
                                 $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
                             }else if(isDelay == 1){
                                 $scope.rrProblemViewList.rrProblemViewList[i].isDeepSkyBlue = true;
                             }else {
                                 $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
-                            }*/
-                            $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
-                        }else if(speedOfProgress == "delayIII"){
-                            /*var isDelay = obj.isDelay;
+                            }
+                            /*$scope.rrProblemViewList.rrProblemViewList[i].isRed = true;*/
+                        }else if(trackingLevel == "III"){
+                            var isDelay = obj.isDelay;
                             if(isDelay == undefined || isDelay == null){
                                 $scope.rrProblemViewList.rrProblemViewList[i].isGoldenRod = true;
                             }else if(isDelay == 1){
                                 $scope.rrProblemViewList.rrProblemViewList[i].isDeepSkyBlue = true;
                             }else {
                                 $scope.rrProblemViewList.rrProblemViewList[i].isGoldenRod = true;
-                            }*/
-                            $scope.rrProblemViewList.rrProblemViewList[i].isGoldenRod = true;
-                        }else if(speedOfProgress == "delayIV"){
-                            /*var isDelay = obj.isDelay;
+                            }
+                            /*$scope.rrProblemViewList.rrProblemViewList[i].isGoldenRod = true;*/
+                        }else if(trackingLevel == "IV"){
+                            var isDelay = obj.isDelay;
                             if(isDelay == undefined || isDelay == null){
                                 $scope.rrProblemViewList.rrProblemViewList[i].isYellow = true;
                             }else if(isDelay == 1){
                                 $scope.rrProblemViewList.rrProblemViewList[i].isDeepSkyBlue = true;
                             }else {
                                 $scope.rrProblemViewList.rrProblemViewList[i].isYellow = true;
-                            }*/
-                            $scope.rrProblemViewList.rrProblemViewList[i].isYellow = true;
+                            }
+                            /*$scope.rrProblemViewList.rrProblemViewList[i].isYellow = true;*/
                         }else{
                         }
                     }
@@ -415,6 +419,18 @@ rrProblemViewListApp.controller("rrProblemViewListController", function ($scope)
                         selectedList:4
                     });
                     $("#problemType").multiselect({
+                        checkAllText: "全选",
+                        uncheckAllText: '全不选',
+                        header: false,
+                        selectedList:4
+                    });
+                    $("#trackingLevel").multiselect({
+                        checkAllText: "全选",
+                        uncheckAllText: '全不选',
+                        header: false,
+                        selectedList:4
+                    });
+                    $("#dpcoi4M").multiselect({
                         checkAllText: "全选",
                         uncheckAllText: '全不选',
                         header: false,

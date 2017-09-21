@@ -19,7 +19,6 @@
         var searchStr = ""
         searchStr += "badContent=${rrProblemQuery.badContent}";
         searchStr += "&problemProgress=${rrProblemQuery.problemProgress}";
-        searchStr += "&speedOfProgress=${rrProblemQuery.speedOfProgress}";
         searchStr += "&problemStatus=${rrProblemQuery.problemStatus}";
         searchStr += "&problemType=${rrProblemQuery.problemType}";
         searchStr += "&engineering=${rrProblemQuery.engineering}";
@@ -32,6 +31,8 @@
         searchStr += "&productLine=${rrProblemQuery.productLine}";
         searchStr += "&severity=${rrProblemQuery.severity}";
         searchStr += "&responsibleDepartment=${rrProblemQuery.responsibleDepartment}";
+        searchStr += "&trackingLevel=${rrProblemQuery.trackingLevel}";
+        searchStr += "&dpcoi4M=${rrProblemQuery.dpcoi4M}";
         searchStr += "&size=${rrProblemQuery.size}";
         searchStr += "&start=${rrProblemQuery.start}";
     </script>
@@ -145,9 +146,14 @@
                                        id="reportDate" name="reportDate" ng-model="rrProblemEdit.rrProblem.reportDateStr">
                             </div>
                             <div class="col-md-3">
-                                <label  class="control-label" for="speedOfProgress">进度：</label>
-                                <input class="form-control-order form-control clean" style="width: 60%" ng-disabled="true"
-                                       id="speedOfProgress" name="speedOfProgress" ng-model="rrProblemEdit.rrProblem.speedOfProgress">
+                                <label  class="control-label" for="dpcoi4M">4M：</label>
+                                <select id="dpcoi4M" name="dpcoi4M" class="form-control-order form-control" required="required"
+                                        ng-model="rrProblemEdit.rrProblem.dpcoi4M" style="width: 60%">
+                                    <option value="">请选择</option>
+                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList | myFilter:13"
+                                            value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.severity"
+                                    >{{dpcoiConfigDate.configValue}}</option>
+                                </select>
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="reasonForDelay">延期原因及进展：</label>
@@ -365,16 +371,6 @@
                                        id="changePoint" name="changePoint" ng-model="rrProblemEdit.rrProblem.changePoint">
                             </div>
                             <div class="col-md-3">
-                                <label  class="control-label" for="dpcoi4M">4M：</label>
-                                <select id="dpcoi4M" name="dpcoi4M" class="form-control-order form-control" required="required"
-                                        ng-model="rrProblemEdit.rrProblem.dpcoi4M" style="width: 60%">
-                                    <option value="">请选择</option>
-                                    <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList | myFilter:13"
-                                            value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.severity"
-                                    >{{dpcoiConfigDate.configValue}}</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
                                 <label  class="control-label" for="analyticReport">解析报告：</label>
                                 <input type="button" ng-click="uploadFile('analyticReport','analyticReportFileId')" value="上传文件">
                                 <input type="hidden" id="analyticReportFileId" name="analyticReportFileId" ng-model="rrProblemEdit.rrProblem.analyticReportFileId">
@@ -388,8 +384,6 @@
                                 <input class="form-control-order form-control clean" style="width: 45%"
                                        id="layeredAudit" name="layeredAudit" ng-model="rrProblemEdit.rrProblem.layeredAudit">
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-md-3">
                                 <label  class="control-label" for="checkResult">验岗结果：</label>
                                 <input type="button" ng-click="uploadFile('checkResult','checkResultFileId')" value="上传文件">
@@ -397,6 +391,8 @@
                                 <input class="form-control-order form-control clean" style="width: 45%"
                                        id="checkResult" name="checkResult" ng-model="rrProblemEdit.rrProblem.checkResult">
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-3">
                                 <label  class="control-label" for="naPending">NA待定：</label>
                                 <input type="button" ng-click="uploadFile('naPending','naPendingFileId')" value="上传文件">
@@ -422,6 +418,9 @@
                                 <label  class="control-label" for="materiel">物料：</label>
                                 <input class="form-control-order form-control clean" style="width: 60%"
                                        id="materiel" name="materiel" ng-model="rrProblemEdit.rrProblem.materiel">
+                                <label  class="control-label" for="speedOfProgress">进度：</label>
+                                <input class="form-control-order form-control clean" style="width: 60%" ng-disabled="true"
+                                       id="speedOfProgress" name="speedOfProgress" ng-model="rrProblemEdit.rrProblem.speedOfProgress">
                         </div>
                         <hr>
                         <div class="modal-footer">

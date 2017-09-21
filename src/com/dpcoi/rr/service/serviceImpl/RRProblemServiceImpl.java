@@ -207,7 +207,7 @@ public class RRProblemServiceImpl implements RRProblemService {
         String reportDateStr = df.format(reportDate);
         Date nowDate = new Date();
         String nowDateStr = df.format(nowDate);
-        if("1/4".equals(problemProgress)){
+        if("2/5".equals(problemProgress)){
             Date firstDate = rrProblem.getFirstDate();
             String firstDateStr = df.format(firstDate);
             if(reportDateStr.compareTo(nowDateStr) < 0){
@@ -221,7 +221,7 @@ public class RRProblemServiceImpl implements RRProblemService {
                     speedOfProgress = "delayII";
                 }
             }
-        }else if("2/4".equals(problemProgress)){
+        }else if("3/5".equals(problemProgress)){
             Date secondDate = rrProblem.getSecondDate();
             String secondDateStr = df.format(secondDate);
             if(reportDateStr.compareTo(nowDateStr) < 0){
@@ -239,7 +239,7 @@ public class RRProblemServiceImpl implements RRProblemService {
                     speedOfProgress = "delayIV";
                 }
             }
-        }else if("3/4".equals(problemProgress)){
+        }else if("4/5".equals(problemProgress)){
             Date thirdDate = rrProblem.getThirdDate();
             String thirdDateStr = df.format(thirdDate);
             if(reportDateStr.compareTo(nowDateStr) < 0){
@@ -248,7 +248,7 @@ public class RRProblemServiceImpl implements RRProblemService {
             if(reportDateStr.compareTo(thirdDateStr) > 0){
                 speedOfProgress = "delayII";
             }
-        }else if("4/4".equals(problemProgress)){
+        }else if("5/5".equals(problemProgress)){
             Date fourthDate = rrProblem.getFourthDate();
             String fourthDateStr = df.format(fourthDate);
             if(reportDateStr.compareTo(nowDateStr) < 0){
@@ -272,11 +272,11 @@ public class RRProblemServiceImpl implements RRProblemService {
         Date hanppenDate = rrProblem.getHappenDate();
         String hanppenDateStr = df.format(hanppenDate);
         List<Calendar> calendarList = this.queryHolidayList(hanppenDateStr);
-        String trackingLevel = "";
+        String trackingLevel = "V";
         int day = this.daysBetween(hanppenDateStr, nowDateStr, calendarList);
         Integer isDelay = rrProblem.getIsDelay();
         day = day - 1;
-        if("1/4".equals(problemProgress)){
+        if("2/5".equals(problemProgress)){
             if(isDelay == 1){
                 if(day <= 7){
                     trackingLevel = "V";
@@ -295,7 +295,7 @@ public class RRProblemServiceImpl implements RRProblemService {
                 }
             }
 
-        }else if("2/4".equals(problemProgress)){
+        }else if("3/5".equals(problemProgress)){
             if(isDelay == 1){
                 if(day <= 14){
                     trackingLevel = "V";
@@ -313,7 +313,7 @@ public class RRProblemServiceImpl implements RRProblemService {
                     trackingLevel = "II";
                 }
             }
-        }else if("3/4".equals(problemProgress)){
+        }else if("4/5".equals(problemProgress)){
             if(isDelay == 1){
                 if(day <= 34){
                     trackingLevel = "V";
@@ -331,7 +331,7 @@ public class RRProblemServiceImpl implements RRProblemService {
                     trackingLevel = "II";
                 }
             }
-        }else if("4/4".equals(problemProgress)){
+        }else if("5/5".equals(problemProgress)){
             if(isDelay == 1){
                 if(day <= 40){
                     trackingLevel = "V";

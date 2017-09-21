@@ -94,37 +94,68 @@ public class RRProblemController {
         List<Map<String, Object>> newMapList = new LinkedList<Map<String, Object>>();
         List<Map<String, Object>> mapList = this.rRProblemService.queryRRProblemScreenShowList();
         for(Map<String, Object> map : mapList){
-            String speedOfProgress = (String)map.get("speedOfProgress");
+            String trackingLevel = (String)map.get("trackingLevel");
             Integer isDelay = (Integer)map.get("isDelay");
-            if(speedOfProgress == null || "".equals(speedOfProgress)){
+            if(trackingLevel == null || "".equals(trackingLevel) || "V".equals(trackingLevel)){
                 map.put("backgroundColor", "background-color : #808080;color: #FFFFFF;!important;");
-            }else if("delayI".equals(speedOfProgress)){
+            }else if("I".equals(trackingLevel)){
                 if(isDelay.intValue() == 1){
                     map.put("backgroundColor", "background-color : deepskyblue;color: #000000;!important;");
                 }else {
                     map.put("backgroundColor", "background-color : red;color: #FFFFFF;!important;");
                 }
-            }else if("delayII".equals(speedOfProgress)){
+            }else if("II".equals(trackingLevel)){
                 if(isDelay.intValue() == 1){
                     map.put("backgroundColor", "background-color : deepskyblue;color: #000000;!important;");
                 }else {
                     map.put("backgroundColor", "background-color : red;color: #FFFFFF;!important;");
                 }
-            }else if("delayIII".equals(speedOfProgress)){
+            }else if("III".equals(trackingLevel)){
                 if(isDelay.intValue() == 1){
                     map.put("backgroundColor", "background-color : deepskyblue;color: #000000;!important;");
                 }else {
                     map.put("backgroundColor", "background-color : GoldenRod;color: #000000;!important;");
                 }
-            }else if("delayIV".equals(speedOfProgress)){
+            }else if("IV".equals(trackingLevel)){
                 if(isDelay.intValue() == 1){
                     map.put("backgroundColor", "background-color : deepskyblue;color: #000000;!important;");
                 }else {
                     map.put("backgroundColor", "background-color : yellow;color: #000000;!important;");
                 }
-            }else{
+            }else {
                 map.put("backgroundColor", "background-color : #808080;color: #FFFFFF;!important;");
             }
+
+//            String speedOfProgress = (String)map.get("speedOfProgress");
+//            if(speedOfProgress == null || "".equals(speedOfProgress)){
+//                map.put("backgroundColor", "background-color : #808080;color: #FFFFFF;!important;");
+//            }else if("delayI".equals(speedOfProgress)){
+//                if(isDelay.intValue() == 1){
+//                    map.put("backgroundColor", "background-color : deepskyblue;color: #000000;!important;");
+//                }else {
+//                    map.put("backgroundColor", "background-color : red;color: #FFFFFF;!important;");
+//                }
+//            }else if("delayII".equals(speedOfProgress)){
+//                if(isDelay.intValue() == 1){
+//                    map.put("backgroundColor", "background-color : deepskyblue;color: #000000;!important;");
+//                }else {
+//                    map.put("backgroundColor", "background-color : red;color: #FFFFFF;!important;");
+//                }
+//            }else if("delayIII".equals(speedOfProgress)){
+//                if(isDelay.intValue() == 1){
+//                    map.put("backgroundColor", "background-color : deepskyblue;color: #000000;!important;");
+//                }else {
+//                    map.put("backgroundColor", "background-color : GoldenRod;color: #000000;!important;");
+//                }
+//            }else if("delayIV".equals(speedOfProgress)){
+//                if(isDelay.intValue() == 1){
+//                    map.put("backgroundColor", "background-color : deepskyblue;color: #000000;!important;");
+//                }else {
+//                    map.put("backgroundColor", "background-color : yellow;color: #000000;!important;");
+//                }
+//            }else{
+//                map.put("backgroundColor", "background-color : #808080;color: #FFFFFF;!important;");
+//            }
             String persionLiable = (String)map.get("persionLiable");
             persionLiable = persionLiable.replace(",", "<br>");
             map.put("persionLiable", persionLiable);
@@ -149,11 +180,11 @@ public class RRProblemController {
             if(ministerJurisdiction == 0){
                 rrProblemQuery.setIsHide(0);
             }
-            String speedOfProgress = rrProblemQuery.getSpeedOfProgress();
-            if(speedOfProgress == null || "".equals(speedOfProgress)){
-                speedOfProgress = "delayI,delayII,delayIII,delayIV,close,follow";
-                rrProblemQuery.setSpeedOfProgress(speedOfProgress);
-            }
+//            String speedOfProgress = rrProblemQuery.getSpeedOfProgress();
+//            if(speedOfProgress == null || "".equals(speedOfProgress)){
+//                speedOfProgress = "delayI,delayII,delayIII,delayIV,close,follow";
+//                rrProblemQuery.setSpeedOfProgress(speedOfProgress);
+//            }
             String path = request.getSession().getServletContext().getRealPath("/");
             String fileName = this.exportExcelService.excelRRProblem(path, rrProblemQuery);
             map.put("success", true);
@@ -180,11 +211,11 @@ public class RRProblemController {
             if(ministerJurisdiction == 0){
                 rrProblemQuery.setIsHide(0);
             }
-            String speedOfProgress = rrProblemQuery.getSpeedOfProgress();
-            if(speedOfProgress == null || "".equals(speedOfProgress)){
-                speedOfProgress = "delayI,delayII,delayIII,delayIV,close,follow";
-                rrProblemQuery.setSpeedOfProgress(speedOfProgress);
-            }
+//            String speedOfProgress = rrProblemQuery.getSpeedOfProgress();
+//            if(speedOfProgress == null || "".equals(speedOfProgress)){
+//                speedOfProgress = "delayI,delayII,delayIII,delayIV,close,follow";
+//                rrProblemQuery.setSpeedOfProgress(speedOfProgress);
+//            }
             List<Map<String, Object>> rrProblemList = this.rRProblemService.queryRRProblemPageList(rrProblemQuery);
             Integer rrProblemCount = this.rRProblemService.queryRRProblemCount(rrProblemQuery);
             Integer pageCount = rrProblemCount / rrProblemQuery.getSize() + (rrProblemCount % rrProblemQuery.getSize() > 0 ? 1 : 0);
@@ -581,7 +612,7 @@ public class RRProblemController {
             User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
             rrProblem = this.rRProblemService.queryRRProblem(rrProblem);
             String problemProgress = rrProblem.getProblemProgress();
-            if("4/4".equals(problemProgress)){
+            if("5/5".equals(problemProgress)){
                 Integer state = rrProblem.getState();
                 if(state == 2){
                     throw new Exception("RR问题点已关闭，不能再次关闭！");
@@ -598,7 +629,7 @@ public class RRProblemController {
                     this.rRProblemService.updateRRProblem(newRRProblem);
                 }
             }else {
-                throw new Exception("问题进展不是4/4！");
+                throw new Exception("问题进展不是5/5！");
             }
             map.put("success", true);
         }catch (Exception e){
@@ -729,13 +760,13 @@ public class RRProblemController {
     }
 
     /**
-     * 验证4/4
+     * 验证5/5
      * @param rrProblem rr问题点
      * @throws Exception 异常
      */
     private void validSpeedOfProgress(RRProblem rrProblem) throws Exception{
         String problemProgress = rrProblem.getProblemProgress();
-        if("4/4".equals(problemProgress)){
+        if("5/5".equals(problemProgress)){
 //                String trackingLevel = rrProblem.getTrackingLevel();
 //                if(trackingLevel == null || "".equals(trackingLevel)){
 //                    throw new Exception("追踪等级不能为空！");

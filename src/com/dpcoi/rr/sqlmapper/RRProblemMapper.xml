@@ -922,6 +922,12 @@
             <if test="isHide != null" >
                 and is_hide = #{isHide,jdbcType=INTEGER}
             </if>
+            <if test="trackingLevel != null and trackingLevel != ''" >
+                and find_in_set(`tracking_level`, #{trackingLevel,jdbcType=VARCHAR})
+            </if>
+            <if test="dpcoi4M != null and dpcoi4M != ''" >
+                and find_in_set(`dpcoi4M`, #{dpcoi4M,jdbcType=VARCHAR})
+            </if>
         </where>
     </sql>
 

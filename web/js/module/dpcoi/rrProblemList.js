@@ -84,7 +84,6 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
     $scope.rrProblemList.searchForm = {
         "badContent": badContent,
         "problemProgress": problemProgress,
-        "speedOfProgress": speedOfProgress,
         "problemStatus" : problemStatus,
         "problemType" : problemType,
         "engineering" : engineering,
@@ -97,6 +96,8 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         "productLine" : productLine,
         "severity" : severity,
         "responsibleDepartment" : responsibleDepartment,
+        "trackingLevel" : trackingLevel,
+        "dpcoi4M" : dpcoi4M,
         "ids":""
     }
 
@@ -115,10 +116,11 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
     }
 
     $scope.rrProblemList.Search = function () {
-        $scope.rrProblemList.searchForm.speedOfProgress = $scope.getMultiselectValue("speedOfProgress");
         $scope.rrProblemList.searchForm.problemType = $scope.getMultiselectValue("problemType");
         $scope.rrProblemList.searchForm.engineering = $scope.getMultiselectValue("engineering");
         $scope.rrProblemList.searchForm.problemProgress = $scope.getMultiselectValue("problemProgress");
+        $scope.rrProblemList.searchForm.trackingLevel = $scope.getMultiselectValue("trackingLevel");
+        $scope.rrProblemList.searchForm.dpcoi4M = $scope.getMultiselectValue("dpcoi4M");
         $scope.rrProblemList.searchForm.happenDateBegin = $("#happenDateBegin").val();
         $scope.rrProblemList.searchForm.happenDateEnd = $("#happenDateEnd").val();
         $scope.rrProblemList.searchForm.pagenum = $scope.rrProblemList.pageInfo.page-1;
@@ -156,49 +158,49 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                         $scope.rrProblemList.rrProblemList[i].isGoldenRod=false;
                         $scope.rrProblemList.rrProblemList[i].isYellow=false;
                         var obj = $scope.rrProblemList.rrProblemList[i];
-                        var speedOfProgress = obj.speedOfProgress;
-                        if(speedOfProgress == undefined || speedOfProgress == null || speedOfProgress == ""){
+                        var trackingLevel = obj.trackingLevel;
+                        if(trackingLevel == undefined || trackingLevel == null || trackingLevel == "" || trackingLevel == "V"){
 
-                        }else if(speedOfProgress == "delayI"){
-                            /*var isDelay = obj.isDelay;
+                        }else if(trackingLevel == "I"){
+                            var isDelay = obj.isDelay;
                             if(isDelay == undefined || isDelay == null){
                                 $scope.rrProblemList.rrProblemList[i].isRed = true;
                             }else if(isDelay == 1){
                                 $scope.rrProblemList.rrProblemList[i].isDeepSkyBlue = true;
                             }else {
                                 $scope.rrProblemList.rrProblemList[i].isRed = true;
-                            }*/
-                            $scope.rrProblemList.rrProblemList[i].isRed = true;
-                        }else if(speedOfProgress == "delayII"){
-                            /*var isDelay = obj.isDelay;
+                            }
+                            /*$scope.rrProblemList.rrProblemList[i].isRed = true;*/
+                        }else if(trackingLevel == "II"){
+                            var isDelay = obj.isDelay;
                             if(isDelay == undefined || isDelay == null){
                                 $scope.rrProblemList.rrProblemList[i].isRed = true;
                             }else if(isDelay == 1){
                                 $scope.rrProblemList.rrProblemList[i].isDeepSkyBlue = true;
                             }else {
                                 $scope.rrProblemList.rrProblemList[i].isRed = true;
-                            }*/
-                            $scope.rrProblemList.rrProblemList[i].isRed = true;
-                        }else if(speedOfProgress == "delayIII"){
-                            /*var isDelay = obj.isDelay;
+                            }
+                            /*$scope.rrProblemList.rrProblemList[i].isRed = true;*/
+                        }else if(trackingLevel == "III"){
+                            var isDelay = obj.isDelay;
                             if(isDelay == undefined || isDelay == null){
                                 $scope.rrProblemList.rrProblemList[i].isGoldenRod = true;
                             }else if(isDelay == 1){
                                 $scope.rrProblemList.rrProblemList[i].isDeepSkyBlue = true;
                             }else {
                                 $scope.rrProblemList.rrProblemList[i].isGoldenRod = true;
-                            }*/
-                            $scope.rrProblemList.rrProblemList[i].isGoldenRod = true;
-                        }else if(speedOfProgress == "delayIV"){
-                            /*var isDelay = obj.isDelay;
+                            }
+                            /*$scope.rrProblemList.rrProblemList[i].isGoldenRod = true;*/
+                        }else if(trackingLevel == "IV"){
+                            var isDelay = obj.isDelay;
                             if(isDelay == undefined || isDelay == null){
                                 $scope.rrProblemList.rrProblemList[i].isYellow = true;
                             }else if(isDelay == 1){
                                 $scope.rrProblemList.rrProblemList[i].isDeepSkyBlue = true;
                             }else {
                                 $scope.rrProblemList.rrProblemList[i].isYellow = true;
-                            }*/
-                            $scope.rrProblemList.rrProblemList[i].isYellow = true;
+                            }
+                            /*$scope.rrProblemList.rrProblemList[i].isYellow = true;*/
                         }else{
                         }
                     }
@@ -254,10 +256,11 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         var searchStr = ""
         searchStr += "badContent=" + $scope.rrProblemList.searchForm.badContent;
         searchStr += "&problemProgress=" + $scope.getMultiselectValue("problemProgress");
-        searchStr += "&speedOfProgress=" + $scope.getMultiselectValue("speedOfProgress");
         searchStr += "&problemStatus=" + $scope.rrProblemList.searchForm.problemStatus;
         searchStr += "&problemType=" + $scope.getMultiselectValue("problemType");
         searchStr += "&engineering=" + $scope.getMultiselectValue("engineering");
+        searchStr += "&trackingLevel=" + $scope.getMultiselectValue("trackingLevel");
+        searchStr += "&dpcoi4M=" + $scope.getMultiselectValue("dpcoi4M");
         searchStr += "&customer=" + $scope.rrProblemList.searchForm.customer;
         searchStr += "&vehicle=" + $scope.rrProblemList.searchForm.vehicle;
         searchStr += "&productNo=" + $scope.rrProblemList.searchForm.productNo;
@@ -468,12 +471,12 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         if($scope.rrProblemList.rrProblemList[index].checkBoxValue == "yes"){
             $scope.rrProblemList.rrProblemList[index].checkBoxValue = "no"
             var obj = $scope.rrProblemList.rrProblemList[index];
-            var speedOfProgress = obj.speedOfProgress;
-            if(speedOfProgress == undefined || speedOfProgress == null || speedOfProgress == ""){
+            var trackingLevel = obj.trackingLevel;
+            if(trackingLevel == undefined || trackingLevel == null || trackingLevel == "" || trackingLevel == "V"){
                 $("#table_tr_"+index).find("td").each(function () {
                     $(this).css("background-color","#FFFFFF");
                 });
-            }else if(speedOfProgress == "delayI"){
+            }else if(trackingLevel == "I"){
                 var isDelay = obj.isDelay;
                 if(isDelay == undefined || isDelay == null){
                     $("#table_tr_"+index).find("td").each(function () {
@@ -488,7 +491,7 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                         $(this).css("background-color","red");
                     });
                 }
-            }else if(speedOfProgress == "delayII"){
+            }else if(trackingLevel == "II"){
                 var isDelay = obj.isDelay;
                 if(isDelay == undefined || isDelay == null){
                     $("#table_tr_"+index).find("td").each(function () {
@@ -503,7 +506,7 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                         $(this).css("background-color","red");
                     });
                 }
-            }else if(speedOfProgress == "delayIII"){
+            }else if(trackingLevel == "III"){
                 var isDelay = obj.isDelay;
                 if(isDelay == undefined || isDelay == null){
                     $("#table_tr_"+index).find("td").each(function () {
@@ -518,7 +521,7 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                         $(this).css("background-color","GoldenRod");
                     });
                 }
-            }else if(speedOfProgress == "delayIV"){
+            }else if(trackingLevel == "IV"){
                 var isDelay = obj.isDelay;
                 if(isDelay == undefined || isDelay == null){
                     $("#table_tr_"+index).find("td").each(function () {
@@ -558,23 +561,6 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                 format: 'Y-m-d'
             });
         });
-
-        $("#speedOfProgress").multiselect({
-            checkAllText: "全选",
-            uncheckAllText: '全不选',
-            header: false,
-            selectedList:4
-        });
-        if(speedOfProgress != ''){
-            var sceneIdArr = speedOfProgress.split(",");
-            $('#speedOfProgress option').each(function(i,content){
-                //alert(i+"***"+content.value);
-                if($.inArray($.trim(content.value),sceneIdArr)>=0){
-                    this.selected=true;
-                }
-            });
-            $("#speedOfProgress").multiselect('refresh');
-        }
 
         $.ajax({
             method: 'post',
@@ -631,6 +617,38 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                             }
                         });
                         $("#problemType").multiselect('refresh');
+                    }
+                    $("#trackingLevel").multiselect({
+                        checkAllText: "全选",
+                        uncheckAllText: '全不选',
+                        header: false,
+                        selectedList:4
+                    });
+                    if(trackingLevel != ''){
+                        var sceneIdArr = trackingLevel.split(",");
+                        $('#trackingLevel option').each(function(i,content){
+                            //alert(i+"***"+content.value);
+                            if($.inArray($.trim(content.value),sceneIdArr)>=0){
+                                this.selected=true;
+                            }
+                        });
+                        $("#trackingLevel").multiselect('refresh');
+                    }
+                    $("#dpcoi4M").multiselect({
+                        checkAllText: "全选",
+                        uncheckAllText: '全不选',
+                        header: false,
+                        selectedList:4
+                    });
+                    if(dpcoi4M != ''){
+                        var sceneIdArr = dpcoi4M.split(",");
+                        $('#dpcoi4M option').each(function(i,content){
+                            //alert(i+"***"+content.value);
+                            if($.inArray($.trim(content.value),sceneIdArr)>=0){
+                                this.selected=true;
+                            }
+                        });
+                        $("#dpcoi4M").multiselect('refresh');
                     }
                     $scope.rrProblemList.pageInfo.page = pageNum;
                     $scope.rrProblemList.Search();

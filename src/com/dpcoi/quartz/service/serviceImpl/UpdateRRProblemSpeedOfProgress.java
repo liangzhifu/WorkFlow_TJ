@@ -45,12 +45,13 @@ public class UpdateRRProblemSpeedOfProgress {
         try {
             List<RRProblem> rrProblemList = this.rRProblemService.queryJobRRProblemList();
             for (RRProblem rrProblem : rrProblemList){
-                String oldSpeedOfProgress = rrProblem.getSpeedOfProgress();
+                String oldTrackingLevel = rrProblem.getTrackingLevel();
                 this.rRProblemService.updateSpeedOfProgress(rrProblem);
                 this.rRProblemService.updateTrackingLevel(rrProblem);
                 String speedOfProgress = rrProblem.getSpeedOfProgress();
-                if("delayI".equals(speedOfProgress) || "delayII".equals(speedOfProgress) || "delayIII".equals(speedOfProgress) || "delayIV".equals(speedOfProgress)){
-                    if("follow".equals(oldSpeedOfProgress)){
+                String trackingLevel =  rrProblem.getTrackingLevel();
+                if("I".equals(trackingLevel) || "II".equals(trackingLevel) || "III".equals(speedOfProgress) || "IV".equals(trackingLevel)){
+                    if(oldTrackingLevel == null || "".equals(oldTrackingLevel) || "V".equals(oldTrackingLevel)){
                         String persionLiable = rrProblem.getPersionLiable();
                         String[] persionLiableArray = persionLiable.split(",");
                         for(int i = 0; i < persionLiableArray.length; i++){
@@ -83,9 +84,9 @@ public class UpdateRRProblemSpeedOfProgress {
                             .append("<br>").append("进度").append(speedOfProgress);
                     timeTask.setComment(comment.toString());
                     String emailUser = "";
-                    if("delayIV".equals(speedOfProgress)){
+                    if("IV".equals(trackingLevel)){
                         emailUser = this.rRDelayLeaderService.queryDelay4Email(rrProblem.getPersionLiable());
-                    }else if("delayIII".equals(speedOfProgress)){
+                    }else if("III".equals(trackingLevel)){
                         emailUser = this.rRDelayLeaderService.queryDelay3Email(rrProblem.getPersionLiable());
                     }else {
                         emailUser = this.rRDelayLeaderService.queryDelay2Email(rrProblem.getPersionLiable());
