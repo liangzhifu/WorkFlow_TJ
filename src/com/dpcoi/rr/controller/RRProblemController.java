@@ -180,11 +180,11 @@ public class RRProblemController {
             if(ministerJurisdiction == 0){
                 rrProblemQuery.setIsHide(0);
             }
-//            String speedOfProgress = rrProblemQuery.getSpeedOfProgress();
-//            if(speedOfProgress == null || "".equals(speedOfProgress)){
-//                speedOfProgress = "delayI,delayII,delayIII,delayIV,close,follow";
-//                rrProblemQuery.setSpeedOfProgress(speedOfProgress);
-//            }
+            String speedOfProgress = rrProblemQuery.getSpeedOfProgress();
+            if(speedOfProgress == null || "".equals(speedOfProgress)){
+                speedOfProgress = "delayI,delayII,delayIII,delayIV,close,follow";
+                rrProblemQuery.setSpeedOfProgress(speedOfProgress);
+            }
             String path = request.getSession().getServletContext().getRealPath("/");
             String fileName = this.exportExcelService.excelRRProblem(path, rrProblemQuery);
             map.put("success", true);
@@ -211,11 +211,11 @@ public class RRProblemController {
             if(ministerJurisdiction == 0){
                 rrProblemQuery.setIsHide(0);
             }
-//            String speedOfProgress = rrProblemQuery.getSpeedOfProgress();
-//            if(speedOfProgress == null || "".equals(speedOfProgress)){
-//                speedOfProgress = "delayI,delayII,delayIII,delayIV,close,follow";
-//                rrProblemQuery.setSpeedOfProgress(speedOfProgress);
-//            }
+            String speedOfProgress = rrProblemQuery.getSpeedOfProgress();
+            if(speedOfProgress == null || "".equals(speedOfProgress)){
+                speedOfProgress = "delayI,delayII,delayIII,delayIV,close,follow";
+                rrProblemQuery.setSpeedOfProgress(speedOfProgress);
+            }
             List<Map<String, Object>> rrProblemList = this.rRProblemService.queryRRProblemPageList(rrProblemQuery);
             Integer rrProblemCount = this.rRProblemService.queryRRProblemCount(rrProblemQuery);
             Integer pageCount = rrProblemCount / rrProblemQuery.getSize() + (rrProblemCount % rrProblemQuery.getSize() > 0 ? 1 : 0);

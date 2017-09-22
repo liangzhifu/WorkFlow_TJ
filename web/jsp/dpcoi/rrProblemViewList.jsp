@@ -193,6 +193,14 @@
                         </select>
                     </div>
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
+                        <label  class="control-label" for="speedOfProgress">进度：</label>
+                        <select id="speedOfProgress" name="speedOfProgress" class="form-control-order form-control" required="required"
+                                multiple="multiple" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                            <option value="close">close</option>
+                            <option value="deleted">deleted</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
                         <button class="btn btn-small btn-purple" type="button" id="rrProblemSearch">
                             <i class="icon-search icon-on-right bigger-110"></i>查找
                         </button>

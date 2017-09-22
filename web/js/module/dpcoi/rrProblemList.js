@@ -84,6 +84,7 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
     $scope.rrProblemList.searchForm = {
         "badContent": badContent,
         "problemProgress": problemProgress,
+        "speedOfProgress": speedOfProgress,
         "problemStatus" : problemStatus,
         "problemType" : problemType,
         "engineering" : engineering,
@@ -119,6 +120,7 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         $scope.rrProblemList.searchForm.problemType = $scope.getMultiselectValue("problemType");
         $scope.rrProblemList.searchForm.engineering = $scope.getMultiselectValue("engineering");
         $scope.rrProblemList.searchForm.problemProgress = $scope.getMultiselectValue("problemProgress");
+        $scope.rrProblemList.searchForm.speedOfProgress = $scope.getMultiselectValue("speedOfProgress");
         $scope.rrProblemList.searchForm.trackingLevel = $scope.getMultiselectValue("trackingLevel");
         $scope.rrProblemList.searchForm.dpcoi4M = $scope.getMultiselectValue("dpcoi4M");
         $scope.rrProblemList.searchForm.happenDateBegin = $("#happenDateBegin").val();
@@ -561,6 +563,23 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                 format: 'Y-m-d'
             });
         });
+
+        $("#speedOfProgress").multiselect({
+            checkAllText: "全选",
+            uncheckAllText: '全不选',
+            header: false,
+            selectedList:4
+        });
+        if(speedOfProgress != ''){
+            var sceneIdArr = speedOfProgress.split(",");
+            $('#speedOfProgress option').each(function(i,content){
+                //alert(i+"***"+content.value);
+                if($.inArray($.trim(content.value),sceneIdArr)>=0){
+                    this.selected=true;
+                }
+            });
+            $("#speedOfProgress").multiselect('refresh');
+        }
 
         $.ajax({
             method: 'post',

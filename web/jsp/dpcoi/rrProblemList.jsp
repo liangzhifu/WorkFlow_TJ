@@ -41,6 +41,7 @@
         }
         var badContent = "${rrProblemQuery.badContent}";
         var problemProgress = "${rrProblemQuery.problemProgress}";
+        var speedOfProgress = "${rrProblemQuery.speedOfProgress}";
         var problemStatus = "${rrProblemQuery.problemStatus}";
         var problemType = "${rrProblemQuery.problemType}";
         var engineering = "${rrProblemQuery.engineering}";
@@ -99,19 +100,6 @@
                                     >{{dpcoiConfigDate.configValue}}</option>
                         </select>
                     </div>
-                    <!--<div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
-                        <label  class="control-label" for="speedOfProgress">进度：</label>
-                        <select id="speedOfProgress" name="speedOfProgress" class="form-control-order form-control" required="required"
-                                multiple="multiple" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
-                            <option value="delayI">delayI</option>
-                            <option value="delayII">delayII</option>
-                            <option value="delayIII">delayIII</option>
-                            <option value="delayIV">delayIV</option>
-                            <option value="close">close</option>
-                            <option value="follow">follow</option>
-                            <option value="deleted">deleted</option>
-                        </select>
-                    </div>-->
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
                         <label  class="control-label" for="dpcoi4M">4M：</label>
                         <select id="dpcoi4M" name="dpcoi4M" class="form-control-order form-control" required="required"
@@ -225,6 +213,14 @@
                             <option ng-repeat="dpcoiConfigDate in rrProblemList.dpcoiConfigList | myFilter:12"
                                     value="{{dpcoiConfigDate.configValue}}"
                             >{{dpcoiConfigDate.configValue}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
+                        <label  class="control-label" for="speedOfProgress">进度：</label>
+                        <select id="speedOfProgress" name="speedOfProgress" class="form-control-order form-control" required="required"
+                                multiple="multiple" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                            <option value="close">close</option>
+                            <option value="deleted">deleted</option>
                         </select>
                     </div>
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">

@@ -19,6 +19,7 @@
         var searchStr = ""
         searchStr += "badContent=${rrProblemQuery.badContent}";
         searchStr += "&problemProgress=${rrProblemQuery.problemProgress}";
+        searchStr += "&speedOfProgress=${rrProblemQuery.speedOfProgress}";
         searchStr += "&problemStatus=${rrProblemQuery.problemStatus}";
         searchStr += "&problemType=${rrProblemQuery.problemType}";
         searchStr += "&engineering=${rrProblemQuery.engineering}";
