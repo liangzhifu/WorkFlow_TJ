@@ -95,33 +95,16 @@ public class RRProblemController {
         List<Map<String, Object>> mapList = this.rRProblemService.queryRRProblemScreenShowList();
         for(Map<String, Object> map : mapList){
             String trackingLevel = (String)map.get("trackingLevel");
-            Integer isDelay = (Integer)map.get("isDelay");
             if(trackingLevel == null || "".equals(trackingLevel) || "V".equals(trackingLevel)){
                 map.put("backgroundColor", "background-color : #808080;color: #FFFFFF;!important;");
             }else if("I".equals(trackingLevel)){
-                if(isDelay.intValue() == 1){
-                    map.put("backgroundColor", "background-color : deepskyblue;color: #000000;!important;");
-                }else {
-                    map.put("backgroundColor", "background-color : red;color: #FFFFFF;!important;");
-                }
+                map.put("backgroundColor", "background-color : red;color: #FFFFFF;!important;");
             }else if("II".equals(trackingLevel)){
-                if(isDelay.intValue() == 1){
-                    map.put("backgroundColor", "background-color : deepskyblue;color: #000000;!important;");
-                }else {
-                    map.put("backgroundColor", "background-color : red;color: #FFFFFF;!important;");
-                }
+                map.put("backgroundColor", "background-color : red;color: #FFFFFF;!important;");
             }else if("III".equals(trackingLevel)){
-                if(isDelay.intValue() == 1){
-                    map.put("backgroundColor", "background-color : deepskyblue;color: #000000;!important;");
-                }else {
-                    map.put("backgroundColor", "background-color : GoldenRod;color: #000000;!important;");
-                }
+                map.put("backgroundColor", "background-color : GoldenRod;color: #000000;!important;");
             }else if("IV".equals(trackingLevel)){
-                if(isDelay.intValue() == 1){
-                    map.put("backgroundColor", "background-color : deepskyblue;color: #000000;!important;");
-                }else {
-                    map.put("backgroundColor", "background-color : yellow;color: #000000;!important;");
-                }
+                map.put("backgroundColor", "background-color : yellow;color: #000000;!important;");
             }else {
                 map.put("backgroundColor", "background-color : #808080;color: #FFFFFF;!important;");
             }

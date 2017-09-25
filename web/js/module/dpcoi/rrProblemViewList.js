@@ -162,45 +162,13 @@ rrProblemViewListApp.controller("rrProblemViewListController", function ($scope)
                         if(trackingLevel == undefined || trackingLevel == null || trackingLevel == "" || trackingLevel == "V"){
 
                         }else if(trackingLevel == "I"){
-                            var isDelay = obj.isDelay;
-                            if(isDelay == undefined || isDelay == null){
-                                $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
-                            }else if(isDelay == 1){
-                                $scope.rrProblemViewList.rrProblemViewList[i].isDeepSkyBlue = true;
-                            }else {
-                                $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
-                            }
-                            /*$scope.rrProblemViewList.rrProblemViewList[i].isRed = true;*/
+                            $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
                         }else if(trackingLevel == "II"){
-                            var isDelay = obj.isDelay;
-                            if(isDelay == undefined || isDelay == null){
-                                $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
-                            }else if(isDelay == 1){
-                                $scope.rrProblemViewList.rrProblemViewList[i].isDeepSkyBlue = true;
-                            }else {
-                                $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
-                            }
-                            /*$scope.rrProblemViewList.rrProblemViewList[i].isRed = true;*/
+                            $scope.rrProblemViewList.rrProblemViewList[i].isRed = true;
                         }else if(trackingLevel == "III"){
-                            var isDelay = obj.isDelay;
-                            if(isDelay == undefined || isDelay == null){
-                                $scope.rrProblemViewList.rrProblemViewList[i].isGoldenRod = true;
-                            }else if(isDelay == 1){
-                                $scope.rrProblemViewList.rrProblemViewList[i].isDeepSkyBlue = true;
-                            }else {
-                                $scope.rrProblemViewList.rrProblemViewList[i].isGoldenRod = true;
-                            }
-                            /*$scope.rrProblemViewList.rrProblemViewList[i].isGoldenRod = true;*/
+                            $scope.rrProblemViewList.rrProblemViewList[i].isGoldenRod = true;
                         }else if(trackingLevel == "IV"){
-                            var isDelay = obj.isDelay;
-                            if(isDelay == undefined || isDelay == null){
-                                $scope.rrProblemViewList.rrProblemViewList[i].isYellow = true;
-                            }else if(isDelay == 1){
-                                $scope.rrProblemViewList.rrProblemViewList[i].isDeepSkyBlue = true;
-                            }else {
-                                $scope.rrProblemViewList.rrProblemViewList[i].isYellow = true;
-                            }
-                            /*$scope.rrProblemViewList.rrProblemViewList[i].isYellow = true;*/
+                            $scope.rrProblemViewList.rrProblemViewList[i].isYellow = true;
                         }else{
                         }
                     }

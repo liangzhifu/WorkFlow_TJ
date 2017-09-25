@@ -164,45 +164,13 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                         if(trackingLevel == undefined || trackingLevel == null || trackingLevel == "" || trackingLevel == "V"){
 
                         }else if(trackingLevel == "I"){
-                            var isDelay = obj.isDelay;
-                            if(isDelay == undefined || isDelay == null){
-                                $scope.rrProblemList.rrProblemList[i].isRed = true;
-                            }else if(isDelay == 1){
-                                $scope.rrProblemList.rrProblemList[i].isDeepSkyBlue = true;
-                            }else {
-                                $scope.rrProblemList.rrProblemList[i].isRed = true;
-                            }
-                            /*$scope.rrProblemList.rrProblemList[i].isRed = true;*/
+                            $scope.rrProblemList.rrProblemList[i].isRed = true;
                         }else if(trackingLevel == "II"){
-                            var isDelay = obj.isDelay;
-                            if(isDelay == undefined || isDelay == null){
-                                $scope.rrProblemList.rrProblemList[i].isRed = true;
-                            }else if(isDelay == 1){
-                                $scope.rrProblemList.rrProblemList[i].isDeepSkyBlue = true;
-                            }else {
-                                $scope.rrProblemList.rrProblemList[i].isRed = true;
-                            }
-                            /*$scope.rrProblemList.rrProblemList[i].isRed = true;*/
+                            $scope.rrProblemList.rrProblemList[i].isRed = true;
                         }else if(trackingLevel == "III"){
-                            var isDelay = obj.isDelay;
-                            if(isDelay == undefined || isDelay == null){
-                                $scope.rrProblemList.rrProblemList[i].isGoldenRod = true;
-                            }else if(isDelay == 1){
-                                $scope.rrProblemList.rrProblemList[i].isDeepSkyBlue = true;
-                            }else {
-                                $scope.rrProblemList.rrProblemList[i].isGoldenRod = true;
-                            }
-                            /*$scope.rrProblemList.rrProblemList[i].isGoldenRod = true;*/
+                            $scope.rrProblemList.rrProblemList[i].isGoldenRod = true;
                         }else if(trackingLevel == "IV"){
-                            var isDelay = obj.isDelay;
-                            if(isDelay == undefined || isDelay == null){
-                                $scope.rrProblemList.rrProblemList[i].isYellow = true;
-                            }else if(isDelay == 1){
-                                $scope.rrProblemList.rrProblemList[i].isDeepSkyBlue = true;
-                            }else {
-                                $scope.rrProblemList.rrProblemList[i].isYellow = true;
-                            }
-                            /*$scope.rrProblemList.rrProblemList[i].isYellow = true;*/
+                            $scope.rrProblemList.rrProblemList[i].isYellow = true;
                         }else{
                         }
                     }
@@ -479,65 +447,21 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                     $(this).css("background-color","#FFFFFF");
                 });
             }else if(trackingLevel == "I"){
-                var isDelay = obj.isDelay;
-                if(isDelay == undefined || isDelay == null){
                     $("#table_tr_"+index).find("td").each(function () {
                         $(this).css("background-color","red");
                     });
-                }else if(isDelay == 1){
-                    $("#table_tr_"+index).find("td").each(function () {
-                        $(this).css("background-color","deepskyblue");
-                    });
-                }else {
-                    $("#table_tr_"+index).find("td").each(function () {
-                        $(this).css("background-color","red");
-                    });
-                }
             }else if(trackingLevel == "II"){
-                var isDelay = obj.isDelay;
-                if(isDelay == undefined || isDelay == null){
                     $("#table_tr_"+index).find("td").each(function () {
                         $(this).css("background-color","red");
                     });
-                }else if(isDelay == 1){
-                    $("#table_tr_"+index).find("td").each(function () {
-                        $(this).css("background-color","deepskyblue");
-                    });
-                }else {
-                    $("#table_tr_"+index).find("td").each(function () {
-                        $(this).css("background-color","red");
-                    });
-                }
             }else if(trackingLevel == "III"){
-                var isDelay = obj.isDelay;
-                if(isDelay == undefined || isDelay == null){
                     $("#table_tr_"+index).find("td").each(function () {
                         $(this).css("background-color","GoldenRod");
                     });
-                }else if(isDelay == 1){
-                    $("#table_tr_"+index).find("td").each(function () {
-                        $(this).css("background-color","deepskyblue");
-                    });
-                }else {
-                    $("#table_tr_"+index).find("td").each(function () {
-                        $(this).css("background-color","GoldenRod");
-                    });
-                }
             }else if(trackingLevel == "IV"){
-                var isDelay = obj.isDelay;
-                if(isDelay == undefined || isDelay == null){
                     $("#table_tr_"+index).find("td").each(function () {
                         $(this).css("background-color","yellow");
                     });
-                }else if(isDelay == 1){
-                    $("#table_tr_"+index).find("td").each(function () {
-                        $(this).css("background-color","deepskyblue");
-                    });
-                }else {
-                    $("#table_tr_"+index).find("td").each(function () {
-                        $(this).css("background-color","yellow");
-                    });
-                }
             }else{
                 $("#table_tr_"+index).find("td").each(function () {
                     $(this).css("background-color","#FFFFFF");

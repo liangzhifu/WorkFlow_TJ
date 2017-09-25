@@ -382,6 +382,7 @@
         WHERE dorder.`DPCOI_ORDER_ID` = woorder.`DPCOI_ORDER_ID`
         AND woorder.`DPCOI_WO_ORDER_STATE` = 1
         AND woorder.`DPCOI_WO_ORDER_TYPE` = 1
+        AND dorder.del_flag = '0'
         AND UNIX_TIMESTAMP(DATE_ADD(dorder.`pfmea_email_date`, INTERVAL 1 DAY)) < UNIX_TIMESTAMP(SYSDATE())
         UNION
         SELECT woorder.`DPCOI_WO_ORDER_ID`
@@ -389,6 +390,7 @@
         WHERE dorder.`DPCOI_ORDER_ID` = woorder.`DPCOI_ORDER_ID`
         AND woorder.`DPCOI_WO_ORDER_STATE` = 1
         AND woorder.`DPCOI_WO_ORDER_TYPE` = 2
+        AND dorder.del_flag = '0'
         AND UNIX_TIMESTAMP(DATE_ADD(dorder.`cp_email_date`, INTERVAL 1 DAY)) < UNIX_TIMESTAMP(SYSDATE())
         UNION
         SELECT woorder.`DPCOI_WO_ORDER_ID`
@@ -396,6 +398,7 @@
         WHERE dorder.`DPCOI_ORDER_ID` = woorder.`DPCOI_ORDER_ID`
         AND woorder.`DPCOI_WO_ORDER_STATE` = 1
         AND woorder.`DPCOI_WO_ORDER_TYPE` = 3
+        AND dorder.del_flag = '0'
         AND UNIX_TIMESTAMP(DATE_ADD(dorder.`standard_book_email_date`, INTERVAL 1 DAY)) < UNIX_TIMESTAMP(SYSDATE()))
         ]]>
     </select>
@@ -436,6 +439,7 @@
         AND dorder.`pfmea_delay` = 0
         AND woorder.`DPCOI_WO_ORDER_STATE` IN (2,3)
         AND woorder.`DPCOI_WO_ORDER_TYPE` = 1
+        AND dorder.del_flag = '0'
         AND UNIX_TIMESTAMP(woorder.`delay_date`) < UNIX_TIMESTAMP(SYSDATE())
         UNION
         SELECT woorder.`DPCOI_WO_ORDER_ID`
@@ -444,6 +448,7 @@
         AND dorder.`cp_delay` = 0
         AND woorder.`DPCOI_WO_ORDER_STATE` IN (2,3)
         AND woorder.`DPCOI_WO_ORDER_TYPE` = 2
+        AND dorder.del_flag = '0'
         AND UNIX_TIMESTAMP(woorder.`delay_date`) < UNIX_TIMESTAMP(SYSDATE())
         UNION
         SELECT woorder.`DPCOI_WO_ORDER_ID`
@@ -452,6 +457,7 @@
         AND dorder.`standard_book_delay` = 0
         AND woorder.`DPCOI_WO_ORDER_STATE` IN (2,3)
         AND woorder.`DPCOI_WO_ORDER_TYPE` = 3
+        AND dorder.del_flag = '0'
         AND UNIX_TIMESTAMP(woorder.`delay_date`) < UNIX_TIMESTAMP(SYSDATE()))
         ]]>
     </select>
