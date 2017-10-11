@@ -50,7 +50,7 @@ public class UpdateRRProblemSpeedOfProgress {
                 this.rRProblemService.updateTrackingLevel(rrProblem);
                 String speedOfProgress = rrProblem.getSpeedOfProgress();
                 String trackingLevel =  rrProblem.getTrackingLevel();
-                if("I".equals(trackingLevel) || "II".equals(trackingLevel) || "III".equals(speedOfProgress) || "IV".equals(trackingLevel)){
+                if("I".equals(trackingLevel) || "II".equals(trackingLevel) || "III".equals(trackingLevel) || "IV".equals(trackingLevel)){
                     if(oldTrackingLevel == null || "".equals(oldTrackingLevel) || "V".equals(oldTrackingLevel)){
                         String persionLiable = rrProblem.getPersionLiable();
                         String[] persionLiableArray = persionLiable.split(",");
@@ -63,6 +63,7 @@ public class UpdateRRProblemSpeedOfProgress {
                             rrDelayStatistics.setRrProblemId(rrProblem.getId());
                             rrDelayStatistics.setProblemStatus(rrProblem.getProblemStatus());
                             rrDelayStatistics.setProblemProgress(rrProblem.getProblemProgress());
+                            rrDelayStatistics.setTrackingLevel(trackingLevel);
                             this.rRDelayStatisticsService.addRRDelayStatistics(rrDelayStatistics);
                         }
                     }

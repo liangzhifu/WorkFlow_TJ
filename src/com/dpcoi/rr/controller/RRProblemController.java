@@ -336,6 +336,7 @@ public class RRProblemController {
             oldRRProblem.setId(rrProblem.getId());
             oldRRProblem = this.rRProblemService.queryRRProblem(oldRRProblem);
             String oldChangePoint = oldRRProblem.getChangePoint();
+            String oldTrackingLevel = oldRRProblem.getTrackingLevel();
             String oldSpeedOfProgress = rrProblem.getSpeedOfProgress();
             String changePoint = rrProblem.getChangePoint();
             changePoint = changePoint.toUpperCase();
@@ -410,9 +411,10 @@ public class RRProblemController {
             }
             this.rRProblemService.updateSpeedOfProgress(rrProblem);
             this.rRProblemService.updateTrackingLevel(rrProblem);
-            if("follow".equals(oldSpeedOfProgress)){
+            if(oldTrackingLevel == null || "".equals(oldTrackingLevel) || "V".equals(oldTrackingLevel)){
+                String trackingLevel = rrProblem.getTrackingLevel();
                 String speedOfProgress = rrProblem.getSpeedOfProgress();
-                if(("delayI".equals(speedOfProgress)) || ("delayII".equals(speedOfProgress)) || ("delayIII".equals(speedOfProgress)) || ("delayIV".equals(speedOfProgress))) {
+                if("I".equals(trackingLevel) || "II".equals(trackingLevel) || "III".equals(trackingLevel) || "IV".equals(trackingLevel)) {
                     String persionLiable = rrProblem.getPersionLiable();
                     String[] persionLiableArray = persionLiable.split(",");
                     for (int i = 0; i < persionLiableArray.length; i++) {
@@ -424,6 +426,7 @@ public class RRProblemController {
                         rrDelayStatistics.setRrProblemId(rrProblem.getId());
                         rrDelayStatistics.setProblemStatus(rrProblem.getProblemStatus());
                         rrDelayStatistics.setProblemProgress(rrProblem.getProblemProgress());
+                        rrDelayStatistics.setTrackingLevel(rrProblem.getTrackingLevel());
                         this.rRDelayStatisticsService.addRRDelayStatistics(rrDelayStatistics);
                     }
                 }
@@ -461,6 +464,7 @@ public class RRProblemController {
             oldRRProblem.setId(rrProblem.getId());
             oldRRProblem = this.rRProblemService.queryRRProblem(oldRRProblem);
             String oldChangePoint = oldRRProblem.getChangePoint();
+            String oldTrackingLevel = oldRRProblem.getTrackingLevel();
             String oldSpeedOfProgress = rrProblem.getSpeedOfProgress();
             String changePoint = rrProblem.getChangePoint();
             changePoint = changePoint.toUpperCase();
@@ -535,9 +539,10 @@ public class RRProblemController {
             }
             this.rRProblemService.updateSpeedOfProgress(rrProblem);
             this.rRProblemService.updateTrackingLevel(rrProblem);
-            if("follow".equals(oldSpeedOfProgress)){
+            if(oldTrackingLevel == null || "".equals(oldTrackingLevel) || "V".equals(oldTrackingLevel)){
                 String speedOfProgress = rrProblem.getSpeedOfProgress();
-                if(("delayI".equals(speedOfProgress)) || ("delayII".equals(speedOfProgress)) || ("delayIII".equals(speedOfProgress)) || ("delayIV".equals(speedOfProgress))) {
+                String trackingLevel = rrProblem.getTrackingLevel();
+                if("I".equals(trackingLevel) || "II".equals(trackingLevel) || "III".equals(trackingLevel) || "IV".equals(trackingLevel)) {
                     String persionLiable = rrProblem.getPersionLiable();
                     String[] persionLiableArray = persionLiable.split(",");
                     for (int i = 0; i < persionLiableArray.length; i++) {
@@ -549,6 +554,7 @@ public class RRProblemController {
                         rrDelayStatistics.setRrProblemId(rrProblem.getId());
                         rrDelayStatistics.setProblemStatus(rrProblem.getProblemStatus());
                         rrDelayStatistics.setProblemProgress(rrProblem.getProblemProgress());
+                        rrDelayStatistics.setTrackingLevel(rrProblem.getTrackingLevel());
                         this.rRDelayStatisticsService.addRRDelayStatistics(rrDelayStatistics);
                     }
                 }
