@@ -340,7 +340,7 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <label  class="control-label" for="alwaysList">始终件表：</label>
-                                <input class="form-control-order form-control clean" style="width: 60%" data-type="dateType3"
+                                <input class="form-control-order form-control clean" style="width: 60%" ng-disabled="true"
                                        id="alwaysList" name="alwaysList" ng-model="rrProblemEdit.rrProblem.alwaysList">
                             </div>
                             <div class="col-md-3">

@@ -418,14 +418,26 @@
                             <span ng-show="rrProblemDate.productScaleFileId == 0">{{rrProblemDate.productScale}}</span>
                             <span ng-show="rrProblemDate.productScaleFileId != 0"><a href="javascript:void(0);" ng-click="rrProblemList.downloadFile(rrProblemDate.productScaleFileId)">{{rrProblemDate.productScale}}</a></span>
                         </td>
-                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.pfmea}}</td>
-                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.cp}}</td>
-                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.standardBook}}</td>
+                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
+                            <span ng-show="rrProblemDate.pfmea == 'N/A'">{{rrProblemDate.pfmea}}</span>
+                            <span ng-show="rrProblemDate.pfmea != 'N/A'"><a href="javascript:void(0);" ng-click="rrProblemList.fileList(rrProblemDate.id, 1)">{{rrProblemDate.pfmea}}</a></span>
+                        </td>
+                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
+                            <span ng-show="rrProblemDate.cp == 'N/A'">{{rrProblemDate.cp}}</span>
+                            <span ng-show="rrProblemDate.cp != 'N/A'"><a href="javascript:void(0);" ng-click="rrProblemList.fileList(rrProblemDate.id, 2)">{{rrProblemDate.cp}}</a></span>
+                        </td>
+                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
+                            <span ng-show="rrProblemDate.standardBook == 'N/A'">{{rrProblemDate.standardBook}}</span>
+                            <span ng-show="rrProblemDate.standardBook != 'N/A'"><a href="javascript:void(0);" ng-click="rrProblemList.fileList(rrProblemDate.id, 3)">{{rrProblemDate.standardBook}}</a></span>
+                        </td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
                             <span ng-show="rrProblemDate.equipmentChecklistFileId == 0">{{rrProblemDate.equipmentChecklist}}</span>
                             <span ng-show="rrProblemDate.equipmentChecklistFileId != 0"><a href="javascript:void(0);" ng-click="rrProblemList.downloadFile(rrProblemDate.equipmentChecklistFileId)">{{rrProblemDate.equipmentChecklist}}</a></span>
                         </td>
-                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.alwaysList}}</td>
+                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
+                            <span ng-show="rrProblemDate.alwaysList == 'N/A'">{{rrProblemDate.alwaysList}}</span>
+                            <span ng-show="rrProblemDate.alwaysList != 'N/A'"><a href="javascript:void(0);" ng-click="rrProblemList.fileList(rrProblemDate.id, 3)">{{rrProblemDate.alwaysList}}</a></span>
+                        </td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
                             <span ng-show="rrProblemDate.inspectionReferenceBookFileId == 0">{{rrProblemDate.inspectionReferenceBook}}</span>
                             <span ng-show="rrProblemDate.inspectionReferenceBookFileId != 0"><a href="javascript:void(0);" ng-click="rrProblemList.downloadFile(rrProblemDate.inspectionReferenceBookFileId)">{{rrProblemDate.inspectionReferenceBook}}</a></span>
@@ -497,6 +509,56 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- 文件列表 -->
+<div id="fileListModal" class="modal fade" tabindex="-1"
+     role="dialog" aria-labelledby="fileListModalLabel"
+     aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true">×
+        </button>
+        <h3 id="fileListModalLabel">文件列表</h3>
+    </div>
+    <form id="fileListModalForm" method="post" class="form-inline">
+        <div class="modal-body">
+            <div class="row">
+                <div style="height: 200px; overflow: scroll;">
+                    <table id="fileListTable"
+                           class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th width="42%">文件名称</th>
+                            <th width="10%">创建人</th>
+                            <th width="15%">创建时间</th>
+                            <th width="10%">审核状态</th>
+                            <th width="20%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="dpcoiWoOrderFileData in rrProblemList.dpcoiWoOrderFileList">
+                            <td>{{dpcoiWoOrderFileData.fileName}}</td>
+                            <td>{{dpcoiWoOrderFileData.createByName}}</td>
+                            <td>{{dpcoiWoOrderFileData.fileCreateDateStr}}</td>
+                            <td>
+                                <span ng-show="dpcoiWoOrderFileData.woFileState==0">未审核</span>
+                                <span ng-show="dpcoiWoOrderFileData.woFileState==1">通过</span>
+                                <span ng-show="dpcoiWoOrderFileData.woFileState==2">不通过</span>
+                            </td>
+                            <td>
+                                <button class="btn btn-small btn-purple" type="button"
+                                        ng-click="rrProblemList.downloadDpcoiWoOrderFile(dpcoiWoOrderFileData.fileId)">
+                                    <i class="bigger-110"></i>查看
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 </body>
 <script src="/WorkFlow/js/module/dpcoi/rrProblemList.js"></script>

@@ -788,18 +788,18 @@ public class RRProblemController {
             if(productScale == null || "".equals(productScale)){
                 throw new Exception("品推表编号不能为空！");
             }
-//                String pfmea = rrProblem.getPfmea();
-//                if(pfmea == null || "".equals(pfmea)){
-//                    throw new Exception("PFMEA不能为空！");
-//                }
-//                String cp = rrProblem.getCp();
-//                if(cp == null || "".equals(cp)){
-//                    throw new Exception("CP不能为空！");
-//                }
-//                String standardBook = rrProblem.getStandardBook();
-//                if(standardBook == null || "".equals(standardBook)){
-//                    throw new Exception("WI不能为空！");
-//                }
+            String pfmea = rrProblem.getPfmea();
+            if(pfmea == null || "".equals(pfmea)){
+                throw new Exception("PFMEA不能为空！");
+            }
+            String cp = rrProblem.getCp();
+            if(cp == null || "".equals(cp)){
+                throw new Exception("CP不能为空！");
+            }
+            String standardBook = rrProblem.getStandardBook();
+            if(standardBook == null || "".equals(standardBook)){
+                throw new Exception("WI不能为空！");
+            }
             String equipmentChecklist = rrProblem.getEquipmentChecklist();
             if(equipmentChecklist == null || "".equals(equipmentChecklist)){
                 throw new Exception("设备点检表不能为空！");
