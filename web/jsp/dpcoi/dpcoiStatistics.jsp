@@ -129,19 +129,19 @@
                            class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th width="20%">《设变通知书》编号</th>
-                            <th width="20%">设变号</th>
-                            <th width="20%">车种</th>
-                            <th width="20%">品号</th>
-                            <th width="20%">生产线</th>
-                            <th width="20%">希望切替日</th>
-                            <th width="20%">实际切替日</th>
-                            <th width="40%">变更内容</th>
-                            <th width="20%">发行日期</th>
-                            <th width="20%">返回日</th>
-                            <th width="15%">设计担当</th>
-                            <th width="15%">量准担当</th>
-                            <th width="20%">4M发行编号</th>
+                            <th width="120px">《设变通知书》编号</th>
+                            <th width="110px">设变号</th>
+                            <th width="40px">车种</th>
+                            <th width="90px">品号</th>
+                            <th width="60px">生产线</th>
+                            <th width="130px">希望切替日</th>
+                            <th width="130px">实际切替日</th>
+                            <th width="400px">变更内容</th>
+                            <th width="80px">发行日期</th>
+                            <th width="80px">返回日</th>
+                            <th width="50px">设计担当</th>
+                            <th width="50px">量准担当</th>
+                            <th width="120px">4M发行编号</th>
                         </tr>
                         </thead>
                         <tbody>
