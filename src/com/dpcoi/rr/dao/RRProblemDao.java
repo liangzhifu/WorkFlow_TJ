@@ -114,4 +114,13 @@ public class RRProblemDao extends BaseDao {
     public String selectDelayEmails(RRProblem rrProblem) {
         return this.sqlSession.selectOne("RRProblemMapper.selectDelayEmails", rrProblem);
     }
+
+    /**
+     * 回滚RR问题点
+     * @param map 条件
+     * @return 返回结果
+     */
+    public Integer updateRollBackRRProblem(Map<String, Object> map) {
+        return this.sqlSession.update("RRProblemMapper.updateRollBackRRProblem", map);
+    }
 }

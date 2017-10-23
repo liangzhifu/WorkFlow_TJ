@@ -1002,4 +1002,26 @@
         and is_hide = 0
         order by id desc
     </select>
+
+    <update id="updateRollBackRRProblem" parameterType="java.util.HashMap">
+        update dpcoi_rr_problem
+        <set>
+            <if test="dpcoiWoOrderType == 1" >
+                pfmea = null,
+                cp = null,
+                standard_book = null,
+                always_list = null,
+            </if>
+            <if test="dpcoiWoOrderType == 2" >
+                cp = null,
+                standard_book = null,
+                always_list = null,
+            </if>
+            <if test="dpcoiWoOrderType == 3" >
+                standard_book = null,
+                always_list = null,
+            </if>
+        </set>
+        where id = #{rrProblemId, jdbcType=INTEGER}
+    </update>
 </mapper>
