@@ -76,9 +76,8 @@
         <include refid="WHERE_SQL"></include>
     </select>
 
-    <update id="updateDpcoiRollBackWoOrderFile" parameterType="java.util.HashMap">
-        update dpcoi_wo_order_file
-        set DEL_FLAG = '1'
+    <delete id="deleteDpcoiRollBackWoOrderFile" parameterType="java.util.HashMap">
+        delete from dpcoi_wo_order_file
         where DEL_FLAG = '0'
         and DPCOI_WO_ORDER_ID in
         (select DPCOI_WO_ORDER_ID
@@ -86,15 +85,14 @@
         where del_flag = '0'
         and DPCOI_ORDER_ID = #{dpcoiOrderId, jdbcType=BIGINT}
         and DPCOI_WO_ORDER_TYPE &gt;= #{dpcoiWoOrderType, jdbcType=BIGINT})
-    </update>
+    </delete>
 
-    <update id="updateDpcoiRollBackWoOrder" parameterType="java.util.HashMap">
-        update dpcoi_wo_order
-        set DEL_FLAG = '1'
+    <delete id="deleteDpcoiRollBackWoOrder" parameterType="java.util.HashMap">
+        delete from dpcoi_wo_order
         where DEL_FLAG = '0'
         and DPCOI_ORDER_ID = #{dpcoiOrderId, jdbcType=BIGINT}
         AND DPCOI_WO_ORDER_TYPE &gt; #{dpcoiWoOrderType, jdbcType=BIGINT}
-    </update>
+    </delete>
 
     <update id="updateDpcoiWoOrder" parameterType="java.util.HashMap">
         update dpcoi_wo_order

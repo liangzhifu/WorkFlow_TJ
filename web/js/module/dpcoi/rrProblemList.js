@@ -222,6 +222,11 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
                 alert("已作废，不能修改！");
                 return;
             }
+            var persionLiable = ","+rrProblem.persionLiable+",";
+            if(persionLiable.indexOf(","+userName+",") < 0){
+                alert("你不是责任人，不能修改此问题点。");
+                return ;
+            }
         }
         var searchStr = ""
         searchStr += "badContent=" + $scope.rrProblemList.searchForm.badContent;

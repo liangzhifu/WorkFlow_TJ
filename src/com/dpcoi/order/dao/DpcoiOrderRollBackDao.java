@@ -55,8 +55,8 @@ public class DpcoiOrderRollBackDao extends BaseDao {
      * @param map 条件
      * @return 返回结果
      */
-    public Integer updateDpcoiRollBackWoOrderFile(Map<String, Object> map){
-        return this.sqlSession.update("DpcoiOrderRollBackMapper.updateDpcoiRollBackWoOrderFile", map);
+    public Integer deleteDpcoiRollBackWoOrderFile(Map<String, Object> map){
+        return this.sqlSession.delete("DpcoiOrderRollBackMapper.deleteDpcoiRollBackWoOrderFile", map);
     }
 
     /**
@@ -64,8 +64,8 @@ public class DpcoiOrderRollBackDao extends BaseDao {
      * @param map 条件
      * @return 返回结果
      */
-    public Integer updateDpcoiRollBackWoOrder(Map<String, Object> map){
-        return this.sqlSession.update("DpcoiOrderRollBackMapper.updateDpcoiRollBackWoOrder", map);
+    public Integer deleteDpcoiRollBackWoOrder(Map<String, Object> map){
+        return this.sqlSession.delete("DpcoiOrderRollBackMapper.deleteDpcoiRollBackWoOrder", map);
     }
 
     /**

@@ -80,6 +80,7 @@ public class RRProblemController {
         User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
         Integer ministerJurisdiction = this.rRProblemService.queryMinisterJurisdiction(user);
         model.put("ministerJurisdiction", ministerJurisdiction);
+        model.put("userName", user.getUserName());
         model.put("rrProblemQuery", rrProblemQuery);
         return "dpcoi/rrProblemList";
     }

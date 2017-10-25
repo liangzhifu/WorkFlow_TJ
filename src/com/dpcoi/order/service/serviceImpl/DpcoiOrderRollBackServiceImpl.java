@@ -57,10 +57,10 @@ public class DpcoiOrderRollBackServiceImpl implements DpcoiOrderRollBackService 
         map.put("dpcoiWoOrderType", dpcoiWoOrderType);
 
         //删除文件
-        this.dpcoiOrderRollBackDao.updateDpcoiRollBackWoOrderFile(map);
+        this.dpcoiOrderRollBackDao.deleteDpcoiRollBackWoOrderFile(map);
 
         //删除工单
-        this.dpcoiOrderRollBackDao.updateDpcoiRollBackWoOrder(map);
+        this.dpcoiOrderRollBackDao.deleteDpcoiRollBackWoOrder(map);
 
         //更新回滚到的工单状态
         this.dpcoiOrderRollBackDao.updateDpcoiWoOrder(map);

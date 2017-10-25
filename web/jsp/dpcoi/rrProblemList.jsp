@@ -33,6 +33,7 @@
     <link rel="stylesheet" type="text/css" href="/WorkFlow/js/ext/resources/css/ext-zte.css">
     <script type="text/javascript">
         var ministerJurisdiction = '${ministerJurisdiction}';
+        var userName = '${userName}';
         var pageNum = 1;
         if('${rrProblemQuery.size}' == ''){
             pageNum = 1;
@@ -561,5 +562,5 @@
     </form>
 </div>
 </body>
-<script src="/WorkFlow/js/module/dpcoi/rrProblemList.js"></script>
+<script src="/WorkFlow/js/module/dpcoi/rrProblemList.js?version=1"></script>
 </html>

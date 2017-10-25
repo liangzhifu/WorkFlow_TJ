@@ -79,22 +79,33 @@ dpcoiOrderRollBackListApp.controller("dpcoiOrderRollBackListController", functio
     });
 
     $scope.dpcoiOrderRollBackList.rollBack = function(dpcoiOrderId, dpcoiWoOrderType){
-        $.ajax({
-            method:'post',
-            url:"/WorkFlow/dpcoiOrderRollBack/rollBackDpcoiOrder.do",
-            data:{"dpcoiOrderId": dpcoiOrderId, "dpcoiWoOrderType": dpcoiWoOrderType},
-            success: function(resultJson) {
-                var result = angular.fromJson(resultJson);
-                if(result.success){
-                    $scope.dpcoiOrderRollBackList.firstPage();
-                }else {
-                    alert(result.message);
+        var woOrderName = "";
+        if(dpcoiWoOrderType == 1){
+            woOrderName = "PFMEA";
+        }else if(dpcoiWoOrderType == 2) {
+            woOrderName = "CP";
+        }else if(dpcoiWoOrderType == 3) {
+            woOrderName = "作业标准书";
+        }
+        var con = confirm("确定回滚到："+woOrderName);
+        if(con == true){
+            $.ajax({
+                method:'post',
+                url:"/WorkFlow/dpcoiOrderRollBack/rollBackDpcoiOrder.do",
+                data:{"dpcoiOrderId": dpcoiOrderId, "dpcoiWoOrderType": dpcoiWoOrderType},
+                success: function(resultJson) {
+                    var result = angular.fromJson(resultJson);
+                    if(result.success){
+                        $scope.dpcoiOrderRollBackList.firstPage();
+                    }else {
+                        alert(result.message);
+                    }
+                },
+                error : function() {
+                    alert("系统出现异常!!");
                 }
-            },
-            error : function() {
-                alert("系统出现异常!!");
-            }
-        });
+            });
+        }
     };
 
     $(document).ready(function() {
