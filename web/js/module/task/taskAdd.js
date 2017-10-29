@@ -1,4 +1,4 @@
-var myDate = new Date();
+﻿var myDate = new Date();
 var nextDate1 = new Date(myDate.getTime() + 24*60*60*1000);  //后一天
 while (nextDate1.getDay() == 0 || nextDate1.getDay() == 6)
 {
