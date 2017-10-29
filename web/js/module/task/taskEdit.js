@@ -54,6 +54,33 @@ var taskDetail = (function() {
 					group_confirm = taskDetailOrder.confirmUserName;
 				}
 			}
+            items[len] = {
+                columnWidth:0.5,
+                layout:'form',
+                items:[{
+                    xtype:'textfield',
+                    fieldLabel:"变更后品号",
+                    name: 'order_change_after_product_no',
+                    id: 'order_change_after_product_no',
+                    value : taskOrder.changeAfterProductNo,
+                    anchor:'90%'
+                }]
+            };
+            items[len+1] = {
+                columnWidth:0.5,
+                layout:'form',
+                labelWidth: 120,
+                items:[{
+                    xtype:'datetimefield',
+                    readOnly: true,
+                    fieldLabel:'真实变更时间',
+                    name: 'order_real_change_time',
+                    id: 'order_real_change_time',
+                    value : taskOrder.realChangeTime,
+                    anchor:'90%'
+                }]
+            };
+            len = len + 2;
 			items[len] = { 
 		            columnWidth:.33,
 		            layout:'form',
@@ -494,6 +521,7 @@ function doSubmit(){
 	Ext.each(order_8, function(item){
 		order_8_value += ","+item.inputValue;
 	});
+    var order_change_after_product_no = Ext.getCmp('order_change_after_product_no').getValue();
 	Ext.Ajax.request( {
 		url : contextPath+'/taskOrder/editChangeTime.do',
 		async: false,
@@ -512,7 +540,8 @@ function doSubmit(){
 			order_8 : order_8_value,
 			order_9 : order_9,
             order_12 : order_12,
-			order_8_input : order_8_input
+			order_8_input : order_8_input,
+            order_change_after_product_no:order_change_after_product_no
 		},
 		success : function(response, action) {
 			var responseText = Ext.decode(response.responseText);

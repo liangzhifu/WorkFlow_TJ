@@ -45,6 +45,32 @@ var taskDetail = (function() {
 					group_confirm = taskDetailOrder.confirmUserName;
 				}
 			}
+            items[len] = {
+                columnWidth:0.5,
+                layout:'form',
+                items:[{
+                    xtype:'displayfield',
+                    fieldLabel:"变更后品号",
+                    name: 'order_change_after_product_no',
+                    id: 'order_change_after_product_no',
+                    value : taskOrder.changeAfterProductNo,
+                    anchor:'90%'
+                }]
+            };
+            items[len+1] = {
+                columnWidth:0.5,
+                layout:'form',
+                labelWidth: 120,
+                items:[{
+                    xtype:'displayfield',
+                    fieldLabel:'真实变更时间',
+                    name: 'order_real_change_time',
+                    id: 'order_real_change_time',
+                    value : taskOrder.realChangeTime,
+                    anchor:'90%'
+                }]
+            };
+            len = len + 2;
 			items[len] = { 
 		            columnWidth:.33,
 		            layout:'form',

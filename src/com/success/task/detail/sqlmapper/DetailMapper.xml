@@ -317,7 +317,16 @@
 					and a.agreement_state = '10B'
 					and b.content_state = '10R'
 					and b.confirm = #{userId,jdbcType=NUMERIC}) c, agreement_manage d
-					where c.agreement_id = d.agreement_id) g
+					where c.agreement_id = d.agreement_id
+					UNION
+					SELECT tor.`ORDER_ID`, 7 AS agent_type, 0 AS agent_id
+					FROM task_order tor, task_order_info toi
+					WHERE tor.`ORDER_ID` = toi.`ORDER_ID`
+					AND tor.`DELETE_STATE` = '0'
+					AND toi.`TASK_TYPE_INFO_ID` = 11
+					AND tor.`real_change_time` IS NULL
+					AND DATE_FORMAT(toi.`TASK_INFO_VALUE`, '%Y-%m-%d') <= DATE_FORMAT(SYSDATE(), '%Y-%m-%d')
+					AND tor.`CREATE_USER_ID` = #{userId,jdbcType=NUMERIC}) g
 				left join task_order a on g.order_id = a.order_id
 				left join task_type b on a.TASK_TYPE_ID = b.TASK_TYPE_ID
 				left join task_order_info c on c.ORDER_ID = a.ORDER_ID and c.TASK_TYPE_INFO_ID = 1

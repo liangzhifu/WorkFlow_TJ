@@ -47,6 +47,31 @@ var taskAdd = (function() {
 				var obj = generBasicObj(infoTypeId, taskTypeInfo);
 				items[i] = obj;
 			}
+            items[len] = {
+                columnWidth:0.5,
+                layout:'form',
+                items:[{
+                    xtype:'textfield',
+                    fieldLabel:"变更后品号",
+                    name: 'order_change_after_product_no',
+                    id: 'order_change_after_product_no',
+                    anchor:'90%'
+                }]
+            };
+            items[len+1] = {
+                columnWidth:0.5,
+                layout:'form',
+                labelWidth: 120,
+                items:[{
+                    xtype:'datetimefield',
+                    readOnly: true,
+                    fieldLabel:'真实变更时间',
+                    name: 'order_real_change_time',
+                    id: 'order_real_change_time',
+                    anchor:'90%'
+                }]
+            };
+			len = len + 2;
 			items[len] = { 
 		            columnWidth:.33,
 		            layout:'column',
@@ -296,16 +321,29 @@ function generBasicObj(infoTypeId, taskTypeInfo){
 			           anchor:'95%'
 			        }]
 				};
+		}else if(taskTypeInfo.taskTypeInfoId == 4){
+            obj = {
+                columnWidth:taskTypeInfo.infoLength,
+                layout:'form',
+                items:[{
+                    xtype:'textfield',
+                    readOnly: false,
+                    fieldLabel:taskTypeInfo.infoName,
+                    name: 'order_'+taskTypeInfo.taskTypeInfoId,
+                    id: 'order_'+taskTypeInfo.taskTypeInfoId,
+                    anchor:'95%'
+                }]
+            };
 		}else {
-			obj = { 
+			obj = {
 		        columnWidth:taskTypeInfo.infoLength,
 		        layout:'form',
-		        items:[{               
+		        items:[{
 		           xtype:'textfield',
-		           readOnly: false,   
+		           readOnly: false,
 		           fieldLabel:taskTypeInfo.infoName,
 		           name: 'order_'+taskTypeInfo.taskTypeInfoId,
-		           id: 'order_'+taskTypeInfo.taskTypeInfoId, 
+		           id: 'order_'+taskTypeInfo.taskTypeInfoId,
 		           anchor:'95%'
 		        }]
 			};
@@ -558,7 +596,7 @@ function doSubmit(){
 			return;
 		}
 	}
-	
+
 	var submitBasicUrl = contextPath + '/taskDetail/addTask.do?taskTypeId='+taskTypeId+"&userId="+userId;
 	Ext.getCmp('basicForm').getForm().submit({
 		url : submitBasicUrl,

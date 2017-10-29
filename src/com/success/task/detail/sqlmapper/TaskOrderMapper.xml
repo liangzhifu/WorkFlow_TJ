@@ -15,6 +15,8 @@
 		<result property="isDelay" column="is_delay"/>
 		<result property="version" column="version"/>
 		<result property="agreementState" column="agreement_state"/>
+		<result property="changeAfterProductNo" column="change_after_product_no"/>
+		<result property="realChangeTime" column="real_change_time"/>
 	</resultMap>
 	
 	<select id="selectTaskOrder" resultMap="taskOrderResultMap" parameterType="TaskOrderQuery">
@@ -38,7 +40,8 @@
 						order_state_code,
 						confirm_order_state_code,
 						alarm_time,
-						version)
+						version,
+						change_after_product_no)
   					 values (#{taskTypeId,jdbcType=VARCHAR},
   					 		 #{cycleId,jdbcType=NUMERIC},
   					 		 0,
@@ -49,7 +52,8 @@
   					 		 #{orderStateCode,jdbcType=VARCHAR},
   					 		 #{confirmOrderStateCode,jdbcType=VARCHAR},
   					 		 #{alarmTime,jdbcType=TIMESTAMP},
-  					 		 #{version,jdbcType=NUMERIC})
+  					 		 #{version,jdbcType=NUMERIC},
+  					 		 #{changeAfterProductNo,jdbcType=NUMERIC})
 		]]>
 	</insert>
 	
@@ -65,6 +69,8 @@
 			<if test="alarmTime != null">alarm_time = #{alarmTime,jdbcType=TIMESTAMP},</if>
 			<if test="delayNoticeTime != null">delay_notice_time = #{delayNoticeTime,jdbcType=VARCHAR},</if>
 			<if test="agreementState != null">agreement_state = #{agreementState,jdbcType=VARCHAR},</if>
+			<if test="changeAfterProductNo != null">change_after_product_no = #{changeAfterProductNo,jdbcType=VARCHAR},</if>
+			<if test="realChangeTime != null">real_change_time = #{realChangeTime,jdbcType=VARCHAR},</if>
 		</set>
 		where order_id=#{orderId, jdbcType=NUMERIC}
 	</update>
@@ -99,7 +105,9 @@
 				m.is_delay, 
 				m.confirm_order_state_code,
 				m.version,
-				m.agreement_state
+				m.agreement_state,
+				m.change_after_product_no,
+				m.real_change_time
 			from task_order m
   			where m.order_id = #{orderId,jdbcType=NUMERIC}
 		]]>

@@ -16,7 +16,7 @@
 			var taskTypeId = '${taskTypeId}';
 			var userId = '${userId}';
 		</script>
-		<script type="text/javascript" src="<c:url value='/js/module/task/taskAgent.js?version=85'/>"></script>
+		<script type="text/javascript" src="<c:url value='/js/module/task/taskAgent.js?version=86'/>"></script>
 	</head>
 	<body>
 		<div id="mainDiv"></div>

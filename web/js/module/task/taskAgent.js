@@ -297,7 +297,9 @@ var taskAgent = (function() {
 						return "立合待填写";
 					}else if(value == 6){
 						return "立合待确认";
-					}else {
+					}else if(value == 7){
+                        return "真实变更时间";
+                    }else {
 						return "未知";
 					}
 				}
@@ -426,6 +428,10 @@ function openWin(agentType, orderId, agentId){
     	var title = "内容确认";
     	var url = contextPath+"/agreement/getAgreementConfirmDlg.do?orderId="+orderId+'&agreementId='+agentId;
     	showCreateWin(title, url);
+    }else if(agentType == 7){
+        var title = "真实变更时间";
+        var url = contextPath+"/taskDetail/getRealChangeTimeDlg.do?orderId="+orderId;
+        showCreateWin(title, url);
     }else {
     	alert("未知代办!");
     	return;

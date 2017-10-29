@@ -55,6 +55,10 @@ public class TaskOrder {
 
 	private String agreementState;
 
+	private String changeAfterProductNo;
+
+	private String realChangeTime;
+
 	public Integer getOrderId() {
 		return orderId;
 	}
@@ -237,5 +241,21 @@ public class TaskOrder {
 
 	public void setAgreementState(String agreementState) {
 		this.agreementState = agreementState;
+	}
+
+	public String getChangeAfterProductNo() {
+		return changeAfterProductNo;
+	}
+
+	public void setChangeAfterProductNo(String changeAfterProductNo) {
+		this.changeAfterProductNo = changeAfterProductNo;
+	}
+
+	public String getRealChangeTime() {
+		return realChangeTime;
+	}
+
+	public void setRealChangeTime(String realChangeTime) {
+		this.realChangeTime = realChangeTime;
 	}
 }

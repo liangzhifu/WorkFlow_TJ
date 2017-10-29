@@ -203,7 +203,22 @@ public class DetailController {
 		}
 		return "task/taskConfirm";
 	}
-	
+
+	@RequestMapping("/getRealChangeTimeDlg.do")
+	public String getRealChangeTimeDlg(HttpServletRequest request,HttpServletResponse response, Map<String, Object> model){
+		Integer orderId =  ServletAPIUtil.getIntegerParameter("orderId", request);
+		try {
+			TaskOrderQuery query = new TaskOrderQuery();
+			query.setOrderId(orderId);
+			TaskOrder taskOrder = this.detailService.getTaskOrder(query);
+			model.put("taskOrderJSON", new JSONObject(taskOrder));
+			model.put("orderId", orderId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "task/taskRealChangeTime";
+	}
+
 	@RequestMapping("/getTaskRefuseDlg.do")
 	public String getTaskRefuseDlg(HttpServletRequest request,HttpServletResponse response, Map<String, Object> model){
 		Integer orderId =  ServletAPIUtil.getIntegerParameter("orderId", request);

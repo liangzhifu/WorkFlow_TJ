@@ -152,6 +152,7 @@ public class DetailServiceImpl implements DetailService {
 		taskOrder.setCreateUserId(user.getUserId());
 		taskOrder.setOrderStateCode("10A");
 		taskOrder.setConfirmOrderStateCode("10B");
+		taskOrder.setChangeAfterProductNo(ServletAPIUtil.getStringParameter("order_change_after_product_no", request, ""));
 		//获取变更时间
 		String changeTimeStr = ServletAPIUtil.getStringParameter("order_11", request, "");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

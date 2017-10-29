@@ -78,7 +78,7 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 	@Override
 	public Integer editTaskOrder(TaskOrder taskOrder) throws ServiceException {
 		// TODO Auto-generated method stub
-		return null;
+		return this.taskOrderDao.updateTaskOrder(taskOrder);
 	}
 
 	@Override

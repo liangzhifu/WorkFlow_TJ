@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.success.task.detail.domain.TaskOrder;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,7 @@ public class TaskOrderController {
 			String order_9 = ServletAPIUtil.getStringParameter("order_9", request, "");
 			String order_11 = ServletAPIUtil.getStringParameter("order_11", request, "");
 			String order_8_input = ServletAPIUtil.getStringParameter("order_8_input", request, "");
+			String order_change_after_product_no = ServletAPIUtil.getStringParameter("order_change_after_product_no", request, "");
 			if(order_5.length() > 0){
 				order_5 = order_5.substring(1);
 			}
@@ -64,6 +66,29 @@ public class TaskOrderController {
 			map2.put("order_9", order_9);
 			map2.put("order_11", order_11);
 			this.taskOrderService.editTaskChangeTime(map2);
+			TaskOrder taskOrder = new TaskOrder();
+			taskOrder.setOrderId(orderId);
+			taskOrder.setChangeAfterProductNo(order_change_after_product_no);
+			this.taskOrderService.updateTaskOrder(taskOrder);
+			map.put("success", true);
+		}catch(Exception e){
+			e.printStackTrace();
+			map.put("success", false);
+			map.put("message", e.getMessage());
+		}
+		AjaxUtil.ajaxResponse(response, new JSONObject(map).toString(), AjaxUtil.RESPONCE_TYPE_JSON);
+	}
+
+	@RequestMapping("/confirmRealChangeTime.do")
+	public void confirmRealChangeTime(HttpServletRequest request,HttpServletResponse response, Map<String, Object> model){
+		Map<String, Object> map = new HashMap<String, Object>();
+		try{
+			Integer orderId =  ServletAPIUtil.getIntegerParameter("orderId", request);
+			String realChangeTime = ServletAPIUtil.getStringParameter("realChangeTime", request, "");
+			TaskOrder taskOrder = new TaskOrder();
+			taskOrder.setOrderId(orderId);
+			taskOrder.setRealChangeTime(realChangeTime);
+			this.taskOrderService.updateTaskOrder(taskOrder);
 			map.put("success", true);
 		}catch(Exception e){
 			e.printStackTrace();
