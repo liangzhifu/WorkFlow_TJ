@@ -478,6 +478,18 @@ function doClose(){
 }
 
 function doSubmit(){
+    var reg = /^[-,a-zA-Z0-9]*$/;
+    var changeBeforProductNo = Ext.getCmp('order_12').getValue();
+    if(!reg.test(changeBeforProductNo)){
+        alert("变更前品号不正确，请检查！");
+        return ;
+    }
+    var changeAfterProductNo = Ext.getCmp('order_change_after_product_no').getValue();
+    if(!reg.test(changeAfterProductNo)){
+        alert("变更后品号不正确，请检查！");
+        return ;
+    }
+
 	if (!Ext.getCmp('basicForm').getForm().isValid()) {
 		alert("请输入正确的格式！");
 		return;

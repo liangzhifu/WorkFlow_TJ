@@ -503,6 +503,18 @@ function generMainObj(taskTache){
 }
 
 function doSubmit(){
+    var reg = /^[-,a-zA-Z0-9]*$/;
+    var changeBeforProductNo = Ext.getCmp('order_12').getValue();
+    if(!reg.test(changeBeforProductNo)){
+        alert("变更前品号不正确，请检查！");
+        return ;
+    }
+    var changeAfterProductNo = Ext.getCmp('order_change_after_product_no').getValue();
+    if(!reg.test(changeAfterProductNo)){
+        alert("变更后品号不正确，请检查！");
+        return ;
+    }
+
 	var order_quality_confirm_staff = Ext.getCmp('order_quality_confirm_staff').getValue();
 	if(order_quality_confirm_staff == null || order_quality_confirm_staff == "" || order_quality_confirm_staff == "undefined"){
 		Ext.MessageBox.alert("提示", "请选择承认人！");
