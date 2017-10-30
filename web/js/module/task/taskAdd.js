@@ -47,31 +47,21 @@ var taskAdd = (function() {
 				var obj = generBasicObj(infoTypeId, taskTypeInfo);
 				items[i] = obj;
 			}
-            items[len] = {
-                columnWidth:0.5,
+			for(var i = len; i > 4; i--){
+				items[i] = items[i-1];
+			}
+            items[4] = {
+                columnWidth:0.25,
                 layout:'form',
                 items:[{
                     xtype:'textfield',
                     fieldLabel:"变更后品号",
                     name: 'order_change_after_product_no',
                     id: 'order_change_after_product_no',
-                    anchor:'90%'
+                    anchor:'95%'
                 }]
             };
-            items[len+1] = {
-                columnWidth:0.5,
-                layout:'form',
-                labelWidth: 120,
-                items:[{
-                    xtype:'datetimefield',
-                    readOnly: true,
-                    fieldLabel:'真实变更时间',
-                    name: 'order_real_change_time',
-                    id: 'order_real_change_time',
-                    anchor:'90%'
-                }]
-            };
-			len = len + 2;
+			len = len + 1;
 			items[len] = { 
 		            columnWidth:.33,
 		            layout:'column',

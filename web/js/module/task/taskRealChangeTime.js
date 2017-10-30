@@ -44,8 +44,11 @@ var taskConfirm = (function() {
                     group_confirm = taskConfirmOrder.confirmUserName;
                 }
             }
-            items[len] = {
-                columnWidth:0.5,
+            for(var i = len; i > 4; i--){
+                items[i] = items[i-1];
+            }
+            items[4] = {
+                columnWidth:0.25,
                 layout:'form',
                 items:[{
                     xtype:'displayfield',
@@ -53,20 +56,19 @@ var taskConfirm = (function() {
                     name: 'order_change_after_product_no',
                     id: 'order_change_after_product_no',
                     value : taskOrder.changeAfterProductNo,
-                    anchor:'90%'
+                    anchor:'95%'
                 }]
             };
             items[len+1] = {
-                columnWidth:0.5,
+                columnWidth:0.25,
                 layout:'form',
-                labelWidth: 120,
                 items:[{
-                    xtype:'datetimefield',
-                    fieldLabel:'真实变更时间',
+                    xtype:'datefield',
+                    fieldLabel:'实际变更时间',
                     name: 'order_real_change_time',
                     id: 'order_real_change_time',
-                    format:'Y-m-d H:i:s',
-                    anchor:'90%'
+                    format:'Y-m-d',
+                    anchor:'95%'
                 }]
             };
             var basicPanel = new Ext.FormPanel({
@@ -250,7 +252,7 @@ function doConfirm(){
         success : function(response, action) {
             var responseText = Ext.decode(response.responseText);
             if(responseText.success){
-                alert("真实变更时间成功！");
+                alert("实际变更时间成功！");
                 parent.doQry();
                 parent.closeCreateWin();
             }else {
