@@ -258,4 +258,32 @@
 		AND info.`agreement_flag` = 1
 		AND tor.`ORDER_ID` = #{orderId,jdbcType=NUMERIC}
 	</select>
+
+	<select id="selectChangeTimeAlarmList" resultType="java.util.HashMap">
+		<![CDATA[
+		SELECT tor.`ORDER_ID` AS orderId,
+		toi2.`TASK_INFO_VALUE` AS productionLine,
+		toi.`TASK_INFO_VALUE` AS changeTime,
+		toi3.`TASK_INFO_VALUE` AS carType,
+		toi4.`TASK_INFO_VALUE` AS mountingMat,
+		toi9.`TASK_INFO_VALUE` AS changeContent,
+		su.`EMAIL` as email,
+		toi1.`TASK_INFO_VALUE` AS publishCode
+		FROM task_order tor
+		LEFT JOIN task_order_info toi2 ON toi2.`ORDER_ID` = tor.`ORDER_ID` AND toi2.`TASK_TYPE_INFO_ID` = 2
+		LEFT JOIN task_order_info toi3 ON toi3.`ORDER_ID` = tor.`ORDER_ID` AND toi3.`TASK_TYPE_INFO_ID` = 3
+		LEFT JOIN task_order_info toi4 ON toi4.`ORDER_ID` = tor.`ORDER_ID` AND toi4.`TASK_TYPE_INFO_ID` = 4
+		LEFT JOIN task_order_info toi9 ON toi9.`ORDER_ID` = tor.`ORDER_ID` AND toi9.`TASK_TYPE_INFO_ID` = 9
+		LEFT JOIN task_order_info toi1 ON toi1.`ORDER_ID` = tor.`ORDER_ID` AND toi1.`TASK_TYPE_INFO_ID` = 1,
+		sys_users su, task_order_info toi
+		WHERE tor.`CREATE_USER_ID` = su.`USER_ID`
+		AND tor.`ORDER_ID` = toi.`ORDER_ID`
+		AND toi.`TASK_TYPE_INFO_ID` = 11
+		AND tor.`DELETE_STATE` = '0'
+		AND tor.`ORDER_STATE_CODE` IN ('10A','10B','10C')
+		AND tor.`real_change_time` IS NULL
+		AND DATE_FORMAT(toi.`TASK_INFO_VALUE`, '%Y-%m-%d') < DATE_FORMAT(SYSDATE(), '%Y-%m-%d')
+		]]>
+	</select>
+
 </mapper>

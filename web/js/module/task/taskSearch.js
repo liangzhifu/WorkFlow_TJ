@@ -340,7 +340,10 @@ var taskSearch = (function() {
 	                { name: 'completeTime' },
 	                { name: 'isDelay' },
 	                { name: 'agreementState'},
-	                { name: 'invalidateText'}
+	                { name: 'invalidateText'},
+                    { name: 'realChangeTime'},
+                    { name: 'changeBeforeProductNo'},
+                    { name: 'changeAfterProductNo'}
 	            ]
 	        );
 
@@ -368,10 +371,14 @@ var taskSearch = (function() {
 			         return value;     
 			    }
 			}, {
-				header : "变更时间",
+				header : "预计变更时间",
 				dataIndex : "changeTime",
 				width : Ext.getBody().getSize().width * 0.1
 			}, {
+				header : "实际变更时间",
+				dataIndex : "realChangeTime",
+                width : Ext.getBody().getSize().width * 0.08
+             }, {
 				header : "发行日期",
 				dataIndex : "issueDate",
 				width : Ext.getBody().getSize().width * 0.06
@@ -402,6 +409,14 @@ var taskSearch = (function() {
 				dataIndex : "mountingMat",
 				width : Ext.getBody().getSize().width * 0.1
 			}, {
+                    header : "变更前品号",
+                    dataIndex : "changeBeforeProductNo",
+                    width : Ext.getBody().getSize().width * 0.1
+            }, {
+                    header : "变更后品号",
+                    dataIndex : "changeAfterProductNo",
+                    width : Ext.getBody().getSize().width * 0.1
+            }, {
 				header : "定单状态",
 				dataIndex : "orderStateCode",
 				width : Ext.getBody().getSize().width * 0.1,
@@ -463,6 +478,31 @@ var taskSearch = (function() {
 				// 超过长度带自动滚动条
 				autoScroll : true,
 				store : store,
+                viewConfig:{
+                    getRowClass:function(record, rowIndex, rowParams, store){//在这里配置更改颜色
+						var changeTime = record.data["changeTime"];
+                        var realChangeTime = record.data["realChangeTime"];
+                        var orderStateCode = record.data["orderStateCode"];
+                        if(orderStateCode == "10A" || orderStateCode == "10B" || orderStateCode == "10C"){
+                            if(realChangeTime == undefined || realChangeTime == null || realChangeTime == ""){
+                                //实例化一个对象date
+                                var date = new Date();
+                                //获取年份
+                                var year = date.getFullYear();
+                                //获取月份
+                                var month = date.getMonth() + 1;
+                                //获取日子
+                                var day = date.getDate();
+                                //拼接日期
+                                var thisDate = year + "-" + (month<10 ? "0" + month : month) + "-" + (day<10 ? "0" + day : day);
+                                var changeTime = changeTime.substring(0,10);
+                                if(changeTime < thisDate){
+                                    return "x-grid-record-gray-orange";//返回样式
+                                }
+                            }
+						}
+                    }
+                },
 				bbar: new Ext.PagingToolbar({
 					id: "pagingToolbar",
 	                pageSize: pageSize,//每页显示的记录值

@@ -383,4 +383,9 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 		return this.taskOrderDao.selectAgreementNum(query);
 	}
 
+	@Override
+	public List<Map<String, Object>> queryChangeTimeAlarmList() throws ServiceException {
+		return this.taskOrderDao.selectChangeTimeAlarmList();
+	}
+
 }

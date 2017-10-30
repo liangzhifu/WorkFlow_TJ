@@ -1,5 +1,6 @@
 package com.success.task.detail.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.success.task.detail.domain.TaskOrder;
@@ -33,5 +34,12 @@ public interface TaskOrderService {
 	 * @throws ServiceException 异常
 	 */
 	public Integer getAgreementNum(TaskOrderQuery query) throws ServiceException;
+
+	/**
+	 * 查询未填写真实变更时间的订单列表
+	 * @return 返回结果
+	 * @throws ServiceException 异常
+	 */
+	public List<Map<String, Object>> queryChangeTimeAlarmList() throws ServiceException;
 	
 }

@@ -1,6 +1,7 @@
 package com.success.task.detail.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -92,5 +93,14 @@ public class TaskOrderDao extends BaseDao {
 	 */
 	public List<TaskOrder> selectInvalidTaskOrderByAgreement() throws DaoException{
 		return this.sqlSession.selectList("taskOrder.selectInvalidTaskOrderByAgreement");
+	}
+
+	/**
+	 * 查询未填写真实变更时间的订单列表
+	 * @return 返回结果
+	 * @throws DaoException 异常
+	 */
+	public List<Map<String, Object>> selectChangeTimeAlarmList() throws DaoException{
+		return this.sqlSession.selectList("taskOrder.selectChangeTimeAlarmList");
 	}
 }

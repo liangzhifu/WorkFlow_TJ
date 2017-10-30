@@ -31,6 +31,9 @@
 		<result property="agreementId" column="agreement_id" />
 		<result property="agreementName" column="agreement_name" />
 		<result property="agreementState" column="agreement_state" />
+		<result property="realChangeTime" column="real_change_time" />
+		<result property="changeBeforeProductNo" column="change_before_product_no" />
+		<result property="changeAfterProductNo" column="change_after_product_no" />
 	</resultMap>
 	
 	<select id="selectDetail" resultMap="detailResultMap" parameterType="DetailQuery">
@@ -157,6 +160,9 @@
 				a.invalidate_text,
 				DATE_FORMAT(a.REAL_COMPLETE_TIME,'%Y-%m-%d %H:%m:%s') as complete_time, 
 				DATE_FORMAT(a.REQUIRE_COMPLETE_TIME,'%Y-%m-%d %H:%m:%s') as require_complete_time,
+				a.real_change_time,
+				a.change_after_product_no,
+				g12.TASK_INFO_VALUE as change_before_product_no,
 				f.cycle_id,
 				f.is_notice,
 				f.is_alarm,
@@ -178,7 +184,8 @@
 				left join task_order_info g2 on g2.ORDER_ID = a.ORDER_ID and g2.TASK_TYPE_INFO_ID = 9 
 				left join task_order_info g3 on g3.ORDER_ID = a.ORDER_ID and g3.TASK_TYPE_INFO_ID = 2 
 				left join task_order_info g4 on g4.ORDER_ID = a.ORDER_ID and g4.TASK_TYPE_INFO_ID = 3 
-				left join task_order_info g5 on g5.ORDER_ID = a.ORDER_ID and g5.TASK_TYPE_INFO_ID = 4 
+				left join task_order_info g5 on g5.ORDER_ID = a.ORDER_ID and g5.TASK_TYPE_INFO_ID = 4
+				left join task_order_info g12 on g12.ORDER_ID = a.ORDER_ID and g12.TASK_TYPE_INFO_ID = 12
 				left join agreement_manage p on p.order_id = a.order_id and (STRCMP(p.agreement_state, '10B') = 0 or STRCMP(p.agreement_state, '10C') = 0)
 		]]>
 		<where>
@@ -325,6 +332,7 @@
 					AND tor.`DELETE_STATE` = '0'
 					AND toi.`TASK_TYPE_INFO_ID` = 11
 					AND tor.`real_change_time` IS NULL
+					AND tor.`ORDER_STATE_CODE` in ('10A','10B','10C')
 					AND DATE_FORMAT(toi.`TASK_INFO_VALUE`, '%Y-%m-%d') <= DATE_FORMAT(SYSDATE(), '%Y-%m-%d')
 					AND tor.`CREATE_USER_ID` = #{userId,jdbcType=NUMERIC}) g
 				left join task_order a on g.order_id = a.order_id

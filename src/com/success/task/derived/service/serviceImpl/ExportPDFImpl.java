@@ -154,7 +154,16 @@ public class ExportPDFImpl implements ExportPDF {
 				}
 			}else {
 				if(taskTypeInfoId != 12) {
-					form.setField("order-" + taskTypeInfoId, taskOrderInfo.getTaskInfoValue());
+					if(taskTypeInfoId == 11){
+						String realChageTime = taskOrder.getRealChangeTime();
+						if(realChageTime == null || "".equals(realChageTime)){
+							form.setField("order-" + taskTypeInfoId, taskOrderInfo.getTaskInfoValue());
+						}else {
+							form.setField("order-" + taskTypeInfoId, realChageTime);
+						}
+					}else {
+						form.setField("order-" + taskTypeInfoId, taskOrderInfo.getTaskInfoValue());
+					}
 				}
 			}
 			

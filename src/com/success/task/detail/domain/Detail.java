@@ -60,6 +60,12 @@ public class Detail {
 
 	private String agreementState;
 
+	private String realChangeTime;
+
+	private String changeBeforeProductNo;
+
+	private String changeAfterProductNo;
+
 	public Integer getOrderId() {
 		return orderId;
 	}
@@ -290,5 +296,29 @@ public class Detail {
 
 	public void setAgreementState(String agreementState) {
 		this.agreementState = agreementState;
+	}
+
+	public String getRealChangeTime() {
+		return realChangeTime;
+	}
+
+	public void setRealChangeTime(String realChangeTime) {
+		this.realChangeTime = realChangeTime;
+	}
+
+	public String getChangeBeforeProductNo() {
+		return changeBeforeProductNo;
+	}
+
+	public void setChangeBeforeProductNo(String changeBeforeProductNo) {
+		this.changeBeforeProductNo = changeBeforeProductNo;
+	}
+
+	public String getChangeAfterProductNo() {
+		return changeAfterProductNo;
+	}
+
+	public void setChangeAfterProductNo(String changeAfterProductNo) {
+		this.changeAfterProductNo = changeAfterProductNo;
 	}
 }
