@@ -16,7 +16,7 @@
 		</script>
 		<style>
 			.x-grid-record-gray-orange table{
-				background:  	Tomato;
+				background: #FFFACD;
 			}
 		</style>
 		<script type="text/javascript" src="<c:url value='/js/module/task/taskSearch.js?version=45'/>"></script>
