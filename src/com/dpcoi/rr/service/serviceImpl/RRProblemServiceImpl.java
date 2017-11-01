@@ -276,7 +276,37 @@ public class RRProblemServiceImpl implements RRProblemService {
         int day = this.daysBetween(hanppenDateStr, nowDateStr, calendarList);
         Integer isDelay = rrProblem.getIsDelay();
         day = day - 1;
-        if("2/5".equals(problemProgress)){
+        if("1/5".equals(problemProgress)){
+            Date createTime = null;
+            Integer rrProblemId = rrProblem.getId();
+            if(rrProblemId == null){
+                createTime = rrProblem.getCreateTime();
+            }else {
+                RRProblem oldRRProblem = new RRProblem();
+                oldRRProblem.setId(rrProblemId);
+                oldRRProblem = this.queryRRProblem(oldRRProblem);
+                createTime = oldRRProblem.getCreateTime();
+            }
+            if(createTime == null){
+                String oldTrackingLevel = rrProblem.getTrackingLevel();
+                if(oldTrackingLevel == null){
+
+                }else {
+                    trackingLevel = oldTrackingLevel;
+                }
+            }else {
+               Long intervalHour = (nowDate.getTime() - createTime.getTime())/1000/60/60;
+               if(intervalHour.intValue() > 24){
+                   trackingLevel = "II";
+               }else if(intervalHour.intValue() > 12){
+                   trackingLevel = "III";
+               }else if(intervalHour.intValue() > 4){
+                   trackingLevel = "IV";
+               }else {
+                   trackingLevel = "V";
+               }
+            }
+        }else if("2/5".equals(problemProgress)){
             if(isDelay == 1){
                 if(day <= 7){
                     trackingLevel = "V";

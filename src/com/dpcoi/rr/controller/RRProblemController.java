@@ -245,6 +245,10 @@ public class RRProblemController {
         Map<String, Object> map = new HashMap<String, Object>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try{
+            User rrUser = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
+            rrProblem.setCreateTime(new Date());
+            rrProblem.setCreateBy(rrUser.getUserId());
+
             rrProblem.setIsHide(0);
             this.validSpeedOfProgress(rrProblem);
             rrProblem = this.validUploadFile(rrProblem);

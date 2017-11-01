@@ -75,6 +75,8 @@
         <result column="other_information" property="otherInformation" jdbcType="INTEGER" />
         <result column="other_information_file_id" property="otherInformationFileId" jdbcType="INTEGER" />
         <result column="delay_application" property="delayApplication" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="create_by" property="createBy" jdbcType="INTEGER" />
     </resultMap>
     <sql id="Base_Column_List" >
         id, problem_status, problem_no, problem_type, engineering, problem_progress, tracking_level,
@@ -89,7 +91,7 @@
         equipment_checklist_file_id, inspection_reference_book_file_id, inspection_book_file_id, education_file_id,
         dpcoi4M, analytic_report, analytic_report_file_id, layered_audit, layered_audit_file_id, check_result,
         check_result_file_id, na_pending, na_pending_file_id, other_information, other_information_file_id,
-        delay_application, is_delay
+        delay_application, is_delay, create_time, create_by
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="RRProblem" >
         select
@@ -361,6 +363,12 @@
             <if test="delayApplication != null" >
                 delay_application,
             </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="createBy != null" >
+                create_by,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="id != null" >
@@ -581,6 +589,12 @@
             </if>
             <if test="delayApplication != null" >
                 #{delayApplication,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null" >
+                #{createBy,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>

@@ -181,6 +181,10 @@ public class RRProblem {
 
     private Integer delayApplication;
 
+    private Date createTime;
+
+    private Integer createBy;
+
     public Integer getId() {
         return id;
     }
@@ -818,5 +822,21 @@ public class RRProblem {
 
     public void setDelayApplication(Integer delayApplication) {
         this.delayApplication = delayApplication;
+    }
+
+    public Integer getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
