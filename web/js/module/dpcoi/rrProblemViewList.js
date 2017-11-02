@@ -351,6 +351,44 @@ rrProblemViewListApp.controller("rrProblemViewListController", function ($scope)
         });
     });
 
+    $scope.rrProblemViewList.downloadFile = function (fileId) {
+        window.open("/WorkFlow/fileUpload/download.do?fileId="+fileId);
+    };
+
+    $scope.rrProblemViewList.dpcoiWoOrderFileList = [{
+        "dpcoiWoOrdreFileId" : "",
+        "fileId" : "",
+        "fileName" : "",
+        "fileType" : "",
+        "fileAlias" : "",
+        "excelPdfName" : ""
+    }];
+
+    $scope.rrProblemViewList.downloadDpcoiWoOrderFile = function (fileId) {
+        window.open("/WorkFlow/fileUpload/download.do?fileId="+fileId);
+    };
+
+    $scope.rrProblemViewList.fileList = function (rrProblemId, dpcoiWoOrderType) {
+        $.ajax({
+            method:'post',
+            url:"/WorkFlow/rrProblemOrder/getDpcoiWoOrderFileList.do",
+            data:{"rrProblemId":rrProblemId, "dpcoiWoOrderType":dpcoiWoOrderType},
+            success: function(resultJson) {
+                var result = angular.fromJson(resultJson);
+                if (result.success) {
+                    $scope.rrProblemViewList.dpcoiWoOrderFileList = result.dpcoiWoOrderFileList;
+                    $scope.$apply();
+                    $("#fileListModal").modal("show");
+                }else {
+                    alert(result.message);
+                }
+            },
+            error : function() {
+                alert("系统出现异常!!");
+            }
+        });
+    };
+
     $(document).ready(function() {
         $("input[data-type='date']").each(function () {
             $(this).datetimepicker({
