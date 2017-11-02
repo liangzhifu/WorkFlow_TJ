@@ -123,4 +123,12 @@ public class RRProblemDao extends BaseDao {
     public Integer updateRollBackRRProblem(Map<String, Object> map) {
         return this.sqlSession.update("RRProblemMapper.updateRollBackRRProblem", map);
     }
+
+    /**
+     * 查询1/5的RR问题点列表
+     * @return 返回结果
+     */
+    public List<RRProblem> selectJobRRProblemTrackingLevelList() {
+        return this.sqlSession.selectList("RRProblemMapper.selectJobRRProblemTrackingLevelList", null);
+    }
 }

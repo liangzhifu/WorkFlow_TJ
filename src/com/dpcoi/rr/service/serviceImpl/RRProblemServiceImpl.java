@@ -507,6 +507,11 @@ public class RRProblemServiceImpl implements RRProblemService {
         this.timeTaskDao.insertTimeTask(timeTask);
     }
 
+    @Override
+    public List<RRProblem> queryJobRRProblemTrackingLevelList() throws ServiceException {
+        return this.rRProblemDao.selectJobRRProblemTrackingLevelList();
+    }
+
 
     /**
      * 计算公式

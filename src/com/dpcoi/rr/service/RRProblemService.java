@@ -133,4 +133,11 @@ public interface RRProblemService {
      */
     public void addSendMinisterEmail(RRProblem rrProblem) throws ServiceException;
 
+    /**
+     * 查询1/5的RR问题点列表
+     * @return 返回结果
+     * @throws ServiceException 异常
+     */
+    public List<RRProblem> queryJobRRProblemTrackingLevelList() throws ServiceException;
+
 }

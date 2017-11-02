@@ -1038,4 +1038,12 @@
         </set>
         where id = #{rrProblemId, jdbcType=INTEGER}
     </update>
+
+    <select id="selectJobRRProblemTrackingLevelList" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from dpcoi_rr_problem
+        where state=1
+        and problem_progress = '1/5'
+    </select>
 </mapper>
