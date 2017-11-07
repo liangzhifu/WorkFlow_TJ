@@ -59,7 +59,8 @@ public class ExportExcelServiceImpl implements ExportExcelService {
                 "根本原因（48H）", "永久对策（14D）", "效果验证（34D）", "品情联编号", "质量警示卡编号",
                 "品推表", "PFMEA", "C.P.QC工程表", "作业标准书", "设备点检表",
                 "始终件表", "检查基准书", "检查手顺书", "教育议事录", "变化点管理",
-                "展开及追踪是否完成", "人工", "物料"};
+                "展开及追踪是否完成", "人工", "物料", "解析报告", "4M",
+                "分层审核", "验岗结果", "NA待定", "其他资料"};
         HSSFRow row = sheet.createRow(0);   //--->创建一行
         for (short i = 0; i < headers.length; i++) {
             HSSFCell cell = row.createCell(i);
@@ -403,6 +404,41 @@ public class ExportExcelServiceImpl implements ExportExcelService {
             text = new HSSFRichTextString((String)map.get("materiel"));
             cell.setCellValue(text);
 
+            //解析报告
+            cell = row.createCell(48);
+            cell.setCellStyle(style);
+            text = new HSSFRichTextString((String)map.get("analyticReport"));
+            cell.setCellValue(text);
+
+            //4M
+            cell = row.createCell(49);
+            cell.setCellStyle(style);
+            text = new HSSFRichTextString((String)map.get("dpcoi4M"));
+            cell.setCellValue(text);
+
+            //分层审核
+            cell = row.createCell(50);
+            cell.setCellStyle(style);
+            text = new HSSFRichTextString((String)map.get("layeredAudit"));
+            cell.setCellValue(text);
+
+            //验岗结果
+            cell = row.createCell(51);
+            cell.setCellStyle(style);
+            text = new HSSFRichTextString((String)map.get("checkResult"));
+            cell.setCellValue(text);
+
+            //NA待定
+            cell = row.createCell(52);
+            cell.setCellStyle(style);
+            text = new HSSFRichTextString((String)map.get("naPending"));
+            cell.setCellValue(text);
+
+            //其他资料
+            cell = row.createCell(53);
+            cell.setCellStyle(style);
+            text = new HSSFRichTextString((String)map.get("otherInformation"));
+            cell.setCellValue(text);
         }
 
         FileOutputStream fileOut = null;

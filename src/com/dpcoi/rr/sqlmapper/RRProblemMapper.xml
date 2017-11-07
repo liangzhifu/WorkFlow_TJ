@@ -981,7 +981,13 @@
         bad_quantity as badQuantity, batch, happen_shift as happenShift, responsible_department as responsibleDepartment, record_ppm as recordPpm, record_num as recordNum,
         temporary, root_cause as rootCause, permanent_game as permanentGame, effect_verification as effectVerification, serial_number as serialNumber, quality_warning_card_number as qualityWarningCardNumber,
         product_scale as productScale, pfmea, cp, standard_book as standardBook, equipment_checklist as equipmentChecklist, always_list as alwaysList, inspection_reference_book as inspectionReferenceBook,
-        inspection_book as inspectionBook, education, change_point as changePoint, expand_trace as expandTrace, artificial, materiel, state, is_delay as isDelay
+        inspection_book as inspectionBook, education, change_point as changePoint, expand_trace as expandTrace, artificial, materiel, state, is_delay as isDelay, is_hide as isHide,
+        serial_number_file_id as serialNumberFileId, product_scale_file_id as productScaleFileId, equipment_checklist_file_id as equipmentChecklistFileId,
+        inspection_reference_book_file_id as inspectionReferenceBookFileId, quality_warning_card_number_file_id as qualityWarningCardNumberFileId,
+        inspection_book_file_id as inspectionBookFileId, education_file_id as educationFileId, dpcoi4M, analytic_report as analyticReport,
+        analytic_report_file_id as analyticReportFileId, layered_audit as layeredAudit, layered_audit_file_id as layeredAuditFileId, check_result as checkResult,
+        check_result_file_id as checkResultFileId, na_pending as naPending, na_pending_file_id as naPendingFileId, other_information as otherInformation,
+        other_information_file_id as otherInformationFileId
         from dpcoi_rr_problem
         <include refid="WHERE_SQL"></include>
     </select>
