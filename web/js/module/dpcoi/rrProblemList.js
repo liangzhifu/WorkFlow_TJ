@@ -422,23 +422,26 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         $("input[name='checkbox_records']:checked").each(function () {
             id = $(this).val();
         });
-        $.ajax({
-            url : '/WorkFlow/rrProblem/toVoidRRProblem.do?id='+id,
-            method: "post",
-            success : function(resultJson) {
-                var obj =  angular.fromJson(resultJson);
-                if(obj.success){
-                    $scope.rrProblemList.firstPage();
-                }else {
-                    alert(obj.message);
+        var con = confirm("确认作废RR问题点！")
+        if (con == true){
+            $.ajax({
+                url : '/WorkFlow/rrProblem/toVoidRRProblem.do?id='+id,
+                method: "post",
+                success : function(resultJson) {
+                    var obj =  angular.fromJson(resultJson);
+                    if(obj.success){
+                        $scope.rrProblemList.firstPage();
+                    }else {
+                        alert(obj.message);
+                        return;
+                    }
+                },
+                failure : function() {
+                    alert('失败！');
                     return;
                 }
-            },
-            failure : function() {
-                alert('失败！');
-                return;
-            }
-        });
+            });
+        }
     });
 
     $scope.checkBoxChange = function(index){

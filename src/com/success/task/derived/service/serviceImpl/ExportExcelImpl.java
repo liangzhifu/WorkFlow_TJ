@@ -43,7 +43,8 @@ public class ExportExcelImpl implements ExportExcel {
         font.setFontHeightInPoints((short)20);   //--->设置字体大小    
         font.setFontName("Courier New");   //---》设置字体，是什么类型例如：宋体    
         
-        String[] headers = {"发行日", "发行编号", "变更时间", "内容", "生产线", "车种", "安装席", "定单状态", "所属部门", "创建人", "创建时间", "完成时间", "是否超时", "作废原因"};
+        String[] headers = {"发行日", "发行编号", "变更时间", "内容", "生产线", "车种", "安装席", "定单状态", "所属部门",
+                "创建人", "创建时间", "完成时间", "是否超时", "作废原因", "真实变更时间", "变更前品号", "变更后品号"};
         HSSFRow row = sheet.createRow(0);   //--->创建一行
         for (short i = 0; i < headers.length; i++) {
             HSSFCell cell = row.createCell(i);
@@ -152,6 +153,24 @@ public class ExportExcelImpl implements ExportExcel {
             cell = row.createCell(13);
             cell.setCellStyle(style);
             text = new HSSFRichTextString(detail.getInvalidateText());
+            cell.setCellValue(text);
+
+            //真实变更时间
+            cell = row.createCell(14);
+            cell.setCellStyle(style);
+            text = new HSSFRichTextString(detail.getRealChangeTime());
+            cell.setCellValue(text);
+
+            //变更前品号
+            cell = row.createCell(15);
+            cell.setCellStyle(style);
+            text = new HSSFRichTextString(detail.getChangeBeforeProductNo());
+            cell.setCellValue(text);
+
+            //变更后品号
+            cell = row.createCell(16);
+            cell.setCellStyle(style);
+            text = new HSSFRichTextString(detail.getChangeAfterProductNo());
             cell.setCellValue(text);
             
         }

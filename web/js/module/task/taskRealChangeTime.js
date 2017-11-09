@@ -240,27 +240,31 @@ function generBasicObj(infoTypeId, taskTypeInfo, taskOrderInfoArray){
 }
 
 function doConfirm(){
-    Ext.Ajax.request( {
-        url : contextPath+'/taskOrder/confirmRealChangeTime.do',
-        async: false,
-        waitTitle : '提示',
-        waitMsg: '请稍后,正在提交数据...',
-        params : {
-            orderId : taskOrderId,
-            realChangeTime : Ext.getCmp('order_real_change_time').value
-        },
-        success : function(response, action) {
-            var responseText = Ext.decode(response.responseText);
-            if(responseText.success){
-                alert("实际变更时间成功！");
-                parent.doQry();
-                parent.closeCreateWin();
-            }else {
-                alert(responseText.message);
-            }
-        },
-        failure : function(e) {
-            Ext.Msg.alert('提示', '确认失败！');
+    Ext.Msg.confirm("确认框", "确定提交时间变更时间！：", function (btn) {
+        if (btn == 'yes') {
+            Ext.Ajax.request({
+                url: contextPath + '/taskOrder/confirmRealChangeTime.do',
+                async: false,
+                waitTitle: '提示',
+                waitMsg: '请稍后,正在提交数据...',
+                params: {
+                    orderId: taskOrderId,
+                    realChangeTime: Ext.getCmp('order_real_change_time').value
+                },
+                success: function (response, action) {
+                    var responseText = Ext.decode(response.responseText);
+                    if (responseText.success) {
+                        alert("实际变更时间成功！");
+                        parent.doQry();
+                        parent.closeCreateWin();
+                    } else {
+                        alert(responseText.message);
+                    }
+                },
+                failure: function (e) {
+                    Ext.Msg.alert('提示', '确认失败！');
+                }
+            });
         }
     });
 }

@@ -299,7 +299,10 @@ var taskSearch = (function() {
 	                { name: 'createOrg' },
 	                { name: 'createTime' },
 	                { name: 'completeTime' },
-	                { name: 'isDelay' }
+	                { name: 'isDelay' },
+                    { name: 'realChangeTime'},
+                    { name: 'changeBeforeProductNo'},
+                    { name: 'changeAfterProductNo'}
 	            ]
 	        );
 
@@ -323,9 +326,13 @@ var taskSearch = (function() {
 			         return value;     
 			    }
 			}, {
-				header : "变更时间",
+				header : "预计变更时间",
 				dataIndex : "changeTime",
 				width : Ext.getBody().getSize().width * 0.1
+			}, {
+                    header : "实际变更时间",
+                    dataIndex : "realChangeTime",
+                    width : Ext.getBody().getSize().width * 0.08
 			}, {
 				header : "发行日期",
 				dataIndex : "issueDate",
@@ -347,6 +354,14 @@ var taskSearch = (function() {
 				dataIndex : "mountingMat",
 				width : Ext.getBody().getSize().width * 0.1
 			}, {
+                    header : "变更前品号",
+                    dataIndex : "changeBeforeProductNo",
+                    width : Ext.getBody().getSize().width * 0.1
+            }, {
+                    header : "变更后品号",
+                    dataIndex : "changeAfterProductNo",
+                    width : Ext.getBody().getSize().width * 0.1
+            }, {
 				header : "定单状态",
 				dataIndex : "orderStateCode",
 				width : Ext.getBody().getSize().width * 0.1,

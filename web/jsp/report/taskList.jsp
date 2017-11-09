@@ -14,7 +14,7 @@
 		<script type="text/javascript">
 			var contextPath = "${pageContext.request.contextPath}";
 		</script>
-		<script type="text/javascript" src="<c:url value='/js/module/report/taskList.js?version=6'/>"></script>
+		<script type="text/javascript" src="<c:url value='/js/module/report/taskList.js?version=7'/>"></script>
 	</head>
 	<body>
 		<div id="mainDiv"></div>
