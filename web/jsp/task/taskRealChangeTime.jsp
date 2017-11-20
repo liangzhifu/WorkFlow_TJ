@@ -15,7 +15,7 @@
         var taskOrderJSON = '${taskOrderJSON}';
         var taskOrderId = '${orderId}';
     </script>
-    <script type="text/javascript" src="<c:url value='/js/module/task/taskRealChangeTime.js?version=3'/>"></script>
+    <script type="text/javascript" src="<c:url value='/js/module/task/taskRealChangeTime.js?version=4'/>"></script>
 </head>
 <body>
 <div id="mainDiv" ></div>

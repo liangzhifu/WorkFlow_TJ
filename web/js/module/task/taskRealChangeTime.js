@@ -68,6 +68,7 @@ var taskConfirm = (function() {
                     name: 'order_real_change_time',
                     id: 'order_real_change_time',
                     format:'Y-m-d',
+                    maxValue : new Date(),
                     anchor:'95%'
                 }]
             };

@@ -24,8 +24,10 @@
 				g3.task_info_value as carType,
 				g4.task_info_value as mountingMat,
 				g10.task_info_value as changeContent,
-				SUBSTRING(g5.task_info_value, 1, 10) as changeDate,
-				SUBSTRING(g5.task_info_value, 11, 6) as changeTime,
+				(case when a.real_complete_time is null THEN SUBSTRING(g5.task_info_value, 1, 10)
+				 else SUBSTRING(a.real_complete_time, 1, 10) end) as changeDate,
+				(case when a.real_complete_time is null THEN SUBSTRING(g5.task_info_value, 11, 6)
+				 else SUBSTRING(a.real_complete_time, 11, 6) end) as changeTime,
 				(case when m3.agreement_id is not null
 				then m3.conclusion_state
 				else g6.contract_state_name end) as contractResult,
@@ -145,8 +147,10 @@
 				g3.task_info_value as carType,
 				g4.task_info_value as mountingMat,
 				g9.task_info_value as changeContent,
-				SUBSTRING(g5.task_info_value, 1, 10) as changeDate,
-				SUBSTRING(g5.task_info_value, 11, 6) as changeTime,
+				(case when a.real_complete_time is null THEN SUBSTRING(g5.task_info_value, 1, 10)
+				 else SUBSTRING(a.real_complete_time, 1, 10) end) as changeDate,
+				(case when a.real_complete_time is null THEN SUBSTRING(g5.task_info_value, 11, 6)
+				 else SUBSTRING(a.real_complete_time, 11, 6) end) as changeTime,
 				(case when m3.agreement_id is not null
 				then m3.conclusion_state
 				else stateCode.contract_state_name end) as contractResult,
