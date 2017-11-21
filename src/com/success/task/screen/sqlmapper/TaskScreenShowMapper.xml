@@ -24,10 +24,10 @@
 				g3.task_info_value as carType,
 				g4.task_info_value as mountingMat,
 				g10.task_info_value as changeContent,
-				(case when a.real_complete_time is null THEN SUBSTRING(g5.task_info_value, 1, 10)
-				 else SUBSTRING(a.real_complete_time, 1, 10) end) as changeDate,
-				(case when a.real_complete_time is null THEN SUBSTRING(g5.task_info_value, 11, 6)
-				 else SUBSTRING(a.real_complete_time, 11, 6) end) as changeTime,
+				(case when a.real_change_time is null THEN SUBSTRING(g5.task_info_value, 1, 10)
+				 else SUBSTRING(a.real_change_time, 1, 10) end) as changeDate,
+				(case when a.real_change_time is null THEN SUBSTRING(g5.task_info_value, 11, 6)
+				 else SUBSTRING(g5.task_info_value, 11, 6) end) as changeTime,
 				(case when m3.agreement_id is not null
 				then m3.conclusion_state
 				else g6.contract_state_name end) as contractResult,
@@ -37,11 +37,19 @@
 				(case when m3.agreement_id is not null
 				then m4.user_name
 				else g8.USER_NAME end) as confirmName,
+				(case when a.real_change_time is null then
 				(case when ceil((unix_timestamp(SYSDATE()) - unix_timestamp(g5.task_info_value)) / 60 / 60) > 7 * 24 then 4
 					when (unix_timestamp(g5.task_info_value) - unix_timestamp(SYSDATE())) < 0 then 5
 					when ceil((unix_timestamp(g5.task_info_value) - unix_timestamp(SYSDATE())) / 60 / 60) < 24 then 2
 					when ceil((unix_timestamp(g5.task_info_value) - unix_timestamp(SYSDATE())) / 60 / 60) < 48 then 3
-					else 0 end) as colorId
+					else 0 end)
+				else
+				(case when ceil((unix_timestamp(SYSDATE()) - unix_timestamp(a.real_change_time)) / 60 / 60) > 7 * 24 then 4
+					when (unix_timestamp(a.real_change_time) - unix_timestamp(SYSDATE())) < 0 then 5
+					when ceil((unix_timestamp(a.real_change_time) - unix_timestamp(SYSDATE())) / 60 / 60) < 24 then 2
+					when ceil((unix_timestamp(a.real_change_time) - unix_timestamp(SYSDATE())) / 60 / 60) < 48 then 3
+					else 0 end)
+				end) as colorId
 				from task_order a
 				left join task_order_info g1 on g1.ORDER_ID = a.ORDER_ID and g1.TASK_TYPE_INFO_ID = 1
 				left join task_order_info g2 on g2.ORDER_ID = a.ORDER_ID and g2.TASK_TYPE_INFO_ID = 2 
@@ -147,10 +155,10 @@
 				g3.task_info_value as carType,
 				g4.task_info_value as mountingMat,
 				g9.task_info_value as changeContent,
-				(case when a.real_complete_time is null THEN SUBSTRING(g5.task_info_value, 1, 10)
-				 else SUBSTRING(a.real_complete_time, 1, 10) end) as changeDate,
-				(case when a.real_complete_time is null THEN SUBSTRING(g5.task_info_value, 11, 6)
-				 else SUBSTRING(a.real_complete_time, 11, 6) end) as changeTime,
+				(case when a.real_change_time is null THEN SUBSTRING(g5.task_info_value, 1, 10)
+				 else SUBSTRING(a.real_change_time, 1, 10) end) as changeDate,
+				(case when a.real_change_time is null THEN SUBSTRING(g5.task_info_value, 11, 6)
+				 else SUBSTRING(g5.task_info_value, 11, 6) end) as changeTime,
 				(case when m3.agreement_id is not null
 				then m3.conclusion_state
 				else stateCode.contract_state_name end) as contractResult,
@@ -160,11 +168,19 @@
 				(case when m3.agreement_id is not null
 				then m4.user_name
 				else g8.USER_NAME end) as confirmName,
+				(case when a.real_change_time is null then
 				(case when ceil((unix_timestamp(SYSDATE()) - unix_timestamp(g5.task_info_value)) / 60 / 60) > 7 * 24 then 4
 					when (unix_timestamp(g5.task_info_value) - unix_timestamp(SYSDATE())) < 0 then 5
 					when ceil((unix_timestamp(g5.task_info_value) - unix_timestamp(SYSDATE())) / 60 / 60) < 24 then 2
 					when ceil((unix_timestamp(g5.task_info_value) - unix_timestamp(SYSDATE())) / 60 / 60) < 48 then 3
-					else 0 end) as colorId
+					else 0 end)
+				else
+				(case when ceil((unix_timestamp(SYSDATE()) - unix_timestamp(a.real_change_time)) / 60 / 60) > 7 * 24 then 4
+					when (unix_timestamp(a.real_change_time) - unix_timestamp(SYSDATE())) < 0 then 5
+					when ceil((unix_timestamp(a.real_change_time) - unix_timestamp(SYSDATE())) / 60 / 60) < 24 then 2
+					when ceil((unix_timestamp(a.real_change_time) - unix_timestamp(SYSDATE())) / 60 / 60) < 48 then 3
+					else 0 end)
+				end) as colorId
 				from task_order a
 				left join task_order_info g1 on g1.ORDER_ID = a.ORDER_ID and g1.TASK_TYPE_INFO_ID = 1
 				left join task_order_info g2 on g2.ORDER_ID = a.ORDER_ID and g2.TASK_TYPE_INFO_ID = 2 
