@@ -235,7 +235,10 @@
 			AND a.DELETE_STATE = 0
 			AND c.TASK_TYPE_INFO_ID = 11
 			AND STRCMP(a.ORDER_STATE_CODE, '10X') <> 0
-			AND UNIX_TIMESTAMP(DATE_ADD(c.TASK_INFO_VALUE, INTERVAL 7 DAY)) < UNIX_TIMESTAMP(SYSDATE())
+			AND (case WHEN a.real_change_time is null
+				then (UNIX_TIMESTAMP(DATE_ADD(c.TASK_INFO_VALUE, INTERVAL 7 DAY)) < UNIX_TIMESTAMP(SYSDATE()))
+				else (UNIX_TIMESTAMP(DATE_ADD(a.real_change_time, INTERVAL 7 DAY)) < UNIX_TIMESTAMP(SYSDATE()))
+				end)
 			AND EXISTS(SELECT 1
 				FROM task_wo_order two, task_wo_order_sys_info twosi, sys_info info
 				WHERE two.`WO_ORDER_ID` = twosi.`WO_ORDER_ID`
