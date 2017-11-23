@@ -34,6 +34,8 @@
 		<result property="realChangeTime" column="real_change_time" />
 		<result property="changeBeforeProductNo" column="change_before_product_no" />
 		<result property="changeAfterProductNo" column="change_after_product_no" />
+		<result property="conclusionState" column="conclusion_state" />
+		<result property="agreementCreateUser" column="agreement_create_user" />
 	</resultMap>
 	
 	<select id="selectDetail" resultMap="detailResultMap" parameterType="DetailQuery">
@@ -172,7 +174,9 @@
 				f.delay_cycle,
 				h.org_name as create_org,
 				p.agreement_id,
-				p.agreement_name
+				p.agreement_name,
+				p.conclusion_state,
+				(select user_name from sys_users su where su.user_id = p.create_user) as agreement_create_user
 				from task_order a
 				left join task_type b on a.TASK_TYPE_ID = b.TASK_TYPE_ID
 				left join task_order_info c on c.ORDER_ID = a.ORDER_ID and c.TASK_TYPE_INFO_ID = 1

@@ -84,7 +84,9 @@
 				AND info.`agreement_flag` = 1
 				AND two.`ORDER_ID` = a.order_id)
 		]]>
-			<![CDATA[and TO_DAYS(NOW()) - TO_DAYS(g11.TASK_INFO_VALUE) <= 7]]>
+			and (case when a.`real_change_time` is null
+			then (TO_DAYS(NOW()) - TO_DAYS(g11.TASK_INFO_VALUE) &lt;= 7)
+			else (TO_DAYS(NOW()) - TO_DAYS(a.`real_change_time`) &lt;= 7) end)
 			<if test="@Ognl@isNotEmpty(publishCode)"> and c.TASK_INFO_VALUE like CONCAT('%',#{publishCode,jdbcType=VARCHAR},'%') </if>
 			<if test="@Ognl@isNotEmpty(changeTime)"> and g.TASK_INFO_VALUE like CONCAT(#{changeTime,jdbcType=VARCHAR},'%') </if>
 		</where>
@@ -121,7 +123,9 @@
 				AND info.`agreement_flag` = 1
 				AND two.`ORDER_ID` = a.order_id)
 		]]>
-			<![CDATA[and TO_DAYS(NOW()) - TO_DAYS(g11.TASK_INFO_VALUE) <= 7]]>
+			and (case when a.`real_change_time` is null
+			then (TO_DAYS(NOW()) - TO_DAYS(g11.TASK_INFO_VALUE) &lt;= 7)
+			else (TO_DAYS(NOW()) - TO_DAYS(a.`real_change_time`) &lt;= 7) end)
 			<if test="@Ognl@isNotEmpty(publishCode)"> and c.TASK_INFO_VALUE like CONCAT('%',#{publishCode,jdbcType=VARCHAR},'%') </if>
 			<if test="@Ognl@isNotEmpty(changeTime)"> and g.TASK_INFO_VALUE like CONCAT(#{changeTime,jdbcType=VARCHAR},'%') </if>
 		</where>

@@ -302,7 +302,10 @@ var taskSearch = (function() {
 	                { name: 'isDelay' },
                     { name: 'realChangeTime'},
                     { name: 'changeBeforeProductNo'},
-                    { name: 'changeAfterProductNo'}
+                    { name: 'changeAfterProductNo'},
+					{ name: 'invalidateText'},
+                    { name: 'conclusionState'},
+                    { name: 'agreementCreateUser'}
 	            ]
 	        );
 
@@ -372,7 +375,9 @@ var taskSearch = (function() {
 						return "处理中";
 					}else if(value=="10C"){
 						return "完成";
-					}else {
+					}else if(value=="10X"){
+                        return "作废";
+                    }else {
 						return "未知";
 					}
 				}
@@ -403,7 +408,19 @@ var taskSearch = (function() {
 						return "否";
 					}
 				}
-			} ]);
+			},{
+				header : "作废原因",
+                dataIndex : "invalidateText",
+                width : Ext.getBody().getSize().width * 0.1
+			},{
+                header : "立合状态",
+                dataIndex : "conclusionState",
+                width : Ext.getBody().getSize().width * 0.1
+             },{
+                header : "立合人员",
+                dataIndex : "agreementCreateUser",
+                width : Ext.getBody().getSize().width * 0.1
+             } ]);
 			var mainGrid = new Ext.grid.GridPanel({
 				id : "mainDataGrid",
 				region : 'center',

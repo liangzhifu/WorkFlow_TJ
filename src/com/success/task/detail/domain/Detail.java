@@ -66,6 +66,10 @@ public class Detail {
 
 	private String changeAfterProductNo;
 
+	private String conclusionState;
+
+	private String agreementCreateUser;
+
 	public Integer getOrderId() {
 		return orderId;
 	}
@@ -320,5 +324,21 @@ public class Detail {
 
 	public void setChangeAfterProductNo(String changeAfterProductNo) {
 		this.changeAfterProductNo = changeAfterProductNo;
+	}
+
+	public String getConclusionState() {
+		return conclusionState;
+	}
+
+	public void setConclusionState(String conclusionState) {
+		this.conclusionState = conclusionState;
+	}
+
+	public String getAgreementCreateUser() {
+		return agreementCreateUser;
+	}
+
+	public void setAgreementCreateUser(String agreementCreateUser) {
+		this.agreementCreateUser = agreementCreateUser;
 	}
 }

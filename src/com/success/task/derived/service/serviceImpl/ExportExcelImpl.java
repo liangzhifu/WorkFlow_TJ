@@ -44,7 +44,8 @@ public class ExportExcelImpl implements ExportExcel {
         font.setFontName("Courier New");   //---》设置字体，是什么类型例如：宋体    
         
         String[] headers = {"发行日", "发行编号", "变更时间", "内容", "生产线", "车种", "安装席", "定单状态", "所属部门",
-                "创建人", "创建时间", "完成时间", "是否超时", "作废原因", "真实变更时间", "变更前品号", "变更后品号"};
+                "创建人", "创建时间", "完成时间", "是否超时", "作废原因", "真实变更时间", "变更前品号", "变更后品号",
+                "作废原因", "立合状态", "立合人员"};
         HSSFRow row = sheet.createRow(0);   //--->创建一行
         for (short i = 0; i < headers.length; i++) {
             HSSFCell cell = row.createCell(i);
@@ -171,6 +172,24 @@ public class ExportExcelImpl implements ExportExcel {
             cell = row.createCell(16);
             cell.setCellStyle(style);
             text = new HSSFRichTextString(detail.getChangeAfterProductNo());
+            cell.setCellValue(text);
+
+            //作废原因
+            cell = row.createCell(17);
+            cell.setCellStyle(style);
+            text = new HSSFRichTextString(detail.getInvalidateText());
+            cell.setCellValue(text);
+
+            //立合状态
+            cell = row.createCell(18);
+            cell.setCellStyle(style);
+            text = new HSSFRichTextString(detail.getConclusionState());
+            cell.setCellValue(text);
+
+            //立合人员
+            cell = row.createCell(19);
+            cell.setCellStyle(style);
+            text = new HSSFRichTextString(detail.getAgreementCreateUser());
             cell.setCellValue(text);
             
         }
