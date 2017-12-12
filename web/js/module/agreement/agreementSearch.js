@@ -429,8 +429,8 @@ function doEditAgreement(){
 		return;
 	}
 	if(record.data.isClose==1){
-		if(parent.userId != 1202){
-			alert("只有李亚楠才能修改已经关闭的立合单！");
+		if(parent.userId != 1266){
+			alert("只有蓝天才能修改已经关闭的立合单！");
 			return;
 		}
 	}
