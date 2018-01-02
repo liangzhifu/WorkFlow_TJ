@@ -3,6 +3,7 @@ package com.dpcoi.config.service;
 import com.dpcoi.config.domain.DpcoiConfig;
 import com.dpcoi.config.query.DpcoiConfigQuery;
 import com.success.web.framework.exception.ServiceException;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import java.util.List;
 import java.util.Map;
@@ -52,4 +53,11 @@ public interface DpcoiConfigService {
      * @throws ServiceException 异常
      */
     public Integer queryDpcoiConfigCount(DpcoiConfigQuery dpcoiConfigQuery) throws ServiceException;
+
+    /**
+     * 解析Excle
+     * @param wb Excel文件
+     * @throws ServiceException 异常
+     */
+    public void addUploadFile(HSSFWorkbook wb) throws ServiceException;
 }

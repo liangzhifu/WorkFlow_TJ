@@ -7,9 +7,14 @@ import com.dpcoi.config.domain.DpcoiConfig;
 import com.dpcoi.config.query.DpcoiConfigQuery;
 import com.dpcoi.config.service.DpcoiConfigService;
 import com.success.web.framework.util.AjaxUtil;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -115,5 +120,29 @@ public class DpcoiConfigController {
             map.put("message", e.getMessage());
         }
         AjaxUtil.ajaxResponse(response, new JSONObject(map).toString(), AjaxUtil.RESPONCE_TYPE_JSON);
+    }
+
+    /**
+     * 上传Excel
+     * @param file Excel文件
+     * @return 返回结果
+     * @throws Exception
+     */
+    @RequestMapping(value = "/updateFileExcel.do", method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Object updateFileExcel(@RequestParam("excelFile") MultipartFile file) throws Exception{
+        Map<String,Object> result=new HashMap<String,Object>();
+        try {
+            if (!file.isEmpty()) {
+                if ("application/vnd.ms-excel".equals(file.getContentType())) {
+                    HSSFWorkbook wb = new HSSFWorkbook(file.getInputStream());
+                    this.dpcoiConfigService.addUploadFile(wb);
+                }
+            }
+            result.put("success", "上传成功");
+        }catch (Exception e){
+            result.put("error", e.getMessage());
+        }
+        return result;
     }
 }

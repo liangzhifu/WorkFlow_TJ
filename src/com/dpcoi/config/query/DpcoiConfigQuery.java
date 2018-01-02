@@ -17,6 +17,8 @@ public class DpcoiConfigQuery {
 
     private Integer size;
 
+    private String configValue;
+
     public Integer getConfigCodeId() {
         return configCodeId;
     }
@@ -39,5 +41,13 @@ public class DpcoiConfigQuery {
 
     public void setSize(Integer size) {
         this.size = size;
+    }
+
+    public String getConfigValue() {
+        return configValue;
+    }
+
+    public void setConfigValue(String configValue) {
+        this.configValue = configValue;
     }
 }

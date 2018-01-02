@@ -81,6 +81,9 @@
             <if test="configCodeId != null and configCodeId != ''">
                 and config.config_code_id = #{configCodeId,jdbcType=INTEGER}
             </if>
+            <if test="configValue != null and configValue != ''">
+                and config.config_value like concat('%',#{configValue, jdbcType=VARCHAR},'%')
+            </if>
         </where>
     </sql>
 
