@@ -260,9 +260,18 @@ public class RRProblemController {
             if(changePoint == null || "".equals(changePoint)){
                 this.rRProblemService.addRRProblem(rrProblem);
             }else if("N/A".equals(changePoint)){
-                this.rRProblemService.addRRProblem(rrProblem);
-                User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
-                this.dpcoiOrderService.addDpcoiOrder(rrProblem, user);
+                String problemType = rrProblem.getProblemType();
+                if ("部品".equals(problemType)){
+                    rrProblem.setPfmea("N/A");
+                    rrProblem.setCp("N/A");
+                    rrProblem.setStandardBook("N/A");
+                    rrProblem.setAlwaysList("N/A");
+                    this.rRProblemService.addRRProblem(rrProblem);
+                }else {
+                    this.rRProblemService.addRRProblem(rrProblem);
+                    User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
+                    this.dpcoiOrderService.addDpcoiOrder(rrProblem, user);
+                }
             }else {
                 DpcoiOrder dpcoiOrder = this.dpcoiOrderService.quereyDpcoiOrderOfTaskOrderNo(changePoint);
                 if(dpcoiOrder == null){

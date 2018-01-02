@@ -65,7 +65,7 @@
                             <div class="col-md-3">
                                 <label  class="control-label" for="problemType"><span style="color:red;">*</span>问题类型：</label>
                                 <select id="problemType" name="problemType" class="form-control-order form-control" ng-disabled="action=='edit'" required="required"
-                                        ng-model="rrProblemEdit.rrProblem.problemType" style="width: 60%">
+                                        ng-model="rrProblemEdit.rrProblem.problemType" ng-change="problemTypeChange()" style="width: 60%">
                                     <option value="">请选择</option>
                                     <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList | myFilter:2"
                                             value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.problemType"
@@ -113,13 +113,15 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <label  class="control-label" for="vehicle"><span style="color:red;">*</span>车型：</label>
-                                <input class="form-control-order form-control clean" required="required" style="width: 60%"
-                                       id="vehicle" name="vehicle" ng-value="rrProblemEdit.rrProblem.vehicle">
+                                <select id="vehicle" name="vehicle" required="required" style="width: 60%"
+                                        class="form-control-order form-control clean chosen-select chosen">
+                                    <option value="">请选择</option>
+                                    <option ng-repeat="data in dpcoiConfigVehicleList" value="{{data.value}}">{{data.value}}</option>
+                                </select>
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="productNo"><span style="color:red;">*</span>品名：</label>
-                                <select id="productNo" name="productNo" class="form-control-order form-control" required="required"
-                                        ng-model="rrProblemEdit.rrProblem.productNo" style="width: 60%">
+                                <select id="productNo" name="productNo" class="form-control-order form-control chosen" required="required">
                                     <option value="">请选择</option>
                                     <option ng-repeat="dpcoiConfigDate in rrProblemEdit.dpcoiConfigList | myFilter:5"
                                             value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue==rrProblemEdit.rrProblem.productNo"
@@ -134,9 +136,9 @@
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="persionLiable"><span style="color:red;">*</span>责任人：</label>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <select id="persionLiable" name="persionLiable" class="form-control-order form-control" required="required"
-                                        multiple="multiple" style="width: 60%">
+                                <select id="persionLiable" name="persionLiable" class="form-control-order form-control chosen-select"
+                                        required="required" multiple="multiple">
+                                    <option ng-repeat="data in rrProblemEdit.persionLiableList" value="{{data.userName}}">{{data.userName}}</option>
                                 </select>
                             </div>
                         </div>
@@ -462,5 +464,5 @@
     </div>
 </div>
 </body>
-<script src="/WorkFlow/js/module/dpcoi/rrProblemEdit.js"></script>
+<script src="/WorkFlow/js/module/dpcoi/rrProblemEdit.js?version=2"></script>
 </html>

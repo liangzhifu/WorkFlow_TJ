@@ -157,13 +157,8 @@
                     </div>
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
                         <label  class="control-label" for="productNo">品名：</label>
-                        <select id="productNo" name="productNo" class="form-control-order form-control" required="required"
-                                ng-model="rrProblemList.searchForm.productNo" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
-                            <option value="">请选择</option>
-                            <option ng-repeat="dpcoiConfigDate in rrProblemList.dpcoiConfigList | myFilter:5"
-                                    value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue == '${rrProblemQuery.productNo}'"
-                            >{{dpcoiConfigDate.configValue}}</option>
-                        </select>
+                        <input type="text" name="productNo" id="productNo" ng-model="rrProblemList.searchForm.productNo"
+                               class="form-control-order form-control" placeholder="品名" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                     </div>
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
                         <label  class="control-label" for="happenDateBegin">发生日期：</label>

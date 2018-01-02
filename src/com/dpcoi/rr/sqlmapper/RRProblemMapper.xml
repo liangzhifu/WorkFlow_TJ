@@ -913,7 +913,7 @@
                 and vehicle like concat('%',#{vehicle,jdbcType=VARCHAR},'%')
             </if>
             <if test="productNo != null and productNo != ''" >
-                and product_no = #{productNo,jdbcType=VARCHAR}
+                and product_no like concat('%',#{productNo,jdbcType=VARCHAR},'%')
             </if>
             <if test="happenDateBegin != null and happenDateBegin != ''" >
                 and DATE_FORMAT(happen_date,'%Y-%m-%d') &gt;= #{happenDateBegin,jdbcType=VARCHAR}

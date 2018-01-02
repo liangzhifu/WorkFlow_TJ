@@ -78,6 +78,8 @@ public class RRProblemServiceImpl implements RRProblemService {
             problemNo = "TT-GC-"+shortYear+"-";
         }else if("市场投诉".equals(problemType)) {
             problemNo = "TT-SC-"+shortYear+"-";
+        }else if("部品".equals(problemType)) {
+            problemNo = "TT-BP-"+shortYear+"-";
         }else{
             throw new ServiceException("问题类型不存在！");
         }
@@ -110,7 +112,8 @@ public class RRProblemServiceImpl implements RRProblemService {
         }
 
         Date happenDate = rrProblem.getHappenDate();
-        List<Calendar> calendarList = this.queryHolidayList(null);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        List<Calendar> calendarList = this.queryHolidayList(formatter.format(happenDate));
         //第一次
         Date date = this.calculationWorkingDay(happenDate, 2, calendarList);
         rrProblem.setFirstDate(date);
