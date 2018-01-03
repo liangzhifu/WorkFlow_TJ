@@ -515,6 +515,29 @@ public class RRProblemServiceImpl implements RRProblemService {
         return this.rRProblemDao.selectJobRRProblemTrackingLevelList();
     }
 
+    @Override
+    public Map<String, Object> getFourDate(String happenDate) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        List<Calendar> calendarList = this.queryHolidayList(happenDate);
+        //第一次
+        Date date = this.calculationWorkingDay(formatter.parse(happenDate), 2, calendarList);
+        map.put("firstDate", formatter.format(date));
+
+        //第二次
+        date = this.calculationWorkingDay(formatter.parse(happenDate), 14, calendarList);
+        map.put("secondDate", formatter.format(date));
+
+        //第三次
+        date = this.calculationWorkingDay(formatter.parse(happenDate), 34, calendarList);
+        map.put("thirdDate", formatter.format(date));
+
+        //第四次
+        date = this.calculationWorkingDay(formatter.parse(happenDate), 40, calendarList);
+        map.put("fourthDate", formatter.format(date));
+        return map;
+    }
+
 
     /**
      * 计算公式

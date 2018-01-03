@@ -964,4 +964,16 @@ public class RRProblemController {
         }
         return rrProblem;
     }
+
+    @RequestMapping("/getFourDate.do")
+    public void getFourDate(HttpServletResponse response, String happenDate){
+        Map<String, Object> map = new HashMap<String, Object>();
+        try{
+            map = this.rRProblemService.getFourDate(happenDate);
+            map.put("success", true);
+        }catch (Exception e){
+            map.put("success", false);
+        }
+        AjaxUtil.ajaxResponse(response, new JSONObject(map).toString(), AjaxUtil.RESPONCE_TYPE_JSON);
+    }
 }

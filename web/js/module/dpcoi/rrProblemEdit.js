@@ -411,8 +411,37 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
             $scope.rrProblemEdit.rrProblem.naPending = "N/A";
             $scope.rrProblemEdit.rrProblem.otherInformation = "N/A";
             $scope.$apply();
+        }else {
+            $scope.rrProblemEdit.rrProblem.pfmea = "";
+            $scope.rrProblemEdit.rrProblem.cp = "";
+            $scope.rrProblemEdit.rrProblem.standardBook = "";
+            $scope.rrProblemEdit.rrProblem.alwaysList = "";
         }
     };
+
+    $("#happenDate").on('change', function(e, params) {
+        var happenDate = $("#happenDate").val();
+        if(happenDate == null || happenDate == ""){
+            $("#firstDate").val("");
+            $("#secondDate").val("");
+            $("#thirdDate").val("");
+            $("#fourthDate").val("");
+        }else {
+            $.ajax({
+                method: 'post',
+                url: "/WorkFlow/rrProblem/getFourDate.do?happenDate=" + happenDate,
+                success: function (resultJson) {
+                    var result = angular.fromJson(resultJson);
+                    if (result.success) {
+                        $("#firstDate").val(result.firstDate);
+                        $("#secondDate").val(result.secondDate);
+                        $("#thirdDate").val(result.thirdDate);
+                        $("#fourthDate").val(result.fourthDate);
+                    }
+                }
+            });
+        }
+    });
 
     $("#vehicle").on('change', function(e, params) {
         for(var i = 0; i < $scope.dpcoiConfigVehicleList.length; i ++){
