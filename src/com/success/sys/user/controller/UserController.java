@@ -159,6 +159,7 @@ public class UserController {
 				    		user.setUserName(account_name);
 				    		user.setMobileTel(account_mobile);
 				    		user.setEmail(account_email);
+							user.setEmail2(account_email);
 				    		user.setOrgId(Integer.valueOf(orgId));
 				    		user.setUserWorkId(userCode);
 				    		Integer r_i = userService.insertUser(user);
@@ -333,6 +334,7 @@ public class UserController {
 		user.setPassword(request.getParameter("password")==null||request.getParameter("password").equals("")?"111111":request.getParameter("password"));
 		user.setOrgId(Integer.parseInt(request.getParameter("orgId")));
 		user.setEmail(request.getParameter("email"));
+		user.setEmail2(request.getParameter("email2"));
 		user.setMobileTel(request.getParameter("mobileTel"));
 		user.setUserMark(request.getParameter("userMark"));	
 		user.setIsHeader(request.getParameter("isHeader"));

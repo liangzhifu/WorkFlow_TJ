@@ -112,7 +112,7 @@
     </select>
 
     <select id="selectDelay2Email" resultType="java.lang.String" parameterType="java.lang.String">
-        SELECT GROUP_CONCAT(users.`EMAIL`)
+        SELECT GROUP_CONCAT(CASE WHEN users.`EMAIL` IS NULL OR users.`EMAIL` = '' THEN users.`EMAIL2` ELSE users.`EMAIL` END)
         FROM sys_users users
         WHERE users.`USER_ID` IN
         (SELECT users.`USER_ID`
@@ -132,7 +132,7 @@
     </select>
 
     <select id="selectDelay3Email" resultType="java.lang.String" parameterType="java.lang.String">
-        select group_concat(users.`EMAIL`)
+        select group_concat(CASE WHEN users.`EMAIL` IS NULL OR users.`EMAIL` = '' THEN users.`EMAIL2` ELSE users.`EMAIL` END)
         from sys_users users
         where users.`USER_ID` in
         (select users.`USER_ID`
@@ -165,7 +165,7 @@
     </select>
 
     <select id="selectDelay4Email" resultType="java.lang.String" parameterType="java.lang.String">
-        select group_concat(users.`EMAIL`)
+        select group_concat(CASE WHEN users.`EMAIL` IS NULL OR users.`EMAIL` = '' THEN users.`EMAIL2` ELSE users.`EMAIL` END)
         from sys_users users
         where users.`USER_ID` in
         (select users.`USER_ID`
@@ -214,7 +214,7 @@
     </select>
 
     <select id="selectMinisteEmail" resultType="java.lang.String">
-        select group_concat(users.`EMAIL`)
+        select group_concat(CASE WHEN users.`EMAIL` IS NULL OR users.`EMAIL` = '' THEN users.`EMAIL2` ELSE users.`EMAIL` END)
         from sys_users users
         where users.`USER_ID` in
         (select drdl.`leader_id`
