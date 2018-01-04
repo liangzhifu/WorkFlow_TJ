@@ -60,4 +60,14 @@ public interface DpcoiConfigService {
      * @throws ServiceException 异常
      */
     public void addUploadFile(HSSFWorkbook wb) throws ServiceException;
+
+    /**
+     * 导出Excel文件
+     * @param dpcoiConfigQuery 查询条件
+     * @param path 项目路径
+     * @return 返回结果
+     * @throws Exception 异常
+     */
+    public String doExportExcle(DpcoiConfigQuery dpcoiConfigQuery, String path) throws Exception;
+
 }

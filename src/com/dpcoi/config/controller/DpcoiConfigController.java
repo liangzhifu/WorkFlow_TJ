@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
@@ -144,5 +145,26 @@ public class DpcoiConfigController {
             result.put("error", e.getMessage());
         }
         return result;
+    }
+
+    /**
+     * 下载Excel
+     * @param httpServletRequest 参数
+     * @param dpcoiConfigQuery 查询条件
+     * @return 返回结果
+     */
+    @RequestMapping(value = "/downExcel.do")
+    @ResponseBody
+    public Object downExcel(HttpServletRequest httpServletRequest, DpcoiConfigQuery dpcoiConfigQuery){
+        Map<String,Object> map=new HashMap<String,Object>();
+        try{
+            String path = httpServletRequest.getSession().getServletContext().getRealPath("/");
+            String fileName = this.dpcoiConfigService.doExportExcle(dpcoiConfigQuery, path);
+            map.put("success", true);
+            map.put("path", "/stdout/" + fileName);
+        }catch (Exception e){
+            map.put("success", false);
+        }
+        return map;
     }
 }

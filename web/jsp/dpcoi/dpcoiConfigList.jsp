@@ -11,7 +11,9 @@
     <title>Dpcoi下拉菜单配置</title>
     <%@include file="../public/js.jsp"%>
     <%@include file="../public/css.jsp"%>
-    <script>
+    <script type="text/javascript">
+        var contextPath = "${pageContext.request.contextPath}";
+
         function impExcel(){
             var html="<form method='post' id='excelForm' enctype='multipart/form-data' action='/WorkFlow/dpcoiConfig/updateFileExcel.do'>" +
                 "<a class='uploadFile button button-primary button-rounded button-small' href='#'>" +
@@ -118,6 +120,8 @@
                 <div class="table-foot-left">
                     <button onclick="downExcel();" class=""><i class="glyphicon glyphicon-open-file"></i>模板下载</button>
                     <span class="separator"></span>
+                    <button ng-click="downDataExcel();" class=""><i class="glyphicon glyphicon-open-file"></i>数据下载</button>
+                    <span class="separator"></span>
                 </div>
                 <div class="table-foot-center">
                     <button class="" ng-disabled="dpcoiConfigList.pageInfo.firstPageDisabled"
@@ -184,5 +188,5 @@
     </form>
 </div>
 </body>
-<script src="/WorkFlow/js/module/dpcoi/dpcoiConfigList.js"></script>
+<script src="/WorkFlow/js/module/dpcoi/dpcoiConfigList.js?version=2"></script>
 </html>

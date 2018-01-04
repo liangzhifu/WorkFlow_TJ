@@ -10,16 +10,15 @@ import com.dpcoi.config.domain.DpcoiConfigCode;
 import com.dpcoi.config.query.DpcoiConfigQuery;
 import com.dpcoi.config.service.DpcoiConfigService;
 import com.success.web.framework.exception.ServiceException;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.Font;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  *
@@ -122,5 +121,67 @@ public class DpcoiConfigServiceImpl implements DpcoiConfigService {
                 this.dpcoiConfigDao.insertDpcoiConfig(dpcoiConfig);
             }
         }
+    }
+
+    @Override
+    public String doExportExcle(DpcoiConfigQuery dpcoiConfigQuery, String path) throws Exception {
+        String fileName = "";
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+        fileName = sdf.format(date)+"_"+uuid+".xls";
+
+        HSSFWorkbook wb = new HSSFWorkbook();
+        HSSFSheet sheet = wb.createSheet("下拉菜单列表");
+
+        //样式1
+        HSSFCellStyle style = wb.createCellStyle();
+        style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        //设置标题字体格式
+        Font font = wb.createFont();
+        //设置字体样式
+        font.setFontHeightInPoints((short)20);
+        font.setFontName("Courier New");
+
+        String[] headers = {"下拉菜单类型", "下拉菜单选项"};
+        HSSFRow row = sheet.createRow(0);
+        for (int i = 0; i < headers.length; i++) {
+            HSSFCell cell = row.createCell(i);
+            cell.setCellStyle(style);
+            HSSFRichTextString text = new HSSFRichTextString(headers[i]);
+            cell.setCellValue(text);
+        }
+
+        List<Map<String, Object>> mapList = this.queryDpcoiConfigList(dpcoiConfigQuery);
+        for (int i = 0; i < mapList.size(); i++) {
+            Map<String, Object> map = mapList.get(i);
+            row = sheet.createRow(i + 1);
+
+            //下拉菜单类型
+            HSSFCell cell = row.createCell(0);
+            cell.setCellStyle(style);
+            HSSFRichTextString text = new HSSFRichTextString((String)map.get("configCodeName"));
+            cell.setCellValue(text);
+
+            //下拉菜单选项
+            cell = row.createCell(1);
+            cell.setCellStyle(style);
+            text = new HSSFRichTextString((String)map.get("configValue"));
+            cell.setCellValue(text);
+        }
+
+        FileOutputStream fileOut = null;
+        fileOut = new FileOutputStream(path+"stdout/"+fileName);
+        wb.write(fileOut);
+        if(fileOut != null){
+            try {
+                fileOut.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return fileName;
     }
 }

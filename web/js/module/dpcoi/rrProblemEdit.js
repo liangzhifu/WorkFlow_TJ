@@ -412,10 +412,21 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
             $scope.rrProblemEdit.rrProblem.otherInformation = "N/A";
             $scope.$apply();
         }else {
+            $scope.rrProblemEdit.rrProblem.qualityWarningCardNumber = "";
             $scope.rrProblemEdit.rrProblem.pfmea = "";
             $scope.rrProblemEdit.rrProblem.cp = "";
             $scope.rrProblemEdit.rrProblem.standardBook = "";
+            $scope.rrProblemEdit.rrProblem.equipmentChecklist = "";
             $scope.rrProblemEdit.rrProblem.alwaysList = "";
+            $scope.rrProblemEdit.rrProblem.inspectionReferenceBook = "";
+            $scope.rrProblemEdit.rrProblem.inspectionBook = "";
+            $scope.rrProblemEdit.rrProblem.education = "";
+            $scope.rrProblemEdit.rrProblem.analyticReport = "";
+            $scope.rrProblemEdit.rrProblem.layeredAudit = "";
+            $scope.rrProblemEdit.rrProblem.checkResult = "";
+            $scope.rrProblemEdit.rrProblem.naPending = "";
+            $scope.rrProblemEdit.rrProblem.otherInformation = "";
+            $scope.$apply();
         }
     };
 
