@@ -185,6 +185,10 @@ public class RRProblem {
 
     private Integer createBy;
 
+    private String containmentWorksheet;
+
+    private Integer containmentWorksheetFileId;
+
     public Integer getId() {
         return id;
     }
@@ -838,5 +842,21 @@ public class RRProblem {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getContainmentWorksheet() {
+        return containmentWorksheet;
+    }
+
+    public void setContainmentWorksheet(String containmentWorksheet) {
+        this.containmentWorksheet = containmentWorksheet;
+    }
+
+    public Integer getContainmentWorksheetFileId() {
+        return containmentWorksheetFileId;
+    }
+
+    public void setContainmentWorksheetFileId(Integer containmentWorksheetFileId) {
+        this.containmentWorksheetFileId = containmentWorksheetFileId;
     }
 }

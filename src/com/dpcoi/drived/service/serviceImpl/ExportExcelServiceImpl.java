@@ -56,11 +56,11 @@ public class ExportExcelServiceImpl implements ExportExcelService {
                 "第一次原因调查", "第二次永久对策", "第三次永久对策有效", "第四次经验总结", "关闭确认",
                 "生产线", "严重度", "发生频次", "不良数量", "批次",
                 "发生班次", "责任部门", "客户处是否记录PPM", "记录数量", "临时对策（4H）",
-                "根本原因（48H）", "永久对策（14D）", "效果验证（34D）", "品情联编号", "质量警示卡编号",
-                "品推表", "PFMEA", "C.P.QC工程表", "作业标准书", "设备点检表",
-                "始终件表", "检查基准书", "检查手顺书", "教育议事录", "变化点管理",
+                "根本原因（48H）", "永久对策（14D）", "效果验证（34D）", "质量警示卡编号",
+                "PFMEA", "C.P.QC工程表", "作业标准书",
+                "始终件表", "检查基准书",
                 "展开及追踪是否完成", "人工", "物料", "解析报告", "4M",
-                "分层审核", "验岗结果", "NA待定", "其他资料"};
+                "分层审核", "验岗结果", "NA待定", "其他资料", "遏制工作表"};
         HSSFRow row = sheet.createRow(0);   //--->创建一行
         for (short i = 0; i < headers.length; i++) {
             HSSFCell cell = row.createCell(i);
@@ -314,130 +314,100 @@ public class ExportExcelServiceImpl implements ExportExcelService {
             text = new HSSFRichTextString((String)map.get("effectVerification"));
             cell.setCellValue(text);
 
-            //品情联编号
-            cell = row.createCell(33);
-            cell.setCellStyle(style);
-            text = new HSSFRichTextString((String)map.get("serialNumber"));
-            cell.setCellValue(text);
-
             //质量警示卡编号
-            cell = row.createCell(34);
+            cell = row.createCell(33);
             cell.setCellStyle(style);
             text = new HSSFRichTextString((String)map.get("qualityWarningCardNumber"));
             cell.setCellValue(text);
 
-            //品推表
-            cell = row.createCell(35);
-            cell.setCellStyle(style);
-            text = new HSSFRichTextString((String)map.get("productScale"));
-            cell.setCellValue(text);
-
             //PFMEA
-            cell = row.createCell(36);
+            cell = row.createCell(34);
             cell.setCellStyle(style);
             text = new HSSFRichTextString((String)map.get("pfmea"));
             cell.setCellValue(text);
 
             //C.P.QC工程表
-            cell = row.createCell(37);
+            cell = row.createCell(35);
             cell.setCellStyle(style);
             text = new HSSFRichTextString((String)map.get("cp"));
             cell.setCellValue(text);
 
             //作业标准书
-            cell = row.createCell(38);
+            cell = row.createCell(36);
             cell.setCellStyle(style);
             text = new HSSFRichTextString((String)map.get("standardBook"));
             cell.setCellValue(text);
 
-            //设备点检表
-            cell = row.createCell(39);
-            cell.setCellStyle(style);
-            text = new HSSFRichTextString((String)map.get("equipmentChecklist"));
-            cell.setCellValue(text);
-
             //始终件表
-            cell = row.createCell(40);
+            cell = row.createCell(37);
             cell.setCellStyle(style);
             text = new HSSFRichTextString((String)map.get("alwaysList"));
             cell.setCellValue(text);
 
             //检查基准书
-            cell = row.createCell(41);
+            cell = row.createCell(38);
             cell.setCellStyle(style);
             text = new HSSFRichTextString((String)map.get("inspectionReferenceBook"));
             cell.setCellValue(text);
 
-            //检查手顺书
-            cell = row.createCell(42);
-            cell.setCellStyle(style);
-            text = new HSSFRichTextString((String)map.get("inspectionBook"));
-            cell.setCellValue(text);
-
-            //教育议事录
-            cell = row.createCell(43);
-            cell.setCellStyle(style);
-            text = new HSSFRichTextString((String)map.get("education"));
-            cell.setCellValue(text);
-
-            //变化点管理
-            cell = row.createCell(44);
-            cell.setCellStyle(style);
-            text = new HSSFRichTextString((String)map.get("changePoint"));
-            cell.setCellValue(text);
-
             //展开及追踪是否完成
-            cell = row.createCell(45);
+            cell = row.createCell(39);
             cell.setCellStyle(style);
             text = new HSSFRichTextString((String)map.get("expandTrace"));
             cell.setCellValue(text);
 
             //人工
-            cell = row.createCell(46);
+            cell = row.createCell(40);
             cell.setCellStyle(style);
             text = new HSSFRichTextString((String)map.get("artificial"));
             cell.setCellValue(text);
 
             //物料
-            cell = row.createCell(47);
+            cell = row.createCell(41);
             cell.setCellStyle(style);
             text = new HSSFRichTextString((String)map.get("materiel"));
             cell.setCellValue(text);
 
             //解析报告
-            cell = row.createCell(48);
+            cell = row.createCell(42);
             cell.setCellStyle(style);
             text = new HSSFRichTextString((String)map.get("analyticReport"));
             cell.setCellValue(text);
 
             //4M
-            cell = row.createCell(49);
+            cell = row.createCell(43);
             cell.setCellStyle(style);
             text = new HSSFRichTextString((String)map.get("dpcoi4M"));
             cell.setCellValue(text);
 
             //分层审核
-            cell = row.createCell(50);
+            cell = row.createCell(44);
             cell.setCellStyle(style);
             text = new HSSFRichTextString((String)map.get("layeredAudit"));
             cell.setCellValue(text);
 
             //验岗结果
-            cell = row.createCell(51);
+            cell = row.createCell(45);
             cell.setCellStyle(style);
             text = new HSSFRichTextString((String)map.get("checkResult"));
             cell.setCellValue(text);
 
             //NA待定
-            cell = row.createCell(52);
+            cell = row.createCell(46);
             cell.setCellStyle(style);
             text = new HSSFRichTextString((String)map.get("naPending"));
             cell.setCellValue(text);
 
             //其他资料
-            cell = row.createCell(53);
+            cell = row.createCell(47);
             cell.setCellStyle(style);
             text = new HSSFRichTextString((String)map.get("otherInformation"));
+            cell.setCellValue(text);
+
+            //遏制工作表
+            cell = row.createCell(48);
+            cell.setCellStyle(style);
+            text = new HSSFRichTextString((String)map.get("containmentWorksheet"));
             cell.setCellValue(text);
         }
 

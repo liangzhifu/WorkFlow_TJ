@@ -255,7 +255,9 @@ public class RRProblemController {
 
             map.put("success", true);
             String changePoint = rrProblem.getChangePoint();
-            changePoint = changePoint.toUpperCase();
+            if(changePoint != null){
+                changePoint = changePoint.toUpperCase();
+            }
             rrProblem.setChangePoint(changePoint);
             if(changePoint == null || "".equals(changePoint)){
                 this.rRProblemService.addRRProblem(rrProblem);
@@ -353,7 +355,9 @@ public class RRProblemController {
             String oldTrackingLevel = oldRRProblem.getTrackingLevel();
             String oldSpeedOfProgress = rrProblem.getSpeedOfProgress();
             String changePoint = rrProblem.getChangePoint();
-            changePoint = changePoint.toUpperCase();
+            if(changePoint != null){
+                changePoint = changePoint.toUpperCase();
+            }
             rrProblem.setChangePoint(changePoint);
             if(changePoint == null || "".equals(changePoint)){
                 if(!(oldChangePoint == null || "".equals(oldChangePoint))){
@@ -915,7 +919,7 @@ public class RRProblemController {
      */
     private RRProblem validUploadFile(RRProblem rrProblem){
         String serialNumber = rrProblem.getSerialNumber();
-        if(rrProblem == null || "".equals(serialNumber) || "N/A".equals(serialNumber.toUpperCase())){
+        if(serialNumber == null || "".equals(serialNumber) || "N/A".equals(serialNumber.toUpperCase())){
             rrProblem.setSerialNumberFileId(0);
         }
         String qualityWarningCardNumber = rrProblem.getQualityWarningCardNumber();
@@ -961,6 +965,10 @@ public class RRProblemController {
         String otherInformation = rrProblem.getOtherInformation();
         if(otherInformation == null || "".equals(otherInformation) || "N/A".equals(otherInformation.toUpperCase())){
             rrProblem.setOtherInformationFileId(0);
+        }
+        String containmentWorksheet = rrProblem.getContainmentWorksheet();
+        if(containmentWorksheet == null || "".equals(containmentWorksheet) || "N/A".equals(containmentWorksheet.toUpperCase())){
+            rrProblem.setContainmentWorksheetFileId(0);
         }
         return rrProblem;
     }

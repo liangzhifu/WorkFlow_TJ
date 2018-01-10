@@ -478,6 +478,9 @@ public class RRProblemServiceImpl implements RRProblemService {
             }else if("otherInformation".equals(fileAttr)){
                 rrProblem.setOtherInformation(formatter.format(new Date()));
                 rrProblem.setOtherInformationFileId(fileUpload.getFileId());
+            }else if("containmentWorksheet".equals(fileAttr)){
+                rrProblem.setContainmentWorksheet(formatter.format(new Date()));
+                rrProblem.setContainmentWorksheetFileId(fileUpload.getFileId());
             }
             this.rRProblemDao.updateRRProblem(rrProblem);
         }

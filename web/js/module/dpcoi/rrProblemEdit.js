@@ -69,29 +69,21 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         "rootCause" : "",
         "permanentGame" : "",
         "effectVerification" : "",
-        "serialNumberFileId" : "",
-        "serialNumber" : "N/A",
         "qualityWarningCardNumberFileId" : "",
         "qualityWarningCardNumber" : "N/A",
-        "productScaleFileId" : "",
-        "productScale" : "N/A",
         "pfmea" : "",
         "cp" : "",
         "standardBook" : "",
-        "equipmentChecklistFileId" : "",
-        "equipmentChecklist" : "",
         "alwaysList" : "",
         "inspectionReferenceBookFileId" : "",
         "inspectionReferenceBook" : "",
         "inspectionBookFileId" : "",
         "inspectionBook" : "",
-        "educationFileId" : "",
-        "education" : "",
-        "changePoint" : "N/A",
+        "containmentWorksheetFileId" : "",
+        "containmentWorksheet" : "",
         "expandTrace" : "N/A",
         "artificial" : "N/A",
         "materiel" : "N/A",
-        "dpcoi4M" : "",
         "analyticReport" : "",
         "layeredAudit" : "",
         "checkResult" : "",
@@ -202,15 +194,23 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
             persionLiableStr = persionLiableStr.substring(1);
         }
         $scope.rrProblemEdit.rrProblem.persionLiable = persionLiableStr;
+        var dpcoi4MArray = $("#dpcoi4M").val();
+        var dpcoi4MStr = "";
+        for(var i = 0; i < dpcoi4MArray.length; i ++){
+            dpcoi4MStr += "," + dpcoi4MArray[i];
+        }
+        if(dpcoi4MStr != ""){
+            dpcoi4MStr = dpcoi4MStr.substring(1);
+        }
+        $scope.rrProblemEdit.rrProblem.dpcoi4M = dpcoi4MStr;
         $scope.rrProblemEdit.rrProblem.vehicle = $("#vehicle").val();
         $scope.rrProblemEdit.rrProblem.productNo = $("#productNo").val();
         $scope.rrProblemEdit.rrProblem.happenDate = $("#happenDate").val();
         $scope.rrProblemEdit.rrProblem.reportDate = $("#reportDate").val();
-        $scope.rrProblemEdit.rrProblem.equipmentChecklist = $("#equipmentChecklist").val();
         $scope.rrProblemEdit.rrProblem.alwaysList = $("#alwaysList").val();
         $scope.rrProblemEdit.rrProblem.inspectionReferenceBook = $("#inspectionReferenceBook").val();
         $scope.rrProblemEdit.rrProblem.inspectionBook = $("#inspectionBook").val();
-        $scope.rrProblemEdit.rrProblem.education = $("#education").val();
+        $scope.rrProblemEdit.rrProblem.containmentWorksheet = $("#containmentWorksheet").val();
         $scope.rrProblemEdit.rrProblem.firstDate = $("#firstDate").val();
         $scope.rrProblemEdit.rrProblem.secondDate = $("#secondDate").val();
         $scope.rrProblemEdit.rrProblem.thirdDate = $("#thirdDate").val();
@@ -224,20 +224,12 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         $scope.rrProblemEdit.rrProblem.effectVerification = $("#effectVerification").val();
         $scope.rrProblemEdit.rrProblem.productLine = $("#productLine").val().toUpperCase();
 
-        $scope.rrProblemEdit.rrProblem.serialNumber = $("#serialNumber").val();
-        $scope.rrProblemEdit.rrProblem.serialNumberFileId = $("#serialNumberFileId").val();
         $scope.rrProblemEdit.rrProblem.qualityWarningCardNumber = $("#qualityWarningCardNumber").val();
         $scope.rrProblemEdit.rrProblem.qualityWarningCardNumberFileId = $("#qualityWarningCardNumberFileId").val();
-        $scope.rrProblemEdit.rrProblem.productScale = $("#productScale").val();
-        $scope.rrProblemEdit.rrProblem.productScaleFileId = $("#productScaleFileId").val();
-        $scope.rrProblemEdit.rrProblem.equipmentChecklist = $("#equipmentChecklist").val();
-        $scope.rrProblemEdit.rrProblem.equipmentChecklistFileId = $("#equipmentChecklistFileId").val();
         $scope.rrProblemEdit.rrProblem.inspectionReferenceBook = $("#inspectionReferenceBook").val();
         $scope.rrProblemEdit.rrProblem.inspectionReferenceBookFileId = $("#inspectionReferenceBookFileId").val();
-        $scope.rrProblemEdit.rrProblem.inspectionBook = $("#inspectionBook").val();
-        $scope.rrProblemEdit.rrProblem.inspectionBookFileId = $("#inspectionBookFileId").val();
-        $scope.rrProblemEdit.rrProblem.education = $("#education").val();
-        $scope.rrProblemEdit.rrProblem.educationFileId = $("#educationFileId").val();
+        $scope.rrProblemEdit.rrProblem.containmentWorksheet = $("#containmentWorksheet").val();
+        $scope.rrProblemEdit.rrProblem.containmentWorksheetFileId = $("#containmentWorksheetFileId").val();
         $scope.rrProblemEdit.rrProblem.analyticReport = $("#analyticReport").val();
         $scope.rrProblemEdit.rrProblem.analyticReportFileId = $("#analyticReportFileId").val();
         $scope.rrProblemEdit.rrProblem.layeredAudit = $("#layeredAudit").val();
@@ -291,15 +283,22 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
             persionLiableStr = persionLiableStr.substring(1);
         }
         $scope.rrProblemEdit.rrProblem.persionLiable = persionLiableStr;
+        var dpcoi4MArray = $("#dpcoi4M").val();
+        var dpcoi4MStr = "";
+        for(var i = 0; i < dpcoi4MArray.length; i ++){
+            dpcoi4MStr += "," + dpcoi4MArray[i];
+        }
+        if(dpcoi4MStr != ""){
+            dpcoi4MStr = dpcoi4MStr.substring(1);
+        }
+        $scope.rrProblemEdit.rrProblem.dpcoi4M = dpcoi4MStr;
         $scope.rrProblemEdit.rrProblem.vehicle = $("#vehicle").val();
         $scope.rrProblemEdit.rrProblem.productNo = $("#productNo").val();
         $scope.rrProblemEdit.rrProblem.happenDate = $("#happenDate").val();
         $scope.rrProblemEdit.rrProblem.reportDate = $("#reportDate").val();
-        $scope.rrProblemEdit.rrProblem.equipmentChecklist = $("#equipmentChecklist").val();
         $scope.rrProblemEdit.rrProblem.alwaysList = $("#alwaysList").val();
         $scope.rrProblemEdit.rrProblem.inspectionReferenceBook = $("#inspectionReferenceBook").val();
-        $scope.rrProblemEdit.rrProblem.inspectionBook = $("#inspectionBook").val();
-        $scope.rrProblemEdit.rrProblem.education = $("#education").val();
+        $scope.rrProblemEdit.rrProblem.containmentWorksheet = $("#containmentWorksheet").val();
         $scope.rrProblemEdit.rrProblem.firstDate = $("#firstDate").val();
         $scope.rrProblemEdit.rrProblem.secondDate = $("#secondDate").val();
         $scope.rrProblemEdit.rrProblem.thirdDate = $("#thirdDate").val();
@@ -313,20 +312,12 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         $scope.rrProblemEdit.rrProblem.effectVerification = $("#effectVerification").val();
         $scope.rrProblemEdit.rrProblem.productLine = $("#productLine").val().toUpperCase();
 
-        $scope.rrProblemEdit.rrProblem.serialNumber = $("#serialNumber").val();
-        $scope.rrProblemEdit.rrProblem.serialNumberFileId = $("#serialNumberFileId").val();
         $scope.rrProblemEdit.rrProblem.qualityWarningCardNumber = $("#qualityWarningCardNumber").val();
         $scope.rrProblemEdit.rrProblem.qualityWarningCardNumberFileId = $("#qualityWarningCardNumberFileId").val();
-        $scope.rrProblemEdit.rrProblem.productScale = $("#productScale").val();
-        $scope.rrProblemEdit.rrProblem.productScaleFileId = $("#productScaleFileId").val();
-        $scope.rrProblemEdit.rrProblem.equipmentChecklist = $("#equipmentChecklist").val();
-        $scope.rrProblemEdit.rrProblem.equipmentChecklistFileId = $("#equipmentChecklistFileId").val();
         $scope.rrProblemEdit.rrProblem.inspectionReferenceBook = $("#inspectionReferenceBook").val();
         $scope.rrProblemEdit.rrProblem.inspectionReferenceBookFileId = $("#inspectionReferenceBookFileId").val();
-        $scope.rrProblemEdit.rrProblem.inspectionBook = $("#inspectionBook").val();
-        $scope.rrProblemEdit.rrProblem.inspectionBookFileId = $("#inspectionBookFileId").val();
-        $scope.rrProblemEdit.rrProblem.education = $("#education").val();
-        $scope.rrProblemEdit.rrProblem.educationFileId = $("#educationFileId").val();
+        $scope.rrProblemEdit.rrProblem.containmentWorksheet = $("#containmentWorksheet").val();
+        $scope.rrProblemEdit.rrProblem.containmentWorksheetFileId = $("#containmentWorksheetFileId").val();
         $scope.rrProblemEdit.rrProblem.analyticReport = $("#analyticReport").val();
         $scope.rrProblemEdit.rrProblem.analyticReportFileId = $("#analyticReportFileId").val();
         $scope.rrProblemEdit.rrProblem.layeredAudit = $("#layeredAudit").val();
@@ -400,11 +391,9 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
             $scope.rrProblemEdit.rrProblem.pfmea = "N/A";
             $scope.rrProblemEdit.rrProblem.cp = "N/A";
             $scope.rrProblemEdit.rrProblem.standardBook = "N/A";
-            $scope.rrProblemEdit.rrProblem.equipmentChecklist = "N/A";
             $scope.rrProblemEdit.rrProblem.alwaysList = "N/A";
             $scope.rrProblemEdit.rrProblem.inspectionReferenceBook = "N/A";
-            $scope.rrProblemEdit.rrProblem.inspectionBook = "N/A";
-            $scope.rrProblemEdit.rrProblem.education = "N/A";
+            $scope.rrProblemEdit.rrProblem.containmentWorksheet = "N/A";
             $scope.rrProblemEdit.rrProblem.analyticReport = "N/A";
             $scope.rrProblemEdit.rrProblem.layeredAudit = "N/A";
             $scope.rrProblemEdit.rrProblem.checkResult = "N/A";
@@ -416,11 +405,9 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
             $scope.rrProblemEdit.rrProblem.pfmea = "";
             $scope.rrProblemEdit.rrProblem.cp = "";
             $scope.rrProblemEdit.rrProblem.standardBook = "";
-            $scope.rrProblemEdit.rrProblem.equipmentChecklist = "";
             $scope.rrProblemEdit.rrProblem.alwaysList = "";
             $scope.rrProblemEdit.rrProblem.inspectionReferenceBook = "";
-            $scope.rrProblemEdit.rrProblem.inspectionBook = "";
-            $scope.rrProblemEdit.rrProblem.education = "";
+            $scope.rrProblemEdit.rrProblem.containmentWorksheet = "";
             $scope.rrProblemEdit.rrProblem.analyticReport = "";
             $scope.rrProblemEdit.rrProblem.layeredAudit = "";
             $scope.rrProblemEdit.rrProblem.checkResult = "";
@@ -506,6 +493,16 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
                         max_shown_results : 5,
                         width : "60%"
                     });
+                    $("#dpcoi4M").chosen({
+                        no_results_text : "没有找到结果！",//搜索无结果时显示的提示
+                        search_contains : true,   //关键字模糊搜索，设置为false，则只从开头开始匹配
+                        max_selected_options : 5,  //当select为多选时，最多选择个数
+                        placeholder_text_multiple : "请选择",
+                        max_shown_results : 5,
+                        display_selected_options : false,
+                        disable_search : false,
+                        width : "70%"
+                    });
                     $scope.showPersionLiable();
                 }
             }
@@ -545,6 +542,12 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
                                         $("#persionLiable option[value='"+arr[i]+"']").attr("selected","selected");
                                     }
                                     $("#persionLiable").trigger("chosen:updated");
+                                    var dpcoi4MStr = $scope.rrProblemEdit.rrProblem.dpcoi4M;
+                                    var arr2 = dpcoi4MStr.split(",");
+                                    for(var i = 0; i < arr2.length; i++){
+                                        $("#dpcoi4M option[value='"+arr2[i]+"']").attr("selected","selected");
+                                    }
+                                    $("#dpcoi4M").trigger("chosen:updated");
                                     $("#vehicle option[value='"+$scope.rrProblemEdit.rrProblem.vehicle+"']").attr("selected","selected");
                                     $("#vehicle").trigger("chosen:updated");
                                     $("#productNo option[value='"+$scope.rrProblemEdit.rrProblem.productNo+"']").attr("selected","selected");

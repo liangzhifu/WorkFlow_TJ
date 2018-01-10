@@ -63,20 +63,22 @@
         <result column="inspection_reference_book_file_id" property="inspectionReferenceBookFileId" jdbcType="INTEGER" />
         <result column="inspection_book_file_id" property="inspectionBookFileId" jdbcType="INTEGER" />
         <result column="education_file_id" property="educationFileId" jdbcType="INTEGER" />
-        <result column="dpcoi4M" property="dpcoi4M" jdbcType="INTEGER" />
-        <result column="analytic_report" property="analyticReport" jdbcType="INTEGER" />
+        <result column="dpcoi4M" property="dpcoi4M" jdbcType="VARCHAR" />
+        <result column="analytic_report" property="analyticReport" jdbcType="VARCHAR" />
         <result column="analytic_report_file_id" property="analyticReportFileId" jdbcType="INTEGER" />
-        <result column="layered_audit" property="layeredAudit" jdbcType="INTEGER" />
+        <result column="layered_audit" property="layeredAudit" jdbcType="VARCHAR" />
         <result column="layered_audit_file_id" property="layeredAuditFileId" jdbcType="INTEGER" />
-        <result column="check_result" property="checkResult" jdbcType="INTEGER" />
+        <result column="check_result" property="checkResult" jdbcType="VARCHAR" />
         <result column="check_result_file_id" property="checkResultFileId" jdbcType="INTEGER" />
-        <result column="na_pending" property="naPending" jdbcType="INTEGER" />
+        <result column="na_pending" property="naPending" jdbcType="VARCHAR" />
         <result column="na_pending_file_id" property="naPendingFileId" jdbcType="INTEGER" />
-        <result column="other_information" property="otherInformation" jdbcType="INTEGER" />
+        <result column="other_information" property="otherInformation" jdbcType="VARCHAR" />
         <result column="other_information_file_id" property="otherInformationFileId" jdbcType="INTEGER" />
         <result column="delay_application" property="delayApplication" jdbcType="INTEGER" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="create_by" property="createBy" jdbcType="INTEGER" />
+        <result column="containment_worksheet" property="containmentWorksheet" jdbcType="VARCHAR" />
+        <result column="containment_worksheet_file_id" property="containmentWorksheetFileId" jdbcType="INTEGER" />
     </resultMap>
     <sql id="Base_Column_List" >
         id, problem_status, problem_no, problem_type, engineering, problem_progress, tracking_level,
@@ -91,7 +93,7 @@
         equipment_checklist_file_id, inspection_reference_book_file_id, inspection_book_file_id, education_file_id,
         dpcoi4M, analytic_report, analytic_report_file_id, layered_audit, layered_audit_file_id, check_result,
         check_result_file_id, na_pending, na_pending_file_id, other_information, other_information_file_id,
-        delay_application, is_delay, create_time, create_by
+        delay_application, is_delay, create_time, create_by, containment_worksheet_file_id, containment_worksheet
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="RRProblem" >
         select
@@ -369,6 +371,12 @@
             <if test="createBy != null" >
                 create_by,
             </if>
+            <if test="containmentWorksheet != null" >
+                containment_worksheet,
+            </if>
+            <if test="containmentWorksheetFileId != null" >
+                containment_worksheet_file_id,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="id != null" >
@@ -596,6 +604,12 @@
             <if test="createBy != null" >
                 #{createBy,jdbcType=INTEGER},
             </if>
+            <if test="containmentWorksheet != null" >
+                #{containmentWorksheet,jdbcType=VARCHAR},
+            </if>
+            <if test="containmentWorksheetFileId != null" >
+                #{containmentWorksheetFileId,jdbcType=INTEGER},
+            </if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="RRProblem" >
@@ -817,6 +831,12 @@
             <if test="delayApplication != null" >
                 delay_application = #{delayApplication,jdbcType=INTEGER},
             </if>
+            <if test="containmentWorksheet != null" >
+                containment_worksheet = #{containmentWorksheet,jdbcType=INTEGER},
+            </if>
+            <if test="containmentWorksheetFileId != null" >
+                containment_worksheet_file_id = #{containmentWorksheetFileId,jdbcType=INTEGER},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -960,7 +980,7 @@
         inspection_book_file_id as inspectionBookFileId, education_file_id as educationFileId, dpcoi4M, analytic_report as analyticReport,
         analytic_report_file_id as analyticReportFileId, layered_audit as layeredAudit, layered_audit_file_id as layeredAuditFileId, check_result as checkResult,
         check_result_file_id as checkResultFileId, na_pending as naPending, na_pending_file_id as naPendingFileId, other_information as otherInformation,
-        other_information_file_id as otherInformationFileId
+        other_information_file_id as otherInformationFileId, containment_worksheet as containmentWorksheet, containment_worksheet_file_id as containmentWorksheetFileId
         from dpcoi_rr_problem
         <include refid="WHERE_SQL"></include>
         order by id desc limit #{start},#{size}
@@ -987,7 +1007,7 @@
         inspection_book_file_id as inspectionBookFileId, education_file_id as educationFileId, dpcoi4M, analytic_report as analyticReport,
         analytic_report_file_id as analyticReportFileId, layered_audit as layeredAudit, layered_audit_file_id as layeredAuditFileId, check_result as checkResult,
         check_result_file_id as checkResultFileId, na_pending as naPending, na_pending_file_id as naPendingFileId, other_information as otherInformation,
-        other_information_file_id as otherInformationFileId
+        other_information_file_id as otherInformationFileId, containment_worksheet as containmentWorksheet, containment_worksheet_file_id as containmentWorksheetFileId
         from dpcoi_rr_problem
         <include refid="WHERE_SQL"></include>
     </select>
@@ -1016,7 +1036,8 @@
         bad_quantity as badQuantity, batch, happen_shift as happenShift, responsible_department as responsibleDepartment, record_ppm as recordPpm, record_num as recordNum,
         temporary, root_cause as rootCause, permanent_game as permanentGame, effect_verification as effectVerification, serial_number as serialNumber, quality_warning_card_number as qualityWarningCardNumber,
         product_scale as productScale, pfmea, cp, standard_book as standardBook, equipment_checklist as equipmentChecklist, always_list as alwaysList, inspection_reference_book as inspectionReferenceBook,
-        inspection_book as inspectionBook, education, change_point as changePoint, expand_trace as expandTrace, artificial, materiel, state, is_delay as isDelay
+        inspection_book as inspectionBook, education, change_point as changePoint, expand_trace as expandTrace, artificial, materiel, state, is_delay as isDelay, containment_worksheet as containmentWorksheet,
+        containment_worksheet_file_id as containmentWorksheetFileId
         from dpcoi_rr_problem
         where state = 1
         and is_hide = 0
