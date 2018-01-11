@@ -224,6 +224,13 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         $scope.rrProblemEdit.rrProblem.effectVerification = $("#effectVerification").val();
         $scope.rrProblemEdit.rrProblem.productLine = $("#productLine").val().toUpperCase();
 
+        $scope.rrProblemEdit.rrProblem.serialNumber = "N/A";
+        $scope.rrProblemEdit.rrProblem.productScale = "N/A";
+        $scope.rrProblemEdit.rrProblem.changePoint = "N/A";
+        $scope.rrProblemEdit.rrProblem.equipmentChecklist = "N/A";
+        $scope.rrProblemEdit.rrProblem.inspectionBook = "N/A";
+        $scope.rrProblemEdit.rrProblem.education = "N/A";
+
         $scope.rrProblemEdit.rrProblem.qualityWarningCardNumber = $("#qualityWarningCardNumber").val();
         $scope.rrProblemEdit.rrProblem.qualityWarningCardNumberFileId = $("#qualityWarningCardNumberFileId").val();
         $scope.rrProblemEdit.rrProblem.inspectionReferenceBook = $("#inspectionReferenceBook").val();
@@ -311,6 +318,13 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         $scope.rrProblemEdit.rrProblem.permanentGame = $("#permanentGame").val();
         $scope.rrProblemEdit.rrProblem.effectVerification = $("#effectVerification").val();
         $scope.rrProblemEdit.rrProblem.productLine = $("#productLine").val().toUpperCase();
+
+        $scope.rrProblemEdit.rrProblem.serialNumber = "N/A";
+        $scope.rrProblemEdit.rrProblem.productScale = "N/A";
+        $scope.rrProblemEdit.rrProblem.changePoint = "N/A";
+        $scope.rrProblemEdit.rrProblem.equipmentChecklist = "N/A";
+        $scope.rrProblemEdit.rrProblem.inspectionBook = "N/A";
+        $scope.rrProblemEdit.rrProblem.education = "N/A";
 
         $scope.rrProblemEdit.rrProblem.qualityWarningCardNumber = $("#qualityWarningCardNumber").val();
         $scope.rrProblemEdit.rrProblem.qualityWarningCardNumberFileId = $("#qualityWarningCardNumberFileId").val();
