@@ -242,7 +242,9 @@
                         <th width="400px" class="x-grid3-header" style="padding: 0px">根本原因（48H）</th>
                         <th width="400px" class="x-grid3-header" style="padding: 0px">永久对策（14D）</th>
                         <th width="400px" class="x-grid3-header" style="padding: 0px">效果验证（34D）</th>
+                        <th width="80px" class="x-grid3-header" style="padding: 0px">遏制工作表</th>
                         <th width="80px" class="x-grid3-header" style="padding: 0px;">质量<br>警示卡</th>
+                        <th width="80px" class="x-grid3-header" style="padding: 0px">验岗结果</th>
                         <th width="80px" class="x-grid3-header" style="padding: 0px">PFMEA</th>
                         <th width="80px" class="x-grid3-header" style="padding: 0px">CPQC工程表</th>
                         <th width="80px" class="x-grid3-header" style="padding: 0px">作业标准书</th>
@@ -251,10 +253,8 @@
                         <th width="80px" class="x-grid3-header" style="padding: 0px">4M</th>
                         <th width="80px" class="x-grid3-header" style="padding: 0px">解析报告</th>
                         <th width="80px" class="x-grid3-header" style="padding: 0px">分层审核</th>
-                        <th width="80px" class="x-grid3-header" style="padding: 0px">验岗结果</th>
                         <th width="80px" class="x-grid3-header" style="padding: 0px">NA待定</th>
                         <th width="80px" class="x-grid3-header" style="padding: 0px">其他资料</th>
-                        <th width="80px" class="x-grid3-header" style="padding: 0px">遏制工作表</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -329,8 +329,16 @@
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;text-align: left;">{{rrProblemDate.permanentGame}}</td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;text-align: left;">{{rrProblemDate.effectVerification}}</td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
+                            <span ng-show="rrProblemDate.containmentWorksheetFileId == 0">{{rrProblemDate.containmentWorksheet}}</span>
+                            <span ng-show="rrProblemDate.containmentWorksheetFileId != 0"><a href="javascript:void(0);" ng-click="rrProblemViewList.downloadFile(rrProblemDate.containmentWorksheetFileId)">{{rrProblemDate.containmentWorksheet}}</a></span>
+                        </td>
+                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
                             <span ng-show="rrProblemDate.qualityWarningCardNumberFileId == 0">{{rrProblemDate.qualityWarningCardNumber}}</span>
                             <span ng-show="rrProblemDate.qualityWarningCardNumberFileId != 0"><a href="javascript:void(0);" ng-click="rrProblemViewList.downloadFile(rrProblemDate.qualityWarningCardNumberFileId)">{{rrProblemDate.qualityWarningCardNumber}}</a></span>
+                        </td>
+                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
+                            <span ng-show="rrProblemDate.checkResultFileId == 0">{{rrProblemDate.checkResult}}</span>
+                            <span ng-show="rrProblemDate.checkResultFileId != 0"><a href="javascript:void(0);" ng-click="rrProblemViewList.downloadFile(rrProblemDate.checkResultFileId)">{{rrProblemDate.checkResult}}</a></span>
                         </td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
                             <span ng-show="rrProblemDate.pfmea == 'N/A'">{{rrProblemDate.pfmea}}</span>
@@ -364,20 +372,12 @@
                             <span ng-show="rrProblemDate.layeredAuditFileId != 0"><a href="javascript:void(0);" ng-click="rrProblemViewList.downloadFile(rrProblemDate.layeredAuditFileId)">{{rrProblemDate.layeredAudit}}</a></span>
                         </td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
-                            <span ng-show="rrProblemDate.checkResultFileId == 0">{{rrProblemDate.checkResult}}</span>
-                            <span ng-show="rrProblemDate.checkResultFileId != 0"><a href="javascript:void(0);" ng-click="rrProblemViewList.downloadFile(rrProblemDate.checkResultFileId)">{{rrProblemDate.checkResult}}</a></span>
-                        </td>
-                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
                             <span ng-show="rrProblemDate.naPendingFileId == 0">{{rrProblemDate.naPending}}</span>
                             <span ng-show="rrProblemDate.naPendingFileId != 0"><a href="javascript:void(0);" ng-click="rrProblemViewList.downloadFile(rrProblemDate.naPendingFileId)">{{rrProblemDate.naPending}}</a></span>
                         </td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
                             <span ng-show="rrProblemDate.otherInformationFileId == 0">{{rrProblemDate.otherInformation}}</span>
                             <span ng-show="rrProblemDate.otherInformationFileId != 0"><a href="javascript:void(0);" ng-click="rrProblemViewList.downloadFile(rrProblemDate.otherInformationFileId)">{{rrProblemDate.otherInformation}}</a></span>
-                        </td>
-                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
-                            <span ng-show="rrProblemDate.containmentWorksheetFileId == 0">{{rrProblemDate.containmentWorksheet}}</span>
-                            <span ng-show="rrProblemDate.containmentWorksheetFileId != 0"><a href="javascript:void(0);" ng-click="rrProblemViewList.downloadFile(rrProblemDate.containmentWorksheetFileId)">{{rrProblemDate.containmentWorksheet}}</a></span>
                         </td>
                     </tr>
                     </tbody>
