@@ -81,20 +81,43 @@ dpcoiConfigListApp.controller("dpcoiConfigListController", function ($scope) {
 
     $scope.dpcoiConfigList.deleteDpcoiConfig = function (configId) {
         $.ajax({
-            method:'post',
-            url:"/WorkFlow/dpcoiConfig/deleteDpcoiConfig.do",
-            data:{"configId":configId},
-            success: function(resultJson) {
+            method: 'post',
+            url: BASE_URL + "/dpcoiConfigVehicle/getDpcoiConfigVehicleList.do",
+            data: {"configId": configId},
+            async: false,
+            success: function (resultJson) {
                 var result = angular.fromJson(resultJson);
                 if (result.success) {
-
+                    var dpcoiConfigVehicleList = result.dpcoiConfigVehicleList;
+                    var str = "";
+                    if (dpcoiConfigVehicleList == undefined || dpcoiConfigVehicleList == null || dpcoiConfigVehicleList.length == 0) {
+                        str = "确定删除下拉菜单！";
+                    } else {
+                        str = "客户有关联车型，确定删除客户！";
+                    }
+                    var con = confirm(str);
+                    if (con == true){
+                        $.ajax({
+                            method:'post',
+                            url:"/WorkFlow/dpcoiConfig/deleteDpcoiConfig.do",
+                            data:{"configId":configId},
+                            success: function(resultJson) {
+                                var result = angular.fromJson(resultJson);
+                                if (result.success) {
+                                    $scope.dpcoiConfigList.firstPage();
+                                }else {
+                                    alert(result.message);
+                                }
+                                $scope.dpcoiConfigList.firstPage();
+                            },
+                            error : function() {
+                                alert("系统出现异常!!");
+                            }
+                        });
+                    }
                 }else {
-                    alert(result.message);
+                    alert(result.mesage);
                 }
-                $scope.dpcoiConfigList.firstPage();
-            },
-            error : function() {
-                alert("系统出现异常!!");
             }
         });
     };
