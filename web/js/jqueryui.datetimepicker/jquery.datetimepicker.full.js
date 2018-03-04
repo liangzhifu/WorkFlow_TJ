@@ -1161,9 +1161,9 @@ var DateFormatter;
 		nextButton: true,
 		defaultSelect: true,
 
-		scrollMonth: true,
-		scrollTime: true,
-		scrollInput: true,
+		scrollMonth: false,
+		scrollTime: false,
+		scrollInput: false,
 
 		lazyInit: false,
 		mask: false,
