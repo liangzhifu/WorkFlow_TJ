@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import com.dpcoi.order.domain.DpcoiOrder;
 import com.dpcoi.order.service.DpcoiOrderService;
+import com.success.task.detail.service.TaskWoOrderStartService;
 import org.springframework.stereotype.Service;
 
 import com.success.sys.config.dao.SysConfigDao;
@@ -30,7 +31,6 @@ import com.success.task.detail.dao.TaskOrderDao;
 import com.success.task.detail.domain.TaskOrder;
 import com.success.task.detail.query.TaskOrderQuery;
 import com.success.task.detail.service.TaskOrderService;
-import com.success.task.detail.service.TaskWoOrderService;
 import com.success.templet.task.dao.TaskTypeDao;
 import com.success.templet.task.domain.TaskType;
 import com.success.templet.task.query.TaskTypeQuery;
@@ -67,8 +67,8 @@ public class TaskConfirmOrderServiceImpl implements TaskConfirmOrderService {
 	@Resource(name = "taskOrderInfoDao")
 	private TaskOrderInfoDao taskOrderInfoDao;
 	
-	@Resource(name = "taskWoOrderService")
-	private TaskWoOrderService taskWoOrderService;
+	@Resource(name = "taskWoOrderStartService")
+	private TaskWoOrderStartService taskWoOrderStartService;
 
 	@Resource(name = "dpcoiOrderService")
 	private DpcoiOrderService dpcoiOrderService;
@@ -77,7 +77,9 @@ public class TaskConfirmOrderServiceImpl implements TaskConfirmOrderService {
 	public Integer addTaskConfirmOrder(TaskConfirmOrder taskConfirmOrder)
 			throws ServiceException {
 		// TODO Auto-generated method stub
-		if(taskConfirmOrder == null) return null;
+		if(taskConfirmOrder == null) {
+			return null;
+		}
 		return this.taskConfirmOrderDao.insertTaskConfirmOrder(taskConfirmOrder);
 	}
 
@@ -106,7 +108,7 @@ public class TaskConfirmOrderServiceImpl implements TaskConfirmOrderService {
 				newTaskConfirmOrder.setConfirmOrderId(taskConfirmOrder.getConfirmOrderId());
 				newTaskConfirmOrder.setConfirmOrderStateCode("10B");
 				this.editTaskConfirmOrder(newTaskConfirmOrder);
-				this.taskWoOrderService.startWoOrder(orderId);
+				this.taskWoOrderStartService.startWoOrder(orderId);
 			}else{
 				String runCode = taskConfirmOrder.getRunCode();
 				if("accept_confirm".equals(runCode)){
@@ -263,7 +265,9 @@ public class TaskConfirmOrderServiceImpl implements TaskConfirmOrderService {
 	public Integer editTaskConfirmOrder(TaskConfirmOrder taskConfirmOrder)
 			throws ServiceException {
 		// TODO Auto-generated method stub
-		if(taskConfirmOrder == null) return null;
+		if(taskConfirmOrder == null) {
+			return null;
+		}
 		return this.taskConfirmOrderDao.updateTaskConfirmOrder(taskConfirmOrder);
 	}
 

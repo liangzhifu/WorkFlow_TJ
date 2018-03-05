@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.success.task.base.dao.TaskConfirmOrderDao;
 import org.springframework.stereotype.Service;
 
 import com.success.sys.email.dao.TimeTaskDao;
@@ -23,7 +24,6 @@ import com.success.task.base.query.TaskConfirmOrderQuery;
 import com.success.task.base.query.TaskNoticeCycleQuery;
 import com.success.task.base.query.TaskOrderInfoQuery;
 import com.success.task.base.query.TaskWoOrderDetailQuery;
-import com.success.task.base.service.TaskConfirmOrderService;
 import com.success.task.detail.dao.TaskOrderDao;
 import com.success.task.detail.dao.TaskWoOrderDao;
 import com.success.task.detail.domain.TaskOrder;
@@ -57,8 +57,8 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 	@Resource(name = "taskTypeService")
 	private TaskTypeService taskTypeService;
 	
-	@Resource(name = "taskConfirmOrderService")
-	private TaskConfirmOrderService taskConfirmOrderService;
+	@Resource(name = "taskConfirmOrderDao")
+	private TaskConfirmOrderDao taskConfirmOrderDao;
 	
 	@Resource(name = "taskWoOrderDao")
 	private TaskWoOrderDao taskWoOrderDao;
@@ -111,7 +111,7 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 		taskOrder.setTaskType(taskType);
 		TaskConfirmOrderQuery taskConfirmOrderQuery = new TaskConfirmOrderQuery();
 		taskConfirmOrderQuery.setOrderId(taskOrder.getOrderId());
-		List<TaskConfirmOrder> taskConfirmOrderList = this.taskConfirmOrderService.queryTaskConfirmOrders(taskConfirmOrderQuery);
+		List<TaskConfirmOrder> taskConfirmOrderList = this.taskConfirmOrderDao.selectTaskConfirmOrder(taskConfirmOrderQuery);
 		taskOrder.setTaskConfirmOrderList(taskConfirmOrderList);
 		
 		TaskWoOrderDetailQuery taskWoOrderDetailQuery = new TaskWoOrderDetailQuery();
@@ -140,7 +140,7 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 		taskOrder.setTaskOrderInfoList(taskOrderInfoList);
 		TaskConfirmOrderQuery taskConfirmOrderQuery = new TaskConfirmOrderQuery();
 		taskConfirmOrderQuery.setOrderId(taskOrder.getOrderId());
-		List<TaskConfirmOrder> taskConfirmOrderList = this.taskConfirmOrderService.queryTaskConfirmOrders(taskConfirmOrderQuery);
+		List<TaskConfirmOrder> taskConfirmOrderList = this.taskConfirmOrderDao.selectTaskConfirmOrder(taskConfirmOrderQuery);
 		taskOrder.setTaskConfirmOrderList(taskConfirmOrderList);
 		TaskWoOrderDetailQuery taskWoOrderDetailQuery = new TaskWoOrderDetailQuery();
 		taskWoOrderDetailQuery.setOrderId(taskOrder.getOrderId());
@@ -190,7 +190,9 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 		publishTaskOrderInfo.setOrderId(orderId);
 		publishTaskOrderInfo.setTaskInfoValue(publish_Code);
 		Integer publishCount = this.taskOrderInfoDao.selectCountPublishCode(publishTaskOrderInfo);
-		if(publishCount > 0) throw new Exception("发行编号已存在！");
+		if(publishCount > 0) {
+			throw new Exception("发行编号已存在！");
+		}
 				
 		String changeTimeStr = (String)map.get("order_11");
 		TaskOrderInfo newTaskOrderInfo = new TaskOrderInfo();
@@ -220,7 +222,7 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 		boolean sendMainFlag = false;
 		TaskConfirmOrderQuery taskConfirmOrderQuery = new TaskConfirmOrderQuery();
 		taskConfirmOrderQuery.setOrderId(orderId);
-		List<TaskConfirmOrder> taskConfirmOrderList = this.taskConfirmOrderService.queryTaskConfirmOrders(taskConfirmOrderQuery);
+		List<TaskConfirmOrder> taskConfirmOrderList = this.taskConfirmOrderDao.selectTaskConfirmOrder(taskConfirmOrderQuery);
 		for(int p = 0; p < taskConfirmOrderList.size(); p++){
 			TaskConfirmOrder taskConfirmOrder = taskConfirmOrderList.get(p);
 			String runType = taskConfirmOrder.getRunType();

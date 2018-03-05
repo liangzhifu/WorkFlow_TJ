@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.success.task.base.service.TaskConfirmOrderStartService;
 import org.springframework.stereotype.Service;
 
 import com.success.sys.email.dao.TimeTaskDao;
@@ -49,9 +50,9 @@ public class TaskWoOrderServiceImpl implements TaskWoOrderService {
 	
 	@Resource(name = "taskWoOrderDetailDao")
 	private TaskWoOrderDetailDao taskWoOrderDetailDao;
-	
-	@Resource(name = "taskConfirmOrderService")
-	private TaskConfirmOrderService taskConfirmOrderService;
+
+	@Resource(name = "taskConfirmOrderStartService")
+	private TaskConfirmOrderStartService taskConfirmOrderStartService;
 	
 	@Resource(name = "timeTaskDao")
 	private TimeTaskDao timeTaskDao;
@@ -78,7 +79,9 @@ public class TaskWoOrderServiceImpl implements TaskWoOrderService {
 	public Integer addTaskWoOrder(TaskWoOrder taskWoOrder)
 			throws ServiceException {
 		// TODO Auto-generated method stub
-		if(taskWoOrder == null) return null;
+		if(taskWoOrder == null) {
+			return null;
+		}
 		return this.taskWoOrderDao.insertTaskWoOrder(taskWoOrder);
 	}
 
@@ -86,7 +89,9 @@ public class TaskWoOrderServiceImpl implements TaskWoOrderService {
 	public Integer editTaskWoOrder(TaskWoOrder taskWoOrder)
 			throws ServiceException {
 		// TODO Auto-generated method stub
-		if(taskWoOrder == null) return null;
+		if(taskWoOrder == null) {
+			return null;
+		}
 		return this.taskWoOrderDao.updateTaskWoOrder(taskWoOrder);
 	}
 
@@ -669,7 +674,7 @@ public class TaskWoOrderServiceImpl implements TaskWoOrderService {
 				
 				TaskConfirmOrderQuery taskConfirmOrderQuery = new TaskConfirmOrderQuery();
 				taskConfirmOrderQuery.setOrderId(orderId);
-				List<TaskConfirmOrder> taskConfirmOrderList = this.taskConfirmOrderService.queryTaskConfirmOrders(taskConfirmOrderQuery);
+				List<TaskConfirmOrder> taskConfirmOrderList = this.taskConfirmOrderDao.selectTaskConfirmOrder(taskConfirmOrderQuery);
 				if(taskConfirmOrderList == null){
 					throw new ServiceException("查询确认工单结果为空!orderId="+orderId);
 				}else {
@@ -678,9 +683,9 @@ public class TaskWoOrderServiceImpl implements TaskWoOrderService {
 						if("input".equals(taskConfirmOrder.getRunType())){
 							taskConfirmOrder.setConfirmOrderStateCode("10C");
 							taskConfirmOrder.setConfirmTime(new Date());
-							this.taskConfirmOrderService.editTaskConfirmOrder(taskConfirmOrder);
+							this.taskConfirmOrderDao.updateTaskConfirmOrder(taskConfirmOrder);
 							int confirmUserSeq = taskConfirmOrder.getConfirmUserSeq();
-							this.taskConfirmOrderService.startTaskConfirmOrder(orderId, confirmUserSeq+1);
+							this.taskConfirmOrderStartService.startTaskConfirmOrder(orderId, confirmUserSeq+1);
 							break;
 						}
 					}
