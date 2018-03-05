@@ -94,10 +94,12 @@
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
                             <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 1">{{dpcoiWoOrderDate.issuedNo}}</span>
                             <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 2">/</span>
+                            <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 4">/</span>
                         </td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
                             <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 1">{{dpcoiWoOrderDate.designChangeNo}}</span>
                             <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 2">{{dpcoiWoOrderDate.taskOrderNo}}</span>
+                            <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 4">{{dpcoiWoOrderDate.designChangeNo}}</span>
                         </td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{dpcoiWoOrderDate.vehicleName}}</td>
                         <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;">{{dpcoiWoOrderDate.productNo}}</td>
@@ -106,20 +108,24 @@
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
                             <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 1">{{dpcoiWoOrderDate.realCuttingDate}}</span>
                             <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 2">/</span>
+                            <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 4">/</span>
                         </td>
                         <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;padding: 4px 4px;text-align: left;display:table-cell; vertical-align:middle;">{{dpcoiWoOrderDate.changeContent}}</td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{dpcoiWoOrderDate.releaseDate}}</td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
                             <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 1">{{dpcoiWoOrderDate.returnDate}}</span>
                             <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 2">/</span>
+                            <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 4">/</span>
                         </td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
                             <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 1">{{dpcoiWoOrderDate.designAct}}</span>
                             <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 2">/</span>
+                            <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 4">/</span>
                         </td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
                             <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 1">{{dpcoiWoOrderDate.quasiActName}}</span>
                             <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 2">/</span>
+                            <span ng-show="dpcoiWoOrderDate.dpcoiOrderType == 4">/</span>
                         </td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
                             <span ng-show="dpcoiWoOrderDate.dpcoiWoOrderType==1">PFMEA</span>

@@ -29,9 +29,9 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <button class="btn btn-small btn-purple" type="button" ng-click="pageTool.search()">
                                     <i class="icon-search icon-on-right bigger-110"></i>查找
                                 </button>
@@ -51,7 +51,10 @@
                                     <i class="icon-file icon-on-right bigger-110"></i>确认书
                                 </button>
                                 <button class="btn btn-small btn-purple" type="button" ng-click="viewOrderQuestion()">
-                                    <i class="icon-file icon-on-right bigger-110"></i>查看确认内容
+                                    <i class="icon-on-right bigger-110"></i>查看确认内容
+                                </button>
+                                <button class="btn btn-small btn-purple" type="button" ng-click="viewDpcoi()">
+                                    <i class="icon-on-right bigger-110"></i>查看DPCOI
                                 </button>
                             </div>
                         </div>

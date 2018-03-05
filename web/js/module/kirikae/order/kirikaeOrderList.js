@@ -60,6 +60,29 @@ alterationKirikaeOrderListApp.controller("alterationKirikaeOrderListController",
     };
 
     //查看切替单确认内容
+    $scope.viewDpcoi = function () {
+        if($('input[name="alterationKirikaeOrderCheck"]:checked').length == 0){
+            alert("请选择一条切替单！");
+            return false;
+        }
+        if($('input[name="alterationKirikaeOrderCheck"]:checked').length > 1){
+            alert("请选择一条切替单！");
+            return false;
+        }
+        var orderId = "";
+        var dpcoiOrderId = "";
+        $('input[name="alterationKirikaeOrderCheck"]:checked').each(function() {
+            orderId = $(this).val();
+        });
+        for (var i = 0; i < $scope.alterationKirikaeOrderList.length; i++) {
+            if (orderId == $scope.alterationKirikaeOrderList[i].alterationOrderId) {
+                dpcoiOrderId = $scope.alterationKirikaeOrderList[i].dpcoiOrderId;
+            }
+        }
+        window.open(BASE_URL + "/dpcoiOrder/getDpcoiOrderDetailDlg.do?dpcoiOrderId="+dpcoiOrderId)
+    };
+
+    //查看切替单确认内容
     $scope.viewOrderQuestion = function () {
         if($('input[name="alterationKirikaeOrderCheck"]:checked').length == 0){
             alert("请选择一条切替单！");
