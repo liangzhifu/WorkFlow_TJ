@@ -151,7 +151,7 @@
             and du.`DEL_FLAG` = '0'
             and du.`DPCOI_USER_STATE` = '1'
             and rs.state_type = 1
-            and dor.`DPCOI_ORDER_TYPE` in (1, 2)
+            and dor.`DPCOI_ORDER_TYPE` in (1, 2, 4)
             <if test="vehicleName != null and vehicleName != ''" >
                 and dor.`VEHICLE_NAME` like CONCAT('%',#{vehicleName},'%')
             </if>
@@ -198,7 +198,7 @@
             and du.`DEL_FLAG` = '0'
             and du.`DPCOI_USER_STATE` = '1'
             and rs.state_type = 1
-            and dor.`DPCOI_ORDER_TYPE` in (1, 2)
+            and dor.`DPCOI_ORDER_TYPE` in (1, 2, 4)
             <if test="vehicleName != null and vehicleName != ''" >
                 and dor.`VEHICLE_NAME` like CONCAT('%',#{vehicleName},'%')
             </if>
@@ -265,7 +265,7 @@
             dor.`DPCOI_ORDER_ID` = wo.`DPCOI_ORDER_ID`
             and dor.`DEL_FLAG` = '0'
             and wo.`DEL_FLAG` = '0'
-            and dor.`DPCOI_ORDER_TYPE` in (1, 2)
+            and dor.`DPCOI_ORDER_TYPE` in (1, 2, 4)
             <if test="vehicleName != null and vehicleName != ''" >
                 and dor.`VEHICLE_NAME` like CONCAT('%',#{vehicleName},'%')
             </if>

@@ -46,6 +46,11 @@ public class DpcoiOrderServiceImpl implements DpcoiOrderService {
     private RRProblemDao rRProblemDao;
 
     @Override
+    public DpcoiOrder selectBySelf(DpcoiOrder dpcoiOrder) throws ServiceException {
+        return this.dpcoiOrderDao.selectBySelf(dpcoiOrder);
+    }
+
+    @Override
     public Integer addDpcoiOrder(DpcoiOrder dpcoiOrder) throws ServiceException {
         Integer num = this.dpcoiOrderDao.insertDpcoiOrder(dpcoiOrder);
 

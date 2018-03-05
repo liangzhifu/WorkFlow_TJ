@@ -16,6 +16,14 @@ import java.util.Map;
 public interface DpcoiOrderService {
 
     /**
+     * 查询DPCOI
+     * @param dpcoiOrder DpcoiOrder订单数据
+     * @return 返回结果
+     * @throws ServiceException 异常信息
+     */
+    public DpcoiOrder selectBySelf(DpcoiOrder dpcoiOrder) throws ServiceException;
+
+    /**
      * 添加一个dpcoiOrder订单
      * @param dpcoiOrder DpcoiOrder订单数据
      * @return 返回结果
