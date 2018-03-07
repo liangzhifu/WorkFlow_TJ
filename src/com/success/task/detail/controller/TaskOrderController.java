@@ -89,6 +89,7 @@ public class TaskOrderController {
 			taskOrder.setOrderId(orderId);
 			taskOrder.setRealChangeTime(realChangeTime);
 			this.taskOrderService.updateTaskOrder(taskOrder);
+			this.taskOrderService.updateDpcoiOrderChangeTime(orderId, realChangeTime);
 			map.put("success", true);
 		}catch(Exception e){
 			e.printStackTrace();

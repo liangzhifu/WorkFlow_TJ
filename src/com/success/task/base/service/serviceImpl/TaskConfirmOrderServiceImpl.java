@@ -344,6 +344,7 @@ public class TaskConfirmOrderServiceImpl implements TaskConfirmOrderService {
 				}
 
 			}
+			dpcoiOrder.setRealCuttingDate(sdf.parse(taskOrder.getRealChangeTime()));
 			dpcoiOrder.setDpcoiOrderType(2);
 			dpcoiOrder.setTaskOrderId(taskConfirmOrder.getOrderId());
 			dpcoiOrder.setDelFlag("0");

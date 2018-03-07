@@ -133,7 +133,7 @@
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{dpcoiOrderDate.hopeCuttingDate}}</td>
                         <td style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">
                             <span ng-show="dpcoiOrderDate.dpcoiOrderType == 1">{{dpcoiOrderDate.realCuttingDate}}</span>
-                            <span ng-show="dpcoiOrderDate.dpcoiOrderType == 2">/</span>
+                            <span ng-show="dpcoiOrderDate.dpcoiOrderType == 2">{{dpcoiOrderDate.realCuttingDate}}</span>
                             <span ng-show="dpcoiOrderDate.dpcoiOrderType == 4">/</span>
                         </td>
                         <td style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 4px 4px;text-align: left;display:table-cell; vertical-align:middle;">{{dpcoiOrderDate.changeContent}}</td>

@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.dpcoi.order.dao.DpcoiOrderDao;
+import com.dpcoi.order.domain.DpcoiOrder;
 import com.success.task.base.dao.TaskConfirmOrderDao;
 import org.springframework.stereotype.Service;
 
@@ -68,6 +70,9 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 	
 	@Resource(name = "taskTypeDao")
 	private TaskTypeDao taskTypeDao;
+
+	@Resource(name = "dpcoiOrderDao")
+	private DpcoiOrderDao dpcoiOrderDao;
 	
 	@Override
 	public Integer addTaskOrder(TaskOrder taskOrder) throws ServiceException {
@@ -388,6 +393,18 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 	@Override
 	public List<Map<String, Object>> queryChangeTimeAlarmList() throws ServiceException {
 		return this.taskOrderDao.selectChangeTimeAlarmList();
+	}
+
+	@Override
+	public void updateDpcoiOrderChangeTime(Integer orderId, String realCuttingDate) throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		TaskOrder taskOrder = new TaskOrder();
+		taskOrder.setOrderId(orderId);
+		DpcoiOrder dpcoiOrder = this.dpcoiOrderDao.selectDpcoiOrderOfTaskOrder(taskOrder);
+		if (dpcoiOrder != null ) {
+			dpcoiOrder.setRealCuttingDate(sdf.parse(realCuttingDate));
+			this.dpcoiOrderDao.updateDpcoiOrder(dpcoiOrder);
+		}
 	}
 
 }

@@ -633,6 +633,7 @@ public class RRProblemController {
                     newRRProblem.setCloseConfirmId(user.getUserId());
                     newRRProblem.setCloseConfirmTime(new Date());
                     newRRProblem.setSpeedOfProgress("close");
+                    newRRProblem.setTrackingLevel("V");
                     this.rRProblemService.updateRRProblem(newRRProblem);
                 }
             }else {

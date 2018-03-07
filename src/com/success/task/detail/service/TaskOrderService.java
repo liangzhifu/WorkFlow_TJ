@@ -1,5 +1,6 @@
 package com.success.task.detail.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -41,5 +42,12 @@ public interface TaskOrderService {
 	 * @throws ServiceException 异常
 	 */
 	public List<Map<String, Object>> queryChangeTimeAlarmList() throws ServiceException;
+
+	/**
+	 * 修改DPCOI订单的实际变更时间
+	 * @param orderId 订单ID
+	 * @throws Exception 异常
+	 */
+	public void updateDpcoiOrderChangeTime(Integer orderId, String realCuttingDate) throws Exception;
 	
 }
