@@ -53,6 +53,16 @@ public class KirikaeWoOrderAttr {
 
     private Date updateTime;
 
+    private String agreementValidResult;
+
+    private Date agreementValidTime;
+
+    private Integer agreementValidState;
+
+    private Date agreementEmailTime;
+
+    private String refuseReason;
+
     public Integer getId() {
         return id;
     }
@@ -221,4 +231,43 @@ public class KirikaeWoOrderAttr {
         this.updateTime = updateTime;
     }
 
+    public String getAgreementValidResult() {
+        return agreementValidResult;
+    }
+
+    public void setAgreementValidResult(String agreementValidResult) {
+        this.agreementValidResult = agreementValidResult;
+    }
+
+    public Date getAgreementValidTime() {
+        return agreementValidTime;
+    }
+
+    public void setAgreementValidTime(Date agreementValidTime) {
+        this.agreementValidTime = agreementValidTime;
+    }
+
+    public Integer getAgreementValidState() {
+        return agreementValidState;
+    }
+
+    public void setAgreementValidState(Integer agreementValidState) {
+        this.agreementValidState = agreementValidState;
+    }
+
+    public Date getAgreementEmailTime() {
+        return agreementEmailTime;
+    }
+
+    public void setAgreementEmailTime(Date agreementEmailTime) {
+        this.agreementEmailTime = agreementEmailTime;
+    }
+
+    public String getRefuseReason() {
+        return refuseReason;
+    }
+
+    public void setRefuseReason(String refuseReason) {
+        this.refuseReason = refuseReason;
+    }
 }

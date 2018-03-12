@@ -50,4 +50,11 @@ public interface AlterationOrderService {
      */
     void editInitAlterationOrder(Integer orderId, User user) throws Exception;
 
+    /**
+     * 更新切替单
+     * @param alterationOrder 切替单实体
+     * @throws Exception 返回异常
+     */
+    void updateAlterationOrder(AlterationOrder alterationOrder) throws Exception;
+
 }

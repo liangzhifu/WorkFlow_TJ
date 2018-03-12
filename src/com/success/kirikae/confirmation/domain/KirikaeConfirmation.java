@@ -20,6 +20,8 @@ public class KirikaeConfirmation {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date releaseDate;
 
+    private String productionBatch;
+
     private String factory;
 
     private Integer createBy;
@@ -73,5 +75,13 @@ public class KirikaeConfirmation {
 
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+    public String getProductionBatch() {
+        return productionBatch;
+    }
+
+    public void setProductionBatch(String productionBatch) {
+        this.productionBatch = productionBatch;
     }
 }

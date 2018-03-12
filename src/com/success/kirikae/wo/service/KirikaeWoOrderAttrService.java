@@ -101,4 +101,20 @@ public interface KirikaeWoOrderAttrService {
      */
     List<Map<String, Object>> listKirikaeAgreement(Integer orderId) throws Exception;
 
+    /**
+     * 立合结果验证
+     * @param kirikaeWoOrderAttrList
+     * @param user
+     * @throws Exception
+     */
+    void editKirikaeWoOrderAttrStandCloseValid(List<KirikaeWoOrderAttr> kirikaeWoOrderAttrList, User user) throws Exception;
+
+    /**
+     * 修改拒绝确认项目
+     * @param woOrderIds 工单列表
+     * @param refuse 拒绝原因
+     * @throws Exception 异常
+     */
+    void editRefuseWoOrderAttr(String[] woOrderIds, String refuse) throws Exception;
+
 }

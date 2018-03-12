@@ -1,5 +1,8 @@
 package com.success.kirikae.wo.controller;
 
+import com.success.alteration.order.constant.AlterationOrderEnum;
+import com.success.alteration.order.domain.AlterationOrder;
+import com.success.alteration.order.service.AlterationOrderService;
 import com.success.common.Constant;
 import com.success.kirikae.constant.Url;
 import com.success.kirikae.instruction.domain.KirikaeInstruction;
@@ -26,6 +29,9 @@ import java.util.Map;
  **/
 @Controller
 public class KirikaeWoOrderAttrController {
+
+    @Resource(name = "alterationOrderService")
+    private AlterationOrderService alterationOrderService;
 
     @Resource(name = "kirikaeWoOrderAttrService")
     private KirikaeWoOrderAttrService kirikaeWoOrderAttrService;
@@ -59,6 +65,16 @@ public class KirikaeWoOrderAttrController {
     @RequestMapping(value = Url.WOORDERATTR_STANDCLOSE_DIALOG)
     private String getStandCloseDialog(){
         return "kirikae/stand/kirikaeStandCloseResult";
+    }
+
+    @RequestMapping(value = Url.WOORDERATTR_STANDCLOSE_VALID_DIALOG)
+    private String getStandCloseValidDialog(){
+        return "kirikae/stand/kirikaeStandCloseValidResult";
+    }
+
+    @RequestMapping(value = Url.WOORDERATTR_CHILD_UPLOAD_DIALOG)
+    private String getChildUploadDialog(){
+        return "kirikae/wo/woAttrUploadChild";
     }
 
     /**
@@ -189,8 +205,10 @@ public class KirikaeWoOrderAttrController {
     private Object review(HttpServletRequest request, KirikaeWoOrderAttrOut kirikaeWoOrderAttrOut){
         Map<String, Object> map = new HashMap<String, Object>(2);
         try{
-            Integer orderId = Integer.valueOf((String)request.getParameter("orderId"));
-            String remark = (String)request.getParameter("remark");
+            Integer orderId = Integer.valueOf((String) request.getParameter("orderId"));
+            String remark = (String) request.getParameter("remark");
+            Integer fileId = Integer.valueOf((String) request.getParameter("fileId"));
+            String spareColumn = (String) request.getParameter("spareColumn");
             User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
             List<KirikaeWoOrderAttr> kirikaeWoOrderAttrList = kirikaeWoOrderAttrOut.getKirikaeWoOrderAttrList();
             this.kirikaeWoOrderAttrService.editKirikaeWoOrderAttrReview(kirikaeWoOrderAttrList, user);
@@ -198,8 +216,18 @@ public class KirikaeWoOrderAttrController {
             if(kirikaeOrderProcedureList != null && kirikaeOrderProcedureList.size() > 0){
                 for(KirikaeOrderProcedure kirikaeOrderProcedure : kirikaeOrderProcedureList){
                     if(kirikaeOrderProcedure.getProcedureCode().intValue() == ProcedureEnum.ProcedureCodeEnum.PROCEDURE_REVIEW.getCode().intValue()){
+                        //判断评审结果
                         kirikaeOrderProcedure.setRemark(remark);
+                        kirikaeOrderProcedure.setFileId(fileId);
+                        kirikaeOrderProcedure.setSpareColumn(spareColumn);
                         this.kirikaeOrderProcedureService.editCompleteKirikaeOrderProcedure(kirikaeOrderProcedure, user);
+                        //NG
+                        if (ProcedureEnum.ProcedureReviewEnum.PROCEDURE_REVIEW_NG.getMsg().equals(spareColumn)) {
+                            AlterationOrder alterationOrder = new AlterationOrder();
+                            alterationOrder.setId(orderId);
+                            alterationOrder.setOrderState(AlterationOrderEnum.OrderStateEnum.ORDER_STATE_COMPLETE.getCode());
+                            this.alterationOrderService.updateAlterationOrder(alterationOrder);
+                        }
                         break;
                     }
                 }
@@ -242,6 +270,31 @@ public class KirikaeWoOrderAttrController {
             List<KirikaeWoOrderAttr> kirikaeWoOrderAttrList = kirikaeWoOrderAttrOut.getKirikaeWoOrderAttrList();
             this.kirikaeWoOrderAttrService.editKirikaeWoOrderAttrStandClose(kirikaeWoOrderAttrList, user);
             this.kirikaeOrderProcedureService.editWoOrderAttrStandClose(orderId, user);
+            map.put("success", true);
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("success", false);
+            map.put("message", e.getMessage());
+        }
+        return map;
+    }
+
+    @RequestMapping(value = Url.WOORDERATTR_STANDCLOSE_VALID)
+    @ResponseBody
+    private Object standCloseValid(HttpServletRequest request, KirikaeWoOrderAttrOut kirikaeWoOrderAttrOut){
+        Map<String, Object> map = new HashMap<String, Object>(2);
+        try{
+            Integer orderId = Integer.valueOf((String)request.getParameter("orderId"));
+            User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
+            List<KirikaeWoOrderAttr> kirikaeWoOrderAttrList = kirikaeWoOrderAttrOut.getKirikaeWoOrderAttrList();
+            this.kirikaeWoOrderAttrService.editKirikaeWoOrderAttrStandCloseValid(kirikaeWoOrderAttrList, user);
+            List<KirikaeOrderProcedure> kirikaeOrderProcedureList = this.kirikaeOrderProcedureService.listKirikaeOrderProcedureByOrderId(orderId);
+            for(KirikaeOrderProcedure kirikaeOrderProcedure : kirikaeOrderProcedureList){
+                if(kirikaeOrderProcedure.getProcedureCode().intValue() == ProcedureEnum.ProcedureCodeEnum.PROCEDURE_STAND_CLOSE_RESULT_VALID.getCode().intValue()){
+                    this.kirikaeOrderProcedureService.editCompleteKirikaeOrderProcedure(kirikaeOrderProcedure, user);
+                    break;
+                }
+            }
             map.put("success", true);
         }catch (Exception e){
             e.printStackTrace();

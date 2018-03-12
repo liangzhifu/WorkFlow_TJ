@@ -93,10 +93,12 @@ public class KirikaeWoOrderAttrServiceImpl implements KirikaeWoOrderAttrService 
                 kirikaeWoOrderAttr.setPreparedState(1);
                 kirikaeWoOrderAttr.setFileState(1);
                 kirikaeWoOrderAttr.setAgreementState(1);
+                kirikaeWoOrderAttr.setAgreementValidState(1);
             }else {
                 kirikaeWoOrderAttr.setPreparedState(0);
                 kirikaeWoOrderAttr.setFileState(0);
                 kirikaeWoOrderAttr.setAgreementState(0);
+                kirikaeWoOrderAttr.setAgreementValidState(0);
             }
             kirikaeWoOrderAttr.setCreateBy(user.getUserId());
             kirikaeWoOrderAttr.setCreateTime(new Date());
@@ -120,7 +122,10 @@ public class KirikaeWoOrderAttrServiceImpl implements KirikaeWoOrderAttrService 
     @Override
     public void editKirikaeWoOrderAttrReview(List<KirikaeWoOrderAttr> kirikaeWoOrderAttrList, User user) throws Exception {
         for(KirikaeWoOrderAttr kirikaeWoOrderAttr : kirikaeWoOrderAttrList){
-            kirikaeWoOrderAttr.setReviewTime(new Date());
+            Integer questionId = kirikaeWoOrderAttr.getQuestionId();
+            if (questionId != 1) {
+                kirikaeWoOrderAttr.setReviewTime(new Date());
+            }
             this.kirikaeWoOrderAttrDao.updateByPrimaryKeySelective(kirikaeWoOrderAttr);
         }
 
@@ -161,10 +166,12 @@ public class KirikaeWoOrderAttrServiceImpl implements KirikaeWoOrderAttrService 
             kirikaeWoOrderAttr.setPreparedState(1);
             kirikaeWoOrderAttr.setFileState(1);
             kirikaeWoOrderAttr.setAgreementState(1);
+            kirikaeWoOrderAttr.setAgreementValidState(1);
         }else {
             kirikaeWoOrderAttr.setPreparedState(1);
             kirikaeWoOrderAttr.setFileState(0);
             kirikaeWoOrderAttr.setAgreementState(0);
+            kirikaeWoOrderAttr.setAgreementValidState(0);
         }
         kirikaeWoOrderAttr.setCreateBy(user.getUserId());
         kirikaeWoOrderAttr.setCreateTime(new Date());
@@ -178,4 +185,32 @@ public class KirikaeWoOrderAttrServiceImpl implements KirikaeWoOrderAttrService 
     public List<Map<String, Object>> listKirikaeAgreement(Integer orderId) throws Exception {
         return this.kirikaeWoOrderAttrDao.selectKirikaeAgreementList(orderId);
     }
+
+    @Override
+    public void editKirikaeWoOrderAttrStandCloseValid(List<KirikaeWoOrderAttr> kirikaeWoOrderAttrList, User user) throws Exception {
+        for(KirikaeWoOrderAttr kirikaeWoOrderAttr : kirikaeWoOrderAttrList){
+            kirikaeWoOrderAttr.setAgreementValidState(1);
+            kirikaeWoOrderAttr.setAgreementValidTime(new Date());
+            this.kirikaeWoOrderAttrDao.updateByPrimaryKeySelective(kirikaeWoOrderAttr);
+        }
+    }
+
+    @Override
+    public void editRefuseWoOrderAttr(String[] woOrderIds, String refuse) throws Exception {
+        for (String woOrderId : woOrderIds){
+            List<KirikaeWoOrderAttr> kirikaeWoOrderAttrList = this.kirikaeWoOrderAttrDao.selectKirikaeWoOrderAttrListByWoOrderId(Integer.valueOf(woOrderId));
+            for (KirikaeWoOrderAttr kirikaeWoOrderAttr : kirikaeWoOrderAttrList){
+                Integer questionId = kirikaeWoOrderAttr.getQuestionId();
+                if (questionId != 1) {
+                    kirikaeWoOrderAttr.setFileState(0);
+                    kirikaeWoOrderAttr.setFileId(0);
+                    kirikaeWoOrderAttr.setAgreementState(0);
+                    kirikaeWoOrderAttr.setAgreementValidState(0);
+                    kirikaeWoOrderAttr.setRefuseReason(refuse);
+                    this.kirikaeWoOrderAttrDao.updateByPrimaryKeySelective(kirikaeWoOrderAttr);
+                }
+            }
+        }
+    }
+
 }

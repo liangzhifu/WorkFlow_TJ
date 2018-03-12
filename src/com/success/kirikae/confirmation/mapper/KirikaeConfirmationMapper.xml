@@ -6,11 +6,12 @@
         <result column="order_id" property="orderId" jdbcType="INTEGER" />
         <result column="release_date" property="releaseDate" jdbcType="DATE" />
         <result column="factory" property="factory" jdbcType="VARCHAR" />
+        <result column="production_batch" property="productionBatch" jdbcType="VARCHAR" />
         <result column="create_by" property="createBy" jdbcType="INTEGER" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
     <sql id="Base_Column_List" >
-        id, order_id, release_date, factory, create_by, create_time
+        id, order_id, release_date, factory, create_by, create_time, production_batch
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select
@@ -33,6 +34,9 @@
             <if test="factory != null" >
                 factory,
             </if>
+            <if test="productionBatch != null" >
+                production_batch,
+            </if>
             <if test="createBy != null" >
                 create_by,
             </if>
@@ -52,6 +56,9 @@
             </if>
             <if test="factory != null" >
                 #{factory,jdbcType=VARCHAR},
+            </if>
+            <if test="productionBatch != null" >
+                #{productionBatch,jdbcType=VARCHAR},
             </if>
             <if test="createBy != null" >
                 #{createBy,jdbcType=INTEGER},

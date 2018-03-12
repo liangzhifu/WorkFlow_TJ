@@ -35,7 +35,9 @@ public class KirikaeOrderUtil {
                     timeTask = new TimeTask();
                     timeTask.setDeleteState(0);
                     timeTask.setNoticeType(1001);
-                    userEmail = userEmail.substring(1);
+                    if (userEmail.length() > 0){
+                        userEmail = userEmail.substring(1);
+                    }
                     timeTask.setUserEmail(userEmail);
                     timeTask.setEmailTitle(title);
                     timeTask.setComment(comment.toString());
@@ -48,7 +50,9 @@ public class KirikaeOrderUtil {
             if(len % 20 != 0){
                 timeTask.setDeleteState(0);
                 timeTask.setNoticeType(1001);
-                userEmail = userEmail.substring(1);
+                if (userEmail.length() > 0){
+                    userEmail = userEmail.substring(1);
+                }
                 timeTask.setUserEmail(userEmail);
                 timeTask.setEmailTitle(title);
                 timeTask.setComment(comment.toString());

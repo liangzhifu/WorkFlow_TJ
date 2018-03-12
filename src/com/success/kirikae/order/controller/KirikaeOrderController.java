@@ -66,6 +66,14 @@ public class KirikaeOrderController {
         return "kirikae/order/generateFourOrder";
     }
 
+    /**
+     * 获取切替单确认切替日期页面
+     * @return 返回结果
+     */
+    @RequestMapping(value = Url.ORDER_INSTRUCTION_CONFIRMATION_DIALOG)
+    private String getInstructionConfirmationDialog(){
+        return "kirikae/order/kirikaeInstructionConfirmation";
+    }
 
     /**
      * 获取切替单列表页面信息

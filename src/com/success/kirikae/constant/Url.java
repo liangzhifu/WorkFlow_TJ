@@ -13,6 +13,7 @@ public interface Url {
     String WOORDERATTR = "/woOrderAttr";
     String AGENCY = "/agency";
     String HISTORY = "/history";
+    String PROCEDURE = "/procedure";
 
     //定单
     String ORDER_ADD_DIALOG = BASE + ORDER + "/getAddDialog.do";
@@ -28,6 +29,7 @@ public interface Url {
     String ORDER_EXPORT_HANDMATCH = BASE + ORDER + "/doExportHandMatchPDF.do";
     String ORDER_GENERATE_FORU_DIALOG = BASE + ORDER + "/getGenerateFourDialog.do";
     String ORDER_GENERATE_FORU = BASE + ORDER + "/generateFour.do";
+    String ORDER_INSTRUCTION_CONFIRMATION_DIALOG = BASE + ORDER + "/getInstructionConfirmationDialog.do";
     //历史记录
     String HISTORY_PAGEINOF = BASE + HISTORY + "/queryPageInfo.do";
     String HISTORY_PAGEINOF_DIALOG = BASE + HISTORY + "/getPageInfoDialog.do";
@@ -45,6 +47,8 @@ public interface Url {
     String WOORDERATTR_REVIEW_DIALOG = BASE + WOORDERATTR + "/getReviewDialog.do";
     String WOORDERATTR_UPLOAD_DIALOG = BASE + WOORDERATTR + "/getUploadDialog.do";
     String WOORDERATTR_STANDCLOSE_DIALOG = BASE + WOORDERATTR + "/getStandCloseDialog.do";
+    String WOORDERATTR_STANDCLOSE_VALID_DIALOG = BASE + WOORDERATTR + "/getStandCloseValidDialog.do";
+    String WOORDERATTR_CHILD_UPLOAD_DIALOG = BASE + WOORDERATTR + "/getChildUploadDialog.do";
     String WOORDERATTR_VIEW_DIALOG = BASE + WOORDERATTR + "/getViewDialog.do";
     String WOORDERATTR_LIST_ADD = BASE + WOORDERATTR + "/getAddList.do";
     String WOORDERATTR_LIST_BYORDERID = BASE + WOORDERATTR + "/getListByOrderId.do";
@@ -53,8 +57,9 @@ public interface Url {
     String WOORDERATTR_ADD = BASE + WOORDERATTR + "/add.do";
     String WOORDERATTR_CONFIRM = BASE + WOORDERATTR + "/confirm.do";
     String WOORDERATTR_REVIEW = BASE + WOORDERATTR + "/review.do";
-    String WOORDERATTR_UPLOAD= BASE + WOORDERATTR + "/upload.do";
-    String WOORDERATTR_STANDCLOSE= BASE + WOORDERATTR + "/standClose.do";
+    String WOORDERATTR_UPLOAD = BASE + WOORDERATTR + "/upload.do";
+    String WOORDERATTR_STANDCLOSE = BASE + WOORDERATTR + "/standClose.do";
+    String WOORDERATTR_STANDCLOSE_VALID = BASE + WOORDERATTR + "/standCloseValid.do";
     String WOORDERATTR_REVIEW_ADD = BASE + WOORDERATTR + "/reviewAdd.do";
     String WOORDERATTR_REVIEW_DELETE = BASE + WOORDERATTR + "/reviewDelete.do";
 
@@ -98,5 +103,8 @@ public interface Url {
     String CONFIRMATION_GET = BASE + CONFIRMATION + "/get.do";
     String CONFIRMATION_CHECKED = BASE + CONFIRMATION + "/checked.do";
     String CONFIRMATION_APPROVED = BASE + CONFIRMATION + "/approved.do";
+
+    //流程
+    String PROCEDURE_ORDER_LIST = BASE + PROCEDURE + "/getKirikaeOrderProcedureList.do";
 
 }

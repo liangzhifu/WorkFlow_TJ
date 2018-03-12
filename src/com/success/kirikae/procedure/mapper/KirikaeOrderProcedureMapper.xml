@@ -14,15 +14,19 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="file_id" property="fileId" jdbcType="INTEGER" />
+        <result column="file_Name" property="fileName" jdbcType="VARCHAR" />
+        <result column="spare_column" property="spareColumn" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
         id, order_id, procedure_state, procedure_seq, delete_state, procedure_code,
-        procedure_type, procedure_by, procedure_time, create_time, start_time, remark
+        procedure_type, procedure_by, procedure_time, create_time, start_time, remark,
+        file_id, spare_column, (SELECT fu.`FILE_NAME` FROM file_upload fu WHERE fu.file_id = kop.file_id) as file_name
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select
         <include refid="Base_Column_List" />
-        from kirikae_order_procedure
+        from kirikae_order_procedure kop
         where id = #{id,jdbcType=INTEGER}
     </select>
     <insert id="insertSelective" parameterType="com.success.kirikae.procedure.domain.KirikaeOrderProcedure" >
@@ -64,6 +68,12 @@
             <if test="remark != null" >
                 remark,
             </if>
+            <if test="fileId != null" >
+                file_id,
+            </if>
+            <if test="spareColumn != null" >
+                spare_column,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="id != null" >
@@ -101,6 +111,12 @@
             </if>
             <if test="remark != null" >
                 #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="fileId != null" >
+                #{fileId,jdbcType=INTEGER},
+            </if>
+            <if test="spareColumn != null" >
+                #{spareColumn,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -140,13 +156,19 @@
             <if test="remark != null" >
                 remark = #{remark,jdbcType=VARCHAR},
             </if>
+            <if test="fileId != null" >
+                file_id = #{fileId,jdbcType=INTEGER},
+            </if>
+            <if test="spareColumn != null" >
+                spare_column = #{spareColumn,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
     <select id="selectKirikaeOrderProcedureListByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List" />
-        from kirikae_order_procedure
+        from kirikae_order_procedure kop
         where order_id = #{orderId,jdbcType=INTEGER}
     </select>
 

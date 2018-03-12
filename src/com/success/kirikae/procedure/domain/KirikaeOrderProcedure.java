@@ -32,6 +32,12 @@ public class KirikaeOrderProcedure {
 
     private String remark;
 
+    private Integer fileId;
+
+    private String fileName;
+
+    private String spareColumn;
+
     public Integer getId() {
         return id;
     }
@@ -126,5 +132,29 @@ public class KirikaeOrderProcedure {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Integer getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(Integer fileId) {
+        this.fileId = fileId;
+    }
+
+    public String getSpareColumn() {
+        return spareColumn;
+    }
+
+    public void setSpareColumn(String spareColumn) {
+        this.spareColumn = spareColumn;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

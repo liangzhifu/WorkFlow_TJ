@@ -74,23 +74,45 @@ public class KirikaeOrderProcedureServiceImpl implements KirikaeOrderProcedureSe
     @Override
     public void editStartNextProcedure(Integer orderId, Integer procedureSeq, User user) throws Exception {
         List<KirikaeOrderProcedure> kirikaeOrderProcedureList = this.kirikaeOrderProcedureDao.selectKirikaeOrderProcedureListByOrderId(orderId);
-        Integer minProcedureSeq = 999;
-        for(KirikaeOrderProcedure kirikaeOrderProcedure : kirikaeOrderProcedureList){
-            if((kirikaeOrderProcedure.getProcedureSeq().intValue() > procedureSeq.intValue()) && (kirikaeOrderProcedure.getProcedureSeq().intValue() < minProcedureSeq.intValue())){
-                minProcedureSeq = kirikaeOrderProcedure.getProcedureSeq();
-            }
-        }
+        Integer minProcedureSeq = this.getMinProcedureSeq(kirikaeOrderProcedureList, procedureSeq);
         if(minProcedureSeq.intValue() == 999){
             AlterationOrder alterationOrder = new AlterationOrder();
             alterationOrder.setId(orderId);
             alterationOrder.setOrderState(AlterationOrderEnum.OrderStateEnum.ORDER_STATE_COMPLETE.getCode());
             this.alterationOrderDao.updateByPrimaryKeySelective(alterationOrder);
         }else {
-            for(KirikaeOrderProcedure kirikaeOrderProcedure : kirikaeOrderProcedureList){
-                if(kirikaeOrderProcedure.getProcedureSeq().intValue() == minProcedureSeq.intValue()){
-                    this.editStartKirikaeOrderProcedure(kirikaeOrderProcedure, user);
+            //下一个流程
+            KirikaeOrderProcedure nextKirikaeOrderProcedure = this.getNextKirikaeOrderProcedure(kirikaeOrderProcedureList, minProcedureSeq);
+            Integer procedureCode = nextKirikaeOrderProcedure.getProcedureCode();
+            procedureSeq = nextKirikaeOrderProcedure.getProcedureSeq();
+            if(ProcedureEnum.ProcedureCodeEnum.PROCEDURE_INSTRUCTIONS_CHECKED.getCode().intValue() == procedureCode.intValue()){
+                //流程（指示书--确认）
+                //没有确认人员，跳过流程执行下一步
+                List<SystemUser> systemUserList = this.systemUserDao.selectSystemUserListByPermissionId(PermissionEnum.ConstantEnum.PERMISSION_NINE.getCode());
+                if (systemUserList == null || systemUserList.size() == 0) {
+                    KirikaeOrderProcedure orderProcedure = new KirikaeOrderProcedure();
+                    orderProcedure.setId(nextKirikaeOrderProcedure.getId());
+                    orderProcedure.setProcedureState(ProcedureEnum.ProcedureStateEnum.PROCEDURE_STATE_THREE.getCode());
+                    orderProcedure.setProcedureTime(new Date());
+                    this.kirikaeOrderProcedureDao.updateByPrimaryKeySelective(orderProcedure);
+                    minProcedureSeq = this.getMinProcedureSeq(kirikaeOrderProcedureList, procedureSeq);
+                    nextKirikaeOrderProcedure = this.getNextKirikaeOrderProcedure(kirikaeOrderProcedureList, minProcedureSeq);
+                }
+            }else if(ProcedureEnum.ProcedureCodeEnum.PROCEDURE_CONFIRM_CHECKED.getCode().intValue() == procedureCode.intValue()){
+                //流程（确认书--确认）
+                //没有确认人员，跳过流程执行下一步
+                List<SystemUser> systemUserList = this.systemUserDao.selectSystemUserListByPermissionId(PermissionEnum.ConstantEnum.PERMISSION_TWELVE.getCode());
+                if (systemUserList == null || systemUserList.size() == 0) {
+                    KirikaeOrderProcedure orderProcedure = new KirikaeOrderProcedure();
+                    orderProcedure.setId(nextKirikaeOrderProcedure.getId());
+                    orderProcedure.setProcedureState(ProcedureEnum.ProcedureStateEnum.PROCEDURE_STATE_THREE.getCode());
+                    orderProcedure.setProcedureTime(new Date());
+                    this.kirikaeOrderProcedureDao.updateByPrimaryKeySelective(orderProcedure);
+                    minProcedureSeq = this.getMinProcedureSeq(kirikaeOrderProcedureList, procedureSeq);
+                    nextKirikaeOrderProcedure = this.getNextKirikaeOrderProcedure(kirikaeOrderProcedureList, minProcedureSeq);
                 }
             }
+            this.editStartKirikaeOrderProcedure(nextKirikaeOrderProcedure, user);
         }
     }
 
@@ -186,13 +208,13 @@ public class KirikaeOrderProcedureServiceImpl implements KirikaeOrderProcedureSe
             systemUserList.add(systemUser);
             List<TimeTask> timeTaskList = KirikaeOrderUtil.generateMail(kirikaeOrder, systemUserList, "立合人员填写");
             this.editSendEmail(timeTaskList);
-        }else if(ProcedureEnum.ProcedureCodeEnum.PROCEDURE_STAND_CLOSE_RESULT.getCode().intValue() == procedureCode.intValue()){
+        }else if(ProcedureEnum.ProcedureCodeEnum.PROCEDURE_STAND_CLOSE_RESULT_VALID.getCode().intValue() == procedureCode.intValue()){
             kirikaeOrderProcedure.setProcedureState(ProcedureEnum.ProcedureStateEnum.PROCEDURE_STATE_TWO.getCode());
             this.kirikaeOrderProcedureDao.updateByPrimaryKeySelective(kirikaeOrderProcedure);
             //邮件通知
-            List<SystemUser> systemUserList = this.systemUserDao.selectPreparedSystemUserListByOrderId(kirikaeOrderProcedure.getOrderId());
-            List<TimeTask> timeTaskList = KirikaeOrderUtil.generateMail(kirikaeOrder, systemUserList, "立合结果填写");
-            this.editSendEmail(timeTaskList);
+            /*List<SystemUser> systemUserList = this.systemUserDao.selectPreparedSystemUserListByOrderId(kirikaeOrderProcedure.getOrderId());
+            List<TimeTask> timeTaskList = KirikaeOrderUtil.generateMail(kirikaeOrder, systemUserList, "立合结果验证");
+            this.editSendEmail(timeTaskList);*/
         }else if(ProcedureEnum.ProcedureCodeEnum.PROCEDURE_STAND_CLOSE_CHECKED.getCode().intValue() == procedureCode.intValue()){
             kirikaeOrderProcedure.setProcedureState(ProcedureEnum.ProcedureStateEnum.PROCEDURE_STATE_TWO.getCode());
             this.kirikaeOrderProcedureDao.updateByPrimaryKeySelective(kirikaeOrderProcedure);
@@ -249,25 +271,10 @@ public class KirikaeOrderProcedureServiceImpl implements KirikaeOrderProcedureSe
             List<SystemUser> systemUserList = this.listSystemUserByPermission(PermissionEnum.ConstantEnum.PERMISSION_THIRTEEN.getCode());
             List<TimeTask> timeTaskList = KirikaeOrderUtil.generateMail(kirikaeOrder, systemUserList, "《手配书》确认书承认");
             this.editSendEmail(timeTaskList);
-        }else if(ProcedureEnum.ProcedureCodeEnum.PROCEDURE_CONFIRM_FOUR_ORDER.getCode().intValue() == procedureCode.intValue()){
+        }else if(ProcedureEnum.ProcedureCodeEnum.PROCEDURE_STAND_CLOSE_RESULT.getCode().intValue() == procedureCode.intValue()){
             //判断是否需要建立4M变化单
-            AlterationOrder alterationOrder = new AlterationOrder();
-            alterationOrder.setId(kirikaeOrderProcedure.getOrderId());
-            alterationOrder = this.alterationOrderDao.selectAlterationOrder(alterationOrder);
-            Integer generateFour = alterationOrder.getGenerateFour();
-            if(generateFour.intValue() == AlterationOrderEnum.GenerateFourEnum.GENERATE_FOUR_ONE.getCode().intValue()){
-                kirikaeOrderProcedure.setProcedureState(ProcedureEnum.ProcedureStateEnum.PROCEDURE_STATE_TWO.getCode());
-                this.kirikaeOrderProcedureDao.updateByPrimaryKeySelective(kirikaeOrderProcedure);
-                //邮件通知
-                List<SystemUser> systemUserList = this.listSystemUserByPermission(PermissionEnum.ConstantEnum.PERMISSION_EIGHT.getCode());
-                List<TimeTask> timeTaskList = KirikaeOrderUtil.generateMail(kirikaeOrder, systemUserList, "建立4M变化单");
-                this.editSendEmail(timeTaskList);
-            }else {
-                kirikaeOrderProcedure.setProcedureTime(new Date());
-                kirikaeOrderProcedure.setProcedureState(ProcedureEnum.ProcedureStateEnum.PROCEDURE_STATE_THREE.getCode());
-                this.kirikaeOrderProcedureDao.updateByPrimaryKeySelective(kirikaeOrderProcedure);
-                this.editStartNextProcedure(kirikaeOrderProcedure.getOrderId(), kirikaeOrderProcedure.getProcedureSeq(), user);
-            }
+            kirikaeOrderProcedure.setProcedureState(ProcedureEnum.ProcedureStateEnum.PROCEDURE_STATE_TWO.getCode());
+            this.kirikaeOrderProcedureDao.updateByPrimaryKeySelective(kirikaeOrderProcedure);
         }else {
             kirikaeOrderProcedure.setProcedureState(ProcedureEnum.ProcedureStateEnum.PROCEDURE_STATE_TWO.getCode());
             this.kirikaeOrderProcedureDao.updateByPrimaryKeySelective(kirikaeOrderProcedure);
@@ -346,6 +353,25 @@ public class KirikaeOrderProcedureServiceImpl implements KirikaeOrderProcedureSe
         }
     }
 
+    @Override
+    public void editRefuseOrderProcedure(Integer orderId) throws Exception {
+        List<KirikaeOrderProcedure> kirikaeOrderProcedureList = this.kirikaeOrderProcedureDao.selectKirikaeOrderProcedureListByOrderId(orderId);
+        if (kirikaeOrderProcedureList != null){
+            for (KirikaeOrderProcedure kirikaeOrderProcedure : kirikaeOrderProcedureList){
+                Integer procedureCode = kirikaeOrderProcedure.getProcedureCode();
+                if (procedureCode.intValue() == ProcedureEnum.ProcedureCodeEnum.PROCEDURE_FILE_UPLOAD.getCode().intValue()) {
+                    kirikaeOrderProcedure.setProcedureState(ProcedureEnum.ProcedureStateEnum.PROCEDURE_STATE_CHILD.getCode());
+                    this.kirikaeOrderProcedureDao.updateByPrimaryKeySelective(kirikaeOrderProcedure);
+                } else if (procedureCode.intValue() == ProcedureEnum.ProcedureCodeEnum.PROCEDURE_STAND_CLOSE_RESULT.getCode().intValue()
+                    || procedureCode.intValue() == ProcedureEnum.ProcedureCodeEnum.PROCEDURE_STAND_CLOSE_RESULT_VALID.getCode().intValue()
+                    || procedureCode.intValue() == ProcedureEnum.ProcedureCodeEnum.PROCEDURE_STAND_CLOSE_CHECKED.getCode().intValue()){
+                    kirikaeOrderProcedure.setProcedureState(ProcedureEnum.ProcedureStateEnum.PROCEDURE_STATE_ONE.getCode());
+                    this.kirikaeOrderProcedureDao.updateByPrimaryKeySelective(kirikaeOrderProcedure);
+                }
+            }
+        }
+    }
+
     /**
      * 计算工作日
      * @param startDay 开始日期
@@ -418,6 +444,40 @@ public class KirikaeOrderProcedureServiceImpl implements KirikaeOrderProcedureSe
                 this.timeTaskDao.insertTimeTask(timeTask);
             }
         }
+    }
+
+    /**
+     * 获取下一流程序号
+     * @param kirikaeOrderProcedureList 流程列表
+     * @param procedureSeq 当前流程序号
+     * @return 返回结果
+     */
+    private Integer getMinProcedureSeq(List<KirikaeOrderProcedure> kirikaeOrderProcedureList, Integer procedureSeq){
+        Integer minProcedureSeq = 999;
+        for(KirikaeOrderProcedure kirikaeOrderProcedure : kirikaeOrderProcedureList){
+            if(kirikaeOrderProcedure.getProcedureSeq() > procedureSeq
+                    && kirikaeOrderProcedure.getProcedureSeq() < minProcedureSeq
+                    && (kirikaeOrderProcedure.getProcedureState().intValue() == ProcedureEnum.ProcedureStateEnum.PROCEDURE_STATE_ONE.getCode())){
+                minProcedureSeq = kirikaeOrderProcedure.getProcedureSeq();
+            }
+        }
+        return minProcedureSeq;
+    }
+
+    /**
+     * 根据流程序号获取流程
+     * @param kirikaeOrderProcedureList 流程列表
+     * @param minProcedureSeq 流程序号
+     * @return 返回结果
+     */
+    private KirikaeOrderProcedure getNextKirikaeOrderProcedure(List<KirikaeOrderProcedure> kirikaeOrderProcedureList, Integer minProcedureSeq){
+        KirikaeOrderProcedure nextKirikaeOrderProcedure = null;
+        for(KirikaeOrderProcedure kirikaeOrderProcedure : kirikaeOrderProcedureList){
+            if(kirikaeOrderProcedure.getProcedureSeq().intValue() == minProcedureSeq.intValue()){
+                nextKirikaeOrderProcedure = kirikaeOrderProcedure;
+            }
+        }
+        return nextKirikaeOrderProcedure;
     }
 
 }

@@ -71,4 +71,11 @@ public interface KirikaeOrderProcedureService {
      */
     void editWoOrderAttrUpload(Integer orderId, User user) throws Exception;
 
+    /**
+     * 修改拒绝流程状态
+     * @param orderId 订单ID
+     * @throws Exception 异常
+     */
+    void editRefuseOrderProcedure(Integer orderId) throws Exception;
+
 }

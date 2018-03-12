@@ -187,7 +187,7 @@ public class ExportKirikaeOrderPdfServiceImpl implements ExportKirikaeOrderPdfSe
         cell_2_1.setHorizontalAlignment(1);
         table.addCell(cell_2_1);
 
-        Paragraph paragraph_2_2 = new Paragraph(checked, font);
+        Paragraph paragraph_2_2 = new Paragraph("/", font);
         paragraph_2_2.setAlignment(1);
         PdfPCell cell_2_2 = new PdfPCell();
         cell_2_2.setUseAscender(true);
@@ -245,7 +245,11 @@ public class ExportKirikaeOrderPdfServiceImpl implements ExportKirikaeOrderPdfSe
         cell1.setBorder(0);
         table.addCell(cell1);
 
-        Paragraph paragraph2 = new Paragraph("信息来源：", font);
+        String designChangeNo = kirikaeOrder.getDesignChangeNo();
+        if (designChangeNo == null) {
+            designChangeNo = "";
+        }
+        Paragraph paragraph2 = new Paragraph("信息来源："+designChangeNo, font);
         PdfPCell cell2 = new PdfPCell();
         cell2.setUseAscender(true);
         cell2.setUseDescender(true);
@@ -253,7 +257,11 @@ public class ExportKirikaeOrderPdfServiceImpl implements ExportKirikaeOrderPdfSe
         cell2.setBorder(0);
         table.addCell(cell2);
 
-        Paragraph paragraph3 = new Paragraph("变更事项：", font);
+        String vehicleName = kirikaeOrder.getVehicleName();
+        if (vehicleName == null) {
+            vehicleName = "";
+        }
+        Paragraph paragraph3 = new Paragraph("变更事项："+vehicleName, font);
         PdfPCell cell3 = new PdfPCell();
         cell3.setUseAscender(true);
         cell3.setUseDescender(true);

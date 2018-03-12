@@ -23,12 +23,17 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="update_by" property="updateBy" jdbcType="INTEGER" />
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="agreement_valid_result" property="agreementValidResult" jdbcType="VARCHAR" />
+        <result column="agreement_valid_time" property="agreementValidTime" jdbcType="TIMESTAMP" />
+        <result column="agreement_valid_state" property="agreementValidState" jdbcType="INTEGER" />
+        <result column="agreement_email_time" property="agreementEmailTime" jdbcType="TIMESTAMP" />
+        <result column="refuse_reason" property="refuseReason" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
         id, wo_order_id, file_state, file_confirm_time, file_id, agreement_state, agreement_time,
         agreement_result, question_id, review_result, review_principle, review_time, change_complete_time,
-        prepared_time, prepared_user, prepared_state, delete_state, create_by, create_time,
-        update_by, update_time
+        prepared_time, prepared_user, prepared_state, delete_state, create_by, create_time, refuse_reason,
+        update_by, update_time, agreement_valid_result, agreement_valid_time, agreement_valid_state, agreement_email_time
     </sql>
     <insert id="insertSelective" parameterType="com.success.kirikae.wo.domain.KirikaeWoOrderAttr"
             useGeneratedKeys="true" keyProperty="id">
@@ -97,6 +102,18 @@
             <if test="updateTime != null" >
                 update_time,
             </if>
+            <if test="agreementValidResult != null" >
+                agreement_valid_result,
+            </if>
+            <if test="agreementValidTime != null" >
+                agreement_valid_time,
+            </if>
+            <if test="agreementValidState != null" >
+                agreement_valid_state,
+            </if>
+            <if test="agreementEmailTime != null" >
+                agreement_email_time,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="id != null" >
@@ -162,6 +179,18 @@
             <if test="updateTime != null" >
                 #{updateTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="agreementValidResult != null" >
+                #{agreementValidResult,jdbcType=VARCHAR},
+            </if>
+            <if test="agreementValidTime != null" >
+                #{agreementValidTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="agreementValidState != null" >
+                #{agreementValidState,jdbcType=INTEGER},
+            </if>
+            <if test="agreementEmailTime != null" >
+                #{agreementEmailTime,jdbcType=TIMESTAMP},
+            </if>
         </trim>
     </insert>
 
@@ -216,6 +245,21 @@
             <if test="updateTime != null" >
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="agreementValidResult != null" >
+                agreement_valid_result = #{agreementValidResult,jdbcType=VARCHAR},
+            </if>
+            <if test="agreementValidTime != null" >
+                agreement_valid_time = #{agreementValidTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="agreementValidState != null" >
+                agreement_valid_state = #{agreementValidState,jdbcType=INTEGER},
+            </if>
+            <if test="agreementEmailTime != null" >
+                agreement_email_time = #{agreementEmailTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refuseReason != null" >
+                refuse_reason = #{refuseReason,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -244,8 +288,8 @@
                 DATE_FORMAT(kwoa.`change_complete_time`, '%Y-%m-%d') AS changeCompleteTime,kwoa.`prepared_user` AS preparedUser,
                 kq.`id` AS questionId, (SELECT su.user_name FROM sys_users su WHERE su.`USER_ID` = kwoa.`prepared_user`) as preparedUserName,
                 kwoa.`review_principle` as reviewPrinciple, kwoa.`review_result` as reviewResult, kwoa.`agreement_result` as agreementResult,
-                DATE_FORMAT(kwoa.`review_time`, '%Y-%m-%d') AS reviewTime, kwoa.`file_id` AS fileId,
-                (SELECT fu.`FILE_NAME` FROM file_upload fu WHERE fu.`FILE_ID` = kwoa.`file_id`) as fileName,
+                DATE_FORMAT(kwoa.`review_time`, '%Y-%m-%d') AS reviewTime, kwoa.`file_id` AS fileId, kwoa.`agreement_valid_result` as agreementValidResult,
+                (SELECT fu.`FILE_NAME` FROM file_upload fu WHERE fu.`FILE_ID` = kwoa.`file_id`) as fileName, kwoa.refuse_reason as refuseReason,
                 (CASE WHEN kwoa.`question_id` = 1 THEN FALSE
                 WHEN DATE_FORMAT(kwoa.`change_complete_time`, '%Y-%m-%d') &gt; DATE_FORMAT(ko.`design_change_timing`, '%Y-%m-%d') THEN TRUE
                 ELSE FALSE END) AS overtimeFlag
@@ -263,7 +307,7 @@
         SELECT kwoa.id, kwoa.wo_order_id, kwoa.file_state, kwoa.file_confirm_time, kwoa.file_id, kwoa.agreement_state, kwoa.agreement_time,
         kwoa.agreement_result, kwoa.question_id, kwoa.review_result, kwoa.review_principle, kwoa.review_time, kwoa.change_complete_time,
         kwoa.prepared_time, kwoa.prepared_user, kwoa.prepared_state, kwoa.delete_state, kwoa.create_by, kwoa.create_time,
-        kwoa.update_by, kwoa.update_time
+        kwoa.update_by, kwoa.update_time, kwoa.`agreement_valid_result`, kwoa.refuse_reason
         FROM kirikae_wo_order kwo, kirikae_wo_order_attr kwoa, kirikae_question kq
         WHERE kwo.`id` = kwoa.`wo_order_id`
         AND kwoa.`question_id` = kq.`id`
@@ -273,14 +317,29 @@
         ORDER BY kwo.`parent_org_id`, kwo.`org_id`,  kq.`id`
     </select>
 
+    <select id="selectKirikaeWoOrderAttrListByWoOrderId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT kwoa.id, kwoa.wo_order_id, kwoa.file_state, kwoa.file_confirm_time, kwoa.file_id, kwoa.agreement_state, kwoa.agreement_time,
+        kwoa.agreement_result, kwoa.question_id, kwoa.review_result, kwoa.review_principle, kwoa.review_time, kwoa.change_complete_time,
+        kwoa.prepared_time, kwoa.prepared_user, kwoa.prepared_state, kwoa.delete_state, kwoa.create_by, kwoa.create_time,
+        kwoa.update_by, kwoa.update_time, kwoa.`agreement_valid_result`, kwoa.refuse_reason
+        FROM kirikae_wo_order kwo, kirikae_wo_order_attr kwoa, kirikae_question kq
+        WHERE kwo.`id` = kwoa.`wo_order_id`
+        AND kwoa.`question_id` = kq.`id`
+        AND kwo.`delete_state` = 0
+        AND kwoa.`delete_state` = 0
+        AND kwo.`id` = #{woOrderId, jdbcType=INTEGER}
+        ORDER BY kwo.`parent_org_id`, kwo.`org_id`,  kq.`id`
+    </select>
+
     <select id="selectKirikaeWoOrderAttrListByUserId" resultType="java.util.HashMap" parameterType="java.util.HashMap">
         SELECT kwoa.id, kq.`confirm_content` AS confirmContent,kq.`confirm_project` AS confirmProject,kwo.id as woOrderId,
         kwo.`org_id` as orgId, kwo.`org_name` as orgName,kwo.`parent_org_name` as parentOrgName, kwo.`parent_org_id` as parentOrgId,
         DATE_FORMAT(kwoa.`change_complete_time`, '%Y-%m-%d') AS changeCompleteTime, kwoa.`agreement_result` as agreementResult,
         (SELECT su.user_name FROM sys_users su WHERE su.`USER_ID` = kwoa.`prepared_user`) as preparedUserName,
         kwoa.`review_principle` as reviewPrinciple, kwoa.`review_result` as reviewResult, kwoa.`file_id` AS fileId,
-        DATE_FORMAT(kwoa.`review_time`, '%Y-%m-%d') AS reviewTime,
-        (SELECT fu.`FILE_NAME` FROM file_upload fu WHERE fu.`FILE_ID` = kwoa.`file_id`) as fileName
+        DATE_FORMAT(kwoa.`review_time`, '%Y-%m-%d') AS reviewTime, kwoa.`agreement_valid_result` as agreementValidResult,
+        (SELECT fu.`FILE_NAME` FROM file_upload fu WHERE fu.`FILE_ID` = kwoa.`file_id`) as fileName,
+        kwoa.refuse_reason as refuseReason
         FROM kirikae_wo_order kwo, kirikae_wo_order_attr kwoa, kirikae_question kq
         WHERE kwo.`id` = kwoa.`wo_order_id`
         AND kwoa.`question_id` = kq.`id`
@@ -297,6 +356,9 @@
         </if>
         <if test="stateType == 'standclose'" >
             AND kwoa.`agreement_state` = 0
+        </if>
+        <if test="stateType == 'standcloseValid'" >
+            AND kwoa.`agreement_valid_state` = 0
         </if>
         ORDER BY kwo.`parent_org_id`, kwo.`org_id`,  kq.`id`
     </select>
@@ -342,8 +404,9 @@
         DATE_FORMAT(kwoa.`change_complete_time`, '%Y-%m-%d') AS changeCompleteTime, kwoa.`agreement_result` as agreementResult,
         (SELECT su.user_name FROM sys_users su WHERE su.`USER_ID` = kwoa.`prepared_user`) as preparedUserName,
         kwoa.`review_principle` as reviewPrinciple, kwoa.`review_result` as reviewResult, kwoa.`file_id` AS fileId,
-        DATE_FORMAT(kwoa.`review_time`, '%Y-%m-%d') AS reviewTime,
-        (SELECT fu.`FILE_NAME` FROM file_upload fu WHERE fu.`FILE_ID` = kwoa.`file_id`) as fileName
+        DATE_FORMAT(kwoa.`review_time`, '%Y-%m-%d') AS reviewTime, kwoa.`agreement_valid_result` as agreementValidResult,
+        (SELECT fu.`FILE_NAME` FROM file_upload fu WHERE fu.`FILE_ID` = kwoa.`file_id`) as fileName,
+        kwoa.refuse_reason as refuseReason
         FROM kirikae_wo_order kwo, kirikae_wo_order_attr kwoa, kirikae_question kq
         WHERE kwo.`id` = kwoa.`wo_order_id`
         AND kwoa.`question_id` = kq.`id`
@@ -351,7 +414,7 @@
         AND kwoa.`delete_state` = 0
         AND kwoa.`question_id` &lt;&gt; 1
         AND kwo.`order_id` = #{orderId, jdbcType=INTEGER}
-        AND kwoa.`agreement_state` = 0
+        AND kwoa.`agreement_valid_state` = 0
         ORDER BY kwo.`parent_org_id`, kwo.`org_id`,  kq.`id`
     </select>
 

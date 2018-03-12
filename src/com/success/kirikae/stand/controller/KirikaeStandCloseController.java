@@ -5,6 +5,7 @@ import com.success.common.Constant;
 import com.success.kirikae.constant.Url;
 import com.success.kirikae.procedure.service.KirikaeOrderProcedureService;
 import com.success.kirikae.stand.service.KirikaeStandCloseService;
+import com.success.kirikae.wo.service.KirikaeWoOrderAttrService;
 import com.success.sys.user.domain.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,9 @@ public class KirikaeStandCloseController {
 
     @Resource(name = "alterationOrderService")
     private AlterationOrderService alterationOrderService;
+
+    @Resource(name = "kirikaeWoOrderAttrService")
+    private KirikaeWoOrderAttrService kirikaeWoOrderAttrService;
 
     @Resource(name = "kirikaeOrderProcedureService")
     private KirikaeOrderProcedureService kirikaeOrderProcedureService;
@@ -112,14 +116,12 @@ public class KirikaeStandCloseController {
      */
     @RequestMapping(value = Url.STAND_REFUSE)
     @ResponseBody
-    private Object refuseKirikaeStandClose(HttpServletRequest request, Integer orderId){
+    private Object refuseKirikaeStandClose(HttpServletRequest request, Integer orderId, String woOrderIdstr, String refuseReason){
         Map<String, Object> map = new HashMap<String, Object>(2);
         try{
-            User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
-            //初始化切替单
-            this.alterationOrderService.editInitAlterationOrder(orderId, user);
-            //启动流程
-            this.kirikaeOrderProcedureService.editStartFirstKirikaeOrderProcedure(orderId, user);
+            String[] woOrderIds = woOrderIdstr.split(",");
+            this.kirikaeOrderProcedureService.editRefuseOrderProcedure(orderId);
+            this.kirikaeWoOrderAttrService.editRefuseWoOrderAttr(woOrderIds, refuseReason);
             map.put("success", true);
         }catch (Exception e){
             map.put("success", false);

@@ -64,6 +64,15 @@ public class KirikaeWoOrderAttrDao extends BaseDao {
     }
 
     /**
+     * 查询所有的确认项目
+     * @param woOrderId 工单ID
+     * @return 返回结果
+     */
+    public List<KirikaeWoOrderAttr> selectKirikaeWoOrderAttrListByWoOrderId(Integer woOrderId){
+        return this.sqlSession.selectList("KirikaeWoOrderAttrMapper.selectKirikaeWoOrderAttrListByWoOrderId", woOrderId);
+    }
+
+    /**
      * 查询某人担当的确认项目
      * @param orderId 订单ID
      * @param userId 用户ID

@@ -134,10 +134,7 @@ public class KirikaeOrderServiceImpl implements KirikaeOrderService {
     public void editGenerateFourOrderProcedure(Integer orderId, User user) throws Exception {
         List<KirikaeOrderProcedure> kirikaeOrderProcedureList = this.kirikaeOrderProcedureService.listKirikaeOrderProcedureByOrderId(orderId);
         for (KirikaeOrderProcedure kirikaeOrderProcedure : kirikaeOrderProcedureList){
-            if(kirikaeOrderProcedure.getProcedureCode().intValue() == ProcedureEnum.ProcedureCodeEnum.PROCEDURE_CONFIRM_FOUR_ORDER.getCode().intValue()){
-                this.kirikaeOrderProcedureService.editCompleteKirikaeOrderProcedure(kirikaeOrderProcedure, user);
-                break;
-            }
+
         }
     }
 }

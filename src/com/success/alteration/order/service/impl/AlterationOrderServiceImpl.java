@@ -218,7 +218,7 @@ public class AlterationOrderServiceImpl implements AlterationOrderService {
                 kirikaeOrderProcedure.setProcedureState(ProcedureEnum.ProcedureStateEnum.PROCEDURE_STATE_ONE.getCode());
                 kirikaeOrderProcedure.setDeleteState(CommonEnum.DeleteStateEnum.DELETE_STATE_NO.getCode());
                 kirikaeOrderProcedure.setProcedureSeq(kirikaeProcedure.getProcedureSeq());
-                kirikaeOrderProcedure.setProcedureCode(kirikaeProcedure.getProcedureSeq());
+                kirikaeOrderProcedure.setProcedureCode(kirikaeProcedure.getProcedureCode());
                 kirikaeOrderProcedure.setProcedureType(kirikaeProcedure.getProcedureType());
                 kirikaeOrderProcedure.setCreateTime(new Date());
                 this.kirikaeOrderProcedureDao.insertSelective(kirikaeOrderProcedure);
@@ -457,6 +457,11 @@ public class AlterationOrderServiceImpl implements AlterationOrderService {
                 this.kirikaeStandCloseDao.updateByPrimaryKeySelective(kirikaeStandClose);
             }
         }
+    }
+
+    @Override
+    public void updateAlterationOrder(AlterationOrder alterationOrder) throws Exception {
+        this.alterationOrderDao.updateByPrimaryKeySelective(alterationOrder);
     }
 
 }
