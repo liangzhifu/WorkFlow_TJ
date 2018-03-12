@@ -34,6 +34,7 @@
                             <td width="60px" class="common-table-td">评审时间</td>
                             <td width="60px" class="common-table-td">上传文件</td>
                             <td width="60px" class="common-table-td">立合结果</td>
+                            <td width="60px" class="common-table-td">验证立合结果</td>
                         </tr>
                         </thead>
                         <tbody>
@@ -55,8 +56,18 @@
                                 <a href="javascript:void(0)" ng-click="downloadFile(data.fileId)">{{data.fileName}}</a>
                             </td>
                             <td ng-class="{'claasRed': data.overtimeFlag}">{{data.agreementResult}}</td>
+                            <td ng-class="{'claasRed': data.overtimeFlag}">{{data.agreementValidResult}}</td>
                         </tr>
                         </tbody>
+                    </table>
+                </div>
+                <div>
+                    <table class="table table-striped table-bordered table-hover">
+                        <tr>
+                            <td width="10%">评审结果：{{spareColumn}}</td>
+                            <td width="20%">会议纪要：<a href="javascript:void(0)" ng-click="downloadFile(fileId)">{{fileName}}</a></td>
+                            <td width="70%">评审结论：{{remark}}</td>
+                        </tr>
                     </table>
                 </div>
             </div>

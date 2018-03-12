@@ -1,8 +1,8 @@
-var woAttrStandCloseReusltApp = angular.module("woAttrStandCloseReuslt", []);
-woAttrStandCloseReusltApp.config(['$locationProvider', function($locationProvider) {
+var woAttrStandCloseValidReusltApp = angular.module("woAttrStandCloseValidReuslt", []);
+woAttrStandCloseValidReusltApp.config(['$locationProvider', function($locationProvider) {
     $locationProvider.html5Mode(true);
 }]);
-woAttrStandCloseReusltApp.controller("woAttrStandCloseReusltController", ["$scope", "$location", function ($scope, $location) {
+woAttrStandCloseValidReusltApp.controller("woAttrStandCloseValidReusltController", ["$scope", "$location", function ($scope, $location) {
     if(!($location.search().id == undefined || $location.search().id == null)){
         $("#id").val($location.search().id);
     }
@@ -51,16 +51,16 @@ woAttrStandCloseReusltApp.controller("woAttrStandCloseReusltController", ["$scop
         }
     };
 
-    $scope.submitWoAttrStandCloseResult = function () {
+    $scope.submitWoAttrStandCloseValidResult = function () {
         if (!$.html5Validate.isAllpass($(".class-required"))) {
             return false;
         }
         var con = confirm("确定提交！");
         if (con == true){
-            $("#woAttrStandCloseReusltForm").ajaxSubmit({
+            $("#woAttrStandCloseValidReusltForm").ajaxSubmit({
                 type: "post",
                 dataType : "json",
-                url : BASE_URL + "/kirikae/woOrderAttr/standClose.do",
+                url : BASE_URL + "/kirikae/woOrderAttr/standCloseValid.do",
                 success : function(resultJson) {
                     var result = angular.fromJson(resultJson);
                     if (result.success) {
@@ -76,15 +76,15 @@ woAttrStandCloseReusltApp.controller("woAttrStandCloseReusltController", ["$scop
         }
     };
 
-    $scope.closeWoAttrStandCloseResult = function () {
+    $scope.closeWoAttrStandCloseValidResult = function () {
         window.location.href = BASE_URL + "/kirikae/agency/getDialog.do";
     };
 
     $(document).ready(function () {
         $.ajax({
             method: 'post',
-            url: BASE_URL + "/kirikae/woOrderAttr/getListByUserId.do",
-            data:{"orderId":$("#id").val(), "stateType":"standcloseValid"},
+            url: BASE_URL + "/kirikae/woOrderAttr/getAgreementList.do",
+            data:{"orderId":$("#id").val()},
             success: function (resultJson) {
                 var result = angular.fromJson(resultJson);
                 if (result.success) {
@@ -96,4 +96,4 @@ woAttrStandCloseReusltApp.controller("woAttrStandCloseReusltController", ["$scop
         });
     });
 }]);
-angular.bootstrap(document, [ 'woAttrStandCloseReuslt' ]);
+angular.bootstrap(document, [ 'woAttrStandCloseValidReuslt' ]);

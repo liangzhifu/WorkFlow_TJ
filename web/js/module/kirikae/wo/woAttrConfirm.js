@@ -92,6 +92,57 @@ woAttrConfirmApp.controller("woAttrConfirmController", ["$scope", "$location", f
         window.location.href = BASE_URL + "/kirikae/agency/getDialog.do";
     };
 
+    $scope.getAlterationOrder = function () {
+        $.ajax({
+            method: 'post',
+            url: BASE_URL + "/alteration/order/getOrder.do",
+            data:{"orderId":$("#id").val()},
+            async: false,
+            success: function (resultJson) {
+                var result = angular.fromJson(resultJson);
+                if (result.success) {
+                    $scope.alterationOrder = result.alterationOrder;
+                    $scope.getWoOrderAttrList();
+                }else {
+                    alert("请联系系统管理员！");
+                }
+            }
+        });
+    };
+
+    $scope.getWoOrderAttrList = function () {
+        $.ajax({
+            method: 'post',
+            url: BASE_URL + "/kirikae/woOrderAttr/getListByUserId.do",
+            data:{"orderId":$("#id").val(), "stateType":"confirm"},
+            success: function (resultJson) {
+                var result = angular.fromJson(resultJson);
+                if (result.success) {
+                    $scope.woAttrList = result.dataMapList;
+                    $scope.calRowSpan();
+                    $scope.$apply();
+                    //判断量产前，还是量产后，量产后的预计完成时间不能晚于切替时间
+                    if($scope.alterationOrder.kirikaeOrder.kirikaeOrderType == 1){
+                        $("input[data-type='date']").each(function () {
+                            $(this).datetimepicker({
+                                timepicker: false,
+                                format: 'Y-m-d'
+                            });
+                        });
+                    }else {
+                        $("input[data-type='date']").each(function () {
+                            $(this).datetimepicker({
+                                timepicker: false,
+                                maxDate: $scope.alterationOrder.kirikaeOrder.designChangeTiming,
+                                format: 'Y-m-d'
+                            });
+                        });
+                    }
+                }
+            }
+        });
+    };
+
     $(document).ready(function () {
         $.ajax({
             method: 'post',
@@ -104,25 +155,7 @@ woAttrConfirmApp.controller("woAttrConfirmController", ["$scope", "$location", f
                 }
             }
         });
-        $.ajax({
-            method: 'post',
-            url: BASE_URL + "/kirikae/woOrderAttr/getListByUserId.do",
-            data:{"orderId":$("#id").val(), "stateType":"confirm"},
-            success: function (resultJson) {
-                var result = angular.fromJson(resultJson);
-                if (result.success) {
-                    $scope.woAttrList = result.dataMapList;
-                    $scope.calRowSpan();
-                    $scope.$apply();
-                    $("input[data-type='date']").each(function () {
-                        $(this).datetimepicker({
-                            timepicker: false,
-                            format: 'Y-m-d'
-                        });
-                    });
-                }
-            }
-        });
+        $scope.getAlterationOrder();
     });
 }]);
 angular.bootstrap(document, [ 'woAttrConfirm' ]);

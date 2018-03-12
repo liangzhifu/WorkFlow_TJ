@@ -70,7 +70,7 @@
                                     <span ng-if="data.orderAgency == 3">评审</span>
                                     <span ng-if="data.orderAgency == 4">文件上传</span>
                                     <span ng-if="data.orderAgency == 5">立合人员填写</span>
-                                    <span ng-if="data.orderAgency == 6">立合结果填写</span>
+                                    <span ng-if="data.orderAgency == 6">立合结果验证</span>
                                     <span ng-if="data.orderAgency == 7">立合确认</span>
                                     <span ng-if="data.orderAgency == 8">立合承认</span>
                                     <span ng-if="data.orderAgency == 9">指示书填写</span>
@@ -79,7 +79,10 @@
                                     <span ng-if="data.orderAgency == 12">确认书填写</span>
                                     <span ng-if="data.orderAgency == 13">确认书确认</span>
                                     <span ng-if="data.orderAgency == 14">确认书承认</span>
-                                    <span ng-if="data.orderAgency == 15">建立4M变化单</span>
+                                    <span ng-if="data.orderAgency == 15">立合结果填写</span>
+                                    <span ng-if="data.orderAgency == 104">文件上传</span>
+                                    <span ng-if="data.orderAgency == 115">立合结果填写</span>
+                                    <span ng-if="data.orderAgency == 106">立合结果验证</span>
                                 </button>
                             </td>
                         </tr>

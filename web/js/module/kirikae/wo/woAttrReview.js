@@ -66,6 +66,12 @@ woAttrReviewApp.controller("woAttrReviewController", ["$scope", "$location", fun
     };
 
     $scope.submitWoAttrReview = function () {
+        if(!$.html5Validate.isAllpass($("#spareColumn"))){
+            return false;
+        }
+        if(!$.html5Validate.isAllpass($("#fileId"))){
+            return false;
+        }
         for(var index = 0; index < $scope.woAttrList.length; index++){
             //判断对象外
             if($scope.woAttrList[index].questionId == 1){
@@ -204,8 +210,82 @@ woAttrReviewApp.controller("woAttrReviewController", ["$scope", "$location", fun
         }
     };
 
+    //上传会议纪要，显示上传控件
+    $scope.uploadFileModal = function (index) {
+        $("#uploadFile").val('');
+        $("#fileUploadModal").modal("show");
+    };
+
+    //上传会议纪要文件
+    $scope.uplodFile = function () {
+        if($("#uploadFile").val()){
+            $("#excelForm").ajaxSubmit({
+                success:function(resultJson){
+                    var result = angular.fromJson(resultJson);
+                    if (result.success) {
+                        $("#fileId").val(result.fileId);
+                        $("#fileName").val(result.fileName);
+                        $("#fileUploadModal").modal("hide");
+                    }
+                }
+            });
+            $("#uploadFile").val('');
+        }
+    };
+
     $scope.closeWoAttrReview = function () {
         window.location.href = BASE_URL + "/kirikae/agency/getDialog.do";
+    };
+
+    $scope.getAlterationOrder = function () {
+        $.ajax({
+            method: 'post',
+            url: BASE_URL + "/alteration/order/getOrder.do",
+            data:{"orderId":$("#id").val()},
+            async: false,
+            success: function (resultJson) {
+                var result = angular.fromJson(resultJson);
+                if (result.success) {
+                    $scope.alterationOrder = result.alterationOrder;
+                    $scope.getWoOrderAttrList();
+                }else {
+                    alert("请联系系统管理员！");
+                }
+            }
+        });
+    };
+
+    $scope.getWoOrderAttrList = function () {
+        $.ajax({
+            method: 'post',
+            url: BASE_URL + "/kirikae/woOrderAttr/getListByOrderId.do",
+            data:{"orderId":$("#id").val(), "stateType":"confirm"},
+            success: function (resultJson) {
+                var result = angular.fromJson(resultJson);
+                if (result.success) {
+                    $scope.woAttrList = result.dataMapList;
+                    $scope.calRowSpan();
+                    $scope.$apply();
+                    //判断量产前，还是量产后，量产后的预计完成时间不能晚于切替时间
+                    if($scope.alterationOrder.kirikaeOrder.kirikaeOrderType == 1){
+                        $("input[data-type='date']").each(function () {
+                            $(this).datetimepicker({
+                                timepicker: false,
+                                format: 'Y-m-d'
+                            });
+                        });
+                    }else {
+                        $("input[data-type='date']").each(function () {
+                            $(this).datetimepicker({
+                                timepicker: false,
+                                maxDate: $scope.alterationOrder.kirikaeOrder.designChangeTiming,
+                                format: 'Y-m-d'
+                            });
+                        });
+                    }
+                }
+            }
+        });
     };
 
     $(document).ready(function () {
@@ -220,25 +300,7 @@ woAttrReviewApp.controller("woAttrReviewController", ["$scope", "$location", fun
                 }
             }
         });
-        $.ajax({
-            method: 'post',
-            url: BASE_URL + "/kirikae/woOrderAttr/getListByOrderId.do",
-            data:{"orderId":$("#id").val(), "stateType":"confirm"},
-            success: function (resultJson) {
-                var result = angular.fromJson(resultJson);
-                if (result.success) {
-                    $scope.woAttrList = result.dataMapList;
-                    $scope.calRowSpan();
-                    $scope.$apply();
-                    $("input[data-type='date']").each(function () {
-                        $(this).datetimepicker({
-                            timepicker: false,
-                            format: 'Y-m-d'
-                        });
-                    });
-                }
-            }
-        });
+        $scope.getAlterationOrder();
     });
 }]);
 woAttrReviewApp.filter('attrFilter', function() {

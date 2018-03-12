@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>切替单立合确认</title>
+    <title>切替单立合结果填写</title>
     <%@include file="../../public/css.jsp"%>
     <%@include file="../../public/js.jsp"%>
 </head>
-<body ng-controller="standCloseCheckedController" ng-cloak>
-<form class="form-inline" id="standCloseCheckedForm">
+<body ng-controller="woAttrStandCloseValidReusltController" ng-cloak>
+<form class="form-inline" id="woAttrStandCloseValidReusltForm">
     <input type="hidden" id="id" name="orderId">
     <div class="main-container container-fluid" style="padding-left: 0px; padding-right: 0px;">
         <div class="main-content" style="padding-left: 0px; padding-right: 0px;">
@@ -42,7 +42,7 @@
                                             {{data.parentOrgName}}
                                         </td>
                                         <td ng-hide="data.rowSpan == 0" rowspan="{{data.rowSpan}}" style="display:table-cell; vertical-align:middle">
-                                            <input type="checkbox" name="woCheckbox" class="form-checkbox-mypage" value="{{data.woOrderId}}">{{data.orgName}}
+                                            {{data.orgName}}
                                         </td>
                                         <td>{{data.confirmProject}}</td>
                                         <td>{{data.confirmContent}}</td>
@@ -52,18 +52,25 @@
                                         <td>{{data.reviewPrinciple}}</td>
                                         <td>{{data.reviewTime}}</td>
                                         <td>{{data.agreementResult}}</td>
-                                        <td>{{data.agreementValidResult}}</td>
+                                        <td>
+                                            <input type="hidden" id="kirikaeWoOrderAttrList[{{$index}}].id" name="kirikaeWoOrderAttrList[{{$index}}].id" value="{{data.id}}">
+                                            <select title="" id="kirikaeWoOrderAttrList[{{$index}}].agreementValidResult" name="kirikaeWoOrderAttrList[{{$index}}].agreementValidResult"
+                                                    class="form-control-order form-control clean class-required" required="required"
+                                                    style="font-size: 12px;height: 25px;width: 95%;padding: 0px;">
+                                                <option value="">请选择</option>
+                                                <option value="NG">NG</option>
+                                                <option value="OK">OK</option>
+                                            </select>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="modal-body" style="padding: 0px;">
                                 <div class="modal-footer">
-                                    <button type="button" ng-click="refuseStandCloseChecked()"
-                                            class="btn btn-small btn-primary">拒绝</button>
-                                    <button type="button" ng-click="submitStandCloseChecked()"
-                                            class="btn btn-small btn-primary">确认</button>
-                                    <button type="button" ng-click="closeStandCloseChecked()"
+                                    <button type="button" ng-click="submitWoAttrStandCloseValidResult()"
+                                            class="btn btn-small btn-primary">确定</button>
+                                    <button type="button" ng-click="closeWoAttrStandCloseValidResult()"
                                             class="btn btn-small btn-primary">取消
                                     </button>
                                 </div>
@@ -76,5 +83,5 @@
     </div>
 </form>
 </body>
-<script src="<%=request.getContextPath()%>/js/module/kirikae/stand/kirikaeStandCloseChecked.js"></script>
+<script src="<%=request.getContextPath()%>/js/module/kirikae/stand/kirikaeStandCloseValidResult.js"></script>
 </html>

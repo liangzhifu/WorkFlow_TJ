@@ -56,6 +56,9 @@
                                 <button class="btn btn-small btn-purple" type="button" ng-click="viewDpcoi()">
                                     <i class="icon-on-right bigger-110"></i>查看DPCOI
                                 </button>
+                                <button class="btn btn-small btn-purple" type="button" ng-click="viewBook()">
+                                    <i class="icon-on-right bigger-110"></i>指示确认书
+                                </button>
                             </div>
                         </div>
                     </div>

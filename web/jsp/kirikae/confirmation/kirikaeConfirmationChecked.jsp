@@ -30,6 +30,11 @@
                                         <input title="" id="factory" name="factory" disabled
                                                ng-model="kirikaeConfirmation.factory" class="form-control-order form-control clean">
                                     </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label" title="">生产批次：</label>
+                                        <input title="" id="productionBatch" name="factory"
+                                               ng-model="kirikaeConfirmation.productionBatch" class="form-control-order form-control clean">
+                                    </div>
                                 </div>
                             </div>
                         </div>

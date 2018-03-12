@@ -73,12 +73,39 @@ standCloseCheckedApp.controller("standCloseCheckedController", ["$scope", "$loca
     };
 
     $scope.refuseStandCloseChecked = function () {
+        var flag = true;
+        var woOrderIdstr = "";
+        $('input[name="woCheckbox"]:checked').each(function() {
+            woOrderIdstr += "," + $(this).val();
+            //判断该组织下是否有对象外，对象外组织不能选择
+            for(var i = 0; i < $scope.woAttrList.length; i++) {
+                var woOrderId = $scope.woAttrList[i].woOrderId;
+                var questionId = $scope.woAttrList[i].questionId;
+                if(woOrderId == $(this).val() && questionId == 1){
+                    flag = false;
+                }
+            }
+        });
+        if (!flag){
+            alert("不能选择对象外组织！");
+            return false;
+        }
+        if (woOrderIdstr == ""){
+            alert("请选择一个拒绝的科室！！");
+            return false;
+        } else {
+            woOrderIdstr = woOrderIdstr.substring(1);
+        }
         var con = confirm("确定拒绝立合结果！");
         if (con == true) {
+            var refuseReason = "";
+            while (refuseReason == ""){
+                refuseReason = prompt("请输入拒绝原因！");
+            }
             $.ajax({
                 method: 'post',
                 url: BASE_URL + "/kirikae/stand/refuse.do",
-                data:{"orderId":$("#id").val()},
+                data:{"orderId":$("#id").val(), "woOrderIdstr":woOrderIdstr, "refuseReason":refuseReason},
                 success: function (resultJson) {
                     var result = angular.fromJson(resultJson);
                     if (result.success) {

@@ -245,15 +245,6 @@ alterationOrderAddOrEditApp.controller("alterationOrderAddOrEditController", ["$
                 var result = angular.fromJson(resultJson);
                 $scope.carNameList = result;
                 $scope.$apply();
-                $("#kirikaeOrder\\.vehicleName").chosen({
-                    no_results_text : "没有找到结果！",//搜索无结果时显示的提示
-                    search_contains : true,   //关键字模糊搜索，设置为false，则只从开头开始匹配
-                    allow_single_deselect : true, //是否允许取消选择
-                    max_selected_options : 5,  //当select为多选时，最多选择个数
-                    placeholder_text_multiple : "请选择",
-                    max_shown_results : 5,
-                    width : "60%"
-                });
                 $scope.showAlteration();
             }
         });
@@ -272,8 +263,6 @@ alterationOrderAddOrEditApp.controller("alterationOrderAddOrEditController", ["$
                     if (result.success) {
                         $scope.alterationOrder = result.alterationOrder;
                         $("#kirikaeOrder\\.id").val($scope.alterationOrder.kirikaeOrder.id);
-                        $("#kirikaeOrder\\.vehicleName option[value='"+$scope.alterationOrder.kirikaeOrder.vehicleName+"']").attr("selected","selected");
-                        $("#kirikaeOrder\\.vehicleName").trigger("chosen:updated");
                         $scope.$apply();
                     }else {
                         alert("请联系系统管理员！");

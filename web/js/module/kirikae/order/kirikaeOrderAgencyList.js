@@ -71,7 +71,7 @@ kirikaeOrderAgencyListApp.controller("kirikaeOrderAgencyListController", functio
         }else if(orderAgency == 5){
             window.location.href = BASE_URL + "/kirikae/stand/getDialog.do?id="+orderId;
         }else if(orderAgency == 6){
-            window.location.href = BASE_URL + "/kirikae/woOrderAttr/getStandCloseDialog.do?id="+orderId;
+            window.location.href = BASE_URL + "/kirikae/woOrderAttr/getStandCloseValidDialog.do?id="+orderId;
         }else if(orderAgency == 7){
             window.location.href = BASE_URL + "/kirikae/stand/getCheckedDialog.do?id="+orderId;
         }else if(orderAgency == 8){
@@ -89,7 +89,13 @@ kirikaeOrderAgencyListApp.controller("kirikaeOrderAgencyListController", functio
         }else if(orderAgency == 14){
             window.location.href = BASE_URL + "/kirikae/confirmation/getApprovedDialog.do?orderId="+orderId;
         }else if(orderAgency == 15){
-            window.location.href = BASE_URL + "/kirikae/order/getGenerateFourDialog.do?id="+orderId;
+            window.location.href = BASE_URL + "/kirikae/woOrderAttr/getStandCloseDialog.do?id="+orderId;
+        }else if(orderAgency == 104){
+            window.location.href = BASE_URL + "/kirikae/woOrderAttr/getChildUploadDialog.do?id="+orderId;
+        }else if(orderAgency == 115){
+            window.location.href = BASE_URL + "/kirikae/woOrderAttr/getChildStandCloseDialog.do?id="+orderId;
+        }else if(orderAgency == 106){
+            window.location.href = BASE_URL + "/kirikae/woOrderAttr/getChildStandCloseValidDialog.do?id="+orderId;
         }else {
 
         }

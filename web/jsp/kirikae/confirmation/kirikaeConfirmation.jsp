@@ -21,7 +21,7 @@
                             <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label class="control-label" title="">发行日期：</label>
+                                        <label class="control-label" title="">日期：</label>
                                         <input title="" id="releaseDate" name="releaseDate" data-type="date"
                                                class="form-control-order form-control clean">
                                     </div>
@@ -29,6 +29,11 @@
                                         <label class="control-label" title="">工厂：</label>
                                         <input title="" id="factory" name="factory"
                                                ng-model="kirikaeConfirmation.factory" class="form-control-order form-control clean">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label" title="">生产批次：</label>
+                                        <input title="" id="productionBatch" name="factory"
+                                               ng-model="kirikaeConfirmation.productionBatch" class="form-control-order form-control clean">
                                     </div>
                                 </div>
                             </div>

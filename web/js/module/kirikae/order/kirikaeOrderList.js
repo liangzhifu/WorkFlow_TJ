@@ -99,6 +99,23 @@ alterationKirikaeOrderListApp.controller("alterationKirikaeOrderListController",
         window.open(BASE_URL + "/kirikae/woOrderAttr/getViewDialog.do?orderId="+orderId)
     };
 
+    //查看切替单指示确认书
+    $scope.viewBook = function () {
+        if($('input[name="alterationKirikaeOrderCheck"]:checked').length == 0){
+            alert("请选择一条切替单！");
+            return false;
+        }
+        if($('input[name="alterationKirikaeOrderCheck"]:checked').length > 1){
+            alert("请选择一条切替单！");
+            return false;
+        }
+        var orderId = "";
+        $('input[name="alterationKirikaeOrderCheck"]:checked').each(function() {
+            orderId = $(this).val();
+        });
+        window.open(BASE_URL + "/kirikae/order/getInstructionConfirmationDialog.do?orderId="+orderId)
+    };
+
     //新增切替变更单
     $scope.addKirikaeOrder = function () {
         $.ajax({

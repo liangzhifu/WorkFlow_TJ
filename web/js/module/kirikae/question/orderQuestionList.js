@@ -4,6 +4,10 @@ orderQuestionListApp.config(['$locationProvider', function($locationProvider) {
 }]);
 orderQuestionListApp.controller("orderQuestionListController", ["$scope", "$location", function ($scope, $location) {
     $scope.orderQuestionList = [];
+    $scope.fileId = 0;
+    $scope.fileName = "";
+    $scope.remark = "";
+    $scope.spareColumn = "";
 
     //计算合并单元格
     $scope.calRowSpan = function () {
@@ -63,6 +67,31 @@ orderQuestionListApp.controller("orderQuestionListController", ["$scope", "$loca
                 if (result.success) {
                     $scope.orderQuestionList = result.dataMapList;
                     $scope.calRowSpan();
+                    $scope.$apply();
+                }else {
+                    alert(result.message);
+                }
+            }
+        });
+
+        $.ajax({
+            method: 'post',
+            url: BASE_URL + "/kirikae/procedure/getKirikaeOrderProcedureList.do",
+            data: {"orderId":orderId},
+            async: false,
+            success: function (resultJson) {
+                var result = angular.fromJson(resultJson);
+                if (result.success) {
+                    var dataMapList = result.dataMapList;
+                    for (var i = 0; i < dataMapList.length; i ++) {
+                        procedureCode = dataMapList[i].procedureCode;
+                        if (procedureCode == 3) {//评审流程
+                            $scope.fileId = dataMapList[i].fileId;
+                            $scope.fileName = dataMapList[i].fileName;
+                            $scope.remark = dataMapList[i].remark;
+                            $scope.spareColumn = dataMapList[i].spareColumn;
+                        }
+                    }
                     $scope.$apply();
                 }else {
                     alert(result.message);

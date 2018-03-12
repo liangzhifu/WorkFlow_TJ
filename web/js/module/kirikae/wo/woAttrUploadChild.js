@@ -1,12 +1,13 @@
-var woAttrStandCloseReusltApp = angular.module("woAttrStandCloseReuslt", []);
-woAttrStandCloseReusltApp.config(['$locationProvider', function($locationProvider) {
+var woAttrUploadChildApp = angular.module("woAttrUploadChild", []);
+woAttrUploadChildApp.config(['$locationProvider', function($locationProvider) {
     $locationProvider.html5Mode(true);
 }]);
-woAttrStandCloseReusltApp.controller("woAttrStandCloseReusltController", ["$scope", "$location", function ($scope, $location) {
+woAttrUploadChildApp.controller("woAttrUploadChildController", ["$scope", "$location", function ($scope, $location) {
     if(!($location.search().id == undefined || $location.search().id == null)){
         $("#id").val($location.search().id);
     }
 
+    $scope.systemUserList = [];
     $scope.woAttrList = [];
 
     //计算合并单元格
@@ -51,16 +52,41 @@ woAttrStandCloseReusltApp.controller("woAttrStandCloseReusltController", ["$scop
         }
     };
 
-    $scope.submitWoAttrStandCloseResult = function () {
+    $scope.file = {"fileIndex" : ""};
+
+    $scope.uploadNewFile = function (index) {
+        $("#uploadFile").val('');
+        $("#fileUploadModal").modal("show");
+        $scope.file.fileIndex = index;
+    };
+
+    $scope.uplodFile = function () {
+        if($("#uploadFile").val()){
+            $("#excelForm").ajaxSubmit({
+                success:function(resultJson){
+                    var result = angular.fromJson(resultJson);
+                    if (result.success) {
+                        $scope.woAttrList[$scope.file.fileIndex].fileId = result.fileId;
+                        $scope.woAttrList[$scope.file.fileIndex].fileName = result.fileName;
+                        $("#fileUploadModal").modal("hide");
+                        $scope.$apply();
+                    }
+                }
+            });
+            $("#uploadFile").val('');
+        }
+    };
+
+    $scope.submitWoAttrUpload = function () {
         if (!$.html5Validate.isAllpass($(".class-required"))) {
             return false;
         }
         var con = confirm("确定提交！");
         if (con == true){
-            $("#woAttrStandCloseReusltForm").ajaxSubmit({
+            $("#woAttrUploadChildForm").ajaxSubmit({
                 type: "post",
                 dataType : "json",
-                url : BASE_URL + "/kirikae/woOrderAttr/standClose.do",
+                url : BASE_URL + "/kirikae/woOrderAttr/upload.do",
                 success : function(resultJson) {
                     var result = angular.fromJson(resultJson);
                     if (result.success) {
@@ -76,24 +102,41 @@ woAttrStandCloseReusltApp.controller("woAttrStandCloseReusltController", ["$scop
         }
     };
 
-    $scope.closeWoAttrStandCloseResult = function () {
+    $scope.closeWoAttrUpload = function () {
         window.location.href = BASE_URL + "/kirikae/agency/getDialog.do";
     };
 
     $(document).ready(function () {
         $.ajax({
             method: 'post',
+            url: BASE_URL + "/system/userOrg/getUserOrgList.do",
+            success: function (resultJson) {
+                var result = angular.fromJson(resultJson);
+                if (result.success) {
+                    $scope.systemUserList = result.mapList;
+                    $scope.$apply();
+                }
+            }
+        });
+        $.ajax({
+            method: 'post',
             url: BASE_URL + "/kirikae/woOrderAttr/getListByUserId.do",
-            data:{"orderId":$("#id").val(), "stateType":"standcloseValid"},
+            data:{"orderId":$("#id").val(), "stateType":"upload"},
             success: function (resultJson) {
                 var result = angular.fromJson(resultJson);
                 if (result.success) {
                     $scope.woAttrList = result.dataMapList;
                     $scope.calRowSpan();
                     $scope.$apply();
+                    $("input[data-type='date']").each(function () {
+                        $(this).datetimepicker({
+                            timepicker: false,
+                            format: 'Y-m-d'
+                        });
+                    });
                 }
             }
         });
     });
 }]);
-angular.bootstrap(document, [ 'woAttrStandCloseReuslt' ]);
+angular.bootstrap(document, [ 'woAttrUploadChild' ]);

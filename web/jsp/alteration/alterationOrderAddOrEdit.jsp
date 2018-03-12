@@ -122,11 +122,8 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label class="control-label" title=""><span style="color:red;">*</span>车种名：</label>
-                                            <select title="" id="kirikaeOrder.vehicleName" name="kirikaeOrder.vehicleName" required="required" style="font-size: 12px;height: 25px;width: 60%;"
-                                                    ng-model="alterationOrder.kirikaeOrder.vehicleName" class="form-control-order form-control clean chosen-select chosen">
-                                                <option value="">请选择</option>
-                                                <option ng-repeat="data in carNameList" value="{{data.configValue}}">{{data.vehicleName}}</option>
-                                            </select>
+                                            <input title="" id="kirikaeOrder.vehicleName" name="kirikaeOrder.vehicleName" style="font-size: 12px;height: 25px;" required="required"
+                                                   ng-model="alterationOrder.kirikaeOrder.vehicleName" class="form-control-order form-control clean">
                                         </div>
                                     </div>
                                     <div class="row">
