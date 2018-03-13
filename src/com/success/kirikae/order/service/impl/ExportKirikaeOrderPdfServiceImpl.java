@@ -1,5 +1,7 @@
 package com.success.kirikae.order.service.impl;
 
+import com.dpcoi.file.dao.FileUploadDao;
+import com.dpcoi.file.domain.FileUpload;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.*;
 import com.success.kirikae.confirmation.dao.KirikaeConfirmationDao;
@@ -10,9 +12,11 @@ import com.success.kirikae.order.constant.KirikaeOrderEnum;
 import com.success.kirikae.order.dao.KirikaeOrderChangeContentDao;
 import com.success.kirikae.order.dao.KirikaeOrderDao;
 import com.success.kirikae.order.dao.KirikaeOrderPartsNumberDao;
+import com.success.kirikae.order.dao.KirikaeResumeDao;
 import com.success.kirikae.order.domain.KirikaeOrder;
 import com.success.kirikae.order.domain.KirikaeOrderChangeContent;
 import com.success.kirikae.order.domain.KirikaeOrderPartsNumber;
+import com.success.kirikae.order.domain.KirikaeResume;
 import com.success.kirikae.order.service.ExportKirikaeOrderPdfService;
 import com.success.kirikae.procedure.constant.ProcedureEnum;
 import com.success.kirikae.procedure.dao.KirikaeOrderProcedureDao;
@@ -57,6 +61,12 @@ public class ExportKirikaeOrderPdfServiceImpl implements ExportKirikaeOrderPdfSe
 
     @Resource(name = "kirikaeConfirmationDao")
     private KirikaeConfirmationDao kirikaeConfirmationDao;
+
+    @Resource(name = "kirikaeResumeDao")
+    private KirikaeResumeDao kirikaeResumeDao;
+
+    @Resource(name = "fileUploadDao")
+    private FileUploadDao fileUploadDao;
 
     @Override
     public String exportConfirmBook(Integer orderId, String path) throws Exception {
@@ -725,6 +735,27 @@ public class ExportKirikaeOrderPdfServiceImpl implements ExportKirikaeOrderPdfSe
         PdfStamper pdfStamper = new PdfStamper(pdfReader, byteArrayOutputStream);
         AcroFields acroFields = pdfStamper.getAcroFields();
 
+        //履历
+        String[] resumeDescription = {"", "", "", ""};
+        String[] resumePrepared = {"", "", "", ""};
+        List<KirikaeResume> kirikaeResumeList = this.kirikaeResumeDao.selectKirikaeResumeListByOrderId(orderId);
+        if (kirikaeResumeList != null){
+            int i = 0;
+            for (KirikaeResume kirikaeResume : kirikaeResumeList){
+                resumeDescription[i] = kirikaeResume.getDescription();
+                resumePrepared[i] = kirikaeResume.getPrepared();
+                i++;
+            }
+        }
+        acroFields.setField("resume-description-1", resumeDescription[0]);
+        acroFields.setField("resume-description-2", resumeDescription[1]);
+        acroFields.setField("resume-description-3", resumeDescription[2]);
+        acroFields.setField("resume-description-4", resumeDescription[3]);
+        acroFields.setField("resume-prepared-1", resumePrepared[0]);
+        acroFields.setField("resume-prepared-2", resumePrepared[1]);
+        acroFields.setField("resume-prepared-3", resumePrepared[2]);
+        acroFields.setField("resume-prepared-4", resumePrepared[3]);
+
         KirikaeOrder kirikaeOrder  = this.kirikaeOrderDao.selectKirikaeOrderByOrderId(orderId);
         //设变号
         String tkNo = kirikaeOrder.getTkNo();
@@ -843,18 +874,18 @@ public class ExportKirikaeOrderPdfServiceImpl implements ExportKirikaeOrderPdfSe
         }
         //客户技术承认
         Integer customerEngineering = kirikaeOrder.getCustomerEngineering();
-        if(customerEngineering != null){
-            if(1 == customerEngineering.intValue()){
+        if(customerEngineering != null) {
+            if (1 == customerEngineering) {
                 acroFields.setField("customer-engineering-yes", "true");
-            }else if(2 == customerEngineering.intValue()){
+            } else if (2 == customerEngineering) {
                 acroFields.setField("customer-engineering-no", "true");
             }
         }
         Integer customerEngineeringApproval = kirikaeOrder.getCustomerEngineeringApproval();
         if(customerEngineeringApproval != null){
-            if(1 == customerEngineeringApproval.intValue()){
+            if(1 == customerEngineeringApproval){
                 acroFields.setField("customer-engineering-approval-yes", "true");
-            }else if(2 == customerEngineeringApproval.intValue()){
+            }else if(2 == customerEngineeringApproval){
                 acroFields.setField("customer-engineering-approval-no", "true");
             }
         }
@@ -912,27 +943,34 @@ public class ExportKirikaeOrderPdfServiceImpl implements ExportKirikaeOrderPdfSe
             }
         }
         Integer designCostsPay = kirikaeOrder.getDesignCostsPay();
-        if(designCostsPay != null){
-            if(1 == designCostsPay.intValue()){
+        if (designCostsPay != null) {
+            if (1 == designCostsPay) {
                 acroFields.setField("design-costs-pay-1", "true");
-            }else if(2 == designCostsPay.intValue()){
+            } else if (2 == designCostsPay) {
                 acroFields.setField("design-costs-pay-2", "true");
-            }
-            else if(3 == designCostsPay.intValue()){
+            } else if (3 == designCostsPay) {
                 acroFields.setField("design-costs-pay-3", "true");
             }
         }
 
+        Integer customerEo = kirikaeOrder.getCustomerEo();
+        if (customerEo != null) {
+            if (1 == customerEo) {
+                acroFields.setField("design-change-contests-yes", "true");
+            } else if (2 == customerEo) {
+                acroFields.setField("design-change-contests-no", "true");
+            }
+        }
         //设变内容变更前
         String beforeChangeContent = "";
         //设变内容变更后
         String afterChangeContent = "";
         List<KirikaeOrderChangeContent> kirikaeOrderChangeContentList = this.kirikaeOrderChangeContentDao.selectKirikaeOrderChangeContentListByOrderId(orderId);
-        for(KirikaeOrderChangeContent kirikaeOrderChangeContent : kirikaeOrderChangeContentList){
-            if("".equals(beforeChangeContent)){
+        for (KirikaeOrderChangeContent kirikaeOrderChangeContent : kirikaeOrderChangeContentList) {
+            if ("".equals(beforeChangeContent)) {
                 beforeChangeContent += kirikaeOrderChangeContent.getBeforeChange();
                 afterChangeContent += kirikaeOrderChangeContent.getAfterChange();
-            }else {
+            } else {
                 beforeChangeContent += "\n" + kirikaeOrderChangeContent.getBeforeChange();
                 afterChangeContent += "\n" + kirikaeOrderChangeContent.getAfterChange();
             }
@@ -940,6 +978,14 @@ public class ExportKirikaeOrderPdfServiceImpl implements ExportKirikaeOrderPdfSe
         acroFields.setField("before-change-content", beforeChangeContent);
         acroFields.setField("after-change-content", afterChangeContent);
 
+        Integer partsNumberChange = kirikaeOrder.getPartsNumberChange();
+        if (partsNumberChange != null) {
+            if (1 == partsNumberChange) {
+                acroFields.setField("parts-num-yes", "true");
+            } else if (2 == partsNumberChange) {
+                acroFields.setField("parts-num-no", "true");
+            }
+        }
         //对象部品及品号变更前
         String beforePartsNum = "变更前";
         //对象部品及品号变更后
@@ -951,6 +997,49 @@ public class ExportKirikaeOrderPdfServiceImpl implements ExportKirikaeOrderPdfSe
         }
         acroFields.setField("before-parts-num", beforePartsNum);
         acroFields.setField("after-parts-num", afterPartsNum);
+
+        //切替现场确认
+        Integer presenceRequired = kirikaeOrder.getPresenceRequired();
+        if (presenceRequired != null) {
+            if (1 == presenceRequired) {
+                acroFields.setField("presence-required-yes", "true");
+            } else if (2 == presenceRequired) {
+                acroFields.setField("presence-required-no", "true");
+            }
+        }
+        //切替类型
+        Integer desingChangeType = kirikaeOrder.getDesingChangeType();
+        if (desingChangeType != null) {
+            if (1 == desingChangeType) {
+                acroFields.setField("desing-change-type-1", "true");
+            } else if (2 == desingChangeType) {
+                acroFields.setField("desing-change-type-2", "true");
+            }
+        }
+        //制造内线
+        String manufactureInternal = kirikaeOrder.getManufactureInternal();
+        if (manufactureInternal == null) {
+            manufactureInternal = "";
+        }
+        acroFields.setField("manufacture-internal", manufactureInternal);
+        //制造担当
+        String manufacturePrepared = kirikaeOrder.getManufacturePrepared();
+        if (manufacturePrepared == null) {
+            manufacturePrepared = "";
+        }
+        acroFields.setField("manufacture-prepared", manufacturePrepared);
+        //切替时间
+        Date designChangeTiming = kirikaeOrder.getDesignChangeTiming();
+        String designChangeTimingDay = "";
+        String designChangeTimingMonth = "";
+        if (designChangeTiming != null){
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(designChangeTiming);
+            designChangeTimingDay = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+            designChangeTimingMonth = String.valueOf((cal.get(Calendar.MONTH) + 1));
+        }
+        acroFields.setField("design-change-timing-day", designChangeTimingDay);
+        acroFields.setField("design-change-timing-month", designChangeTimingMonth);
 
         //指示书承认
         String instructionApproved = "";
@@ -1035,64 +1124,150 @@ public class ExportKirikaeOrderPdfServiceImpl implements ExportKirikaeOrderPdfSe
         }
         acroFields.setField("instruction-factory", instructionFactory);
         if(customerDesignChangeNotification != null){
-            if(1 == customerDesignChangeNotification.intValue()){
+            if(1 == customerDesignChangeNotification){
                 acroFields.setField("customer-design-change-notification", "true");
             }
         }
         if(customerTechnologyApproval != null){
-            if(1 == customerTechnologyApproval.intValue()){
+            if(1 == customerTechnologyApproval){
                 acroFields.setField("customer-technology-approval", "true");
             }
         }
         if(certificationApproval != null){
-            if(1 == certificationApproval.intValue()){
+            if(1 == certificationApproval){
                 acroFields.setField("certification-approval", "true");
             }
         }
-        if(isirProcession != null){
-            if(1 == isirProcession.intValue()){
+        if (isirProcession != null) {
+            if (1 == isirProcession) {
                 acroFields.setField("instruction-isir-procession-yes", "true");
-            }else if(0 == isirProcession.intValue()){
+            } else if (0 == isirProcession) {
                 acroFields.setField("instruction-isir-procession-no", "true");
             }
         }
-        if(isirMarking != null){
-            if(1 == isirMarking.intValue()){
+        if (isirMarking != null) {
+            if (1 == isirMarking) {
                 acroFields.setField("instruction-isir-marking-yes", "true");
-            }else if(0 == isirMarking.intValue()){
+            } else if (0 == isirMarking) {
                 acroFields.setField("instruction-isir-marking-no", "true");
             }
         }
-        if(isirNotificationIssued != null){
-            if(1 == isirNotificationIssued.intValue()){
+        if (isirNotificationIssued != null) {
+            if (1 == isirNotificationIssued) {
                 acroFields.setField("instruction-isir-notification-issued-yes", "true");
-            }else if(0 == isirNotificationIssued.intValue()){
+            } else if (0 == isirNotificationIssued) {
                 acroFields.setField("instruction-isir-notification-issued-no", "true");
             }
         }
 
         //确认书工厂
         String confirmationFactory = "";
+        String confirmationProductionBatch = "";
+        String confirmationReleaseDateStr = "";
         KirikaeConfirmation kirikaeConfirmation = this.kirikaeConfirmationDao.selectKirikaeConfirmationByOrderId(orderId);
-        if(kirikaeConfirmation != null){
+        if (kirikaeConfirmation != null) {
             confirmationFactory = kirikaeConfirmation.getFactory();
+            confirmationProductionBatch = kirikaeConfirmation.getProductionBatch();
+            Date releaseDate = kirikaeConfirmation.getReleaseDate();
+            if (releaseDate != null) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                confirmationReleaseDateStr = formatter.format(releaseDate);
+            }
         }
-        if(confirmationFactory == null){
-            instructionFactory = "";
+        if (confirmationFactory == null) {
+            confirmationFactory = "";
+        }
+        if (confirmationProductionBatch == null) {
+            confirmationProductionBatch = "";
         }
         acroFields.setField("confirmation-factory", confirmationFactory);
+        acroFields.setField("confirmation-production-batch", confirmationProductionBatch);
+        acroFields.setField("confirmation-release-date", confirmationReleaseDateStr);
 
         pdfStamper.setFormFlattening(true);
         pdfStamper.close();
         Document document = new Document();
         PdfCopy pdfCopy = new PdfCopy(document, fileOutputStream);
         document.open();
-        PdfImportedPage impPage = null;
-        impPage = pdfCopy.getImportedPage(new PdfReader(byteArrayOutputStream.toByteArray()), 1);
+        PdfImportedPage impPage = pdfCopy.getImportedPage(new PdfReader(byteArrayOutputStream.toByteArray()), 1);
         pdfCopy.addPage(impPage);
         document.close();
 
         return pdfName;
+    }
+
+    @Override
+    public String exportHandMatchAttachment(Integer orderId, String path) throws Exception {
+        String handMatchAttachmentName = "";
+        //判断是否待附件
+        Boolean flag = false;
+        List<KirikaeOrderChangeContent> kirikaeOrderChangeContentList = this.kirikaeOrderChangeContentDao.selectKirikaeOrderChangeContentListByOrderId(orderId);
+        List<Integer> fileIdList = new LinkedList<Integer>();
+        for (KirikaeOrderChangeContent kirikaeOrderChangeContent : kirikaeOrderChangeContentList) {
+            Integer beforeFileId = kirikaeOrderChangeContent.getBeforeFileId();
+            if (beforeFileId != null) {
+                fileIdList.add(beforeFileId);
+            }
+            Integer newFileId = kirikaeOrderChangeContent.getNewFileId();
+            if (newFileId != null) {
+                fileIdList.add(newFileId);
+            }
+        }
+        //查询PDF文件
+        List<FileUpload> fileUploadList = new LinkedList<FileUpload>();
+        if (fileIdList.size() > 0){
+            for (Integer fileId : fileIdList) {
+                FileUpload fileUpload = new FileUpload();
+                fileUpload.setFileId(fileId);
+                fileUpload = this.fileUploadDao.selectBySelf(fileUpload);
+                String fileType = fileUpload.getFileType();
+                if ("application/pdf".equals(fileType)) {
+                    flag = true;
+                    fileUploadList.add(fileUpload);
+                }
+            }
+        }
+        String handMatchName = this.exportHandMatch(orderId, path);
+        if (flag) {
+            Date date = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String randNum = UUID.randomUUID().toString();
+            handMatchAttachmentName = sdf.format(date)+"_"+randNum+".pdf";
+
+            List<PdfReader> pdfReaderList = new LinkedList<PdfReader>();
+            PdfReader reader = new PdfReader(path+"stdout/" + handMatchName);
+            pdfReaderList.add(reader);
+            for (FileUpload fileUpload : fileUploadList) {
+                PdfReader temp = new PdfReader(path+"fileupload/" + fileUpload.getFileAlias());
+                pdfReaderList.add(temp);
+            }
+
+            FileOutputStream out = new FileOutputStream(path+"stdout/"+handMatchAttachmentName);
+            Document document = new Document();
+            PdfWriter writer = PdfWriter.getInstance(document, out);
+
+            document.open();
+            PdfContentByte cb = writer.getDirectContent();
+
+            int pageOfCurrentReaderPDF = 0;
+            Iterator<PdfReader> iteratorPDFReader = pdfReaderList.iterator();
+            while (iteratorPDFReader.hasNext()) {
+                PdfReader pdfReader = iteratorPDFReader.next();
+                while (pageOfCurrentReaderPDF < pdfReader.getNumberOfPages()) {
+                    document.newPage();
+                    pageOfCurrentReaderPDF++;
+                    PdfImportedPage page = writer.getImportedPage(pdfReader, pageOfCurrentReaderPDF);
+                    cb.addTemplate(page, 0, 0);
+                }
+                pageOfCurrentReaderPDF = 0;
+            }
+            out.flush();
+            document.close();
+            out.close();
+        } else {
+            handMatchAttachmentName = handMatchName;
+        }
+        return handMatchAttachmentName;
     }
 
 }

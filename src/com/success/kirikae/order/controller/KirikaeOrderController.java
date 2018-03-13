@@ -249,7 +249,7 @@ public class KirikaeOrderController {
         Map<String, Object> map = new HashMap<String, Object>();
         try{
             String path = request.getSession().getServletContext().getRealPath("/");
-            String fileName = this.exportKirikaeOrderPdfService.exportHandMatch(orderId, path);
+            String fileName = this.exportKirikaeOrderPdfService.exportHandMatchAttachment(orderId, path);
             map.put("success", true);
             map.put("path", "/stdout/" + fileName);
         }catch(Exception e){
