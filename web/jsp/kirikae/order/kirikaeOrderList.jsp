@@ -99,7 +99,23 @@
                                 <td>{{data.designChangeTiming | date:"yyyy-MM-dd"}}</td>
                                 <td>
                                     <span ng-if="data.orderState == '10A'">初始化</span>
-                                    <span ng-if="data.orderState == '10B'">处理中</span>
+                                    <span ng-if="data.orderState == '10B'">
+                                        <span ng-if="data.procedureCode == 1">确认切替日期</span>
+                                        <span ng-if="data.procedureCode == 2">填写确认内容</span>
+                                        <span ng-if="data.procedureCode == 3">评审</span>
+                                        <span ng-if="data.procedureCode == 4">文件上传</span>
+                                        <span ng-if="data.procedureCode == 5">立合-人员填写</span>
+                                        <span ng-if="data.procedureCode == 6">立合--结果验证</span>
+                                        <span ng-if="data.procedureCode == 7">立合--确认</span>
+                                        <span ng-if="data.procedureCode == 8">立合--承认</span>
+                                        <span ng-if="data.procedureCode == 9">指示书--做成</span>
+                                        <span ng-if="data.procedureCode == 10">指示书--确认</span>
+                                        <span ng-if="data.procedureCode == 11">指示书--承认</span>
+                                        <span ng-if="data.procedureCode == 12">确认书--做成</span>
+                                        <span ng-if="data.procedureCode == 13">确认书--确认</span>
+                                        <span ng-if="data.procedureCode == 14">确认书--承认</span>
+                                        <span ng-if="data.procedureCode == 15">立合--结果确认</span>
+                                    </span>
                                     <span ng-if="data.orderState == '10C'">已完成</span>
                                     <span ng-if="data.orderState == '10X'">已作废</span>
                                 </td>

@@ -79,9 +79,9 @@
                                     <span ng-if="data.orderAgency == 12">确认书填写</span>
                                     <span ng-if="data.orderAgency == 13">确认书确认</span>
                                     <span ng-if="data.orderAgency == 14">确认书承认</span>
-                                    <span ng-if="data.orderAgency == 15">立合结果填写</span>
+                                    <span ng-if="data.orderAgency == 15">立合结果确认</span>
                                     <span ng-if="data.orderAgency == 104">文件上传</span>
-                                    <span ng-if="data.orderAgency == 115">立合结果填写</span>
+                                    <span ng-if="data.orderAgency == 115">立合结果确认</span>
                                     <span ng-if="data.orderAgency == 106">立合结果验证</span>
                                 </button>
                             </td>

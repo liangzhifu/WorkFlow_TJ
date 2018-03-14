@@ -317,7 +317,7 @@ public class ExportKirikaeOrderPdfServiceImpl implements ExportKirikaeOrderPdfSe
         Font font = new Font(bfChinese, 7, Font.BOLD);
 
         Table table = new Table(10);
-        float[] columnWidth = {30,40,30,50,115,55,60,55,60,65};
+        float[] columnWidth = {25,45,20,60,185,25,60,50,50,30};
         table.setWidths(columnWidth);
         table.setPadding(3f);
 

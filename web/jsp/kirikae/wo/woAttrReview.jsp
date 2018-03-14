@@ -48,36 +48,44 @@
                                         <td>{{data.confirmProject}}</td>
                                         <td>{{data.confirmContent}}</td>
                                         <td>
-                                            <select title="" id="kirikaeWoOrderAttrList[{{$index}}].preparedUser" name="kirikaeWoOrderAttrList[{{$index}}].preparedUser"
-                                                    class="form-control-order form-control clean class-required" required="required"
-                                                    style="font-size: 12px;height: 25px;width: 95%;padding: 0px;">
-                                                <option value="">请选择</option>
-                                                <option ng-repeat="userDate in systemUserList | attrFilter:data.orgId"
-                                                        value="{{userDate.userId}}" ng-selected="userDate.userId == data.preparedUser">{{userDate.userName}}</option>
-                                            </select>
+                                            <span ng-hide="data.questionId == 1">
+                                                <select title="" id="kirikaeWoOrderAttrList[{{$index}}].preparedUser" name="kirikaeWoOrderAttrList[{{$index}}].preparedUser"
+                                                        class="form-control-order form-control clean class-required" required="required"
+                                                        style="font-size: 12px;height: 25px;width: 95%;padding: 0px;">
+                                                    <option value="">请选择</option>
+                                                    <option ng-repeat="userDate in systemUserList | attrFilter:data.orgId"
+                                                            value="{{userDate.userId}}" ng-selected="userDate.userId == data.preparedUser">{{userDate.userName}}</option>
+                                                </select>
+                                            </span>
                                         </td>
                                         <td>
-                                            <input type="hidden" id="kirikaeWoOrderAttrList[{{$index}}].id" name="kirikaeWoOrderAttrList[{{$index}}].id" value="{{data.id}}">
-                                            <input type="hidden" id="kirikaeWoOrderAttrList[{{$index}}].questionId" name="kirikaeWoOrderAttrList[{{$index}}].questionId" value="{{data.questionId}}">
-                                            <input title="" id="kirikaeWoOrderAttrList[{{$index}}].changeCompleteTime"
-                                                   name="kirikaeWoOrderAttrList[{{$index}}].changeCompleteTime" data-type='date' value="{{data.changeCompleteTime}}"
-                                                   class="form-control-order form-control clean class-required" required="required"
-                                                   style="font-size: 12px;height: 25px;width: 95%" />
+                                            <span ng-hide="data.questionId == 1">
+                                                <input type="hidden" id="kirikaeWoOrderAttrList[{{$index}}].id" name="kirikaeWoOrderAttrList[{{$index}}].id" value="{{data.id}}">
+                                                <input type="hidden" id="kirikaeWoOrderAttrList[{{$index}}].questionId" name="kirikaeWoOrderAttrList[{{$index}}].questionId" value="{{data.questionId}}">
+                                                <input title="" id="kirikaeWoOrderAttrList[{{$index}}].changeCompleteTime"
+                                                       name="kirikaeWoOrderAttrList[{{$index}}].changeCompleteTime" data-type='date' value="{{data.changeCompleteTime}}"
+                                                       class="form-control-order form-control clean class-required" required="required"
+                                                       style="font-size: 12px;height: 25px;width: 95%" />
+                                            </span>
                                         </td>
                                         <td>
-                                            <select title="" id="kirikaeWoOrderAttrList[{{$index}}].reviewResult" name="kirikaeWoOrderAttrList[{{$index}}].reviewResult"
-                                                    class="form-control-order form-control clean class-required" required="required"
-                                                    style="font-size: 12px;height: 25px;width: 95%;padding: 0px;">
-                                                <option value="">请选择</option>
-                                                <option value="NG">NG</option>
-                                                <option value="OK">OK</option>
-                                            </select>
+                                            <span ng-hide="data.questionId == 1">
+                                                <select title="" id="kirikaeWoOrderAttrList[{{$index}}].reviewResult" name="kirikaeWoOrderAttrList[{{$index}}].reviewResult"
+                                                                 class="form-control-order form-control clean class-required" required="required"
+                                                                 style="font-size: 12px;height: 25px;width: 95%;padding: 0px;">
+                                                    <option value="">请选择</option>
+                                                    <option value="NG">NG</option>
+                                                    <option value="OK">OK</option>
+                                                </select>
+                                            </span>
                                         </td>
                                         <td>
-                                            <input title="" id="kirikaeWoOrderAttrList[{{$index}}].reviewPrinciple"
-                                                   name="kirikaeWoOrderAttrList[{{$index}}].reviewPrinciple"
-                                                   class="form-control-order form-control clean"
-                                                   style="font-size: 12px;height: 25px;width: 95%" />
+                                            <span ng-hide="data.questionId == 1">
+                                                <input title="" id="kirikaeWoOrderAttrList[{{$index}}].reviewPrinciple"
+                                                       name="kirikaeWoOrderAttrList[{{$index}}].reviewPrinciple"
+                                                       class="form-control-order form-control clean"
+                                                       style="font-size: 12px;height: 25px;width: 95%" />
+                                            </span>
                                         </td>
                                         <td>
                                             <button class="btn btn-small btn-success" type="button" ng-click="deleteConfirm($index)">
