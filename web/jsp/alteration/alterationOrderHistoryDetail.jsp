@@ -226,7 +226,7 @@
                                                 class="form-control-order form-control clean" style="font-size: 12px;height: 25px;padding: 0px;">
                                             <option value="">请选择</option>
                                             <option value="1" ng-selected="alterationOrderHistory.kirikaeOrder.designCostsPay==1">客户</option>
-                                            <option value="2" ng-selected="alterationOrderHistory.kirikaeOrder.designCostsPay==2">高田</option>
+                                            <option value="2" ng-selected="alterationOrderHistory.kirikaeOrder.designCostsPay==2">均胜</option>
                                             <option value="3" ng-selected="alterationOrderHistory.kirikaeOrder.designCostsPay==3">供应商</option>
                                         </select>
                                     </div>
@@ -269,7 +269,7 @@
                                         <select title="" id="kirikaeOrder.desingChangeType" name="kirikaeOrder.desingChangeType" disabled
                                                 class="form-control-order form-control clean" style="font-size: 12px;height: 25px;padding: 0px;">
                                             <option value="">请选择</option>
-                                            <option value="1" ng-selected="alterationOrderHistory.kirikaeOrder.desingChangeType==1">高田</option>
+                                            <option value="1" ng-selected="alterationOrderHistory.kirikaeOrder.desingChangeType==1">均胜</option>
                                             <option value="2" ng-selected="alterationOrderHistory.kirikaeOrder.desingChangeType==2">客户</option>
                                         </select>
                                     </div>
