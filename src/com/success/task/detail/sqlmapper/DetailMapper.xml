@@ -190,7 +190,7 @@
 				left join task_order_info g4 on g4.ORDER_ID = a.ORDER_ID and g4.TASK_TYPE_INFO_ID = 3 
 				left join task_order_info g5 on g5.ORDER_ID = a.ORDER_ID and g5.TASK_TYPE_INFO_ID = 4
 				left join task_order_info g12 on g12.ORDER_ID = a.ORDER_ID and g12.TASK_TYPE_INFO_ID = 12
-				left join agreement_manage p on p.order_id = a.order_id and (STRCMP(p.agreement_state, '10B') = 0 or STRCMP(p.agreement_state, '10C') = 0)
+				left join agreement_manage p on p.order_id = a.order_id and (STRCMP(p.agreement_state, '10B') = 0 or STRCMP(p.agreement_state, '10C') = 0) and p.delete_state = 0
 		]]>
 		<where>
 			1 = 1
@@ -235,7 +235,7 @@
 				left join task_order_info g3 on g3.ORDER_ID = a.ORDER_ID and g3.TASK_TYPE_INFO_ID = 2 
 				left join task_order_info g4 on g4.ORDER_ID = a.ORDER_ID and g4.TASK_TYPE_INFO_ID = 3 
 				left join task_order_info g5 on g5.ORDER_ID = a.ORDER_ID and g5.TASK_TYPE_INFO_ID = 4
-				left join agreement_manage p on p.order_id = a.order_id and (STRCMP(p.agreement_state, '10B') = 0 or STRCMP(p.agreement_state, '10C') = 0)
+				left join agreement_manage p on p.order_id = a.order_id and (STRCMP(p.agreement_state, '10B') = 0 or STRCMP(p.agreement_state, '10C') = 0) and p.delete_state = 0
 		]]>
 		<where>
 			1 = 1
@@ -318,6 +318,7 @@
 					where a.agreement_id = b.agreement_id
 					and a.agreement_state = '10B'
 					and b.content_state = '10B'
+					and a.delete_state = 0
 					and b.responsible = #{userId,jdbcType=NUMERIC}) c, agreement_manage d
 					where c.agreement_id = d.agreement_id
 					UNION
@@ -327,6 +328,7 @@
 					where a.agreement_id = b.agreement_id
 					and a.agreement_state = '10B'
 					and b.content_state = '10R'
+					and a.delete_state = 0
 					and b.confirm = #{userId,jdbcType=NUMERIC}) c, agreement_manage d
 					where c.agreement_id = d.agreement_id
 					UNION
@@ -396,6 +398,7 @@
 					where a.agreement_id = b.agreement_id
 					and a.agreement_state = '10B'
 					and b.content_state = '10B'
+					and a.delete_state = 0
 					and b.responsible = #{userId,jdbcType=NUMERIC}) c, agreement_manage d
 					where c.agreement_id = d.agreement_id
 					UNION
@@ -404,6 +407,7 @@
 					from agreement_manage a, agreement_content b
 					where a.agreement_id = b.agreement_id
 					and a.agreement_state = '10B'
+					and a.delete_state = 0
 					and b.content_state = '10R'
 					and b.confirm = #{userId,jdbcType=NUMERIC}) c, agreement_manage d
 					where c.agreement_id = d.agreement_id) g

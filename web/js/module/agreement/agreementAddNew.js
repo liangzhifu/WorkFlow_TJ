@@ -367,24 +367,27 @@ function doSubmit(){
     var responsibleJson = Ext.encode(responsibleArray);
     var submitBasicUrl = contextPath + '/agreement/addAgreement.do?orderId='+orderId+"&userId="+userId;
 
-    Ext.getCmp('basicForm').getForm().submit({
-        url : submitBasicUrl,
-        waitTitle : '提示',
-        waitMsg: '请稍后,正在提交数据...',
-        params : {
-            problemJson : problemJson,
-            responsibleJson : responsibleJson
-        },
-        async: false,
-        success : function(form, action) {
-            alert('新增立合成功！');
-            window.close();
-        },
-        failure : function(form, action) {
-            var responseText = Ext.decode(action.response.responseText);
-            Ext.Msg.alert('提示', responseText.message);
-        }
-    });
+    var con = confirm("确定删除！");
+    if (con == true){
+        Ext.getCmp('basicForm').getForm().submit({
+            url : submitBasicUrl,
+            waitTitle : '提示',
+            waitMsg: '请稍后,正在提交数据...',
+            params : {
+                problemJson : problemJson,
+                responsibleJson : responsibleJson
+            },
+            async: false,
+            success : function(form, action) {
+                alert('新增立合成功！');
+                window.close();
+            },
+            failure : function(form, action) {
+                var responseText = Ext.decode(action.response.responseText);
+                Ext.Msg.alert('提示', responseText.message);
+            }
+        });
+    }
 }
 
 function doClose(){

@@ -236,6 +236,9 @@
 		from agreement_manage a
 		where (STRCMP(a.agreement_state, '10B') = 0 or STRCMP(a.agreement_state, '10C') = 0)
 		and a.order_id = #{orderId,jdbcType=NUMERIC}
+		and a.delete_state = 0
+		order BY a.`agreement_id` DESC
+		LIMIT 1
 		]]>
 	</select>
 
