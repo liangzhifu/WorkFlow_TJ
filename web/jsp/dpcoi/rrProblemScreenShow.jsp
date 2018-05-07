@@ -109,7 +109,7 @@
     function toOtherJsp(){
         var getTimestamp=new Date().getTime();
         //window.location.href = "http://10.234.11.21:9007/pub/problem1.aspx"+"?timestamp="+getTimestamp;
-        window.location.href = 'http://10.234.11.12:8080/WorkFlow/jsp/screen/screenShow.jsp';
+        window.location.href = '/WorkFlow/jsp/screen/screenShow.jsp';
     }
 </script>
 </html>
