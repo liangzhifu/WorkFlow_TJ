@@ -40,9 +40,35 @@ var taskAdd = (function() {
 			var items = new Array();
 			var taskType  = Ext.decode(taskTypeJSON);
 			var taskTypeInfoArray = taskType.taskTypeInfo;
-			var len = taskTypeInfoArray.length;
+            //
+			var taskTypeInfoArray2 = new Array();
+			var taskTypeInfo5 = null;
+            for (var i = 0; i < taskTypeInfoArray.length; i++) {
+                var taskTypeInfo = taskTypeInfoArray[i];
+                var taskTypeInfoId = taskTypeInfo.taskTypeInfoId;
+                if (taskTypeInfoId == 5) {
+                    taskTypeInfo5 = taskTypeInfo;
+				} else {
+                    taskTypeInfoArray2.push(taskTypeInfo);
+				}
+            }
+            var taskTypeInfoArray3 = new Array();
+            for (var i = 0; i < taskTypeInfoArray2.length; i++) {
+                var taskTypeInfo = taskTypeInfoArray2[i];
+                var taskTypeInfoId = taskTypeInfo.taskTypeInfoId;
+                if (taskTypeInfoId == 6) {
+                	var infoValueList = taskTypeInfo5.infoValueList;
+                	for(var j = 0; j < infoValueList.length; j++){
+                        taskTypeInfo.infoValueList.push(infoValueList[j]);
+					}
+                    taskTypeInfoArray3.push(taskTypeInfo);
+                } else {
+                    taskTypeInfoArray3.push(taskTypeInfo);
+				}
+            }
+            var len = taskTypeInfoArray3.length;
 			for (var i = 0; i < len; i++) {
-				var taskTypeInfo = taskTypeInfoArray[i];
+				var taskTypeInfo = taskTypeInfoArray3[i];
 				var infoTypeId = taskTypeInfo.infoTypeId;
 				var obj = generBasicObj(infoTypeId, taskTypeInfo);
 				items[i] = obj;
@@ -527,10 +553,10 @@ function doSubmit(){
 	}
 	
 	var checkFlag = false;
-	var order_5 = Ext.getCmp('order_5').getValue();
+	/*var order_5 = Ext.getCmp('order_5').getValue();
 	Ext.each(order_5, function(item){
 		checkFlag = true;
-	});
+	});*/
 	var order_6 = Ext.getCmp('order_6').getValue();
 	Ext.each(order_6, function(item){
 		checkFlag = true;

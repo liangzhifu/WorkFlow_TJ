@@ -69,7 +69,7 @@ public interface DpcoiWoOrderService {
      * @user 操作员
      * @param confirmResult 确认结果
      */
-    public void editWoOrderConfirm(DpcoiWoOrder dpcoiWoOrder, Integer confirmResult, User user) throws ServiceException;
+    public void editWoOrderConfirm(DpcoiWoOrder dpcoiWoOrder, Integer confirmResult, User user) throws Exception;
 
     /**
      * 上传文件完成
@@ -86,6 +86,6 @@ public interface DpcoiWoOrderService {
      * @param user 操作人
      * @param noPassedWoOrderFileIdStr 未通过的文件
      */
-    public void editWoOrderManagerConfirm(DpcoiWoOrder dpcoiWoOrder, Integer confirmResult, User user, String noPassedWoOrderFileIdStr) throws ServiceException;
+    public void editWoOrderManagerConfirm(DpcoiWoOrder dpcoiWoOrder, Integer confirmResult, User user, String noPassedWoOrderFileIdStr) throws Exception;
 
 }
