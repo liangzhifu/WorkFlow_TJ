@@ -367,7 +367,7 @@ function doSubmit(){
     var responsibleJson = Ext.encode(responsibleArray);
     var submitBasicUrl = contextPath + '/agreement/addAgreement.do?orderId='+orderId+"&userId="+userId;
 
-    var con = confirm("确定删除！");
+    var con = confirm("确定新增立合！");
     if (con == true){
         Ext.getCmp('basicForm').getForm().submit({
             url : submitBasicUrl,
