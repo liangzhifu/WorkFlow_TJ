@@ -70,6 +70,11 @@ public class KirikaeOrderServiceImpl implements KirikaeOrderService {
     }
 
     @Override
+    public List<Map<String, Object>> listKirikaeOrderScreenShow() throws Exception {
+        return this.kirikaeOrderDao.selectKirikaeOrderScreenShowList();
+    }
+
+    @Override
     public Integer countKirikaeOrder(KirikaeOrderQuery kirikaeOrderQuery) throws Exception {
         return this.kirikaeOrderDao.selectKirikaeOrderCount(kirikaeOrderQuery);
     }

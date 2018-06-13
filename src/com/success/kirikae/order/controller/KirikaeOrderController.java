@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author lzf
@@ -57,11 +57,13 @@ public class KirikaeOrderController {
 
     /**
      * 获取切替单生成4M变化单页面
+     * @param request 参数
+     * @param model 参数
      * @return 返回结果
      */
     @RequestMapping(value = Url.ORDER_GENERATE_FORU_DIALOG)
     private String getGenerateFourDialog(HttpServletRequest request, Map<String, Object> model){
-        User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
+        User user = (User) request.getSession().getAttribute(Constant.STAFF_KEY);
         model.put("userId", user.getUserId());
         return "kirikae/order/generateFourOrder";
     }
@@ -92,11 +94,37 @@ public class KirikaeOrderController {
             map.put("totalCount", totalCount);
             map.put("totalPage", totalPage);
             map.put("success", true);
-        }catch (Exception e){
+        } catch (Exception e){
             map.put("success", false);
             map.put("message", e.getMessage());
         }
         return map;
+    }
+
+    /**
+     * 设变屏幕展示
+     * model 页面返回数据
+     * @return 返回结果
+     * @throws Exception 异常
+     */
+    @RequestMapping("/kirikae/order/getKirikaeOrderScreenShowDlg.do")
+    public String getKirikaeOrderScreenShowDlg(Map<String, Object> model) throws Exception{
+        List<Map<String, Object>> newMapList = new LinkedList<Map<String, Object>>();
+        List<Map<String, Object>> mapList = this.kirikaeOrderService.listKirikaeOrderScreenShow();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String nowDateStr = df.format(new Date());
+        for (Map<String, Object> map : mapList){
+            Date designChangeTiming = (Date) map.get("designChangeTiming");
+            if (designChangeTiming != null) {
+                String designChangeTimingStr = df.format(designChangeTiming);
+                if (nowDateStr.compareTo(designChangeTimingStr) > 0) {
+                    map.put("backgroundColor", "background-color : red;color: #FFFFFF;!important;");
+                }
+            }
+            newMapList.add(map);
+        }
+        model.put("mapList", newMapList);
+        return "kirikae/order/kirikaeOrderScreenShow";
     }
 
     /**
@@ -110,6 +138,7 @@ public class KirikaeOrderController {
 
     /**
      * 新增变更单
+     * @param request 参数
      * @param kirikaeOrder 变更单实体
      * @httpServletRequest 请求参数
      * @return 返回结果
@@ -119,10 +148,10 @@ public class KirikaeOrderController {
     private Object addOrder(HttpServletRequest request, KirikaeOrder kirikaeOrder){
         Map<String, Object> map = new HashMap<String, Object>(2);
         try{
-            User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
+            User user = (User) request.getSession().getAttribute(Constant.STAFF_KEY);
             this.kirikaeOrderService.addKirikaeOrder(kirikaeOrder, user);
             map.put("success", true);
-        }catch (Exception e){
+        } catch (Exception e){
             map.put("success", false);
             map.put("message", e.getMessage());
         }
@@ -131,6 +160,7 @@ public class KirikaeOrderController {
 
     /**
      * 修改变更单
+     * @param request 参数
      * @param kirikaeOrder 变更单实体
      * @return 返回结果
      */
@@ -139,10 +169,10 @@ public class KirikaeOrderController {
     private Object editOrder(HttpServletRequest request, KirikaeOrder kirikaeOrder){
         Map<String, Object> map = new HashMap<String, Object>(2);
         try{
-            User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
+            User user = (User) request.getSession().getAttribute(Constant.STAFF_KEY);
             this.kirikaeOrderService.editKirikaeOrder(kirikaeOrder, user);
             map.put("success", true);
-        }catch (Exception e){
+        } catch (Exception e){
             map.put("success", false);
             map.put("message", e.getMessage());
         }
@@ -163,7 +193,7 @@ public class KirikaeOrderController {
             kirikaeOrder = this.kirikaeOrderService.getKirikaeOrder(kirikaeOrder);
             map.put("kirikaeOrder", kirikaeOrder);
             map.put("success", true);
-        }catch (Exception e){
+        } catch (Exception e){
             map.put("success", false);
             map.put("message", e.getMessage());
         }
@@ -183,7 +213,7 @@ public class KirikaeOrderController {
             boolean flag = this.kirikaeOrderService.validOrderRepeat(orderId);
             map.put("valid", flag);
             map.put("success", true);
-        }catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
             map.put("success", false);
             map.put("message", e.getMessage());
@@ -203,10 +233,10 @@ public class KirikaeOrderController {
     private Object validOrderDesignChangeTiming(HttpServletRequest request, Integer orderId, String designChangeTiming){
         Map<String, Object> map = new HashMap<String, Object>(2);
         try{
-            User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
+            User user = (User) request.getSession().getAttribute(Constant.STAFF_KEY);
             this.kirikaeOrderService.editValidDesignChangeTiming(orderId, designChangeTiming, user);
             map.put("success", true);
-        }catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
             map.put("success", false);
             map.put("message", e.getMessage());
@@ -229,7 +259,7 @@ public class KirikaeOrderController {
             String fileName = this.exportKirikaeOrderPdfService.exportConfirmBook(orderId, path);
             map.put("success", true);
             map.put("path", "/stdout/" + fileName);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             map.put("success", false);
             map.put("message", e.getMessage());
@@ -252,7 +282,7 @@ public class KirikaeOrderController {
             String fileName = this.exportKirikaeOrderPdfService.exportHandMatchAttachment(orderId, path);
             map.put("success", true);
             map.put("path", "/stdout/" + fileName);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             map.put("success", false);
             map.put("message", e.getMessage());
@@ -270,12 +300,12 @@ public class KirikaeOrderController {
     public Object generateFour(HttpServletRequest request){
         Map<String, Object> map = new HashMap<String, Object>();
         try{
-            Integer orderId = Integer.valueOf((String)request.getParameter("orderId"));
-            User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
+            Integer orderId = Integer.valueOf((String) request.getParameter("orderId"));
+            User user = (User) request.getSession().getAttribute(Constant.STAFF_KEY);
             this.detailService.addTask(request, 1);
             this.kirikaeOrderService.editGenerateFourOrderProcedure(orderId, user);
             map.put("success", true);
-        }catch(Exception e){
+        } catch (Exception e){
             e.printStackTrace();
             map.put("success", false);
             map.put("message", e.getMessage());

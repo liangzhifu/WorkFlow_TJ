@@ -67,6 +67,8 @@ public class LoginAuthenticationFilter implements Filter {
 		excludeURL.add(contextPath + "/jsp/screen/screenShow.jsp");
 		excludeURL.add(contextPath + "/rrProblem/getRRProblemScreenShowDlg.do");
 		excludeURL.add(contextPath + "/jsp/dpcoi/rrProblemScreenShow.jsp");
+		excludeURL.add(contextPath + "/kirikae/order/getKirikaeOrderScreenShowDlg.do");
+		excludeURL.add(contextPath + "/jsp/kirikae/order/kirikaeOrderScreenShow.jsp");
 	}
 
 }

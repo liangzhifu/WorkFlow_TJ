@@ -76,4 +76,12 @@ public class KirikaeOrderDao extends BaseDao {
     public Integer selectKirikaeOrderCount(KirikaeOrderQuery kirikaeOrderQuery){
         return this.sqlSession.selectOne("KirikaeOrderMapper.selectKirikaeOrderCount", kirikaeOrderQuery);
     }
+
+    /**
+     * 获取切图单--屏幕展示列表
+     * @return 返回结果
+     */
+    public List<Map<String, Object>> selectKirikaeOrderScreenShowList() {
+        return this.sqlSession.selectList("KirikaeOrderMapper.selectKirikaeOrderScreenShowList");
+    }
 }

@@ -48,6 +48,13 @@ public interface KirikaeOrderService {
     List<Map<String, Object>> listKirikaeOrderPage(KirikaeOrderQuery kirikaeOrderQuery) throws Exception;
 
     /**
+     * 获取切替单列表--屏幕展示
+     * @return 返回结果
+     * @throws Exception 异常
+     */
+    List<Map<String, Object>> listKirikaeOrderScreenShow() throws Exception;
+
+    /**
      * 获取切替单数量
      * @param kirikaeOrderQuery 查询条件
      * @return 返回结果
