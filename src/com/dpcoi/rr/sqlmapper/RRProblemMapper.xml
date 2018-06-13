@@ -905,6 +905,9 @@
 
     <sql id="WHERE_SQL">
         <where>
+            <if test="problemNo != null and problemNo != ''" >
+                and problem_no like CONCAT('%',#{problemNo,jdbcType=VARCHAR},'%')
+            </if>
             <if test="badContent != null and badContent != ''" >
                 and `bad_content` like CONCAT('%',#{badContent,jdbcType=VARCHAR},'%')
             </if>

@@ -75,6 +75,16 @@ public class RRProblemController {
         return "dpcoi/rrProblemEdit";
     }
 
+    @RequestMapping("/getRRProblemEditDlg2.do")
+    public String getRRProblemEditDlg2(Map<String, Object> model, RRProblem rrProblem) throws Exception{
+        model.put("action", "edit");
+        Map<String, Object> map = this.rRProblemService.getHappenDateRandom();
+        model.put("startDate", map.get("startDate"));
+        model.put("endDate", map.get("endDate"));
+        model.put("rrProblemId", rrProblem.getId());
+        return "dpcoi/rrProblemEdit2";
+    }
+
     @RequestMapping("/getRRProblemListDlg.do")
     public String getRRProblemListDlg(HttpServletRequest request, Map<String, Object> model, RRProblemQuery rrProblemQuery) throws Exception{
         User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
@@ -83,6 +93,11 @@ public class RRProblemController {
         model.put("userName", user.getUserName());
         model.put("rrProblemQuery", rrProblemQuery);
         return "dpcoi/rrProblemList";
+    }
+
+    @RequestMapping("/getRRProblemListDlg2.do")
+    public String getRRProblemListDlg2(HttpServletRequest request, Map<String, Object> model) throws Exception{
+        return "dpcoi/rrProblemList2";
     }
 
     @RequestMapping("/getRRProblemViewListDlg.do")
@@ -208,6 +223,49 @@ public class RRProblemController {
             map.put("pageCount", pageCount);
             map.put("success", true);
         }catch (Exception e){
+            e.printStackTrace();
+            map.put("success", false);
+            map.put("message", e.getMessage());
+        }
+        AjaxUtil.ajaxResponse(response, new JSONObject(map).toString(), AjaxUtil.RESPONCE_TYPE_JSON);
+    }
+
+    /**
+     * 查询RR问题点选项列表--分页
+     * @param response 参数
+     * @param rrProblemQuery 查询条件
+     */
+    @RequestMapping("/getRRProblemListPage2.do")
+    public void getRRProblemListPage2(HttpServletRequest request, HttpServletResponse response, RRProblemQuery rrProblemQuery){
+        Map<String, Object> map = new HashMap<String, Object>();
+        try{
+            List<Map<String, Object>> rrProblemList = this.rRProblemService.queryRRProblemPageList(rrProblemQuery);
+            Integer rrProblemCount = this.rRProblemService.queryRRProblemCount(rrProblemQuery);
+            Integer pageCount = rrProblemCount / rrProblemQuery.getSize() + (rrProblemCount % rrProblemQuery.getSize() > 0 ? 1 : 0);
+            map.put("rrProblemList", rrProblemList);
+            map.put("rrProblemCount", rrProblemCount);
+            map.put("pageCount", pageCount);
+            map.put("success", true);
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("success", false);
+            map.put("message", e.getMessage());
+        }
+        AjaxUtil.ajaxResponse(response, new JSONObject(map).toString(), AjaxUtil.RESPONCE_TYPE_JSON);
+    }
+
+    /**
+     * 更新RR问题点
+     * @param response 参数
+     * @param rrProblem RR问题点
+     */
+    @RequestMapping("updateRRProblem2.do")
+    public void updateRRProblem2(HttpServletResponse response, RRProblem rrProblem){
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            this.rRProblemService.updateRRProblem(rrProblem);
+            map.put("success", true);
+        } catch (Exception e) {
             e.printStackTrace();
             map.put("success", false);
             map.put("message", e.getMessage());

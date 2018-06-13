@@ -53,6 +53,8 @@ public class RRProblemQuery {
 
     private Integer isHide;
 
+    private String problemNo;
+
     public Integer getStart() {
         return start;
     }
@@ -219,5 +221,13 @@ public class RRProblemQuery {
 
     public void setDpcoi4M(String dpcoi4M) {
         this.dpcoi4M = dpcoi4M;
+    }
+
+    public String getProblemNo() {
+        return problemNo;
+    }
+
+    public void setProblemNo(String problemNo) {
+        this.problemNo = problemNo;
     }
 }
