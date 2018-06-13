@@ -973,6 +973,42 @@ public class RRProblemController {
     }
 
     /**
+     * 上传文件
+     * @param request 参数
+     * @param response 参数
+     * @param rrProblemId RR问题点ID
+     * @param fileAttr 文件类型
+     * @param file 文件
+     */
+    @RequestMapping(value = "uploadFile2.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public void uploadFile2(HttpServletRequest request, HttpServletResponse response, @RequestParam("rrProblemId") Integer rrProblemId, @RequestParam("fileAttr") String fileAttr, @RequestParam("uploadFile") MultipartFile file){
+        Map<String, Object> map = new HashMap<String, Object>();
+        try{
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            User user = (User) request.getSession().getAttribute(Constant.STAFF_KEY);
+            String path = request.getSession().getServletContext().getRealPath("/");
+            if (!path.endsWith(java.io.File.separator)) {
+                path = path + java.io.File.separator;
+            }
+            if(!file.isEmpty()){
+                FileUpload fileUpload = this.rRProblemService.addUploadFile2(rrProblemId, fileAttr, file, path, user);
+                map.put("success", true);
+                map.put("fileId", fileUpload.getFileId());
+                map.put("fileDate", formatter.format(new Date()));
+                map.put("message", "上传成功");
+            } else {
+                map.put("success", false);
+                map.put("message", "上传失败");
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            map.put("success", false);
+            map.put("message", e.getMessage());
+        }
+        AjaxUtil.ajaxResponse(response, new JSONObject(map).toString(), AjaxUtil.RESPONCE_TYPE_JSON);
+    }
+
+    /**
      * 验证上传文件
      * @param rrProblem RR问题点数据
      */

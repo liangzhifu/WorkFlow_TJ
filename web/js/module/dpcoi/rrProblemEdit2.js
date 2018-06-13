@@ -14,6 +14,22 @@ updateFileExcelChange = function (fileTimeInput, fileIdInput){
     }
 };
 
+updateFileExcelChange2 = function (fileIdInput){
+    if($("#uploadFile").val()){
+        $("#excelForm").ajaxSubmit({
+            success:function(data){
+                alert(data.message);
+                $("#"+fileIdInput).val(data.fileDate);
+                if ("standardBook" == fileIdInput) {
+                    $("#alwaysList").val(data.fileDate);
+                }
+                myModal.destroy();
+            }
+        });
+        $("#uploadFile").val('');
+    }
+};
+
 var rrProblemEditApp = angular.module("rrProblemEdit", []);
 rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
     $scope.action = action;
@@ -222,6 +238,11 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         $scope.rrProblemEdit.rrProblem.otherInformation = $("#otherInformation").val();
         $scope.rrProblemEdit.rrProblem.otherInformationFileId = $("#otherInformationFileId").val();
 
+        $scope.rrProblemEdit.rrProblem.pfmea = $("#pfmea").val();
+        $scope.rrProblemEdit.rrProblem.cp = $("#cp").val();
+        $scope.rrProblemEdit.rrProblem.standardBook = $("#standardBook").val();
+        $scope.rrProblemEdit.rrProblem.alwaysList = $("#alwaysList").val();
+
         $.ajax({
             method:'post',
             url:url,
@@ -301,6 +322,11 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         $scope.rrProblemEdit.rrProblem.otherInformation = $("#otherInformation").val();
         $scope.rrProblemEdit.rrProblem.otherInformationFileId = $("#otherInformationFileId").val();
 
+        $scope.rrProblemEdit.rrProblem.pfmea = $("#pfmea").val();
+        $scope.rrProblemEdit.rrProblem.cp = $("#cp").val();
+        $scope.rrProblemEdit.rrProblem.standardBook = $("#standardBook").val();
+        $scope.rrProblemEdit.rrProblem.alwaysList = $("#alwaysList").val();
+
         $.ajax({
             method:'post',
             url:url,
@@ -345,6 +371,25 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
             "</a>"+
             "<input type='hidden' name='rrProblemId' value='"+rrProblemId+"'/>"+
             "<input type='hidden' name='fileAttr' value='"+fileTimeInput+"'/>"+
+            "</form>";
+        myModal = new jBox('Modal', {
+            width: 150,
+            title: '上传文件',
+            content: html,
+            onCloseComplete:function(){
+                myModal.destroy();
+            }
+        }).open();
+    };
+
+    $scope.uploadFile2 = function (fileIdInput) {
+        var path=$("#path").val();
+        var html="<form method='post' id='excelForm' enctype='multipart/form-data' action='/WorkFlow/rrProblem/uploadFile2.do'>"+
+            "<a class='uploadFile button button-primary button-rounded button-small' href='#'>" +
+            "<input type='file' onchange='updateFileExcelChange2(\""+fileIdInput+"\")' name='uploadFile' id='uploadFile'/><i class='glyphicon glyphicon-search'></i>浏览" +
+            "</a>"+
+            "<input type='hidden' name='rrProblemId' value='"+rrProblemId+"'/>"+
+            "<input type='hidden' name='fileAttr' value='"+fileIdInput+"'/>"+
             "</form>";
         myModal = new jBox('Modal', {
             width: 150,

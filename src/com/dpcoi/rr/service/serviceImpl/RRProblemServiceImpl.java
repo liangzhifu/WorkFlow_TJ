@@ -8,11 +8,19 @@ import com.dpcoi.config.query.DpcoiConfigVehicleQuery;
 import com.dpcoi.file.dao.FileUploadDao;
 import com.dpcoi.file.domain.FileUpload;
 import com.dpcoi.holiday.dao.HolidayDao;
+import com.dpcoi.order.dao.DpcoiOrderDao;
+import com.dpcoi.order.domain.DpcoiOrder;
 import com.dpcoi.rr.dao.RRDelayLeaderDao;
 import com.dpcoi.rr.domain.RRProblem;
 import com.dpcoi.rr.dao.RRProblemDao;
 import com.dpcoi.rr.query.RRProblemQuery;
 import com.dpcoi.rr.service.RRProblemService;
+import com.dpcoi.woOrder.dao.DpcoiWoOrderDao;
+import com.dpcoi.woOrder.dao.DpcoiWoOrderFileDao;
+import com.dpcoi.woOrder.domain.DpcoiWoOrder;
+import com.dpcoi.woOrder.domain.DpcoiWoOrderFile;
+import com.dpcoi.woOrder.query.DpcoiWoOrderFileQuery;
+import com.dpcoi.woOrder.query.DpcoiWoOrderQuery;
 import com.success.sys.email.dao.TimeTaskDao;
 import com.success.sys.email.domain.TimeTask;
 import com.success.sys.user.dao.UserDao;
@@ -56,6 +64,15 @@ public class RRProblemServiceImpl implements RRProblemService {
 
     @Resource(name="rRDelayLeaderDao")
     private RRDelayLeaderDao rRDelayLeaderDao;
+
+    @Resource(name="dpcoiOrderDao")
+    private DpcoiOrderDao dpcoiOrderDao;
+
+    @Resource(name = "dpcoiWoOrderDao")
+    private DpcoiWoOrderDao dpcoiWoOrderDao;
+
+    @Resource(name = "dpcoiWoOrderFileDao")
+    private DpcoiWoOrderFileDao dpcoiWoOrderFileDao;
 
     @Override
     public Integer addRRProblem(RRProblem rrProblem) throws Exception {
@@ -483,6 +500,70 @@ public class RRProblemServiceImpl implements RRProblemService {
                 rrProblem.setContainmentWorksheetFileId(fileUpload.getFileId());
             }
             this.rRProblemDao.updateRRProblem(rrProblem);
+        }
+        return fileUpload;
+    }
+
+    @Override
+    public FileUpload addUploadFile2(Integer rrProblemId, String fileAttr, MultipartFile file, String path, User user) throws Exception {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = file.getOriginalFilename();
+        String fileType = file.getContentType();
+        int index = fileName.lastIndexOf(".");
+        String fileSuffix = fileName.substring(index);
+        String fileAlias = UUID.randomUUID().toString() + fileSuffix;
+        String filePath = path + "fileupload/" + fileAlias;
+        file.transferTo(new File(filePath));
+
+        FileUpload fileUpload = new FileUpload();
+        fileUpload.setFileName(fileName);
+        fileUpload.setFileAlias(fileAlias);
+        fileUpload.setFileType(fileType);
+        fileUpload.setExcelPdfName("");
+        fileUpload.setCreateDate(new Date());
+        fileUpload.setCreateBy(user.getUserId());
+        this.fileUploadDao.insertFileUpload(fileUpload);
+        if (rrProblemId != null) {
+            //查询对应的pfmea\cp\作业指导书
+            DpcoiOrder dpcoiOrder = this.dpcoiOrderDao.selectDpcoiOrderByRRProblem(rrProblemId);
+            DpcoiWoOrderQuery dpcoiWoOrderQuery = new DpcoiWoOrderQuery();
+            dpcoiWoOrderQuery.setDpcoiOrderId(dpcoiOrder.getDpcoiOrderId());
+            List<DpcoiWoOrder> dpcoiWoOrderList = this.dpcoiWoOrderDao.selectDpcoiWoOrderOfDpcoiOrder(dpcoiWoOrderQuery);
+            Integer dpcoiWoOrderId = null;
+            for (DpcoiWoOrder dpcoiWoOrder : dpcoiWoOrderList){
+                if ("pfmea".equals(fileAttr) && dpcoiWoOrder.getDpcoiWoOrderType() == 1){
+                    dpcoiWoOrderId = dpcoiWoOrder.getDpcoiWoOrderId();
+                } else if ("cp".equals(fileAttr) && dpcoiWoOrder.getDpcoiWoOrderType() == 2) {
+                    dpcoiWoOrderId = dpcoiWoOrder.getDpcoiWoOrderId();
+                } else if ("standardBook".equals(fileAttr) && dpcoiWoOrder.getDpcoiWoOrderType() == 3) {
+                    dpcoiWoOrderId = dpcoiWoOrder.getDpcoiWoOrderId();
+                }
+            }
+            if (dpcoiWoOrderId != null) {
+                DpcoiWoOrderFileQuery dpcoiWoOrderFileQuery = new DpcoiWoOrderFileQuery();
+                dpcoiWoOrderFileQuery.setDpcoiWoOrderId(dpcoiWoOrderId);
+                List<Map<String, Object>> mapList  = this.dpcoiWoOrderFileDao.selectDpcoiWoOrderFileList(dpcoiWoOrderFileQuery);
+                for (Map<String, Object> map : mapList) {
+                    DpcoiWoOrderFile dpcoiWoOrderFileTemp = new DpcoiWoOrderFile();
+                    Integer id = (Integer) map.get("dpcoiWoOrderFileId");
+                    dpcoiWoOrderFileTemp.setId(id);
+                    dpcoiWoOrderFileTemp.setUpdateDate(new Date());
+                    dpcoiWoOrderFileTemp.setUpdateBy(user.getUserId());
+                    dpcoiWoOrderFileTemp.setDelFlag("1");
+                    this.dpcoiWoOrderFileDao.updateDpcoiWoOrderFile(dpcoiWoOrderFileTemp);
+                }
+
+                DpcoiWoOrderFile dpcoiWoOrderFile = new DpcoiWoOrderFile();
+                dpcoiWoOrderFile.setFileId(fileUpload.getFileId());
+                dpcoiWoOrderFile.setDpcoiWoOrderId(dpcoiWoOrderId);
+                dpcoiWoOrderFile.setDelFlag("0");
+                dpcoiWoOrderFile.setWoFileState(1);
+                dpcoiWoOrderFile.setCreateBy(user.getUserId());
+                dpcoiWoOrderFile.setCreateDate(new Date());
+                dpcoiWoOrderFile.setUpdateDate(new Date());
+                dpcoiWoOrderFile.setUpdateBy(user.getUserId());
+                this.dpcoiWoOrderFileDao.insertDpcoiWoOrderFile(dpcoiWoOrderFile);
+            }
         }
         return fileUpload;
     }

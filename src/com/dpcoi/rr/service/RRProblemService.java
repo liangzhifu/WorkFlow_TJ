@@ -127,6 +127,18 @@ public interface RRProblemService {
     public FileUpload addUploadFile(Integer rrProblemId, String fileAttr, MultipartFile file, String path, User user) throws Exception;
 
     /**
+     * 上传文件
+     * @param rrProblemId RR问题点ID
+     * @param fileAttr 文件所属
+     * @param file 文件
+     * @param path 文件路径
+     * @param user 用户
+     * @return 返回结果
+     * @throws Exception 异常
+     */
+    public FileUpload addUploadFile2(Integer rrProblemId, String fileAttr, MultipartFile file, String path, User user) throws Exception;
+
+    /**
      * 申请延期，发送部长邮件
      * @param rrProblem RR问题点
      * @throws ServiceException 异常

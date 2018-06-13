@@ -284,17 +284,20 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <label  class="control-label" for="pfmea">PFMEA：</label>
-                                <input class="form-control-order form-control clean" style="width: 60%" ng-disabled="true"
+                                <input type="button" ng-click="uploadFile2('pfmea')" value="上传文件">
+                                <input class="form-control-order form-control clean" style="width: 60%"
                                        id="pfmea" name="pfmea" ng-model="rrProblemEdit.rrProblem.pfmea">
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="cp">CP：</label>
-                                <input class="form-control-order form-control clean" style="width: 60%" ng-disabled="true"
+                                <input type="button" ng-click="uploadFile2('cp')" value="上传文件">
+                                <input class="form-control-order form-control clean" style="width: 60%"
                                        id="cp" name="cp" ng-model="rrProblemEdit.rrProblem.cp">
                             </div>
                             <div class="col-md-3">
                                 <label  class="control-label" for="standardBook">WI：</label>
-                                <input class="form-control-order form-control clean" style="width: 60%" ng-disabled="true"
+                                <input type="button" ng-click="uploadFile2('standardBook')" value="上传文件">
+                                <input class="form-control-order form-control clean" style="width: 60%"
                                        id="standardBook" name="standardBook" ng-model="rrProblemEdit.rrProblem.standardBook">
                             </div>
                             <div class="col-md-3">
