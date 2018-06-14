@@ -986,7 +986,7 @@
         other_information_file_id as otherInformationFileId, containment_worksheet as containmentWorksheet, containment_worksheet_file_id as containmentWorksheetFileId
         from dpcoi_rr_problem
         <include refid="WHERE_SQL"></include>
-        order by id desc limit #{start},#{size}
+        order by happen_date desc limit #{start},#{size}
     </select>
 
     <select id="selectRRProblemCount" resultType="java.lang.Integer" parameterType="RRProblemQuery">
