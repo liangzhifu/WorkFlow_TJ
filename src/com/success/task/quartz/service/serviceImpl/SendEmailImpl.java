@@ -144,6 +144,8 @@ public class SendEmailImpl {
 							subject = "RR问题点申请延期";
 						}else if(noticeType == 40){
 							subject = "实际变更时间确认";
+						}else if(noticeType == 45){
+							subject = "RR问题点新增";
 						}else {
 							
 						}
