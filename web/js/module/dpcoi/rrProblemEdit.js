@@ -570,6 +570,9 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
                                 }
                             }
                         });
+                    } else {
+                        $("#persionLiable option[value='"+userName+"']").attr("selected","selected");
+                        $("#persionLiable").trigger("chosen:updated");
                     }
                 }
             }
