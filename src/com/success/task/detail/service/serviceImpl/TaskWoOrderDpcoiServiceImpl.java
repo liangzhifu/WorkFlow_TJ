@@ -122,9 +122,11 @@ public class TaskWoOrderDpcoiServiceImpl implements TaskWoOrderDpcoiService {
         taskWoOrderList = this.taskWoOrderService.queryTaskWoOrders(taskWoOrderDetailQuery);
         for (TaskWoOrder taskWoOrderTemp: taskWoOrderList){
             String woOrderState = taskWoOrder.getWoOrderStateCode();
-            if ("10B".equals(woOrderState) || "10R".equals(woOrderState)){
-                flag = false;
-                break;
+            if (taskWoOrderTemp.getWoOrderId().intValue() != taskWoOrder.getWoOrderId()) {
+                if ("10B".equals(woOrderState) || "10R".equals(woOrderState)) {
+                    flag = false;
+                    break;
+                }
             }
         }
         if (flag) {

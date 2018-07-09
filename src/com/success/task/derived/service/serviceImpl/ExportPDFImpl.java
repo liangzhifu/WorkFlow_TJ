@@ -345,7 +345,7 @@ public class ExportPDFImpl implements ExportPDF {
 		float marginBottom = 10f;
 		
 		//问题+结论的高度
-        float totalHeigth = 540f;
+        float totalHeigth = 530f;
         
         //A4 宽595
 		Document document = new Document(PageSize.A4, marginLeft, marginRight, marginTop, marginBottom);  
