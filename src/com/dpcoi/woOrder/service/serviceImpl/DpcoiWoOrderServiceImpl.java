@@ -129,30 +129,30 @@ public class DpcoiWoOrderServiceImpl implements DpcoiWoOrderService {
             if(dpcoiWoOrderType == 3){
                 //定单完成
                 dpcoiOrder.setDpcoiOrderState(2);
-                Integer taskOrderId = dpcoiOrder.getTaskOrderId();
-                if (taskOrderId != null) {
-                    DpcoiWoOrderQuery dpcoiWoOrderQuery = new DpcoiWoOrderQuery();
-                    dpcoiWoOrderQuery.setDpcoiOrderId(dpcoiOrder.getDpcoiOrderId());
-                    List<DpcoiWoOrder> dpcoiWoOrderList = this.dpcoiWoOrderDao.selectDpcoiWoOrderOfDpcoiOrder(dpcoiWoOrderQuery);
-                    String woOrderValue = "";
-                    for (DpcoiWoOrder dpcoiWoOrderTemp : dpcoiWoOrderList){
-                        Integer dpcoiWoOrderState = dpcoiWoOrderTemp.getDpcoiWoOrderState();
-                        if (dpcoiWoOrderState == 4) {
-                            Integer dpcoiWoOrderTypeTemp = dpcoiWoOrderTemp.getDpcoiWoOrderType();
-                            if (dpcoiWoOrderTypeTemp == 1){
-                                woOrderValue += "," + "588";
-                            } else if (dpcoiWoOrderTypeTemp == 2) {
-                                woOrderValue += "," + "586";
-                            }
-                        }
-                    }
-                    if ("".equals(woOrderValue)) {
-                        woOrderValue = "585";
-                    } else {
-                        woOrderValue = woOrderValue.substring(1);
-                    }
-                    this.taskWoOrderDpcoiService.complateTaskWoOrder(taskOrderId, woOrderValue, user);
-                }
+//                Integer taskOrderId = dpcoiOrder.getTaskOrderId();
+//                if (taskOrderId != null) {
+//                    DpcoiWoOrderQuery dpcoiWoOrderQuery = new DpcoiWoOrderQuery();
+//                    dpcoiWoOrderQuery.setDpcoiOrderId(dpcoiOrder.getDpcoiOrderId());
+//                    List<DpcoiWoOrder> dpcoiWoOrderList = this.dpcoiWoOrderDao.selectDpcoiWoOrderOfDpcoiOrder(dpcoiWoOrderQuery);
+//                    String woOrderValue = "";
+//                    for (DpcoiWoOrder dpcoiWoOrderTemp : dpcoiWoOrderList){
+//                        Integer dpcoiWoOrderState = dpcoiWoOrderTemp.getDpcoiWoOrderState();
+//                        if (dpcoiWoOrderState == 4) {
+//                            Integer dpcoiWoOrderTypeTemp = dpcoiWoOrderTemp.getDpcoiWoOrderType();
+//                            if (dpcoiWoOrderTypeTemp == 1){
+//                                woOrderValue += "," + "588";
+//                            } else if (dpcoiWoOrderTypeTemp == 2) {
+//                                woOrderValue += "," + "586";
+//                            }
+//                        }
+//                    }
+//                    if ("".equals(woOrderValue)) {
+//                        woOrderValue = "585";
+//                    } else {
+//                        woOrderValue = woOrderValue.substring(1);
+//                    }
+//                    this.taskWoOrderDpcoiService.complateTaskWoOrder(taskOrderId, woOrderValue, user);
+//                }
             } else {
                 DpcoiWoOrder newDpcoiWoOrder = new DpcoiWoOrder();
                 newDpcoiWoOrder.setDpcoiOrderId(dpcoiWoOrder.getDpcoiOrderId());
@@ -381,27 +381,27 @@ public class DpcoiWoOrderServiceImpl implements DpcoiWoOrderService {
 
             if(dpcoiWoOrderType == 3){
                 dpcoiOrder.setDpcoiOrderState(2); ;
-                Integer taskOrderId = dpcoiOrder.getTaskOrderId();
-                if (taskOrderId != null) {
-                    DpcoiWoOrderQuery dpcoiWoOrderQuery = new DpcoiWoOrderQuery();
-                    dpcoiWoOrderQuery.setDpcoiOrderId(dpcoiOrder.getDpcoiOrderId());
-                    List<DpcoiWoOrder> dpcoiWoOrderList = this.dpcoiWoOrderDao.selectDpcoiWoOrderOfDpcoiOrder(dpcoiWoOrderQuery);
-                    String woOrderValue = "";
-                    for (DpcoiWoOrder dpcoiWoOrderTemp : dpcoiWoOrderList){
-                        Integer dpcoiWoOrderState = dpcoiWoOrderTemp.getDpcoiWoOrderState();
-                        if (dpcoiWoOrderState == 4) {
-                            Integer dpcoiWoOrderTypeTemp = dpcoiWoOrderTemp.getDpcoiWoOrderType();
-                            if (dpcoiWoOrderTypeTemp == 1){
-                                woOrderValue += "," + "588";
-                            } else if (dpcoiWoOrderTypeTemp == 2) {
-                                woOrderValue += "," + "586";
-                            }
-                        }
-                    }
-                    woOrderValue += "," + "589";
-                    woOrderValue = woOrderValue.substring(1);
-                    this.taskWoOrderDpcoiService.complateTaskWoOrder(taskOrderId, woOrderValue, user);
-                }
+//                Integer taskOrderId = dpcoiOrder.getTaskOrderId();
+//                if (taskOrderId != null) {
+//                    DpcoiWoOrderQuery dpcoiWoOrderQuery = new DpcoiWoOrderQuery();
+//                    dpcoiWoOrderQuery.setDpcoiOrderId(dpcoiOrder.getDpcoiOrderId());
+//                    List<DpcoiWoOrder> dpcoiWoOrderList = this.dpcoiWoOrderDao.selectDpcoiWoOrderOfDpcoiOrder(dpcoiWoOrderQuery);
+//                    String woOrderValue = "";
+//                    for (DpcoiWoOrder dpcoiWoOrderTemp : dpcoiWoOrderList){
+//                        Integer dpcoiWoOrderState = dpcoiWoOrderTemp.getDpcoiWoOrderState();
+//                        if (dpcoiWoOrderState == 4) {
+//                            Integer dpcoiWoOrderTypeTemp = dpcoiWoOrderTemp.getDpcoiWoOrderType();
+//                            if (dpcoiWoOrderTypeTemp == 1){
+//                                woOrderValue += "," + "588";
+//                            } else if (dpcoiWoOrderTypeTemp == 2) {
+//                                woOrderValue += "," + "586";
+//                            }
+//                        }
+//                    }
+//                    woOrderValue += "," + "589";
+//                    woOrderValue = woOrderValue.substring(1);
+//                    this.taskWoOrderDpcoiService.complateTaskWoOrder(taskOrderId, woOrderValue, user);
+//                }
             } else {
                 DpcoiWoOrder newDpcoiWoOrder = new DpcoiWoOrder();
                 newDpcoiWoOrder.setDpcoiOrderId(dpcoiWoOrder.getDpcoiOrderId());
