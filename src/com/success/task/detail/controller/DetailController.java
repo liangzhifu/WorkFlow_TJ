@@ -58,9 +58,10 @@ public class DetailController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try{
 			Integer orderId =  ServletAPIUtil.getIntegerParameter("orderId", request);
+			String agreementId = ServletAPIUtil.getStringParameter("agreementId", request);
 			String path = request.getSession().getServletContext().getRealPath("/");
 			//String fileName = this.exportPDF.exportPDF(orderId, path);
-			String fileName = this.exportPDF.exportAllPDF(orderId, path);
+			String fileName = this.exportPDF.exportAllPDF(orderId, agreementId, path);
 			map.put("success", true);
 			map.put("path", "/stdout/" + fileName);
 		}catch(Exception e){

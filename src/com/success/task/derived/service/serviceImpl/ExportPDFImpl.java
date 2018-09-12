@@ -919,12 +919,16 @@ public class ExportPDFImpl implements ExportPDF {
 	}
 
 	@Override
-	public String exportAllPDF(int orderId, String path) throws Exception {
+	public String exportAllPDF(int orderId, String agreemntIdTemp, String path) throws Exception {
 		// TODO Auto-generated method stub
 		String pdfName = "";
 		String pdfName1 = this.exportPDF(orderId, path);
-		
-		Integer agreementId = this.agreementService.queryAgreementIdByOrderId(orderId);
+		Integer agreementId = null;
+		if (!(agreemntIdTemp == null || "".equals(agreemntIdTemp))) {
+			agreementId = Integer.valueOf(agreemntIdTemp);
+		} else {
+			agreementId = this.agreementService.queryAgreementIdByOrderId(orderId);
+		}
 		if(agreementId == null){
 			pdfName = pdfName1;
 		}else {

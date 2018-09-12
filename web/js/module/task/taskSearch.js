@@ -611,7 +611,8 @@ function doDown(){
 		url : contextPath+'/taskDetail/doExportPDF.do',
  		async: false,
 		params : {
-			orderId : record.data.orderId
+			orderId : record.data.orderId,
+			agreementId: record.data.agreementId
 		},
  		method: "post",
 		success : function(response, action) {
