@@ -120,7 +120,7 @@
                                        id="reportDate" name="reportDate" ng-model="rrProblemEdit.rrProblem.reportDateStr">
                             </div>
                             <div class="col-md-3">
-                                <label  class="control-label" for="dpcoi4M">4M：</label>
+                                <label  class="control-label" for="dpcoi4M"><span style="color:red;">*</span>4M：</label>
                                 <input class="form-control-order form-control clean" style="width: 60%"
                                        id="dpcoi4M" name="dpcoi4M" ng-model="rrProblemEdit.rrProblem.dpcoi4M">
                             </div>

@@ -150,7 +150,7 @@
                                        id="reportDate" name="reportDate" ng-model="rrProblemEdit.rrProblem.reportDateStr">
                             </div>
                             <div class="col-md-3">
-                                <label  class="control-label" for="dpcoi4M">4M：</label>
+                                <label  class="control-label" for="dpcoi4M"><span style="color:red;">*</span>4M：</label>
                                 <select id="dpcoi4M" name="dpcoi4M" class="form-control-order form-control chosen-select" required="required"
                                         ng-model="rrProblemEdit.rrProblem.dpcoi4M" style="width: 60%" multiple="multiple">
                                     <option value="">请选择</option>

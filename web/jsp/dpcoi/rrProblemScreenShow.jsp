@@ -109,7 +109,8 @@
     function toOtherJsp(){
         var getTimestamp=new Date().getTime();
         //window.location.href = "http://10.234.11.21:9007/pub/problem1.aspx"+"?timestamp="+getTimestamp;
-        window.location.href = '/WorkFlow/kirikae/order/getKirikaeOrderScreenShowDlg.do';
+        //window.location.href = '/WorkFlow/kirikae/order/getKirikaeOrderScreenShowDlg.do';
+        window.location.href = '/WorkFlow/jsp/screen/screenShow.jsp';
     }
 </script>
 </html>

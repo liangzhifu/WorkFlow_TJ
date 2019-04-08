@@ -51,6 +51,7 @@
 		select s.password
   			from sys_users s
   			where s.user_code = #{userCode,jdbcType=VARCHAR}
+  			and s.delete_state = 0
 		]]>
 	</select>
 
