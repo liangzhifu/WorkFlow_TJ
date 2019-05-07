@@ -63,4 +63,12 @@ public class DpcoiConfigDao extends BaseDao{
     public List<Map<String, Object>> selectDpcoiConfigList(DpcoiConfigQuery dpcoiConfigQuery){
         return this.sqlSession.selectList("dpcoiConfigMapper.selectDpcoiConfigList", dpcoiConfigQuery);
     }
+
+    /**
+     * 查询配置列表
+     * @return 返回结果
+     */
+    public List<DpcoiConfig> selectDpcoiCustomerConfigList() {
+        return this.sqlSession.selectList("dpcoiConfigMapper.selectDpcoiCustomerConfigList");
+    }
 }

@@ -113,4 +113,14 @@
         <include refid="WHERE_SQL"></include>
         order by config.`config_code_id`, config.`config_value`
     </select>
+
+    <select id="selectDpcoiCustomerConfigList" resultMap="BaseResultMap">
+        SELECT config.config_id,
+        config.config_value,
+        config.config_code_id
+        FROM dpcoi_config config
+        WHERE config.delete_state = '0'
+        AND config.config_code_id = 11
+    </select>
+
 </mapper>

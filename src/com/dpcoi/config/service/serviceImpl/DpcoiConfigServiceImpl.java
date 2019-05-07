@@ -5,6 +5,7 @@ package com.dpcoi.config.service.serviceImpl;/**
 
 import com.dpcoi.config.dao.DpcoiConfigCodeDao;
 import com.dpcoi.config.dao.DpcoiConfigDao;
+import com.dpcoi.config.dao.DpcoiConfigVehicleDao;
 import com.dpcoi.config.domain.DpcoiConfig;
 import com.dpcoi.config.domain.DpcoiConfigCode;
 import com.dpcoi.config.query.DpcoiConfigQuery;
@@ -34,6 +35,9 @@ public class DpcoiConfigServiceImpl implements DpcoiConfigService {
     @Resource(name = "dpcoiConfigCodeDao")
     private DpcoiConfigCodeDao dpcoiConfigCodeDao;
 
+    @Resource(name = "dpcoiConfigVehicleDao")
+    private DpcoiConfigVehicleDao dpcoiConfigVehicleDao;
+
     @Override
     public Integer addDpcoiConfig(DpcoiConfig dpcoiConfig) throws ServiceException {
         return this.dpcoiConfigDao.insertDpcoiConfig(dpcoiConfig);
@@ -41,6 +45,9 @@ public class DpcoiConfigServiceImpl implements DpcoiConfigService {
 
     @Override
     public Integer deleteDpcoiConfig(DpcoiConfig dpcoiConfig) throws ServiceException {
+        // 判断是否客户
+        // 删除客户关联车型
+        this.dpcoiConfigVehicleDao.updateDpcoiConfigVehicleByCustomer(dpcoiConfig.getConfigId());
         dpcoiConfig.setDeleteState("1");
         return this.dpcoiConfigDao.updateDpcoiConfig(dpcoiConfig);
     }

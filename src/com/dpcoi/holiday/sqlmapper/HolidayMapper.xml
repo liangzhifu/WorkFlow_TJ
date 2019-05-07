@@ -62,10 +62,10 @@
         FROM sys_holiday holiday
         <where>
             <if test="holidayStart != null and holidayStart != ''" >
-                and DATE_FORMAT(holiday.`holiday`,'%y-%M-%d') &gt;= DATE_FORMAT(#{holidayStart},'%y-%M-%d')
+                and DATE_FORMAT(holiday.`holiday`,'%Y-%m-%d') &gt;= DATE_FORMAT(#{holidayStart},'%Y-%m-%d')
             </if>
             <if test="holidayEnd != null and holidayEnd != ''" >
-                and DATE_FORMAT(holiday.`holiday`,'%y-%M-%d') &lt;= DATE_FORMAT(#{holidayEnd},'%y-%M-%d')
+                and DATE_FORMAT(holiday.`holiday`,'%Y-%m-%d') &lt;= DATE_FORMAT(#{holidayEnd},'%Y-%m-%d')
             </if>
         </where>
         order by holiday.`holiday` DESC limit #{start},#{size}
@@ -76,10 +76,10 @@
         FROM sys_holiday holiday
         <where>
             <if test="holidayStart != null and holidayStart != ''" >
-                and DATE_FORMAT(holiday.`holiday`,'%y-%M-%d') &gt;= DATE_FORMAT(#{holidayStart},'%y-%M-%d')
+                and DATE_FORMAT(holiday.`holiday`,'%Y-%m-%d') &gt;= DATE_FORMAT(#{holidayStart},'%Y-%m-%d')
             </if>
             <if test="holidayEnd != null and holidayEnd != ''" >
-                and DATE_FORMAT(holiday.`holiday`,'%y-%M-%d') &lt;= DATE_FORMAT(#{holidayEnd},'%y-%M-%d')
+                and DATE_FORMAT(holiday.`holiday`,'%Y-%m-%d') &lt;= DATE_FORMAT(#{holidayEnd},'%Y-%m-%d')
             </if>
         </where>
     </select>

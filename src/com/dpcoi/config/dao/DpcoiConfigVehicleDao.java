@@ -72,4 +72,13 @@ public class DpcoiConfigVehicleDao extends BaseDao{
     public List<Map<String, Object>> selectDpcoiConfigVehicle(DpcoiConfigVehicleQuery dpcoiConfigVehicleQuery){
         return this.sqlSession.selectList("dpcoiConfigVehicleMapper.selectDpcoiConfigVehicle", dpcoiConfigVehicleQuery);
     }
+
+    /**
+     * 删除客户关联车型
+     * @param configId 客户ID
+     * @return 返回结果
+     */
+    public Integer updateDpcoiConfigVehicleByCustomer(Integer configId) {
+        return this.sqlSession.update("dpcoiConfigVehicleMapper.updateDpcoiConfigVehicleByCustomer", configId);
+    }
 }
