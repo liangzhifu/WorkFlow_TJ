@@ -19,10 +19,7 @@ import com.success.sys.user.domain.User;
 import com.success.web.framework.util.AjaxUtil;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -423,106 +420,111 @@ public class RRProblemController {
             String oldTrackingLevel = oldRRProblem.getTrackingLevel();
             String oldSpeedOfProgress = rrProblem.getSpeedOfProgress();
             String changePoint = rrProblem.getChangePoint();
-            if(changePoint != null){
-                changePoint = changePoint.toUpperCase();
-            }
-            rrProblem.setChangePoint(changePoint);
-            if(changePoint == null || "".equals(changePoint)){
-                if(!(oldChangePoint == null || "".equals(oldChangePoint))){
-                    throw new Exception("变化点管理已有值，不可修改为空！");
+            if ("close".equals(oldSpeedOfProgress)){
+                this.rRProblemService.updateRRProblem(rrProblem);
+            } else {
+                if (changePoint != null) {
+                    changePoint = changePoint.toUpperCase();
                 }
-            }else if("N/A".equals(changePoint)){
-                if(oldChangePoint == null || "".equals(oldChangePoint)){
-                    User user = (User)request.getSession().getAttribute(Constant.STAFF_KEY);
-                    this.dpcoiOrderService.addDpcoiOrder(rrProblem, user);
-                }else {
-                    if(!("N/A".equals(oldChangePoint))){
-                        throw new Exception("变化点管理原有值不是N/A，不能修改为N/A！");
+                rrProblem.setChangePoint(changePoint);
+                if (changePoint == null || "".equals(changePoint)) {
+                    if (!(oldChangePoint == null || "".equals(oldChangePoint))) {
+                        throw new Exception("变化点管理已有值，不可修改为空！");
                     }
-                }
-            }else {
-                if(oldChangePoint == null || "".equals(oldChangePoint)){
-                    DpcoiOrder dpcoiOrder = this.dpcoiOrderService.quereyDpcoiOrderOfTaskOrderNo(changePoint);
-                    if(dpcoiOrder == null){
-                        throw new Exception("变化点管理不存在！");
-                    }else {
-                        //同步数据
-                        DpcoiWoOrderQuery dpcoiWoOrderQuery = new DpcoiWoOrderQuery();
-                        dpcoiWoOrderQuery.setDpcoiOrderId(dpcoiOrder.getDpcoiOrderId());
-                        List<Map<String, Object>> mapList = this.dpcoiWoOrderService.queryDpcoiWoOrderList(dpcoiWoOrderQuery);
-                        String pfmea = "";
-                        String cp = "";
-                        String standardBook = "";
-                        for (Map<String, Object> objectMap : mapList) {
-                            Integer dpcoiWoOrderType = (Integer) objectMap.get("dpcoiWoOrderType");
-                            Integer dpcoiWoOrderState = (Integer) objectMap.get("dpcoiWoOrderState");
-                            if (1==dpcoiWoOrderType) {
-                                if (4==dpcoiWoOrderState) {
-                                    Date pfmeaCompleteDate = (Date) objectMap.get("pfmeaCompleteDate");
-                                    if (pfmeaCompleteDate != null) {
-                                        pfmea = formatter.format(pfmeaCompleteDate);
+                } else if ("N/A".equals(changePoint)) {
+                    if (oldChangePoint == null || "".equals(oldChangePoint)) {
+                        User user = (User) request.getSession().getAttribute(Constant.STAFF_KEY);
+                        this.dpcoiOrderService.addDpcoiOrder(rrProblem, user);
+                    } else {
+                        if (!("N/A".equals(oldChangePoint))) {
+                            throw new Exception("变化点管理原有值不是N/A，不能修改为N/A！");
+                        }
+                    }
+                } else {
+                    if (oldChangePoint == null || "".equals(oldChangePoint)) {
+                        DpcoiOrder dpcoiOrder = this.dpcoiOrderService.quereyDpcoiOrderOfTaskOrderNo(changePoint);
+                        if (dpcoiOrder == null) {
+                            throw new Exception("变化点管理不存在！");
+                        } else {
+                            //同步数据
+                            DpcoiWoOrderQuery dpcoiWoOrderQuery = new DpcoiWoOrderQuery();
+                            dpcoiWoOrderQuery.setDpcoiOrderId(dpcoiOrder.getDpcoiOrderId());
+                            List<Map<String, Object>> mapList = this.dpcoiWoOrderService.queryDpcoiWoOrderList(dpcoiWoOrderQuery);
+                            String pfmea = "";
+                            String cp = "";
+                            String standardBook = "";
+                            for (Map<String, Object> objectMap : mapList) {
+                                Integer dpcoiWoOrderType = (Integer) objectMap.get("dpcoiWoOrderType");
+                                Integer dpcoiWoOrderState = (Integer) objectMap.get("dpcoiWoOrderState");
+                                if (1 == dpcoiWoOrderType) {
+                                    if (4 == dpcoiWoOrderState) {
+                                        Date pfmeaCompleteDate = (Date) objectMap.get("pfmeaCompleteDate");
+                                        if (pfmeaCompleteDate != null) {
+                                            pfmea = formatter.format(pfmeaCompleteDate);
+                                        }
+                                    } else if (7 == dpcoiWoOrderState) {
+                                        pfmea = "N/A";
                                     }
-                                } else if (7==dpcoiWoOrderState) {
-                                    pfmea = "N/A";
-                                }
-                            } else if (2==dpcoiWoOrderType) {
-                                if (4==dpcoiWoOrderState) {
-                                    Date cpCompleteDate = (Date) objectMap.get("cpCompleteDate");
-                                    if (cpCompleteDate != null) {
-                                        cp = formatter.format(cpCompleteDate);
+                                } else if (2 == dpcoiWoOrderType) {
+                                    if (4 == dpcoiWoOrderState) {
+                                        Date cpCompleteDate = (Date) objectMap.get("cpCompleteDate");
+                                        if (cpCompleteDate != null) {
+                                            cp = formatter.format(cpCompleteDate);
+                                        }
+                                    } else if (7 == dpcoiWoOrderState) {
+                                        cp = "N/A";
                                     }
-                                } else if (7==dpcoiWoOrderState) {
-                                    cp = "N/A";
-                                }
-                            } else if (3==dpcoiWoOrderType) {
-                                if (4==dpcoiWoOrderState) {
-                                    Date standardBookCompleteDate = (Date) objectMap.get("standardBookCompleteDate");
-                                    if (standardBookCompleteDate != null) {
-                                        standardBook = formatter.format(standardBookCompleteDate);
+                                } else if (3 == dpcoiWoOrderType) {
+                                    if (4 == dpcoiWoOrderState) {
+                                        Date standardBookCompleteDate = (Date) objectMap.get("standardBookCompleteDate");
+                                        if (standardBookCompleteDate != null) {
+                                            standardBook = formatter.format(standardBookCompleteDate);
+                                        }
+                                    } else if (7 == dpcoiWoOrderState) {
+                                        standardBook = "N/A";
                                     }
-                                } else if (7==dpcoiWoOrderState) {
-                                    standardBook = "N/A";
                                 }
                             }
+                            rrProblem.setPfmea(pfmea);
+                            rrProblem.setCp(cp);
+                            rrProblem.setStandardBook(standardBook);
+                            dpcoiOrder.setRrProblemId(rrProblem.getId());
+                            this.dpcoiOrderService.updateDpcoiOrder(dpcoiOrder);
                         }
-                        rrProblem.setPfmea(pfmea);
-                        rrProblem.setCp(cp);
-                        rrProblem.setStandardBook(standardBook);
-                        dpcoiOrder.setRrProblemId(rrProblem.getId());
-                        this.dpcoiOrderService.updateDpcoiOrder(dpcoiOrder);
+                    } else if (!(oldChangePoint.equals(changePoint))) {
+                        throw new Exception("变化点管理已有值，不可修改！");
                     }
-                }else if(!(oldChangePoint.equals(changePoint))){
-                    throw new Exception("变化点管理已有值，不可修改！");
                 }
-            }
-            this.rRProblemService.updateSpeedOfProgress(rrProblem);
-            this.rRProblemService.updateTrackingLevel(rrProblem);
-            if(oldTrackingLevel == null || "".equals(oldTrackingLevel) || "V".equals(oldTrackingLevel)){
+                this.rRProblemService.updateSpeedOfProgress(rrProblem);
+                this.rRProblemService.updateTrackingLevel(rrProblem);
+                if (oldTrackingLevel == null || "".equals(oldTrackingLevel) || "V".equals(oldTrackingLevel)) {
+                    String trackingLevel = rrProblem.getTrackingLevel();
+                    String speedOfProgress = rrProblem.getSpeedOfProgress();
+                    if ("I".equals(trackingLevel) || "II".equals(trackingLevel) || "III".equals(trackingLevel) || "IV".equals(trackingLevel)) {
+                        String persionLiable = rrProblem.getPersionLiable();
+                        String[] persionLiableArray = persionLiable.split(",");
+                        for (int i = 0; i < persionLiableArray.length; i++) {
+                            RRDelayStatistics rrDelayStatistics = new RRDelayStatistics();
+                            rrDelayStatistics.setSpeedOfProgress(speedOfProgress);
+                            rrDelayStatistics.setDelayDate(new Date());
+                            rrDelayStatistics.setDelayType(2);
+                            rrDelayStatistics.setPersionLiable(persionLiableArray[i]);
+                            rrDelayStatistics.setRrProblemId(rrProblem.getId());
+                            rrDelayStatistics.setProblemStatus(rrProblem.getProblemStatus());
+                            rrDelayStatistics.setProblemProgress(rrProblem.getProblemProgress());
+                            rrDelayStatistics.setTrackingLevel(rrProblem.getTrackingLevel());
+                            this.rRDelayStatisticsService.addRRDelayStatistics(rrDelayStatistics);
+                        }
+                    }
+                }
+                this.rRProblemService.updateRRProblem(rrProblem);
                 String trackingLevel = rrProblem.getTrackingLevel();
-                String speedOfProgress = rrProblem.getSpeedOfProgress();
-                if("I".equals(trackingLevel) || "II".equals(trackingLevel) || "III".equals(trackingLevel) || "IV".equals(trackingLevel)) {
-                    String persionLiable = rrProblem.getPersionLiable();
-                    String[] persionLiableArray = persionLiable.split(",");
-                    for (int i = 0; i < persionLiableArray.length; i++) {
-                        RRDelayStatistics rrDelayStatistics = new RRDelayStatistics();
-                        rrDelayStatistics.setSpeedOfProgress(speedOfProgress);
-                        rrDelayStatistics.setDelayDate(new Date());
-                        rrDelayStatistics.setDelayType(2);
-                        rrDelayStatistics.setPersionLiable(persionLiableArray[i]);
-                        rrDelayStatistics.setRrProblemId(rrProblem.getId());
-                        rrDelayStatistics.setProblemStatus(rrProblem.getProblemStatus());
-                        rrDelayStatistics.setProblemProgress(rrProblem.getProblemProgress());
-                        rrDelayStatistics.setTrackingLevel(rrProblem.getTrackingLevel());
-                        this.rRDelayStatisticsService.addRRDelayStatistics(rrDelayStatistics);
-                    }
+                if (!"V".equals(trackingLevel)) {
+                    map.put("message", "已超期！");
+                } else {
+                    map.put("message", "");
                 }
-            }
-            this.rRProblemService.updateRRProblem(rrProblem);
-            String trackingLevel = rrProblem.getTrackingLevel();
-            if(!"V".equals(trackingLevel)){
-                map.put("message", "已超期！");
-            }else {
-                map.put("message", "");
+                this.rRProblemService.addEmailByProblemProgress(rrProblem);
             }
             map.put("success", true);
         }catch (Exception e){
@@ -754,6 +756,35 @@ public class RRProblemController {
     }
 
     /**
+     * 还原已作废RR问题点
+     * @param rrProblem 参数
+     */
+    @RequestMapping("toVoidRRProblemRestore.do")
+    @ResponseBody
+    public Object toVoidRRProblemRestore(RRProblem rrProblem){
+        Map<String, Object> map = new HashMap<String, Object>();
+        try{
+            RRProblem newRRProblem = this.rRProblemService.queryRRProblem(rrProblem);
+            Integer state = newRRProblem.getState();
+            if(state == 2){
+                throw new Exception("RR问题点已关闭，不能还原！");
+            }else {
+                newRRProblem.setState(1);
+                newRRProblem.setCloseConfirm(" ");
+                this.rRProblemService.updateSpeedOfProgress(newRRProblem);
+                this.rRProblemService.updateTrackingLevel(newRRProblem);
+                this.rRProblemService.updateRRProblem(newRRProblem);
+            }
+            map.put("success", true);
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("success", false);
+            map.put("message", e.getMessage());
+        }
+        return map;
+    }
+
+    /**
      * RR问题点延期
      * @param response 参数
      * @param rrProblem 参数
@@ -781,6 +812,37 @@ public class RRProblemController {
             map.put("message", e.getMessage());
         }
         AjaxUtil.ajaxResponse(response, new JSONObject(map).toString(), AjaxUtil.RESPONCE_TYPE_JSON);
+    }
+
+    /**
+     * RR问题点延期还原
+     * @param response 参数
+     * @param rrProblem 参数
+     */
+    @RequestMapping("delayRRProblemRestore.do")
+    @ResponseBody
+    public Object delayRRProblemRestore(HttpServletResponse response, RRProblem rrProblem){
+        Map<String, Object> map = new HashMap<String, Object>();
+        try{
+            rrProblem = this.rRProblemService.queryRRProblem(rrProblem);
+            Integer state = rrProblem.getState();
+            if(state == 2){
+                throw new Exception("RR问题点已关闭，不能还原！");
+            }else if(state == 3){
+                throw new Exception("RR问题点已作废，不能还原！");
+            }else{
+                rrProblem.setCloseConfirm(" ");
+                rrProblem.setIsDelay(0);
+                this.rRProblemService.updateTrackingLevel(rrProblem);
+                this.rRProblemService.updateRRProblem(rrProblem);
+            }
+            map.put("success", true);
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("success", false);
+            map.put("message", e.getMessage());
+        }
+        return map;
     }
 
     /**

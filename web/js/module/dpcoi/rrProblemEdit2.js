@@ -116,7 +116,13 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         "fourthDelay" : "0",
         "delayLevel" : "0",
         "isDelay" : "0",
-        "delayApplication" : "0"
+        "delayApplication" : "0",
+        "productNumber": "",
+        "estimateCloseDate":"",
+        "realCloseDate":"",
+        "customerCloseDate":"",
+        "badType":"",
+        "stateProgress": ""
     };
 
     $scope.validData = function(){
@@ -213,6 +219,12 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         $scope.rrProblemEdit.rrProblem.permanentGame = $("#permanentGame").val();
         $scope.rrProblemEdit.rrProblem.effectVerification = $("#effectVerification").val();
         $scope.rrProblemEdit.rrProblem.productLine = $("#productLine").val().toUpperCase();
+        $scope.rrProblemEdit.rrProblem.productNumber = $("#productNumber").val();
+        $scope.rrProblemEdit.rrProblem.estimateCloseDate = $("#estimateCloseDate").val();
+        $scope.rrProblemEdit.rrProblem.realCloseDate = $("#realCloseDate").val();
+        $scope.rrProblemEdit.rrProblem.customerCloseDate = $("#customerCloseDate").val();
+        $scope.rrProblemEdit.rrProblem.badType = $("#badType").val();
+        $scope.rrProblemEdit.rrProblem.stateProgress = $("#stateProgress").val();
 
         $scope.rrProblemEdit.rrProblem.serialNumber = "N/A";
         $scope.rrProblemEdit.rrProblem.productScale = "N/A";
@@ -297,6 +309,12 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         $scope.rrProblemEdit.rrProblem.permanentGame = $("#permanentGame").val();
         $scope.rrProblemEdit.rrProblem.effectVerification = $("#effectVerification").val();
         $scope.rrProblemEdit.rrProblem.productLine = $("#productLine").val().toUpperCase();
+        $scope.rrProblemEdit.rrProblem.productNumber = $("#productNumber").val();
+        $scope.rrProblemEdit.rrProblem.estimateCloseDate = $("#estimateCloseDate").val();
+        $scope.rrProblemEdit.rrProblem.realCloseDate = $("#realCloseDate").val();
+        $scope.rrProblemEdit.rrProblem.customerCloseDate = $("#customerCloseDate").val();
+        $scope.rrProblemEdit.rrProblem.badType = $("#badType").val();
+        $scope.rrProblemEdit.rrProblem.stateProgress = $("#stateProgress").val();
 
         $scope.rrProblemEdit.rrProblem.serialNumber = "N/A";
         $scope.rrProblemEdit.rrProblem.productScale = "N/A";
@@ -491,6 +509,15 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
                 showApplyButton: true,
                 prevButton : true,
                 applyButtonName:'N/A',
+                format: 'Y-m-d'
+            });
+        });
+
+        $("input[data-type='dateType4']").each(function () {
+            $(this).datetimepicker({
+                timepicker: false,
+                showApplyButton: true,
+                applyButtonName: 'N/A',
                 format: 'Y-m-d'
             });
         });

@@ -59,6 +59,12 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         "materiel" : "N/A",
         "state" : "",
         "isDelay": "",
+        "productNumber" : "",
+        "badType" : "",
+        "estimateCloseDate" : "",
+        "realCloseDate" : "",
+        "customerCloseDate" : "",
+        "stateProgress" : "",
         isRed:false,
         isGoldenRod:false,
         isYellow:false,
@@ -68,19 +74,19 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
     $scope.rrProblemList.firstPage = function () {
         $scope.rrProblemList.pageInfo.page = 1;
         $scope.rrProblemList.Search();
-    }
+    };
     $scope.rrProblemList.prevPage = function () {
         $scope.rrProblemList.pageInfo.page = $scope.rrProblemList.pageInfo.page - 1;
         $scope.rrProblemList.Search();
-    }
+    };
     $scope.rrProblemList.nextPage = function () {
         $scope.rrProblemList.pageInfo.page = $scope.rrProblemList.pageInfo.page + 1;
         $scope.rrProblemList.Search();
-    }
+    };
     $scope.rrProblemList.lastPage = function () {
         $scope.rrProblemList.pageInfo.page = $scope.rrProblemList.pageInfo.totalPage;
         $scope.rrProblemList.Search();
-    }
+    };
     $scope.rrProblemList.searchForm = {
         "badContent": badContent,
         "problemProgress": problemProgress,
@@ -221,14 +227,15 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
             }else if(state == 3){
                 alert("已作废，不能修改！");
                 return;
-            }
-            var persionLiable = ","+rrProblem.persionLiable+",";
-            if(persionLiable.indexOf(","+userName+",") < 0){
-                alert("你不是责任人，不能修改此问题点。");
-                return ;
+            } else {
+                var persionLiable = ","+rrProblem.persionLiable+",";
+                if(persionLiable.indexOf(","+userName+",") < 0){
+                    alert("你不是责任人，不能修改此问题点。");
+                    return ;
+                }
             }
         }
-        var searchStr = ""
+        var searchStr = "";
         searchStr += "badContent=" + $scope.rrProblemList.searchForm.badContent;
         searchStr += "&problemProgress=" + $scope.getMultiselectValue("problemProgress");
         searchStr += "&problemStatus=" + $scope.rrProblemList.searchForm.problemStatus;
@@ -315,6 +322,50 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         });
     });
 
+    $("#rrProblemToVoidRestore").click(function () {
+        if($scope.rrProblemList.ministerJurisdiction == 0){
+            alert("你没有部长权限！");
+            return;
+        }
+        var length = $("input[name='checkbox_records']:checked").length;
+        if(length == 0 || length > 1){
+            alert("请选择一条RR问题点！");
+            return ;
+        }
+        var id;
+        $("input[name='checkbox_records']:checked").each(function () {
+            id = $(this).val();
+        });
+        for(var i = 0; i < $scope.rrProblemList.rrProblemList.length; i++){
+            if($scope.rrProblemList.rrProblemList[i].id == id){
+                if($scope.rrProblemList.rrProblemList[i].isVoid == 0){
+                    alert("该RR问题点不是作废单，不能还原！");
+                    return;
+                }
+            }
+        }
+        var con = confirm("确认还原已作废的RR问题点！")
+        if (con == true){
+            $.ajax({
+                url : BASE_URL+'/rrProblem/toVoidRRProblemRestore.do?id='+id,
+                method: "post",
+                success : function(resultJson) {
+                    var obj =  angular.fromJson(resultJson);
+                    if(obj.success){
+                        $scope.rrProblemList.firstPage();
+                    }else {
+                        alert(obj.message);
+                        return;
+                    }
+                },
+                failure : function() {
+                    alert('失败！');
+                    return;
+                }
+            });
+        }
+    });
+
     $("#rrProblemDelay").click(function () {
         if($scope.rrProblemList.ministerJurisdiction == 0){
             alert("你没有部长权限！");
@@ -347,6 +398,51 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
             }
         });
     });
+
+    $("#rrProblemDelayRestore").click(function () {
+        if($scope.rrProblemList.ministerJurisdiction == 0){
+            alert("你没有部长权限！");
+            return;
+        }
+        var length = $("input[name='checkbox_records']:checked").length;
+        if(length == 0 || length > 1){
+            alert("请选择一条RR问题点！");
+            return ;
+        }
+        var id;
+        $("input[name='checkbox_records']:checked").each(function () {
+            id = $(this).val();
+        });
+        for(var i = 0; i < $scope.rrProblemList.rrProblemList.length; i++){
+            if($scope.rrProblemList.rrProblemList[i].id == id){
+                if($scope.rrProblemList.rrProblemList[i].isDelay == 0){
+                    alert("该RR问题点不是延期单，不能还原！");
+                    return;
+                }
+            }
+        }
+        var con = confirm("确认还原已延期的RR问题点！");
+        if (con == true) {
+            $.ajax({
+                url: BASE_URL + '/rrProblem/delayRRProblemRestore.do?id=' + id,
+                method: "post",
+                success: function (resultJson) {
+                    var obj = angular.fromJson(resultJson);
+                    if (obj.success) {
+                        $scope.rrProblemList.firstPage();
+                    } else {
+                        alert(obj.message);
+                        return;
+                    }
+                },
+                failure: function () {
+                    alert('失败！');
+                    return;
+                }
+            });
+        }
+    });
+
     $("#rrProblemHide").click(function () {
         if($scope.rrProblemList.ministerJurisdiction == 0){
             alert("你没有部长权限！");

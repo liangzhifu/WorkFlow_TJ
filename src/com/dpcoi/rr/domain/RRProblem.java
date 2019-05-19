@@ -189,6 +189,18 @@ public class RRProblem {
 
     private Integer containmentWorksheetFileId;
 
+    private String productNumber;
+
+    private String estimateCloseDate;
+
+    private String realCloseDate;
+
+    private String customerCloseDate;
+
+    private String stateProgress;
+
+    private String badType;
+
     public Integer getId() {
         return id;
     }
@@ -858,5 +870,53 @@ public class RRProblem {
 
     public void setContainmentWorksheetFileId(Integer containmentWorksheetFileId) {
         this.containmentWorksheetFileId = containmentWorksheetFileId;
+    }
+
+    public String getProductNumber() {
+        return productNumber;
+    }
+
+    public void setProductNumber(String productNumber) {
+        this.productNumber = productNumber;
+    }
+
+    public String getEstimateCloseDate() {
+        return estimateCloseDate;
+    }
+
+    public void setEstimateCloseDate(String estimateCloseDate) {
+        this.estimateCloseDate = estimateCloseDate;
+    }
+
+    public String getRealCloseDate() {
+        return realCloseDate;
+    }
+
+    public void setRealCloseDate(String realCloseDate) {
+        this.realCloseDate = realCloseDate;
+    }
+
+    public String getCustomerCloseDate() {
+        return customerCloseDate;
+    }
+
+    public void setCustomerCloseDate(String customerCloseDate) {
+        this.customerCloseDate = customerCloseDate;
+    }
+
+    public String getStateProgress() {
+        return stateProgress;
+    }
+
+    public void setStateProgress(String stateProgress) {
+        this.stateProgress = stateProgress;
+    }
+
+    public String getBadType() {
+        return badType;
+    }
+
+    public void setBadType(String badType) {
+        this.badType = badType;
     }
 }

@@ -85,7 +85,7 @@ public class RRProblemServiceImpl implements RRProblemService {
         int year = cal.get(Calendar.YEAR);
         String shortYear = String.valueOf(year).substring(2);
         cal.setTime(nowDate);
-        if("客诉".equals(problemType)){
+        if("客户投诉量产".equals(problemType)){
             problemNo = "TT-KS-"+shortYear+"-";
         }else if("内诉（全检）".equals(problemType)) {
             problemNo = "TT-NS-"+shortYear+"-";
@@ -97,6 +97,10 @@ public class RRProblemServiceImpl implements RRProblemService {
             problemNo = "TT-SC-"+shortYear+"-";
         }else if("部品".equals(problemType)) {
             problemNo = "TT-BP-"+shortYear+"-";
+        } else if ("客户投诉非量产".equals(problemType)) {
+            problemNo = "TT-KSF-"+shortYear+"-";
+        } else if ("COP/LAT".equals(problemType)) {
+            problemNo = "TT-COP-"+shortYear+"-";
         }else{
             throw new ServiceException("问题类型不存在！");
         }
@@ -644,6 +648,33 @@ public class RRProblemServiceImpl implements RRProblemService {
         date = this.calculationWorkingDay(formatter.parse(happenDate), 40, calendarList);
         map.put("fourthDate", formatter.format(date));
         return map;
+    }
+
+    @Override
+    public void addEmailByProblemProgress(RRProblem rrProblem) throws Exception {
+        String problemProgress = rrProblem.getProblemProgress();
+        if("5/5".equals(problemProgress)){
+            TimeTask timeTask = new TimeTask();
+            timeTask.setNoticeType(100);
+            StringBuffer comment = new StringBuffer();
+            comment.append("问题编号:").append(rrProblem.getProblemNo())
+                    .append("<br>").append("问题类型:").append(rrProblem.getProblemType())
+                    .append("<br>").append("工程:").append(rrProblem.getEngineering())
+                    .append("<br>").append("客户:").append(rrProblem.getCustomer())
+                    .append("<br>").append("车型:").append(rrProblem.getVehicle())
+                    .append("<br>").append("品名:").append(rrProblem.getProductNo())
+                    .append("<br>").append("不良内容:").append(rrProblem.getBadContent())
+                    .append("<br>").append("根本原因:").append(rrProblem.getRootCause())
+                    .append("<br>").append("永久对策:").append(rrProblem.getPermanentGame());
+            timeTask.setComment(comment.toString());
+            String userEmail = this.rRProblemDao.selectMinisterJurisdictionUser();
+            timeTask.setUserEmail(userEmail);
+            timeTask.setDeleteState(0);
+            StringBuffer title = new StringBuffer();
+            title.append(rrProblem.getCustomer()).append("+").append(rrProblem.getVehicle()).append("+").append(rrProblem.getBadContent());
+            timeTask.setEmailTitle(title.toString());
+            this.timeTaskDao.insertTimeTask(timeTask);
+        }
     }
 
 

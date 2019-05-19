@@ -22,7 +22,7 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
     $scope.rrProblemEdit.persionLiableList = [{
         "userId" : "",
         "userName" : ""
-    }]
+    }];
     $scope.rrProblemEdit.dpcoiConfigList = [{
         "configId" : "",
         "configCodeId" : "",
@@ -100,7 +100,13 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         "fourthDelay" : "0",
         "delayLevel" : "0",
         "isDelay" : "0",
-        "delayApplication" : "0"
+        "delayApplication" : "0",
+        "productNumber": "",
+        "estimateCloseDate":"",
+        "realCloseDate":"",
+        "customerCloseDate":"",
+        "badType":"",
+        "stateProgress": ""
     };
 
     $scope.validData = function(){
@@ -223,6 +229,12 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         $scope.rrProblemEdit.rrProblem.permanentGame = $("#permanentGame").val();
         $scope.rrProblemEdit.rrProblem.effectVerification = $("#effectVerification").val();
         $scope.rrProblemEdit.rrProblem.productLine = $("#productLine").val().toUpperCase();
+        $scope.rrProblemEdit.rrProblem.productNumber = $("#productNumber").val();
+        $scope.rrProblemEdit.rrProblem.estimateCloseDate = $("#estimateCloseDate").val();
+        $scope.rrProblemEdit.rrProblem.realCloseDate = $("#realCloseDate").val();
+        $scope.rrProblemEdit.rrProblem.customerCloseDate = $("#customerCloseDate").val();
+        $scope.rrProblemEdit.rrProblem.badType = $("#badType").val();
+        $scope.rrProblemEdit.rrProblem.stateProgress = $("#stateProgress").val();
 
         $scope.rrProblemEdit.rrProblem.serialNumber = "N/A";
         $scope.rrProblemEdit.rrProblem.productScale = "N/A";
@@ -318,6 +330,12 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
         $scope.rrProblemEdit.rrProblem.permanentGame = $("#permanentGame").val();
         $scope.rrProblemEdit.rrProblem.effectVerification = $("#effectVerification").val();
         $scope.rrProblemEdit.rrProblem.productLine = $("#productLine").val().toUpperCase();
+        $scope.rrProblemEdit.rrProblem.productNumber = $("#productNumber").val();
+        $scope.rrProblemEdit.rrProblem.estimateCloseDate = $("#estimateCloseDate").val();
+        $scope.rrProblemEdit.rrProblem.realCloseDate = $("#realCloseDate").val();
+        $scope.rrProblemEdit.rrProblem.customerCloseDate = $("#customerCloseDate").val();
+        $scope.rrProblemEdit.rrProblem.badType = $("#badType").val();
+        $scope.rrProblemEdit.rrProblem.stateProgress = $("#stateProgress").val();
 
         $scope.rrProblemEdit.rrProblem.serialNumber = "N/A";
         $scope.rrProblemEdit.rrProblem.productScale = "N/A";
@@ -498,15 +516,6 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
                 if (result.success) {
                     $scope.rrProblemEdit.dpcoiConfigList = result.dpcoiConfigList;
                     $scope.$apply();
-                    $("#productNo").chosen({
-                        no_results_text : "没有找到结果！",//搜索无结果时显示的提示
-                        search_contains : true,   //关键字模糊搜索，设置为false，则只从开头开始匹配
-                        allow_single_deselect : true, //是否允许取消选择
-                        max_selected_options : 5,  //当select为多选时，最多选择个数
-                        placeholder_text_multiple : "请选择",
-                        max_shown_results : 5,
-                        width : "60%"
-                    });
                     $("#dpcoi4M").chosen({
                         no_results_text : "没有找到结果！",//搜索无结果时显示的提示
                         search_contains : true,   //关键字模糊搜索，设置为false，则只从开头开始匹配
@@ -564,8 +573,6 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
                                     $("#dpcoi4M").trigger("chosen:updated");
                                     $("#vehicle option[value='"+$scope.rrProblemEdit.rrProblem.vehicle+"']").attr("selected","selected");
                                     $("#vehicle").trigger("chosen:updated");
-                                    $("#productNo option[value='"+$scope.rrProblemEdit.rrProblem.productNo+"']").attr("selected","selected");
-                                    $("#productNo").trigger("chosen:updated");
                                     $scope.$apply();
                                 }
                             }
@@ -603,6 +610,15 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
                 showApplyButton: true,
                 prevButton : true,
                 applyButtonName:'N/A',
+                format: 'Y-m-d'
+            });
+        });
+
+        $("input[data-type='dateType4']").each(function () {
+            $(this).datetimepicker({
+                timepicker: false,
+                showApplyButton: true,
+                applyButtonName: 'N/A',
                 format: 'Y-m-d'
             });
         });

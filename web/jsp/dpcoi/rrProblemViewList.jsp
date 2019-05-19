@@ -218,10 +218,15 @@
                         <th width="35px" class="x-grid3-header" style="padding: 0px">进展</th>
                         <th width="60px" class="x-grid3-header" style="padding: 0px">追踪等级</th>
                         <th width="100px" class="x-grid3-header" style="padding: 0px">发生日期</th>
+                        <th width="100px" class="x-grid3-header" style="padding: 0px">预计关闭日期</th>
+                        <th width="100px" class="x-grid3-header" style="padding: 0px">实际关闭日期</th>
+                        <th width="100px" class="x-grid3-header" style="padding: 0px">客户关闭日期</th>
                         <th width="100px" class="x-grid3-header" style="padding: 0px">客户</th>
                         <th width="100px" class="x-grid3-header" style="padding: 0px">车型</th>
                         <th width="100px" class="x-grid3-header" style="padding: 0px">品名</th>
+                        <th width="100px" class="x-grid3-header" style="padding: 0px">品号</th>
                         <th width="400px" class="x-grid3-header" style="padding: 0px">不良内容</th>
+                        <th width="100px" class="x-grid3-header" style="padding: 0px">不良归类</th>
                         <th width="100px" class="x-grid3-header" style="padding: 0px">责任人</th>
                         <th width="100px" class="x-grid3-header" style="padding: 0px">下次汇报时间</th>
                         <th width="400px" class="x-grid3-header" style="padding: 0px">延期原因及延期进展</th>
@@ -256,6 +261,7 @@
                         <th width="80px" class="x-grid3-header" style="padding: 0px">分层审核</th>
                         <th width="80px" class="x-grid3-header" style="padding: 0px">NA待定</th>
                         <th width="80px" class="x-grid3-header" style="padding: 0px">其他资料</th>
+                        <th width="100px" class="x-grid3-header" style="padding: 0px">进展状态</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -268,10 +274,15 @@
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.problemProgress}}</td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.trackingLevel}}</td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.happenDate}}</td>
+                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.estimateCloseDate}}</td>
+                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.realCloseDate}}</td>
+                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.customerCloseDate}}</td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.customer}}</td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.vehicle}}</td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.productNo}}</td>
+                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.productNumber}}</td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;text-align: left;">{{rrProblemDate.badContent}}</td>
+                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.badType}}</td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.persionLiable}}</td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;padding: 0px;display:table-cell; vertical-align:middle;">{{rrProblemDate.reportDate}}</td>
                         <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;text-align: left;">{{rrProblemDate.reasonForDelay}}</td>
@@ -380,6 +391,7 @@
                             <span ng-show="rrProblemDate.otherInformationFileId == 0">{{rrProblemDate.otherInformation}}</span>
                             <span ng-show="rrProblemDate.otherInformationFileId != 0"><a href="javascript:void(0);" ng-click="rrProblemViewList.downloadFile(rrProblemDate.otherInformationFileId)">{{rrProblemDate.otherInformation}}</a></span>
                         </td>
+                        <td ng-class="{'claasRed': rrProblemDate.isRed, 'classGoldenRod': rrProblemDate.isGoldenRod, 'classYellow': rrProblemDate.isYellow, 'cassDeepSkyBlue': rrProblemDate.isDeepSkyBlue}" style="white-space:normal;word-wrap:break-word;word-break:break-all;padding: 0px;display:table-cell; vertical-align:middle;text-align: left;">{{rrProblemDate.stateProgress}}</td>
                     </tr>
                     </tbody>
                 </table>
