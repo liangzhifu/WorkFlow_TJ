@@ -105,8 +105,9 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         "responsibleDepartment" : responsibleDepartment,
         "trackingLevel" : trackingLevel,
         "dpcoi4M" : dpcoi4M,
+        "stateProgress" : stateProgress,
         "ids":""
-    }
+    };
 
     $scope.getMultiselectValue = function(id){
         var idArray = $("#"+id).val();
@@ -120,7 +121,7 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
             }
         }
         return idStr;
-    }
+    };
 
     $scope.rrProblemList.Search = function () {
         $scope.rrProblemList.searchForm.problemType = $scope.getMultiselectValue("problemType");
@@ -252,6 +253,7 @@ rrProblemListApp.controller("rrProblemListController", function ($scope) {
         searchStr += "&productLine=" + $scope.rrProblemList.searchForm.productLine;
         searchStr += "&severity=" + $scope.rrProblemList.searchForm.severity;
         searchStr += "&responsibleDepartment=" + $scope.rrProblemList.searchForm.responsibleDepartment;
+        searchStr += "&stateProgress=" + $scope.rrProblemList.searchForm.stateProgress;
         searchStr += "&size=" + $scope.rrProblemList.searchForm.pageCount;
         searchStr += "&start=" + $scope.rrProblemList.searchForm.pagenum * $scope.rrProblemList.searchForm.size;
         window.location.href = "/WorkFlow/rrProblem/getRRProblemEditDlg.do?id="+id+"&"+searchStr;

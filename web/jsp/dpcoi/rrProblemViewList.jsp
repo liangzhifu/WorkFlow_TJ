@@ -152,7 +152,7 @@
                                class="form-control-order form-control" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" style="margin-bottom: 4px;">
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
                         <label  class="control-label" for="productLine">生产线：</label>
                         <input type="text" name="productLine" id="productLine" ng-model="rrProblemViewList.searchForm.productLine"
@@ -201,6 +201,18 @@
                             <i class="icon-search icon-on-right bigger-110"></i>查找
                         </button>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
+                    <label  class="control-label" for="problemStatus">进展状态：</label>
+                    <select id="stateProgress" name="stateProgress" class="form-control-order form-control" required="required"
+                            ng-model="rrProblemViewList.searchForm.stateProgress" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                        <option value="">请选择</option>
+                        <option ng-repeat="dpcoiConfigDate in rrProblemViewList.dpcoiConfigList | myFilter:14"
+                                value="{{dpcoiConfigDate.configValue}}"
+                        >{{dpcoiConfigDate.configValue}}</option>
+                    </select>
                 </div>
             </div>
             <div class="x-panel-header x-unselectable" id="ext-gen12" style="-moz-user-select: none;">

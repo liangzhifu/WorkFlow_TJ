@@ -38,7 +38,7 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
     $scope.rrProblemEdit.persionLiableList = [{
         "userId" : "",
         "userName" : ""
-    }]
+    }];
     $scope.rrProblemEdit.dpcoiConfigList = [{
         "configId" : "",
         "configCodeId" : "",

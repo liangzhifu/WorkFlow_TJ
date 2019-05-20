@@ -57,6 +57,7 @@
         var responsibleDepartment = "${rrProblemQuery.responsibleDepartment}";
         var trackingLevel = "${rrProblemQuery.trackingLevel}";
         var dpcoi4M = "${rrProblemQuery.dpcoi4M}";
+        var stateProgress = "${rrProblemQuery.stateProgress}";
     </script>
     <style type="text/css">
         .claasRed{
@@ -224,6 +225,16 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
+                        <label  class="control-label" for="problemStatus">进展状态：</label>
+                        <select id="stateProgress" name="stateProgress" class="form-control-order form-control" required="required"
+                                ng-model="rrProblemList.searchForm.stateProgress" style="width: 60%;margin-left: 0%;padding: 1px 1px;font-size: 12px;margin-right: 15px;height: 25px;">
+                            <option value="">请选择</option>
+                            <option ng-repeat="dpcoiConfigDate in rrProblemList.dpcoiConfigList | myFilter:14"
+                                    value="{{dpcoiConfigDate.configValue}}" ng-selected="dpcoiConfigDate.configValue == '${rrProblemQuery.stateProgress}'"
+                            >{{dpcoiConfigDate.configValue}}</option>
+                        </select>
+                    </div>
                     <div class="col-md-2" style="padding-right: 1px;padding-left: 1px;">
                     </div>
                     <div class="col-md-8" style="padding-right: 1px;padding-left: 1px;">
@@ -550,5 +561,5 @@
     </form>
 </div>
 </body>
-<script src="/WorkFlow/js/module/dpcoi/rrProblemList.js?version=2"></script>
+<script src="/WorkFlow/js/module/dpcoi/rrProblemList.js?version=3"></script>
 </html>

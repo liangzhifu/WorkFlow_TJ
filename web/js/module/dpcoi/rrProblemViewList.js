@@ -68,19 +68,19 @@ rrProblemViewListApp.controller("rrProblemViewListController", function ($scope)
     $scope.rrProblemViewList.firstPage = function () {
         $scope.rrProblemViewList.pageInfo.page = 1;
         $scope.rrProblemViewList.Search();
-    }
+    };
     $scope.rrProblemViewList.prevPage = function () {
         $scope.rrProblemViewList.pageInfo.page = $scope.rrProblemViewList.pageInfo.page - 1;
         $scope.rrProblemViewList.Search();
-    }
+    };
     $scope.rrProblemViewList.nextPage = function () {
         $scope.rrProblemViewList.pageInfo.page = $scope.rrProblemViewList.pageInfo.page + 1;
         $scope.rrProblemViewList.Search();
-    }
+    };
     $scope.rrProblemViewList.lastPage = function () {
         $scope.rrProblemViewList.pageInfo.page = $scope.rrProblemViewList.pageInfo.totalPage;
         $scope.rrProblemViewList.Search();
-    }
+    };
     $scope.rrProblemViewList.searchForm = {
         "badContent": "",
         "problemProgress": "",
@@ -99,6 +99,7 @@ rrProblemViewListApp.controller("rrProblemViewListController", function ($scope)
         "responsibleDepartment" : "",
         "trackingLevel" : "",
         "dpcoi4M" : "",
+        "stateProgress" : "",
         "ids":""
     };
 

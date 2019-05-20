@@ -172,8 +172,13 @@ rrProblemEditApp.controller("rrProblemEditController", function ($scope) {
             return false;
         }
         var persionLiableArray = $("#persionLiable").val();
-        if(persionLiableArray.length <= 0){
+        if(persionLiableArray == null || persionLiableArray.length <= 0){
             alert("责任人不能为空！");
+            return false;
+        }
+        var dpcoi4MArray = $("#dpcoi4M").val();
+        if(dpcoi4MArray == null || dpcoi4MArray.length <= 0){
+            alert("4M不能为空！");
             return false;
         }
         return flag;

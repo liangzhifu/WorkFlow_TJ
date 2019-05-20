@@ -35,6 +35,7 @@
         searchStr += "&responsibleDepartment=${rrProblemQuery.responsibleDepartment}";
         searchStr += "&trackingLevel=${rrProblemQuery.trackingLevel}";
         searchStr += "&dpcoi4M=${rrProblemQuery.dpcoi4M}";
+        searchStr += "&stateProgress=${rrProblemQuery.stateProgress}";
         searchStr += "&size=${rrProblemQuery.size}";
         searchStr += "&start=${rrProblemQuery.start}";
     </script>
@@ -471,5 +472,5 @@
     </div>
 </div>
 </body>
-<script src="/WorkFlow/js/module/dpcoi/rrProblemEdit.js?version=6"></script>
+<script src="/WorkFlow/js/module/dpcoi/rrProblemEdit.js?version=7"></script>
 </html>

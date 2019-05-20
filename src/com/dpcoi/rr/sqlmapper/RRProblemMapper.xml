@@ -1032,6 +1032,9 @@
             <if test="dpcoi4M != null and dpcoi4M != ''" >
                 and find_in_set(`dpcoi4M`, #{dpcoi4M,jdbcType=VARCHAR})
             </if>
+            <if test="stateProgress != null and stateProgress != ''" >
+                and state_progress = #{stateProgress,jdbcType=VARCHAR}
+            </if>
         </where>
     </sql>
 
